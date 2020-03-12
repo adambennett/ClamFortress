@@ -6,8 +6,8 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
-.idea/JustCode.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
+/.idea/JustCode.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/vcs.xml
+/.idea/workspace.xml

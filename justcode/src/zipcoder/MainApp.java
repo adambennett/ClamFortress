@@ -6,4 +6,6 @@ public class MainApp {
         System.out.println("test project config");
     }
 
+    public void temp() {}
+
 }

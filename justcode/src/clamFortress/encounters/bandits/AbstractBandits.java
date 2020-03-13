@@ -1,4 +1,4 @@
 package clamFortress.encounters.bandits;
 
-public abstract class Bandits {
+public abstract class AbstractBandits {
 }

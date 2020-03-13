@@ -1,4 +1,8 @@
 package clamFortress.consoleIO;
 
-public class MainMenu {
+import java.util.*;
+
+public class MainMenu extends AbstractConsole  {
+
+    Hashtable<String, Integer> test;
 }

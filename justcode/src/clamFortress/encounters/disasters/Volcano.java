@@ -1,4 +1,4 @@
 package clamFortress.encounters.disasters;
 
-public class Volcano extends NaturalDisaster {
+public class Volcano extends AbstractDisaster {
 }

@@ -1,4 +1,4 @@
 package clamFortress.encounters.disasters;
 
-public abstract class NaturalDisaster {
+public abstract class AbstractDisaster {
 }

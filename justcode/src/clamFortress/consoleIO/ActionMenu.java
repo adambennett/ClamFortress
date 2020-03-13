@@ -1,4 +1,4 @@
 package clamFortress.consoleIO;
 
-public class ActionMenu {
+public class ActionMenu extends AbstractConsole {
 }

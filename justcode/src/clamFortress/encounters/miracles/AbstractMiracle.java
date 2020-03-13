@@ -1,4 +1,4 @@
 package clamFortress.encounters.miracles;
 
-public abstract class Miracle {
+public abstract class AbstractMiracle {
 }

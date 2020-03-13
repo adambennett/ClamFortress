@@ -1,4 +1,4 @@
 package clamFortress.encounters.disasters;
 
-public class Hurricane extends NaturalDisaster {
+public class Hurricane extends AbstractDisaster {
 }

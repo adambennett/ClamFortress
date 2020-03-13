@@ -1,4 +1,4 @@
 package clamFortress.encounters.disasters;
 
-public class Typhoon extends NaturalDisaster {
+public class Typhoon extends AbstractDisaster {
 }

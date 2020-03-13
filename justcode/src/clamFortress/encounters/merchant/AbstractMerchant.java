@@ -1,4 +1,4 @@
 package clamFortress.encounters.merchant;
 
-public abstract class Merchant {
+public abstract class AbstractMerchant {
 }

@@ -1,4 +1,4 @@
 package clamFortress.encounters.plagues;
 
-public class Coronavirus extends Plague {
+public abstract class AbstractPlague {
 }

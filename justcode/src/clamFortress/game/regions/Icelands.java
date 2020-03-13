@@ -1,4 +1,4 @@
 package clamFortress.game.regions;
 
-public class Icelands extends Region {
+public class Icelands {
 }

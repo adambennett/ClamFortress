@@ -1,4 +1,4 @@
 package clamFortress.consoleIO;
 
-public class EndGameMenu {
+public class EndGameMenu extends AbstractConsole  {
 }

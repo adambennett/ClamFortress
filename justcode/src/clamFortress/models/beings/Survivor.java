@@ -4,7 +4,7 @@ import clamFortress.enums.*;
 
 import java.util.*;
 
-public class Survivor {
+public abstract class Survivor {
     private Integer agility;
     private Integer strength;
     private Integer dexterity;
@@ -30,6 +30,9 @@ public class Survivor {
         this.race = race;
         this.relations = relations;
     }
+
+    //This is a nullary constructor because im not sure if we are going to have each one use the constructor from Survivor
+    public Survivor(){};
 
     public void putRelation(Survivor s, Relation r) {
         // put new relation in map @ s

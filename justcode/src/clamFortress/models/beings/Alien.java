@@ -1,4 +1,4 @@
 package clamFortress.models.beings;
 
-public class Alien {
+public class Alien extends Survivor {
 }

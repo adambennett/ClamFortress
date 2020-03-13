@@ -73,7 +73,7 @@ public class SurvivorBuilder {
         return this;
     }
 
-    public Survivor createSettler() {
+    public Survivor createSurvivor() {
         return new Survivor(agility, strength, dexterity, magic, engineering, injury, age, name, gender, race, relations);
     }
 }

@@ -1,4 +1,4 @@
 package clamFortress.models.beings;
 
-public class Human {
+public class Human extends Survivor{
 }

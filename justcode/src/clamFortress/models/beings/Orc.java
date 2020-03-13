@@ -2,5 +2,5 @@ package clamFortress.models.beings;
 
 import clamFortress.interfaces.*;
 
-public class Orc implements Mythical {
+public class Orc extends Survivor implements Mythical {
 }

@@ -1,4 +1,6 @@
 package zipcoder.models.beings;
 
-public class Claman {
+import zipcoder.interfaces.*;
+
+public class Claman implements Mythical {
 }

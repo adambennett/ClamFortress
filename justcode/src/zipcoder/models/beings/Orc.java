@@ -1,4 +1,6 @@
 package zipcoder.models.beings;
 
-public class Orc {
+import zipcoder.interfaces.*;
+
+public class Orc implements Mythical {
 }

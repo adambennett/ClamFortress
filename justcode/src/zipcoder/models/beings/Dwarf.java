@@ -1,4 +1,6 @@
 package zipcoder.models.beings;
 
-public class Dwarf {
+import zipcoder.interfaces.*;
+
+public class Dwarf implements Mythical {
 }

@@ -1,5 +1,9 @@
 package zipcoder.models;
 
+import clamFortress.enums.Gender;
+import clamFortress.enums.Race;
+import clamFortress.models.beings.Survivor;
+import clamFortress.models.builders.SurvivorBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 import zipcoder.enums.Gender;
@@ -12,11 +16,11 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class SettlerTest {
-    Settler relationTest = new Settler(4,4,4,4,4,4,4,"tom",Gender.MALE,Race.CLAMAN, null );
+public class SurvivorTest {
+    Survivor relationTest = new Survivor(4,4,4,4,4,4,4,"tom",Gender.MALE,Race.CLAMAN, null );
     @Test
     public void setAgility() {
-        Settler test = new SettlerBuilder()
+        Survivor test = new SurvivorBuilder()
                 .setAgility(4)
                 .setStrength(4)
                 .setDexterity(4)
@@ -27,7 +31,7 @@ public class SettlerTest {
                 .setName("tim")
                 .setGender(Gender.MALE)
                 .setRace(Race.CLAMAN)
-                .createSettler();
+                .createSurvivor();
 
         Integer actual = test.getAgility();
         Integer expected = 4;

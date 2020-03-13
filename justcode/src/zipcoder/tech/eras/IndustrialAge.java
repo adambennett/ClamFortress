@@ -1,4 +1,4 @@
 package zipcoder.tech.eras;
 
-public class IndustrialAge {
+public class IndustrialAge extends Era {
 }

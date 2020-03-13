@@ -1,4 +1,7 @@
 package zipcoder.models.resources.natural;
 
-public class Flowers {
+import zipcoder.interfaces.*;
+import zipcoder.models.resources.*;
+
+public class Flowers extends NaturalResource implements Refinable, Harvestable {
 }

@@ -1,4 +1,6 @@
 package zipcoder.models.animals.desert;
 
-public class Camel {
+import zipcoder.models.animals.*;
+
+public class Camel extends Animal {
 }

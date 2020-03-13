@@ -1,4 +1,6 @@
 package zipcoder.models.resources.refined;
 
-public class Lumber {
+import zipcoder.models.resources.*;
+
+public class Lumber extends RefinedResource {
 }

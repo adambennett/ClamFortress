@@ -1,4 +1,6 @@
 package zipcoder.models.animals.jungle;
 
-public class Wildabeast {
+import zipcoder.models.animals.*;
+
+public class Wildabeast extends Animal {
 }

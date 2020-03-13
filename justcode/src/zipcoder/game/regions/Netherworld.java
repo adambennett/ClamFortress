@@ -1,4 +1,4 @@
 package zipcoder.game.regions;
 
-public class Netherworld {
+public class Netherworld extends Region {
 }

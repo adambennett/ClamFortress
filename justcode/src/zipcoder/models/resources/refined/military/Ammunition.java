@@ -1,4 +1,6 @@
 package zipcoder.models.resources.refined.military;
 
-public class Ammunition {
+import zipcoder.models.resources.*;
+
+public class Ammunition extends RefinedResource {
 }

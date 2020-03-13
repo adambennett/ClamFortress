@@ -1,4 +1,7 @@
 package zipcoder.models.resources.natural;
 
-public class Wood {
+import zipcoder.interfaces.*;
+import zipcoder.models.resources.*;
+
+public class Wood extends NaturalResource implements Refinable, Harvestable {
 }

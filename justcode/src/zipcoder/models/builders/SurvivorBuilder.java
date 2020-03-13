@@ -1,10 +1,11 @@
-package zipcoder.models;
+package zipcoder.models.builders;
 
 import zipcoder.enums.*;
+import zipcoder.models.beings.*;
 
 import java.util.*;
 
-public class SettlerBuilder {
+public class SurvivorBuilder {
     private Integer agility;
     private Integer strength;
     private Integer dexterity;
@@ -15,64 +16,64 @@ public class SettlerBuilder {
     private String name;
     private Gender gender;
     private Race race;
-    private Map<Settler, ArrayList<Relation>> relations;
+    private Map<Survivor, ArrayList<Relation>> relations;
 
-    public SettlerBuilder setAgility(Integer agility) {
+    public SurvivorBuilder setAgility(Integer agility) {
         this.agility = agility;
         return this;
     }
 
-    public SettlerBuilder setStrength(Integer strength) {
+    public SurvivorBuilder setStrength(Integer strength) {
         this.strength = strength;
         return this;
     }
 
-    public SettlerBuilder setDexterity(Integer dexterity) {
+    public SurvivorBuilder setDexterity(Integer dexterity) {
         this.dexterity = dexterity;
         return this;
     }
 
-    public SettlerBuilder setMagic(Integer magic) {
+    public SurvivorBuilder setMagic(Integer magic) {
         this.magic = magic;
         return this;
     }
 
-    public SettlerBuilder setEngineering(Integer engineering) {
+    public SurvivorBuilder setEngineering(Integer engineering) {
         this.engineering = engineering;
         return this;
     }
 
-    public SettlerBuilder setInjury(Integer injury) {
+    public SurvivorBuilder setInjury(Integer injury) {
         this.injury = injury;
         return this;
     }
 
-    public SettlerBuilder setAge(Integer age) {
+    public SurvivorBuilder setAge(Integer age) {
         this.age = age;
         return this;
     }
 
-    public SettlerBuilder setName(String name) {
+    public SurvivorBuilder setName(String name) {
         this.name = name;
         return this;
     }
 
-    public SettlerBuilder setGender(Gender gender) {
+    public SurvivorBuilder setGender(Gender gender) {
         this.gender = gender;
         return this;
     }
 
-    public SettlerBuilder setRace(Race race) {
+    public SurvivorBuilder setRace(Race race) {
         this.race = race;
         return this;
     }
 
-    public SettlerBuilder setRelations(Map<Settler, ArrayList<Relation>> relations) {
+    public SurvivorBuilder setRelations(Map<Survivor, ArrayList<Relation>> relations) {
         this.relations = relations;
         return this;
     }
 
-    public Settler createSettler() {
-        return new Settler(agility, strength, dexterity, magic, engineering, injury, age, name, gender, race, relations);
+    public Survivor createSettler() {
+        return new Survivor(agility, strength, dexterity, magic, engineering, injury, age, name, gender, race, relations);
     }
 }

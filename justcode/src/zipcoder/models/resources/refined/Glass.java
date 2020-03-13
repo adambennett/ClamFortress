@@ -1,4 +1,6 @@
 package zipcoder.models.resources.refined;
 
-public class Glass {
+import zipcoder.models.resources.*;
+
+public class Glass extends RefinedResource {
 }

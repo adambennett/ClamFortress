@@ -1,4 +1,7 @@
 package zipcoder.models.resources.natural;
 
-public class Copper {
+import zipcoder.interfaces.*;
+import zipcoder.models.resources.*;
+
+public class Copper extends NaturalResource implements Refinable {
 }

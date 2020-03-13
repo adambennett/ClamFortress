@@ -1,4 +1,7 @@
 package zipcoder.models.resources.natural;
 
-public class Sand {
+import zipcoder.interfaces.*;
+import zipcoder.models.resources.*;
+
+public class Sand extends NaturalResource implements Refinable, Harvestable {
 }

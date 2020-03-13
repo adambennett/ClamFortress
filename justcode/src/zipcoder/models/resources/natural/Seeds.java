@@ -1,4 +1,7 @@
 package zipcoder.models.resources.natural;
 
-public class Seeds {
+import zipcoder.interfaces.*;
+import zipcoder.models.resources.*;
+
+public class Seeds extends NaturalResource implements Harvestable {
 }

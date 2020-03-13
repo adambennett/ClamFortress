@@ -1,4 +1,6 @@
 package zipcoder.models.resources.refined;
 
-public class Coin {
+import zipcoder.models.resources.*;
+
+public class Coin extends RefinedResource {
 }

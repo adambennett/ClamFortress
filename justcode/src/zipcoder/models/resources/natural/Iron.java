@@ -1,4 +1,7 @@
 package zipcoder.models.resources.natural;
 
-public class Iron {
+import zipcoder.interfaces.*;
+import zipcoder.models.resources.*;
+
+public class Iron extends NaturalResource implements Refinable {
 }

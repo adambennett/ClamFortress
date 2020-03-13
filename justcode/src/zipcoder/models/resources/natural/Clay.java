@@ -1,4 +1,7 @@
 package zipcoder.models.resources.natural;
 
-public class Clay {
+import zipcoder.interfaces.*;
+import zipcoder.models.resources.*;
+
+public class Clay extends NaturalResource implements Refinable {
 }

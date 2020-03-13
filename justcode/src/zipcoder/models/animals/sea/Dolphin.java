@@ -1,4 +1,6 @@
 package zipcoder.models.animals.sea;
 
-public class Dolphin {
+import zipcoder.models.animals.*;
+
+public class Dolphin extends Animal {
 }

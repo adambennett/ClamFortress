@@ -1,4 +1,6 @@
 package zipcoder.models.resources.refined;
 
-public class Art {
+import zipcoder.models.resources.*;
+
+public class Art extends RefinedResource {
 }

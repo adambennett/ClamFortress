@@ -1,4 +1,4 @@
 package zipcoder.game.regions;
 
-public class Desert {
+public class Desert extends Region {
 }

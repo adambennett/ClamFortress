@@ -1,4 +1,6 @@
 package zipcoder.models.resources.refined;
 
-public class Brick {
+import zipcoder.models.resources.*;
+
+public class Brick extends RefinedResource {
 }

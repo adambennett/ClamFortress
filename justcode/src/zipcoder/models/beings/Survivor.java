@@ -1,10 +1,10 @@
-package zipcoder.models;
+package zipcoder.models.beings;
 
 import zipcoder.enums.*;
 
 import java.util.*;
 
-public class Settler {
+public class Survivor {
     private Integer agility;
     private Integer strength;
     private Integer dexterity;
@@ -15,9 +15,9 @@ public class Settler {
     private String name;
     private Gender gender;
     private Race race;
-    private Map<Settler, ArrayList<Relation>> relations;
+    private Map<Survivor, ArrayList<Relation>> relations;
 
-    public Settler(Integer agility, Integer strength, Integer dexterity, Integer magic, Integer engineering, Integer injury, Integer age, String name, Gender gender, Race race, Map<Settler, ArrayList<Relation>> relations) {
+    public Survivor(Integer agility, Integer strength, Integer dexterity, Integer magic, Integer engineering, Integer injury, Integer age, String name, Gender gender, Race race, Map<Survivor, ArrayList<Relation>> relations) {
         this.agility = agility;
         this.strength = strength;
         this.dexterity = dexterity;
@@ -31,11 +31,11 @@ public class Settler {
         this.relations = relations;
     }
 
-    public void putRelation(Settler s, Relation r) {
+    public void putRelation(Survivor s, Relation r) {
         // put new relation in map @ s
     }
 
-    public void getRelations(Settler s) {
+    public void getRelations(Survivor s) {
         this.relations.get(s);
     }
 

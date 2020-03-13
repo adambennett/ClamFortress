@@ -1,4 +1,4 @@
 package zipcoder.game.regions;
 
-public class Sea {
+public class Sea extends Region {
 }

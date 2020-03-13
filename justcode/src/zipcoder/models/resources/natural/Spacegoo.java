@@ -1,4 +1,7 @@
 package zipcoder.models.resources.natural;
 
-public class Spacegoo {
+import zipcoder.interfaces.*;
+import zipcoder.models.resources.*;
+
+public class Spacegoo extends NaturalResource implements Dangerous, Harvestable {
 }

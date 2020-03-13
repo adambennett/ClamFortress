@@ -1,4 +1,6 @@
 package zipcoder.models.resources.refined.medical;
 
-public class MedicalSupply {
+import zipcoder.models.resources.*;
+
+public class MedicalSupply extends RefinedResource {
 }

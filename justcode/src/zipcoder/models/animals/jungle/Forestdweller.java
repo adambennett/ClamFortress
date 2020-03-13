@@ -1,4 +1,6 @@
 package zipcoder.models.animals.jungle;
 
-public class Forestdweller {
+import zipcoder.models.animals.*;
+
+public class Forestdweller extends Animal {
 }

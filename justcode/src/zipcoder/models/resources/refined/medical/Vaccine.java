@@ -1,4 +1,6 @@
 package zipcoder.models.resources.refined.medical;
 
-public class Vaccine {
+import zipcoder.models.resources.*;
+
+public class Vaccine extends RefinedResource {
 }

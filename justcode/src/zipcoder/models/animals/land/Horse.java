@@ -1,4 +1,6 @@
 package zipcoder.models.animals.land;
 
-public class Horse {
+import zipcoder.models.animals.*;
+
+public class Horse extends Animal {
 }

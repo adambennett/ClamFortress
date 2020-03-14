@@ -6,10 +6,8 @@ import clamFortress.models.resources.refined.Stone;
 
 public class Rock extends NaturalResource implements Refinable, Mineable {
 
-    Stone stone =  new Stone();
-
     public Rock(){
-        this.refined = stone;
+        this.refined = new Stone();
     }
 
     @Override

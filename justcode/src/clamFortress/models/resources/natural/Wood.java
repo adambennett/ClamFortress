@@ -6,10 +6,8 @@ import clamFortress.models.resources.refined.Lumber;
 
 public class Wood extends NaturalResource implements Refinable, Harvestable {
 
-    Lumber lumber = new Lumber();
-
     public Wood(){
-        this.refined = lumber;
+        this.refined = new Lumber();
     }
 }
 

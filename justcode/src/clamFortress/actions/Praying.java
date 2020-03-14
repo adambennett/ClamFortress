@@ -13,4 +13,6 @@ public class Praying extends AbstractGameAction {
     public void update() {
         // do building logic
     }
+
+
 }

@@ -4,28 +4,28 @@ import clamFortress.enums.*;
 
 import java.util.*;
 
-public abstract class Survivor {
+public  class Survivor {
     private Integer agility;
     private Integer strength;
     private Integer dexterity;
     private Integer intelligence;
     private Integer magic;
     private Integer engineering;
-    private Integer injury;
+    private Integer healthPoints;
     private Integer age;
     private String name;
     private Gender gender;
     private Race race;
     private Map<Survivor, ArrayList<Relation>> relations;
 
-    public Survivor(Integer agility, Integer strength, Integer dexterity, Integer intelligence, Integer magic, Integer engineering, Integer injury, Integer age, String name, Gender gender, Race race, Map<Survivor, ArrayList<Relation>> relations) {
+    public Survivor(Integer agility, Integer strength, Integer dexterity, Integer intelligence, Integer magic, Integer engineering, Integer healthPoints, Integer age, String name, Gender gender, Race race, Map<Survivor, ArrayList<Relation>> relations) {
         this.agility = agility;
         this.strength = strength;
         this.dexterity = dexterity;
         this.intelligence = intelligence;
         this.magic = magic;
         this.engineering = engineering;
-        this.injury = injury;
+        this.healthPoints = healthPoints;
         this.age = age;
         this.name = name;
         this.gender = gender;
@@ -80,9 +80,9 @@ public abstract class Survivor {
 
     public void setEngineering(Integer engineering) { this.engineering = engineering; }
 
-    public Integer getInjury() { return injury; }
+    public Integer getHealthPoints() { return healthPoints; }
 
-    public void setInjury(Integer injury) { this.injury = injury; }
+    public void setHealthPoints(Integer healthPoints) { this.healthPoints = healthPoints; }
 
     public Integer getAge() { return age; }
 

@@ -9,9 +9,10 @@ public class SurvivorBuilder {
     private Integer agility;
     private Integer strength;
     private Integer dexterity;
+    private Integer intelligence;
     private Integer magic;
     private Integer engineering;
-    private Integer injury;
+    private Integer healthPoints;
     private Integer age;
     private String name;
     private Gender gender;
@@ -33,6 +34,11 @@ public class SurvivorBuilder {
         return this;
     }
 
+    public SurvivorBuilder setIntelligence(Integer intelligence){
+        this.intelligence = intelligence;
+        return this;
+    }
+
     public SurvivorBuilder setMagic(Integer magic) {
         this.magic = magic;
         return this;
@@ -43,8 +49,8 @@ public class SurvivorBuilder {
         return this;
     }
 
-    public SurvivorBuilder setInjury(Integer injury) {
-        this.injury = injury;
+    public SurvivorBuilder setHealthPoints(Integer healthPoints) {
+        this.healthPoints = healthPoints;
         return this;
     }
 
@@ -74,6 +80,7 @@ public class SurvivorBuilder {
     }
 
     public Survivor createSurvivor() {
-        return new Survivor(agility, strength, dexterity, intelligence, magic, engineering, injury, age, name, gender, race, relations);
+
+        return new Survivor(agility, strength, dexterity, intelligence, magic, engineering, healthPoints, age, name, gender, race, relations);
     }
 }

@@ -8,17 +8,17 @@ import clamFortress.models.tools.medical.HealingTool;
 import java.util.Map;
 
 public class Board {
-   static Integer numberOfTreesOnBoard;
-   static Integer mineableStoneOnBoard;
-   static Integer huntableAnimalsOnBoard;
-   static Integer colectableClayOnBoard;
-   static Map<Flowers,Integer> flowersOnBoard;
-   static Integer mineableCopperOreOnBoard;
-   static Integer mineableIronOreOnBoard;
-   static Map<Gems,Integer> mineableGemsOnBoard;
-   static Integer fishableFishOnBoard;
-   static Map<Animal,Integer> animalsInRegionOnBoard;
-   static Integer healingItemsOnBoard;
+  private static Integer numberOfTreesOnBoard;
+  private static Integer mineableStoneOnBoard;
+  private static Integer huntableAnimalsOnBoard;
+  private static Integer colectableClayOnBoard;
+  private static Map<Flowers,Integer> flowersOnBoard;
+  private static Integer mineableCopperOreOnBoard;
+  private static Integer mineableIronOreOnBoard;
+  private static Map<Gems,Integer> mineableGemsOnBoard;
+  private static Integer fishableFishOnBoard;
+  private static Map<Animal,Integer> animalsInRegionOnBoard;
+  private static Integer healingItemsOnBoard;
 
 
    static Integer villageMana;

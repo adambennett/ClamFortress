@@ -1,13 +1,16 @@
 package clamFortress.models;
 
 import clamFortress.models.animals.Animal;
+import clamFortress.models.resources.*;
 import clamFortress.models.resources.natural.Flowers;
 import clamFortress.models.resources.natural.Gems;
+
 import clamFortress.models.tools.medical.HealingTool;
 
 import java.util.Map;
 
 public class Board {
+
   private static Integer numberOfTreesOnBoard;
   private static Integer mineableStoneOnBoard;
   private static Integer huntableAnimalsOnBoard;

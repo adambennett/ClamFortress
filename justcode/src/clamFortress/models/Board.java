@@ -1,8 +1,10 @@
 package clamFortress.models;
 
 import clamFortress.models.animals.Animal;
+import clamFortress.models.resources.*;
 import clamFortress.models.resources.natural.Flowers;
 import clamFortress.models.resources.natural.Gems;
+
 import clamFortress.models.tools.medical.HealingTool;
 
 import java.util.Map;
@@ -19,4 +21,6 @@ public class Board {
    static Integer fishableFishOnBoard;
    static Map<Animal,Integer> animalsInRegionOnBoard;
    static Integer healingItemsOnBoard;
+
+
 }

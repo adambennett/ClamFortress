@@ -47,6 +47,7 @@ public abstract class AbstractGameAction {
     public static enum ActionType {
         BUILDING,
         DEFENDING,
+        DISCOVER,
         ENGINEERING,
         FISHING,
         FORAGING,

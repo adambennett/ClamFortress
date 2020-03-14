@@ -1,4 +1,4 @@
 package clamFortress.game.regions;
 
-public class Sea {
+public class Sea extends AbstractRegion  {
 }

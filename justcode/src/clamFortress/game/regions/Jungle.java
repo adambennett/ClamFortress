@@ -1,4 +1,4 @@
 package clamFortress.game.regions;
 
-public class Jungle {
+public class Jungle extends AbstractRegion  {
 }

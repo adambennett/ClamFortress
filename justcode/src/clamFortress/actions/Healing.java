@@ -5,8 +5,9 @@ import clamFortress.models.beings.*;
 
 public class Healing extends AbstractGameAction {
 
-    public Healing(Survivor source, int amount) {
-        this.setValues(source, amount);
+
+    public Healing(Survivor source,Survivor target ,int amount) {
+        this.setValues(source,target, amount);
         this.actionType = ActionType.HEALING;
     }
 
@@ -15,10 +16,10 @@ public class Healing extends AbstractGameAction {
         // do building logic
     }
 
-    public static void healSurvivor(Survivor toBeHealed, Survivor healer){
+    public void healSurvivor( Survivor healer,Survivor toBeHealed){
         Integer healAmount = 10;
 
-        if(healer.getIntelligence() > 7/*placeholder number*/){
+        if(healer.getIntelligence() >= 7/*placeholder number*/){
             healAmount+=10;
         }
         if(Board.getHealingItemsOnBoard() > 0){

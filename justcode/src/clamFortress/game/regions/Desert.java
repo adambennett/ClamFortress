@@ -1,4 +1,4 @@
 package clamFortress.game.regions;
 
-public class Desert {
+public class Desert extends AbstractRegion  {
 }

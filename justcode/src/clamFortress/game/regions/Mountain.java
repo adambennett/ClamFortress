@@ -1,4 +1,4 @@
 package clamFortress.game.regions;
 
-public class Mountain {
+public class Mountain extends AbstractRegion  {
 }

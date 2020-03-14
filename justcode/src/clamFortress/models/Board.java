@@ -1,12 +1,10 @@
 package clamFortress.models;
 
-import clamFortress.actions.Healing;
 import clamFortress.models.animals.Animal;
 import clamFortress.models.resources.natural.Flowers;
 import clamFortress.models.resources.natural.Gems;
-import clamFortress.models.tools.medical.healingTool;
+import clamFortress.models.tools.medical.HealingTool;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
@@ -20,5 +18,5 @@ public class Board {
     Map<Gems,Integer> mineableGems;
     Integer fishableFish;
     Map<Animal,Integer> animalsInRegion;
-    Map<healingTool, Integer> healingItems;
+    Map<HealingTool, Integer> healingItems;
 }

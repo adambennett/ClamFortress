@@ -1,4 +1,4 @@
 package clamFortress.game.regions;
 
-public class City {
+public class City extends AbstractRegion {
 }

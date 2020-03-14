@@ -1,4 +1,4 @@
 package clamFortress.game.regions;
 
-public class Grasslands {
+public class Grasslands extends AbstractRegion  {
 }

@@ -15,7 +15,7 @@ public class NaturalResourceTest {
     public void getRefinedWood() {
         Wood wood = new Wood();
         Lumber expected = new Lumber();
-        RefinedResource actual =  wood.getRefined();
+        Lumber actual = (Lumber) wood.getRefined();
 
         Assert.assertEquals(expected,actual);
 
@@ -25,7 +25,7 @@ public class NaturalResourceTest {
     public void getRefinedStone() {
         Rock rock = new Rock();
         Stone expected = new Stone();
-        RefinedResource actual =  rock.getRefined();
+        Stone actual = rock.getRefined();
 
         Assert.assertEquals(expected,actual);
 

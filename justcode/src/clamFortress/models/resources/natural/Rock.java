@@ -11,4 +11,9 @@ public class Rock extends NaturalResource implements Refinable, Mineable {
     public Rock(){
         this.refined = stone;
     }
+
+    @Override
+    public Stone getRefined() {
+        return (Stone) this.refined;
+    }
 }

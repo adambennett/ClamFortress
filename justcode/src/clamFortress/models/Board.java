@@ -18,5 +18,93 @@ public class Board {
    static Map<Gems,Integer> mineableGemsOnBoard;
    static Integer fishableFishOnBoard;
    static Map<Animal,Integer> animalsInRegionOnBoard;
-   static Map<HealingTool, Integer> healingItemsOnBoard;
+   static Integer healingItemsOnBoard;
+
+   public static Integer getNumberOfTreesOnBoard() {
+      return numberOfTreesOnBoard;
+   }
+
+   public static void setNumberOfTreesOnBoard(Integer numberOfTreesOnBoard) {
+      Board.numberOfTreesOnBoard = numberOfTreesOnBoard;
+   }
+
+   public static Integer getMineableStoneOnBoard() {
+      return mineableStoneOnBoard;
+   }
+
+   public static void setMineableStoneOnBoard(Integer mineableStoneOnBoard) {
+      Board.mineableStoneOnBoard = mineableStoneOnBoard;
+   }
+
+   public static Integer getHuntableAnimalsOnBoard() {
+      return huntableAnimalsOnBoard;
+   }
+
+   public static void setHuntableAnimalsOnBoard(Integer huntableAnimalsOnBoard) {
+      Board.huntableAnimalsOnBoard = huntableAnimalsOnBoard;
+   }
+
+   public static Integer getColectableClayOnBoard() {
+      return colectableClayOnBoard;
+   }
+
+   public static void setColectableClayOnBoard(Integer colectableClayOnBoard) {
+      Board.colectableClayOnBoard = colectableClayOnBoard;
+   }
+
+   public static Map<Flowers, Integer> getFlowersOnBoard() {
+      return flowersOnBoard;
+   }
+
+   public static void setFlowersOnBoard(Map<Flowers, Integer> flowersOnBoard) {
+      Board.flowersOnBoard = flowersOnBoard;
+   }
+
+   public static Integer getMineableCopperOreOnBoard() {
+      return mineableCopperOreOnBoard;
+   }
+
+   public static void setMineableCopperOreOnBoard(Integer mineableCopperOreOnBoard) {
+      Board.mineableCopperOreOnBoard = mineableCopperOreOnBoard;
+   }
+
+   public static Integer getMineableIronOreOnBoard() {
+      return mineableIronOreOnBoard;
+   }
+
+   public static void setMineableIronOreOnBoard(Integer mineableIronOreOnBoard) {
+      Board.mineableIronOreOnBoard = mineableIronOreOnBoard;
+   }
+
+   public static Map<Gems, Integer> getMineableGemsOnBoard() {
+      return mineableGemsOnBoard;
+   }
+
+   public static void setMineableGemsOnBoard(Map<Gems, Integer> mineableGemsOnBoard) {
+      Board.mineableGemsOnBoard = mineableGemsOnBoard;
+   }
+
+   public static Integer getFishableFishOnBoard() {
+      return fishableFishOnBoard;
+   }
+
+   public static void setFishableFishOnBoard(Integer fishableFishOnBoard) {
+      Board.fishableFishOnBoard = fishableFishOnBoard;
+   }
+
+   public static Map<Animal, Integer> getAnimalsInRegionOnBoard() {
+      return animalsInRegionOnBoard;
+   }
+
+   public static void setAnimalsInRegionOnBoard(Map<Animal, Integer> animalsInRegionOnBoard) {
+      Board.animalsInRegionOnBoard = animalsInRegionOnBoard;
+   }
+
+   public static Integer getHealingItemsOnBoard() {
+      return healingItemsOnBoard;
+   }
+
+   public static void setHealingItemsOnBoard(Integer healingItemsOnBoard) {
+      Board.healingItemsOnBoard = healingItemsOnBoard;
+   }
 }

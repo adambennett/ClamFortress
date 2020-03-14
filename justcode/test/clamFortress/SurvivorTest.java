@@ -18,7 +18,7 @@ public class SurvivorTest {
                     .setDexterity(4)
                     .setMagic(4)
                     .setEngineering(4)
-                    .setInjury(4)
+                    .setHealthPoints(4)
                     .setAge(4)
                     .setName("tim")
                     .setGender(Gender.MALE)

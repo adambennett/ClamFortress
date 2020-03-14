@@ -20,6 +20,9 @@ public class Board {
    static Map<Animal,Integer> animalsInRegionOnBoard;
    static Integer healingItemsOnBoard;
 
+
+   static Integer villageMana;
+
    public static Integer getNumberOfTreesOnBoard() {
       return numberOfTreesOnBoard;
    }
@@ -107,4 +110,9 @@ public class Board {
    public static void setHealingItemsOnBoard(Integer healingItemsOnBoard) {
       Board.healingItemsOnBoard = healingItemsOnBoard;
    }
+
+   public static Integer getVillageMana() { return villageMana; }
+
+   public static void setVillageMana(Integer villageMana) { Board.villageMana = villageMana; }
+
 }

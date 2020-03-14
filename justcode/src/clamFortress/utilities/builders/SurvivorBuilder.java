@@ -1,4 +1,4 @@
-package clamFortress.models.builders;
+package clamFortress.utilities.builders;
 
 import clamFortress.enums.*;
 import clamFortress.models.beings.*;

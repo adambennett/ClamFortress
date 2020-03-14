@@ -4,7 +4,7 @@ import clamFortress.enums.Gender;
 import clamFortress.enums.Race;
 import clamFortress.models.Board;
 import clamFortress.models.beings.Survivor;
-import clamFortress.models.builders.SurvivorBuilder;
+import clamFortress.utilities.builders.SurvivorBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -52,14 +52,14 @@ public class HealingTest {
             .setRace(Race.CLAMAN)
             .createSurvivor();
 
-Healing healing = new Healing(healer,toBeHealed,4);
+    Healing healing = new Healing(healer,toBeHealed,4);
     @Test
     public void healSurvivorHealerLowInt() {
         Board.setHealingItemsOnBoard(0);
-    healing.healSurvivor(healer,toBeHealed);
+        healing.update();
 
-    Integer expected = 50;
-    Integer actual = toBeHealed.getHealthPoints();
+        Integer expected = 50;
+        Integer actual = toBeHealed.getHealthPoints();
 
         Assert.assertEquals(expected,actual);
     }
@@ -67,7 +67,7 @@ Healing healing = new Healing(healer,toBeHealed,4);
     @Test
     public void healSurvivorHealerHighInt() {
         Board.setHealingItemsOnBoard(0);
-        healing.healSurvivor(goodHealer,toBeHealed);
+        healing.update();
 
         Integer expected = 60;
         Integer actual = toBeHealed.getHealthPoints();
@@ -77,7 +77,7 @@ Healing healing = new Healing(healer,toBeHealed,4);
     @Test
     public void healSurvivorHealerHighIntWithHealingItems() {
         Board.setHealingItemsOnBoard(1);
-        healing.healSurvivor(goodHealer,toBeHealed);
+        healing.update();
 
         Integer expected = 70;
         Integer actual = toBeHealed.getHealthPoints();
@@ -88,7 +88,7 @@ Healing healing = new Healing(healer,toBeHealed,4);
     @Test
     public void healSurvivorHealerHighIntWithHealingItemsRemoveItems() {
         Board.setHealingItemsOnBoard(1);
-        healing.healSurvivor(goodHealer,toBeHealed);
+        healing.update();
 
         Integer expected = 0;
         Integer actual = Board.getHealingItemsOnBoard();

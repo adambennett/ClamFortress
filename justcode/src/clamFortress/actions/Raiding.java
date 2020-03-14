@@ -12,6 +12,5 @@ public class Raiding extends AbstractGameAction {
     @Override
     public void update() {
         // do building logic
-        //asdasdad
     }
 }

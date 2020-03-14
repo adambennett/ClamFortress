@@ -1,4 +1,4 @@
 package clamFortress.models.tools.medical;
 
-public class Bandage extends healingTool {
+public class Bandage extends HealingTool {
 }

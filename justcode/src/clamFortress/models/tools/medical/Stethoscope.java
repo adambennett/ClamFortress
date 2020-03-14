@@ -1,4 +1,4 @@
 package clamFortress.models.tools.medical;
 
-public class Stethoscope {
+public class Stethoscope extends healingTool {
 }

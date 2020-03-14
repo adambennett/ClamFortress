@@ -13,4 +13,12 @@ public class Healing extends AbstractGameAction {
     public void update() {
         // do building logic
     }
+
+    public void healSurvivor(Survivor toBeHealed, Survivor healer){
+        Integer healAmount = 10;
+        if(healer.getIntelligence() > 7/*placeholder number*/){
+            healAmount+=10;
+        }
+
+    }
 }

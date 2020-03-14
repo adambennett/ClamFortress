@@ -74,6 +74,6 @@ public class SurvivorBuilder {
     }
 
     public Survivor createSurvivor() {
-        return new Survivor(agility, strength, dexterity, magic, engineering, injury, age, name, gender, race, relations);
+        return new Survivor(agility, strength, dexterity, intelligence, magic, engineering, injury, age, name, gender, race, relations);
     }
 }

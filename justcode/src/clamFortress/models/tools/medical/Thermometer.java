@@ -1,4 +1,4 @@
 package clamFortress.models.tools.medical;
 
-public class Thermometer {
+public class Thermometer extends healingTool {
 }

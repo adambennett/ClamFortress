@@ -8,6 +8,7 @@ public abstract class Survivor {
     private Integer agility;
     private Integer strength;
     private Integer dexterity;
+    private Integer intelligence;
     private Integer magic;
     private Integer engineering;
     private Integer injury;
@@ -17,10 +18,11 @@ public abstract class Survivor {
     private Race race;
     private Map<Survivor, ArrayList<Relation>> relations;
 
-    public Survivor(Integer agility, Integer strength, Integer dexterity, Integer magic, Integer engineering, Integer injury, Integer age, String name, Gender gender, Race race, Map<Survivor, ArrayList<Relation>> relations) {
+    public Survivor(Integer agility, Integer strength, Integer dexterity, Integer intelligence, Integer magic, Integer engineering, Integer injury, Integer age, String name, Gender gender, Race race, Map<Survivor, ArrayList<Relation>> relations) {
         this.agility = agility;
         this.strength = strength;
         this.dexterity = dexterity;
+        this.intelligence = intelligence;
         this.magic = magic;
         this.engineering = engineering;
         this.injury = injury;
@@ -66,59 +68,35 @@ public abstract class Survivor {
         this.dexterity = dexterity;
     }
 
-    public Integer getMagic() {
-        return magic;
-    }
+    public void setIntelligence(Integer intelligence){ this.intelligence = intelligence; }
 
-    public void setMagic(Integer magic) {
-        this.magic = magic;
-    }
+    public Integer getIntelligence(){ return this.intelligence;}
 
-    public Integer getEngineering() {
-        return engineering;
-    }
+    public Integer getMagic() { return magic; }
 
-    public void setEngineering(Integer engineering) {
-        this.engineering = engineering;
-    }
+    public void setMagic(Integer magic) { this.magic = magic; }
 
-    public Integer getInjury() {
-        return injury;
-    }
+    public Integer getEngineering() { return engineering; }
 
-    public void setInjury(Integer injury) {
-        this.injury = injury;
-    }
+    public void setEngineering(Integer engineering) { this.engineering = engineering; }
 
-    public Integer getAge() {
-        return age;
-    }
+    public Integer getInjury() { return injury; }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+    public void setInjury(Integer injury) { this.injury = injury; }
 
-    public String getName() {
-        return name;
-    }
+    public Integer getAge() { return age; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setAge(Integer age) { this.age = age; }
 
-    public Gender getGender() {
-        return gender;
-    }
+    public String getName() { return name; }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public Race getRace() {
-        return race;
-    }
+    public Gender getGender() { return gender; }
 
-    public void setRace(Race race) {
-        this.race = race;
-    }
+    public void setGender(Gender gender) { this.gender = gender; }
+
+    public Race getRace() { return race; }
+
+    public void setRace(Race race) { this.race = race; }
 }

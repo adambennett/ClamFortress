@@ -89,7 +89,7 @@ public class PriorityManager {
             rolls.put(getRoll(this.findNether), new Netherworld());
             rolls.put(getRoll(this.findSea), new Sea());
             AbstractRegion regionToDiscover = rolls.get(rolls.lastEntry().getKey());
-            actions.add(new Discover(regionToDiscover));
+            actions.add(new Scouting(regionToDiscover));
         }
 
 

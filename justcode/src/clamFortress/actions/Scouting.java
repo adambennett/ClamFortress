@@ -1,16 +1,20 @@
 package clamFortress.actions;
 
+import clamFortress.game.regions.*;
 import clamFortress.models.beings.*;
 
 public class Scouting extends AbstractGameAction {
 
-    public Scouting(Survivor source, int amount) {
-        this.setValues(source, amount);
-        this.actionType = ActionType.SCOUTING;
+    private AbstractRegion region;
+
+    public Scouting(AbstractRegion region) {
+        this.actionType = ActionType.DISCOVER;
+        this.region = region;
     }
 
     @Override
     public void update() {
-        // do building logic
+        // Board.discover(this.region);
+        // this.isDone = true;
     }
 }

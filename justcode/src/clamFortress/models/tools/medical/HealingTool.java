@@ -1,4 +1,4 @@
 package clamFortress.models.tools.medical;
 
-public abstract class healingTool {
+public abstract class HealingTool {
 }

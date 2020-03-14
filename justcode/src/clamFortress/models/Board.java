@@ -22,12 +22,11 @@ public class Board {
   private static Integer fishableFishOnBoard;
   private static Map<Animal,Integer> animalsInRegionOnBoard;
   private static Integer healingItemsOnBoard;
-
-
-   static Integer villageMana;
+  private static Integer populationCap;
+  private static Integer villageMana;
 
    public static Integer getNumberOfTreesOnBoard() {
-      return numberOfTreesOnBoard;
+       return numberOfTreesOnBoard;
    }
 
    public static void setNumberOfTreesOnBoard(Integer numberOfTreesOnBoard) {
@@ -107,15 +106,27 @@ public class Board {
    }
 
    public static Integer getHealingItemsOnBoard() {
-      return healingItemsOnBoard;
+       return healingItemsOnBoard;
    }
 
    public static void setHealingItemsOnBoard(Integer healingItemsOnBoard) {
       Board.healingItemsOnBoard = healingItemsOnBoard;
    }
 
-   public static Integer getVillageMana() { return villageMana; }
+   public static Integer getVillageMana() {
+       return villageMana;
+   }
 
-   public static void setVillageMana(Integer villageMana) { Board.villageMana = villageMana; }
+   public static void setVillageMana(Integer villageMana) {
+       Board.villageMana = villageMana;
+   }
+
+    public static Integer getPopulationCap() {
+        return populationCap;
+    }
+
+    public static void setPopulationCap(Integer populationCap) {
+        Board.populationCap = populationCap;
+    }
 
 }

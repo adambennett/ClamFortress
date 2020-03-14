@@ -1,5 +1,6 @@
 package clamFortress.actions;
 
+import clamFortress.models.Board;
 import clamFortress.models.beings.*;
 
 public class Hunting extends AbstractGameAction {
@@ -11,6 +12,7 @@ public class Hunting extends AbstractGameAction {
 
     @Override
     public void update() {
-        // do building logic
+
+        Board.getAnimalsInRegionOnBoard();
     }
 }

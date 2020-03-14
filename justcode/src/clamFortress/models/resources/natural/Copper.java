@@ -6,9 +6,13 @@ import clamFortress.models.resources.refined.CopperIngot;
 
 public class Copper extends NaturalResource implements Refinable, Mineable {
 
-    CopperIngot ingot = new CopperIngot();
 
     public Copper(){
-        this.refined = ingot;
+        this.refined = new CopperIngot();
+    }
+
+    @Override
+    public CopperIngot getRefined() {
+        return (CopperIngot) this.refined;
     }
 }

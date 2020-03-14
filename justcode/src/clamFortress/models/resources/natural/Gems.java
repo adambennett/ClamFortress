@@ -6,9 +6,14 @@ import clamFortress.models.resources.refined.Jewelry;
 
 public class Gems extends NaturalResource implements Mineable {
 
-    Jewelry jewelry = new Jewelry();
 
     public Gems(){
-        this.refined = jewelry;
+        this.refined = new Jewelry();
+    }
+
+    @Override
+    public Jewelry getRefined() {
+        return (Jewelry) this.refined;
     }
 }
+

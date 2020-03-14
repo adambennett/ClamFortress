@@ -6,9 +6,13 @@ import clamFortress.models.resources.refined.IronIngot;
 
 public class Iron extends NaturalResource implements Refinable, Mineable {
 
-    IronIngot ingot = new IronIngot();
 
     public Iron(){
-        this.refined = ingot;
+        this.refined = new IronIngot();
+    }
+
+    @Override
+    public IronIngot getRefined() {
+        return (IronIngot) this.refined;
     }
 }

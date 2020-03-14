@@ -18,5 +18,5 @@ public class Board {
    static Map<Gems,Integer> mineableGemsOnBoard;
    static Integer fishableFishOnBoard;
    static Map<Animal,Integer> animalsInRegionOnBoard;
-   static Map<HealingTool, Integer> healingItemsOnBoard;
+   static Integer healingItemsOnBoard;
 }

@@ -18,6 +18,7 @@ public class GameStrings {
     private static String openingBlurb;
     private static String turnMenu;
     private static String customDifficulty;
+    private static String priorityMenu;
 
 
     private static String format(String s, String lenCheck, String endString) {
@@ -76,6 +77,8 @@ public class GameStrings {
                 "***---------------------------------------------------------***\n" +
                 "***   Choose any combination of custom difficulty options   ***\n" +
                 "***************************************************************\n";
+
+        priorityMenu = "";
 
         String orc = "???                     ***\n";
         String elf = orc;

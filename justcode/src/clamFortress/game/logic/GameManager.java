@@ -94,6 +94,9 @@ public class GameManager {
             calendar.add(Calendar.MINUTE, randMinutes);
             calendar.add(Calendar.SECOND, randSecs);
             calendar.add(Calendar.MILLISECOND, randMilli);
+            newDate = calendar.getTime();
+            diffMilli = Math.abs(newDate.getTime() - originalDate.getTime());
+            diff = TimeUnit.DAYS.convert(diffMilli, TimeUnit.MILLISECONDS);
             if (diff > maxDays) {
                 calendar.setTime(this.date);
             }
@@ -101,6 +104,7 @@ public class GameManager {
             diffMilli = Math.abs(newDate.getTime() - originalDate.getTime());
             diff = TimeUnit.DAYS.convert(diffMilli, TimeUnit.MILLISECONDS);
         }
+        this.date = newDate;
         return (int)diff;
     }
 

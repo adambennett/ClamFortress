@@ -3,7 +3,6 @@ package clamFortress.consoleIO;
 import clamFortress.actions.*;
 import clamFortress.enums.*;
 import clamFortress.game.logic.*;
-import clamFortress.models.beings.player.*;
 import clamFortress.utilities.persistence.*;
 
 import java.util.*;

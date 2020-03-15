@@ -7,5 +7,6 @@ public enum PromptMessage {
     LOGIN_MENU,
     RACE_MENU,
     TURN_MENU,
+    PRIORITY_MENU,
     BLURB
 }

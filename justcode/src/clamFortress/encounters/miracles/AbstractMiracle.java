@@ -1,4 +1,6 @@
 package clamFortress.encounters.miracles;
 
-public abstract class AbstractMiracle {
+import clamFortress.encounters.*;
+
+public abstract class AbstractMiracle extends AbstractEncounter {
 }

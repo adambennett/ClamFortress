@@ -1,4 +1,6 @@
 package clamFortress.encounters.disasters;
 
-public abstract class AbstractDisaster {
+import clamFortress.encounters.*;
+
+public abstract class AbstractDisaster extends AbstractEncounter {
 }

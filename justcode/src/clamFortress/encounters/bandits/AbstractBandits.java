@@ -1,4 +1,6 @@
 package clamFortress.encounters.bandits;
 
-public abstract class AbstractBandits {
+import clamFortress.encounters.*;
+
+public abstract class AbstractBandits extends AbstractEncounter {
 }

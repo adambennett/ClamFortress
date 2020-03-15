@@ -1,4 +1,6 @@
 package clamFortress.encounters.alien;
 
-public abstract class AbstractAliens {
+import clamFortress.encounters.*;
+
+public abstract class AbstractAliens extends AbstractEncounter {
 }

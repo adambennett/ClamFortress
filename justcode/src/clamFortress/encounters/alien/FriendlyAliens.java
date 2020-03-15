@@ -1,4 +1,8 @@
 package clamFortress.encounters.alien;
 
-public class FriendlyAliens {
+public class FriendlyAliens extends AbstractAliens {
+    @Override
+    public void runEncounter() {
+
+    }
 }

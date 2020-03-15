@@ -1,4 +1,6 @@
 package clamFortress.encounters.raids;
 
-public abstract class AbstractRaid {
+import clamFortress.encounters.*;
+
+public abstract class AbstractRaid extends AbstractEncounter {
 }

@@ -61,7 +61,7 @@ public class PriorityManager {
             // Desert
             // Sea
             // Mountains
-            // Icelands
+            // Tundra
             // City
             // Jungle
             // Netherworld
@@ -83,7 +83,7 @@ public class PriorityManager {
             rolls.put(getRoll(this.findCity), new City());
             rolls.put(getRoll(this.findDesert), new Desert());
             rolls.put(getRoll(this.findGrass), new Grasslands());
-            rolls.put(getRoll(this.findIce), new Icelands());
+            rolls.put(getRoll(this.findIce), new Tundra());
             rolls.put(getRoll(this.findJungle), new Jungle());
             rolls.put(getRoll(this.findMountain), new Mountain());
             rolls.put(getRoll(this.findNether), new Netherworld());

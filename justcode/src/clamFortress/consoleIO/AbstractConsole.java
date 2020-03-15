@@ -2,6 +2,7 @@ package clamFortress.consoleIO;
 
 import clamFortress.enums.*;
 import clamFortress.game.*;
+import clamFortress.game.logic.*;
 import clamFortress.utilities.*;
 import clamFortress.utilities.builders.*;
 
@@ -11,6 +12,7 @@ public abstract class AbstractConsole {
 
     protected static Game currentGame;
     protected static GameBuilder builder;
+    protected PriorityManager manager;
     protected Map<String, MenuCommands> consoleCommands;
 
     protected abstract void initializeCommands();
@@ -18,6 +20,7 @@ public abstract class AbstractConsole {
 
     public AbstractConsole() {
         consoleCommands = new HashMap<>();
+        manager = new PriorityManager(Race.HUMAN, 0);
         initializeCommands();
     }
 
@@ -66,7 +69,7 @@ public abstract class AbstractConsole {
     }
 
     public void printPrompt(PromptMessage message, boolean promptForInput) {
-        String promptString = GameStrings.getStringFromPromptType(message);
+        String promptString = GameStrings.getStringFromPromptType(message, manager);
         ConsoleServices.print(promptString);
         if (promptForInput) {
             getUserInput();

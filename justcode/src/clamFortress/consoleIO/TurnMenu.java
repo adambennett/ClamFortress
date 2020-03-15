@@ -36,4 +36,6 @@ public class TurnMenu extends AbstractConsole  {
                 printPrompt(PromptMessage.TURN_MENU, true);
         }
     }
+
+
 }

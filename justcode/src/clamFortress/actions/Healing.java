@@ -6,8 +6,8 @@ import clamFortress.models.beings.player.*;
 public class Healing extends AbstractGameAction {
 
 
-    public Healing(Survivor source, Survivor target , int amount) {
-        this.setValues(source,target, amount);
+    public Healing(Survivor source, Survivor target) {
+        this.setValues(source,target,0);
         this.actionType = ActionType.HEALING;
     }
 

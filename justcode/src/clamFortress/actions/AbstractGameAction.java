@@ -24,7 +24,7 @@ public abstract class AbstractGameAction {
         this.duration = 0.5F;
     }
 
-    protected void setValues(Survivor source, int amount) {
+    protected void  setValues(Survivor source, int amount) {
         this.source = source;
         this.amount = amount;
         this.duration = 0.5F;

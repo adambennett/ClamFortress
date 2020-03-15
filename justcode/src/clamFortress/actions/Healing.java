@@ -1,5 +1,6 @@
 package clamFortress.actions;
 
+import clamFortress.game.*;
 import clamFortress.models.Board;
 import clamFortress.models.beings.player.*;
 
@@ -8,7 +9,8 @@ import java.util.*;
 public class Healing extends AbstractGameAction {
 
 
-    public Healing(ArrayList<Survivor> population) {
+    public Healing(Game game) {
+        this.currentGame = game;
         this.actionType = ActionType.HEALING;
     }
 

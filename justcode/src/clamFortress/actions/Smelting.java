@@ -1,9 +1,10 @@
 package clamFortress.actions;
 
 import clamFortress.game.*;
-public class Masonry extends AbstractGameAction {
 
-    public Masonry(Game game) {
+public class Smelting extends AbstractGameAction {
+
+    public Smelting(Game game) {
         this.setValues(game);
         this.actionType = ActionType.MASONRY;
     }

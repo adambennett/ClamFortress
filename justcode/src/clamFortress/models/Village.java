@@ -113,15 +113,16 @@ public class Village {
     }
 
     public void addToPopulation(Survivor s) {
-
-        this.population.add(s);
-        this.strength += s.getStrength();
-        this.agility += s.getAgility();
-        this.intelligence += s.getIntelligence();
-        this.dexterity += s.getDexterity();
-        this.magic += s.getMagic();
-        this.engineering += s.getEngineering();
-        this.health += s.getHealthPoints();
+        if (population.size() < popCap) {
+            this.population.add(s);
+            this.strength += s.getStrength();
+            this.agility += s.getAgility();
+            this.intelligence += s.getIntelligence();
+            this.dexterity += s.getDexterity();
+            this.magic += s.getMagic();
+            this.engineering += s.getEngineering();
+            this.health += s.getHealthPoints();
+        }
     }
 
     public Boolean addBuilding(AbstractBuilding b) {
@@ -426,17 +427,13 @@ public class Village {
         this.engineeringAvg = engineering/population.size();
     }
 
-
     public void setStone(Integer stone) {
         this.stone = stone;
     }
 
-
     public void setWood(Integer wood) {
         this.wood = wood;
     }
-
-
 
     public Integer getWood() {
         return wood;
@@ -465,7 +462,6 @@ public class Village {
     public Integer getPopCap() {
         return popCap;
     }
-
 
     public void incWood() {
         incWood(1);
@@ -544,4 +540,7 @@ public class Village {
         this.popCap = amt;
     }
 
+    public ArrayList<AbstractBuilding> getBuildings() {
+        return buildings;
+    }
 }

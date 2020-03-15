@@ -12,7 +12,7 @@ public class CustomDifficultyMenu extends AbstractConsole  {
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {}
 
     public void printPromptCustomOptions() {
-        String promptString = GameStrings.getStringFromPromptType(PromptMessage.CUSTOM_DIFF_MENU, manager);
+        String promptString = GameStrings.getStringFromPromptType(PromptMessage.CUSTOM_DIFF_MENU, currentGame);
         ConsoleServices.print(promptString);
         getUserInputForCustomOptions();
     }

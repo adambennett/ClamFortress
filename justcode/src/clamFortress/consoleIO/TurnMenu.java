@@ -35,7 +35,8 @@ public class TurnMenu extends AbstractConsole  {
                 Database.score(1000);
                 printPrompt(PromptMessage.TURN_MENU, true);
             case CONTINUE:
-                new PriorityMenu().printPrompt(PromptMessage.PRIORITY_MENU, true);
+                PriorityMenu priorityMenu = new PriorityMenu();
+                priorityMenu.printPrompt(PromptMessage.PRIORITY_MENU, true);
         }
     }
 
@@ -46,7 +47,7 @@ public class TurnMenu extends AbstractConsole  {
     }
 
     private void heal() {
-        currentGame.actionManager.addToBottom(new Healing(currentGame.getVillage().getSurvivors()));
+        currentGame.actionManager.addToBottom(new Healing(currentGame));
 
         /*
         Survivor targetHealer = new Survivor();

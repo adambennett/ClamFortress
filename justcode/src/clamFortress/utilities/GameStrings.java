@@ -2,6 +2,7 @@ package clamFortress.utilities;
 
 import clamFortress.consoleIO.*;
 import clamFortress.enums.*;
+import clamFortress.game.*;
 import clamFortress.game.logic.*;
 import clamFortress.utilities.persistence.*;
 
@@ -29,7 +30,8 @@ public class GameStrings {
         return s;
     }
 
-    private static void loadStrings(PriorityManager manager) {
+    private static void loadStrings(Game game) {
+        priorityMenu = "";
         openingBlurb = "Blah blah help your guys survive and thrive... watch out for cLAmS";
 
 
@@ -78,8 +80,98 @@ public class GameStrings {
                 "***   Choose any combination of custom difficulty options   ***\n" +
                 "***************************************************************\n";
 
-        
+        String orc = "???                     ***\n";
+        String elf = orc;
+        String dwarf = orc;
+        String claman = orc;
+        String alien = orc;
+        boolean isOrcUnlocked = Database.getOrcsUnlocked();
+        boolean isElfUnlocked = Database.getElvesUnlocked();
+        boolean isDwarfUnlocked = Database.getDwarvesUnlocked();
+        boolean isClamanUnlocked = Database.getClamanUnlocked();
+        boolean isAlienUnlocked = Database.getAliensUnlocked();
+        if (isAlienUnlocked) { alien = "Alien                   ***\n"; }
+        if (isClamanUnlocked) { claman = "Claman                  ***\n"; }
+        if (isDwarfUnlocked) { dwarf = "Dwarf                   ***\n"; }
+        if (isElfUnlocked) { elf = "Elf                     ***\n"; }
+        if (isOrcUnlocked) { orc = "Orc                     ***\n"; }
+        chooseRace =
+                "**************************************************\n" +
+                "***             Choose Village Race            ***\n" +
+                "***--------------------------------------------***\n" +
+                "***                1 | Human                   ***\n" +
+                "***                2 | " + orc +
+                "***                3 | " + elf +
+                "***                4 | " + dwarf +
+                "***                5 | " + claman +
+                "***                6 | " + alien +
+                "***                7 | Random                  ***\n" +
+                "**************************************************\n";
 
+        chooseBiome =
+                "**************************************************\n" +
+                "***             Choose Starting Biome          ***\n" +
+                "***--------------------------------------------***\n" +
+                "***                1 | Grasslands (Default)    ***\n" +
+                "***                2 | Desert                  ***\n" +
+                "***                3 | Jungle                  ***\n" +
+                "***                4 | Mountain                ***\n" +
+                "***                5 | Sea                     ***\n" +
+                "***                6 | Tundra                  ***\n" +
+                "**************************************************\n";
+
+        String endString = "***";
+        String lenCheck = "************************************************************";
+        String otherlen = "*******************************";
+        String mana = "" + game.getVillage().getMana();
+        String faith = "" + game.getVillage().getFaith();
+        String coins = "" + game.getVillage().getCoins();
+        String stone = "" + game.getVillage().getStone();
+        String wood = "" + game.getVillage().getWood();
+        String population = "" + game.getVillage().getPopulation() + " / " + game.getVillage().getPopCap();
+        String turnNumber = "" + game.getGameManager().getTurnNumber();
+        String date = "***  " + game.getGameManager().getDateString() + " :: ";
+        String season = game.getGameManager().getSeason();
+        String fullDate = date + season;
+        String surroundings = "***                1 | Surrounding Region Report            ***\n";
+        if (AbstractConsole.getCurrentGame() != null && !AbstractConsole.getCurrentGame().getSurroundingCheckEnabled()) {
+            surroundings =          "***                1 | [DISABLED]                           ***\n";
+        }
+        mana = format(mana, otherlen, endString);
+        coins = format(coins, otherlen, endString);
+        stone = format(stone, otherlen, endString);
+        wood = format(wood, otherlen, endString);
+        population = format(population, otherlen, endString);
+        turnNumber = format(turnNumber, otherlen, endString);
+        fullDate = format(fullDate, lenCheck, endString);
+        faith = format(faith, otherlen, endString);
+        turnMenu =
+                "***************************************************************\n" +
+                    fullDate +
+                "***           Turn Number :: " + turnNumber +
+                "***            Population :: " + population +
+                "***                  Wood :: " + wood +
+                "***                 Stone :: " + stone +
+                "***                 Coins :: " + coins +
+                "***                 Faith :: " + faith +
+                "***                  Mana :: " + mana +
+                "***---------------------------------------------------------***\n" +
+                surroundings +
+                "***                2 | Village Resources                    ***\n" +
+                "***                3 | Village Inventory                    ***\n" +
+                "***                4 | Buildings                            ***\n" +
+                "***                5 | Inspect Villagers                    ***\n" +
+                "***                6 | Train (Random Stat - 200 Coins)      ***\n" +
+                "***---------------------------------------------------------***\n" +
+                "***                0 | Continue to Priorities Menu          ***\n" +
+                "***---------------------------------------------------------***\n" +
+                "***             Skip | Skip turn                            ***\n" +
+                "***              End | End Game                             ***\n" +
+                "***             Exit | Save & Quit                          ***\n" +
+                "***************************************************************\n";
+    }
+    
+    public static void loadPriorityMenu(PriorityManager manager) {        
         Integer foodPriority1 = manager.getFood1();
         Integer foodPriority2 = manager.getFood2();
         Integer foodPriority3 = manager.getFood3();
@@ -126,126 +218,37 @@ public class GameStrings {
         String points = format("(" + manager.getPointsRemaining() + ")" , lenB, ending);
         priorityMenu =
                 "***************************************************************\n" +
-                "***                    Priorities " + points +
-                "***---------------------------------------------------------***\n" +
-                "***             1 | DYNAMIC FOOD OPTION1 <" + food1 +
-                "***             2 | DYNAMIC FOOD OPTION2 <" + food2 +
-                "***             3 | DYNAMIC FOOD OPTION3 <" + food3 +
-                "***             4 | Pray                 <" + pray +
-                "***             5 | Forage               <" + forage +
-                "***             6 | Woodcutting          <" + woody +
-                "***             7 | Stone Picking        <" + stoney +
-                "***             8 | Mining               <" + mine +
-                "***             9 | Defending            <" + defend +
-                "***            10 | Harvesting           <" + harvest +
-                "***            11 | Forging              <" + forge +
-                "***            12 | Healing              <" + heal +
-                "***            13 | Scouting             <" + scout +
-                "***            14 | Planting             <" + plant +
-                "***            15 | Smithing             <" + smith +
-                "***            16 | Smelting             <" + smelt +
-                "***            17 | Raiding              <" + raid +
-                "***            18 | Engineering          <" + engineer +
-                "***            19 | Building             <" + build +
-                "***            20 | Trading              <" + trade +
-                "***---------------------------------------------------------***\n" +
-                "***   Choose any combination of options to put points into  ***\n" +
-                "***************************************************************\n";
+                        "***                    Priorities " + points +
+                        "***---------------------------------------------------------***\n" +
+                        "***             1 | DYNAMIC FOOD OPTION1 <" + food1 +
+                        "***             2 | DYNAMIC FOOD OPTION2 <" + food2 +
+                        "***             3 | DYNAMIC FOOD OPTION3 <" + food3 +
+                        "***             4 | Pray                 <" + pray +
+                        "***             5 | Forage               <" + forage +
+                        "***             6 | Woodcutting          <" + woody +
+                        "***             7 | Stone Picking        <" + stoney +
+                        "***             8 | Mining               <" + mine +
+                        "***             9 | Defending            <" + defend +
+                        "***            10 | Harvesting           <" + harvest +
+                        "***            11 | Forging              <" + forge +
+                        "***            12 | Healing              <" + heal +
+                        "***            13 | Scouting             <" + scout +
+                        "***            14 | Planting             <" + plant +
+                        "***            15 | Smithing             <" + smith +
+                        "***            16 | Smelting             <" + smelt +
+                        "***            17 | Raiding              <" + raid +
+                        "***            18 | Engineering          <" + engineer +
+                        "***            19 | Building             <" + build +
+                        "***            20 | Trading              <" + trade +
+                        "***---------------------------------------------------------***\n" +
+                        "***   Choose any combination of options to put points into  ***\n" +
+                        "***************************************************************\n";
 
-        String orc = "???                     ***\n";
-        String elf = orc;
-        String dwarf = orc;
-        String claman = orc;
-        String alien = orc;
-        boolean isOrcUnlocked = Database.getOrcsUnlocked();
-        boolean isElfUnlocked = Database.getElvesUnlocked();
-        boolean isDwarfUnlocked = Database.getDwarvesUnlocked();
-        boolean isClamanUnlocked = Database.getClamanUnlocked();
-        boolean isAlienUnlocked = Database.getAliensUnlocked();
-        if (isAlienUnlocked) { alien = "Alien                   ***\n"; }
-        if (isClamanUnlocked) { claman = "Claman                  ***\n"; }
-        if (isDwarfUnlocked) { dwarf = "Dwarf                   ***\n"; }
-        if (isElfUnlocked) { elf = "Elf                     ***\n"; }
-        if (isOrcUnlocked) { orc = "Orc                     ***\n"; }
-        chooseRace =
-                "**************************************************\n" +
-                "***             Choose Village Race            ***\n" +
-                "***--------------------------------------------***\n" +
-                "***                1 | Human                   ***\n" +
-                "***                2 | " + orc +
-                "***                3 | " + elf +
-                "***                4 | " + dwarf +
-                "***                5 | " + claman +
-                "***                6 | " + alien +
-                "***                7 | Random                  ***\n" +
-                "**************************************************\n";
-
-        chooseBiome =
-                "**************************************************\n" +
-                "***             Choose Starting Biome          ***\n" +
-                "***--------------------------------------------***\n" +
-                "***                1 | Grasslands (Default)    ***\n" +
-                "***                2 | Desert                  ***\n" +
-                "***                3 | Jungle                  ***\n" +
-                "***                4 | Mountain                ***\n" +
-                "***                5 | Sea                     ***\n" +
-                "***                6 | Tundra                  ***\n" +
-                "**************************************************\n";
-
-        GameManager game = GameManager.getInstance();
-        String endString = "***";
-        String lenCheck = "************************************************************";
-        String otherlen = "*******************************";
-        String mana = "" + game.getMana();
-        String faith = "" + game.getFaith();
-        String coins = "" + game.getCoins();
-        String stone = "" + game.getStone();
-        String wood = "" + game.getWood();
-        String population = "" + game.getPopulation() + " / " + game.getPopCap();
-        String turnNumber = "" + game.getTurnNumber();
-        String date = "***  " + game.getDateString() + " :: ";
-        String season = game.getSeason();
-        String fullDate = date + season;
-        String surroundings = "***                1 | Surrounding Region Report            ***\n";
-        if (AbstractConsole.getCurrentGame() != null && !AbstractConsole.getCurrentGame().getSurroundingCheckEnabled()) {
-            surroundings =          "***                1 | [DISABLED]                           ***\n";
-        }
-        mana = format(mana, otherlen, endString);
-        coins = format(coins, otherlen, endString);
-        stone = format(stone, otherlen, endString);
-        wood = format(wood, otherlen, endString);
-        population = format(population, otherlen, endString);
-        turnNumber = format(turnNumber, otherlen, endString);
-        fullDate = format(fullDate, lenCheck, endString);
-        faith = format(faith, otherlen, endString);
-        turnMenu =
-                "***************************************************************\n" +
-                    fullDate +
-                "***           Turn Number :: " + turnNumber +
-                "***            Population :: " + population +
-                "***                  Wood :: " + wood +
-                "***                 Stone :: " + stone +
-                "***                 Coins :: " + coins +
-                "***                 Faith :: " + faith +
-                "***                  Mana :: " + mana +
-                "***---------------------------------------------------------***\n" +
-                surroundings +
-                "***                2 | Village Resources                    ***\n" +
-                "***                3 | Village Inventory                    ***\n" +
-                "***                4 | Buildings                            ***\n" +
-                "***                5 | Inspect Villagers                    ***\n" +
-                "***                6 | Train (Random Stat - 200 Coins)      ***\n" +
-                "***---------------------------------------------------------***\n" +
-                "***                0 | Continue to Priorities Menu          ***\n" +
-                "***---------------------------------------------------------***\n" +
-                "***             Skip | Skip turn                            ***\n" +
-                "***              End | End Game                             ***\n" +
-                "***             Exit | Save & Quit                          ***\n" +
-                "***************************************************************\n";
+    
     }
 
-    public static String getStringFromPromptType(PromptMessage msg, PriorityManager manager) {
-        loadStrings(manager);
+    public static String getStringFromPromptType(PromptMessage msg, Game game) {
+        loadStrings(game);
         switch (msg) {
             case BIOME_MENU:
                 return chooseBiome;
@@ -262,6 +265,7 @@ public class GameStrings {
             case BLURB:
                 return openingBlurb;
             case PRIORITY_MENU:
+                loadPriorityMenu(game.priorityManager);
                 return priorityMenu;
         }
         return "";

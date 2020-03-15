@@ -10,7 +10,7 @@ import java.util.*;
 
 public abstract class AbstractConsole {
 
-    protected static Game currentGame;
+    protected static Game currentGame = new Game();
     protected static GameBuilder builder;
     protected PriorityManager manager;
     protected Map<String, MenuCommands> consoleCommands;
@@ -20,7 +20,7 @@ public abstract class AbstractConsole {
 
     public AbstractConsole() {
         consoleCommands = new HashMap<>();
-        manager = new PriorityManager(Race.HUMAN, 0);
+        manager = new PriorityManager(currentGame);
         initializeCommands();
     }
 
@@ -69,7 +69,7 @@ public abstract class AbstractConsole {
     }
 
     public void printPrompt(PromptMessage message, boolean promptForInput) {
-        String promptString = GameStrings.getStringFromPromptType(message, manager);
+        String promptString = GameStrings.getStringFromPromptType(message, currentGame);
         ConsoleServices.print(promptString);
         if (promptForInput) {
             getUserInput();

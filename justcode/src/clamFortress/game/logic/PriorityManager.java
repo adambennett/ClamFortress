@@ -2,8 +2,11 @@ package clamFortress.game.logic;
 
 import clamFortress.actions.*;
 import clamFortress.enums.*;
+import clamFortress.game.*;
 import clamFortress.game.regions.*;
+import clamFortress.models.resources.refined.*;
 
+import javax.swing.*;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -31,14 +34,59 @@ public class PriorityManager {
     private Integer build = 0;
     private Integer trade = 0;
     private final Race chosenRace;
+    private final ActionManager actionManager;
+    private final Game game;
     
-    public PriorityManager(Race race, int points) {
-        this.chosenRace = race;
-        this.pointsRemaining = points;
+    public PriorityManager(Game game) {
+        if (game != null) {
+            this.chosenRace = null;
+            this.pointsRemaining = 5;
+            this.actionManager = new ActionManager();
+        } else {
+            this.chosenRace = game.getPlayerRace();
+           // this.pointsRemaining = game.getVillage().getSurvivors().size();
+            this.pointsRemaining = 200;
+            this.actionManager = game.actionManager;
+        }
+        this.game = game;
     }
 
-    public void runPriorityLogic() {
+    public void runSimplePriorityLogic() {
+        for (int i = 0; i < pray; i++) {
+            actionManager.addToBottom(new Praying(game));
+        }
 
+        for (int i = 0; i < forage; i++) {
+            actionManager.addToBottom(new Foraging(game));
+        }
+
+        for (int i = 0; i < woodcut; i++) {
+            actionManager.addToBottom(new Woodcutting(game));
+        }
+
+        for (int i = 0; i < stone; i++) {
+            actionManager.addToBottom(new StonePicking(game));
+        }
+
+        for (int i = 0; i < mine; i++) {
+            actionManager.addToBottom(new Mining(game));
+        }
+
+        for (int i = 0; i < defend; i++) {
+            actionManager.addToBottom(new Defense(game));
+        }
+
+        for (int i = 0; i < harvest; i++) {
+            actionManager.addToBottom(new Harvesting(game));
+        }
+
+        for (int i = 0; i < forge; i++) {
+            actionManager.addToBottom(new Forging(game));
+        }
+
+        for (int i = 0; i < heal; i++) {
+            actionManager.addToBottom(new Healing(game));
+        }
     }
 
     public Integer getPointsRemaining() {

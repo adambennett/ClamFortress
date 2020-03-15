@@ -11,7 +11,7 @@ public class PriorityMenu extends AbstractConsole {
 
     @Override
     protected void initializeCommands() {
-        manager = new PriorityManager(currentGame.getPlayerRace(), currentGame.getVillage().getSurvivors().size());
+        manager = new PriorityManager(currentGame);
         consoleCommands.put("1", MenuCommands.DYNAMIC_FOOD_A);
         consoleCommands.put("2", MenuCommands.DYNAMIC_FOOD_B);
         consoleCommands.put("3", MenuCommands.DYNAMIC_FOOD_C);
@@ -125,7 +125,7 @@ public class PriorityMenu extends AbstractConsole {
         if (manager.getPointsRemaining() > 0) {
             printPrompt(PromptMessage.PRIORITY_MENU, true);
         } else {
-            manager.runPriorityLogic();
+            manager.runSimplePriorityLogic();
             new TurnMenu().advanceTurn();
         }
     }

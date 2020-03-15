@@ -18,17 +18,8 @@ public class GameManagerTest {
 
     @Test
     public void instanceVariablesTest() {
-
         game.incTurns();
-        game.incCoins();
-        game.incMana();
         game.incDate();
-        boolean expectPopIncToFail = game.incPop();
-        game.incPopCap(500);
-        boolean expectPopIncToPass = game.incPop();
-        game.incFaith();
-        game.incStone();
-        game.incWood();
         BigInteger expectedTurn = BigInteger.valueOf(2);
         BigInteger expectedCoins = BigInteger.valueOf(1);
         BigInteger expectedMana = BigInteger.valueOf(1);
@@ -42,17 +33,9 @@ public class GameManagerTest {
         c.setTime(expectedDate);
         c.add(Calendar.DATE, 1);
         expectedDate = c.getTime();
-        Assert.assertEquals(expectedCoins, game.getCoins());
+
         Assert.assertEquals(expectedTurn, game.getTurnNumber());
-        Assert.assertEquals(expectedMana, game.getMana());
-        Assert.assertEquals(expectedPop, game.getPopulation());
-        Assert.assertEquals(expectedPopCap, game.getPopCap());
-        Assert.assertEquals(expectedFaith, game.getFaith());
-        Assert.assertEquals(expectedStone, game.getStone());
-        Assert.assertEquals(expectedWood, game.getWood());
         Assert.assertEquals(expectedDate.toString(), game.getDate().toString());
-        Assert.assertFalse(expectPopIncToFail);
-        Assert.assertTrue(expectPopIncToPass);
     }
 
     @Test

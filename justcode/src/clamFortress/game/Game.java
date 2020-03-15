@@ -23,6 +23,7 @@ public class Game {
 
     // Nested Objects
     public ActionManager actionManager;
+    public PriorityManager priorityManager;
     private final Board gameBoard;
     private final GameManager gameManager;
     private final Village village;
@@ -54,14 +55,15 @@ public class Game {
     // Custom Difficulty
     public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
         this.actionManager = new ActionManager();
+        this.priorityManager = new PriorityManager(this);
         this.difficulty = Modes.CUSTOM;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
-        this.gameManager.incPopCap(5);
-        this.gameManager.incPop(5);
-        this.gameManager.incWood(100);
         this.gameBoard = new Board();
         this.village = new Village(startingBiome, new StoneAge());
+        this.village.incPopCap(5);
+        this.village.incWood(100);
+        // TODO: Add 5 villagers of the chosen race to the village
         this.toughEnemies = customDifficultyMods.contains(1);
         this.slowResourceGain = customDifficultyMods.contains(2);
         this.frequentBadEvents = customDifficultyMods.contains(3);
@@ -81,14 +83,15 @@ public class Game {
 
     public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
         this.actionManager = new ActionManager();
+        this.priorityManager = new PriorityManager(this);
         this.difficulty = gameDifficulty;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
-        this.gameManager.incPopCap(5);
-        this.gameManager.incPop(5);
-        this.gameManager.incWood(100);
         this.gameBoard = new Board();
         this.village = new Village(startingBiome, new StoneAge());
+        this.village.incPopCap(5);
+        this.village.incWood(100);
+        // TODO: Add 5 villagers of the chosen race to the village
         switch (difficulty) {
             case DEFAULT:
                 // Bad
@@ -239,10 +242,7 @@ public class Game {
     }
 
     public void newCitizen(Survivor s) {
-        boolean canInc = gameManager.incPop();
-        if (canInc) {
-            village.addToPopulation(s);
-        }
+        village.addToPopulation(s);
     }
 
     public Boolean newBuilding(AbstractBuilding b) {

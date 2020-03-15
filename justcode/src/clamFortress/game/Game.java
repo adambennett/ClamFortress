@@ -4,8 +4,11 @@ import clamFortress.enums.*;
 import clamFortress.game.logic.*;
 import clamFortress.game.regions.*;
 import clamFortress.models.*;
+import clamFortress.utilities.persistence.*;
 
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.logging.*;
 
 public class Game {
 
@@ -186,6 +189,13 @@ public class Game {
                 this.surroundingCheckEnabled = true;
                 break;
         }
+    }
+
+    public Integer advanceTurn() {
+        Integer dateInc = gameManager.advanceDateByTurn();
+        Logger.getGlobal().info("Time elapsed: " + dateInc + " Days");
+        Database.score(1);
+        return dateInc;
     }
 
     public NewBoard getGameBoard() {

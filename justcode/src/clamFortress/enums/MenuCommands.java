@@ -23,5 +23,9 @@ public enum MenuCommands {
     MOUNTAIN,
     SEA,
     TUNDRA,
-    EXIT
+    EXIT,
+    SKIP_TURN,
+    END_GAME,
+    RANDOM_RACE,
+    SCORE_REALLY_BIG_HACKS
 }

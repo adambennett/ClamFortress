@@ -43,15 +43,11 @@ public class Database {
     public static void score(Integer amt) {
         Database.playerScore += amt;
         if ( Database.playerScore < 0) {  Database.playerScore = 0; }
+        updateUnlocks();
     }
 
     public static Integer getPlayerScore() {
         return  Database.playerScore;
-    }
-
-    public static void setPlayerScore(Integer playerScore) {
-        Database.playerScore = playerScore;
-        if (playerScore < 0) { Database.playerScore = 0; }
     }
 
     public static Boolean getDwarvesUnlocked() {

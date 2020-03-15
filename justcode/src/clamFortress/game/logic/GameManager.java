@@ -1,7 +1,9 @@
 package clamFortress.game.logic;
 
 import java.math.*;
+import java.text.*;
 import java.util.*;
+import java.util.concurrent.*;
 
 public class GameManager {
 
@@ -59,6 +61,36 @@ public class GameManager {
         c.setTime(this.date);
         c.add(Calendar.MONTH, 1);
         this.date = c.getTime();
+    }
+
+    public Integer advanceDateByTurn() {
+        Date originalDate = this.date;
+        Calendar calendar = Calendar.getInstance();
+        long diffMilli = Math.abs(this.date.getTime() - originalDate.getTime());
+        long diff = TimeUnit.DAYS.convert(diffMilli, TimeUnit.MILLISECONDS);
+        int randMonths = ThreadLocalRandom.current().nextInt(0, 2);
+        boolean addedMonths = false;
+        while (diff < 20) {
+            int randHour = ThreadLocalRandom.current().nextInt(1, 24);
+            int randDay = ThreadLocalRandom.current().nextInt(1, 8);
+            int randMinutes = ThreadLocalRandom.current().nextInt(1, 61);
+            int randSecs = ThreadLocalRandom.current().nextInt(1, 61);
+            int randMilli = ThreadLocalRandom.current().nextInt(1, 1001);
+            calendar.setTime(this.date);
+            if (!addedMonths) {
+                calendar.add(Calendar.MONTH, randMonths);
+                addedMonths = true;
+            }
+            calendar.add(Calendar.DAY_OF_WEEK, randDay);
+            calendar.add(Calendar.HOUR, randHour);
+            calendar.add(Calendar.MINUTE, randMinutes);
+            calendar.add(Calendar.SECOND, randSecs);
+            calendar.add(Calendar.MILLISECOND, randMilli);
+            this.date = calendar.getTime();
+            diffMilli = Math.abs(this.date.getTime() - originalDate.getTime());
+            diff = TimeUnit.DAYS.convert(diffMilli, TimeUnit.MILLISECONDS);
+        }
+        return (int)diff;
     }
 
     public void incTurns() {

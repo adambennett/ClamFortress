@@ -15,6 +15,7 @@ public class RaceMenu extends AbstractConsole  {
         consoleCommands.put("4", MenuCommands.DWARF);
         consoleCommands.put("5", MenuCommands.CLAMAN);
         consoleCommands.put("6", MenuCommands.ALIEN);
+        consoleCommands.put("7", MenuCommands.RANDOM_RACE);
     }
 
     @Override
@@ -37,6 +38,9 @@ public class RaceMenu extends AbstractConsole  {
                 break;
             case ELF:
                 builder.setRace(Race.ELF);
+                break;
+            case RANDOM_RACE:
+                builder.setRace(Race.getRandomRace());
                 break;
         }
 

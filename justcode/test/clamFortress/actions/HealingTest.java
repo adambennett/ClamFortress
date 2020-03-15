@@ -3,7 +3,7 @@ package clamFortress.actions;
 import clamFortress.enums.Gender;
 import clamFortress.enums.Race;
 import clamFortress.models.Board;
-import clamFortress.models.beings.Survivor;
+import clamFortress.models.beings.player.Survivor;
 import clamFortress.utilities.builders.SurvivorBuilder;
 import org.junit.Assert;
 import org.junit.Test;

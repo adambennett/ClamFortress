@@ -10,13 +10,6 @@ import java.util.concurrent.*;
 
 public class EncounterManager {
 
-    public static void runEncounters() {
-        ArrayList<AbstractEncounter> encounters = generateEncounters();
-        for (AbstractEncounter enc : encounters) {
-            enc.runEncounter();
-        }
-    }
-
     public static ArrayList<AbstractEncounter> generateEncounters() {
         return generateEncounters(ThreadLocalRandom.current().nextInt(0, 1001));
     }
@@ -58,7 +51,7 @@ public class EncounterManager {
             currentEncounters.add(new Fire());
         }
 
-        if (roll > 160 && roll < 275 && roll != 200) {
+        if (roll > 165 && roll < 225 && roll != 200) {
             currentEncounters.add(new H1N1());
         }
 // END BAD STUFF--------------------------------------------------------------------------------------------------------
@@ -81,7 +74,7 @@ public class EncounterManager {
             currentEncounters.add(new NeutralAlien());
         }
 
-        if (roll > 500) {
+        if (roll > 500 && roll < 600 && roll != 555 && roll != 501) {
             currentEncounters.add(new NeutralAlien());
         }
 

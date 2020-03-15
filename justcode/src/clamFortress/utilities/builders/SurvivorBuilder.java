@@ -1,7 +1,7 @@
 package clamFortress.utilities.builders;
 
 import clamFortress.enums.*;
-import clamFortress.models.beings.*;
+import clamFortress.models.beings.player.*;
 
 import java.util.*;
 

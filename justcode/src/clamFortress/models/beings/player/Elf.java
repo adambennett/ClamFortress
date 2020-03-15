@@ -1,4 +1,4 @@
-package clamFortress.models.beings;
+package clamFortress.models.beings.player;
 
 import clamFortress.interfaces.*;
 

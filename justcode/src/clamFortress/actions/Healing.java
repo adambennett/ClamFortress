@@ -1,12 +1,12 @@
 package clamFortress.actions;
 
 import clamFortress.models.Board;
-import clamFortress.models.beings.*;
+import clamFortress.models.beings.player.*;
 
 public class Healing extends AbstractGameAction {
 
 
-    public Healing(Survivor source,Survivor target ,int amount) {
+    public Healing(Survivor source, Survivor target , int amount) {
         this.setValues(source,target, amount);
         this.actionType = ActionType.HEALING;
     }

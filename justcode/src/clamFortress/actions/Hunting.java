@@ -1,7 +1,7 @@
 package clamFortress.actions;
 
 import clamFortress.models.Board;
-import clamFortress.models.beings.*;
+import clamFortress.models.beings.player.*;
 
 public class Hunting extends AbstractGameAction {
 

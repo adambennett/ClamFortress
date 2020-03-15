@@ -1,18 +1,26 @@
 package clamFortress.game;
 
+import clamFortress.encounters.*;
+import clamFortress.encounters.bandits.*;
+import clamFortress.encounters.disasters.*;
+import clamFortress.encounters.miracles.*;
+import clamFortress.encounters.plagues.*;
+import clamFortress.encounters.raids.*;
 import clamFortress.enums.*;
 import clamFortress.game.logic.*;
 import clamFortress.game.regions.*;
 import clamFortress.models.*;
+import clamFortress.models.beings.player.*;
+import clamFortress.models.buildings.abstracts.*;
+import clamFortress.tech.eras.*;
 import clamFortress.utilities.persistence.*;
 
 import java.util.*;
-import java.util.concurrent.*;
 import java.util.logging.*;
 
 public class Game {
 
-    private final NewBoard gameBoard;
+    private final Board gameBoard;
     private final GameManager gameManager;
     private final Boolean toughEnemies;
     private final Boolean hostileEnemies;
@@ -31,6 +39,7 @@ public class Game {
     private final Boolean surroundingCheckEnabled;
     private final Race playerRace;
     private final Modes difficulty;
+    private final Village village;
 
     // Default Settings (for tests)
     public Game() {
@@ -45,7 +54,8 @@ public class Game {
         this.gameManager.incPopCap(5);
         this.gameManager.incPop(5);
         this.gameManager.incWood(100);
-        this.gameBoard = new NewBoard(startingBiome);
+        this.gameBoard = new Board();
+        this.village = new Village(startingBiome, new StoneAge());
         this.toughEnemies = customDifficultyMods.contains(1);
         this.slowResourceGain = customDifficultyMods.contains(2);
         this.frequentBadEvents = customDifficultyMods.contains(3);
@@ -70,7 +80,8 @@ public class Game {
         this.gameManager.incPopCap(5);
         this.gameManager.incPop(5);
         this.gameManager.incWood(100);
-        this.gameBoard = new NewBoard(startingBiome);
+        this.gameBoard = new Board();
+        this.village = new Village(startingBiome, new StoneAge());
         switch (difficulty) {
             case DEFAULT:
                 // Bad
@@ -192,13 +203,67 @@ public class Game {
     }
 
     public Integer advanceTurn() {
-        Integer dateInc = gameManager.advanceDateByTurn();
+        Integer dateInc = 0;
+        ArrayList<AbstractEncounter> encounters = EncounterManager.generateEncounters();
+        if (encounters.size() > 0) {
+            dateInc += gameManager.advanceDate(5, 15);
+            for (AbstractEncounter enc : encounters) {
+                if (village.canRunEncounter(enc)) {
+                    Logger.getGlobal().info("\nRandom encounter!! Encounter: " + enc.toString() + "\n");
+                    enc.runEncounter(village, gameBoard);
+                } else {
+                    Logger.getGlobal().info("\nSkipped encounter due to it being active already. Encounter: " + enc.toString() + "\n");
+                }
+            }
+            int low = 25 - dateInc;
+            int high = 45 - dateInc;
+            if (low < 0) { low = 0; }
+            if (high < 1) { high = 1; }
+            dateInc += gameManager.advanceDate(low, high);
+        } else {
+            dateInc += gameManager.advanceDate(25, 45);
+        }
         Database.score(dateInc);
-        Logger.getGlobal().info("\nTime elapsed: " + dateInc + " Days\nPlayer Global Score: " + Database.getPlayerScore());
+        gameManager.incTurns();
         return dateInc;
     }
 
-    public NewBoard getGameBoard() {
+    public void newCitizen(Survivor s) {
+        boolean canInc = gameManager.incPop();
+        if (canInc) {
+            village.addToPopulation(s);
+        }
+    }
+
+    public Boolean newBuilding(AbstractBuilding b) {
+        return village.addBuilding(b);
+    }
+
+    public void newMiracle(AbstractMiracle m) {
+        village.addMiracle(m);
+    }
+
+    public void newDisaster(AbstractDisaster d) {
+        village.addDisaster(d);
+    }
+
+    public void newPlague(AbstractPlague p) {
+        village.addPlague(p);
+    }
+
+    public void newHostileRaid(AbstractRaid r) {
+        village.addHostileRaid(r);
+    }
+
+    public void newFriendlyRaid(AbstractRaid r) {
+        village.addFriendlyRaid(r);
+    }
+
+    public void banditEncounter(AbstractBandits encounter) {
+        village.addBandits(encounter);
+    }
+
+    public Board getGameBoard() {
         return gameBoard;
     }
 

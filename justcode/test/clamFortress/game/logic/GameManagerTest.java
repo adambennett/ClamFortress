@@ -23,9 +23,9 @@ public class GameManagerTest {
         game.incCoins();
         game.incMana();
         game.incDate();
-        game.incPop();
+        boolean expectPopIncToFail = game.incPop();
         game.incPopCap(500);
-        game.incPop();
+        boolean expectPopIncToPass = game.incPop();
         game.incFaith();
         game.incStone();
         game.incWood();
@@ -51,6 +51,8 @@ public class GameManagerTest {
         Assert.assertEquals(expectedStone, game.getStone());
         Assert.assertEquals(expectedWood, game.getWood());
         Assert.assertEquals(expectedDate.toString(), game.getDate().toString());
+        Assert.assertFalse(expectPopIncToFail);
+        Assert.assertTrue(expectPopIncToPass);
     }
 
     @Test

@@ -1,6 +1,6 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.*;
+import clamFortress.models.beings.player.*;
 
 public class Engineering extends AbstractGameAction {
 

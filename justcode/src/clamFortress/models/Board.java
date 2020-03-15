@@ -1,5 +1,6 @@
 package clamFortress.models;
 
+import clamFortress.encounters.alien.*;
 import clamFortress.models.animals.Animal;
 import clamFortress.models.resources.*;
 import clamFortress.models.resources.natural.Flowers;
@@ -7,7 +8,7 @@ import clamFortress.models.resources.natural.Gems;
 
 import clamFortress.models.tools.medical.HealingTool;
 
-import java.util.Map;
+import java.util.*;
 
 public class Board {
 
@@ -22,6 +23,16 @@ public class Board {
   private static Integer fishableFishOnBoard;
   private static Map<Animal,Integer> animalsInRegionOnBoard;
   private static Integer healingItemsOnBoard;
+  private ArrayList<AbstractAliens> aliensOnBoard;
+
+  public Board() {
+      aliensOnBoard = new ArrayList<>();
+  }
+
+  public void addAlienEncounter(AbstractAliens a) {
+      aliensOnBoard.add(a);
+  }
+
 
    public static Integer getNumberOfTreesOnBoard() {
        return numberOfTreesOnBoard;

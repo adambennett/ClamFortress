@@ -76,31 +76,29 @@ public class GameManager {
         this.date = c.getTime();
     }
 
-    public Integer advanceDateByTurn() {
+    public Integer advanceDate(int minDays, int maxDays) {
         Date originalDate = this.date;
+        Date newDate = this.date;
         Calendar calendar = Calendar.getInstance();
-        long diffMilli = Math.abs(this.date.getTime() - originalDate.getTime());
+        long diffMilli = Math.abs(newDate.getTime() - originalDate.getTime());
         long diff = TimeUnit.DAYS.convert(diffMilli, TimeUnit.MILLISECONDS);
-        int randMonths = ThreadLocalRandom.current().nextInt(0, 2);
-        boolean addedMonths = false;
-        while (diff < 20) {
+        while (diff < minDays) {
             int randHour = ThreadLocalRandom.current().nextInt(1, 24);
-            int randDay = ThreadLocalRandom.current().nextInt(1, 8);
+            int randDay = ThreadLocalRandom.current().nextInt(1, 12);
             int randMinutes = ThreadLocalRandom.current().nextInt(1, 61);
             int randSecs = ThreadLocalRandom.current().nextInt(1, 61);
             int randMilli = ThreadLocalRandom.current().nextInt(1, 1001);
-            calendar.setTime(this.date);
-            if (!addedMonths) {
-                calendar.add(Calendar.MONTH, randMonths);
-                addedMonths = true;
-            }
+            calendar.setTime(newDate);
             calendar.add(Calendar.DAY_OF_WEEK, randDay);
             calendar.add(Calendar.HOUR, randHour);
             calendar.add(Calendar.MINUTE, randMinutes);
             calendar.add(Calendar.SECOND, randSecs);
             calendar.add(Calendar.MILLISECOND, randMilli);
-            this.date = calendar.getTime();
-            diffMilli = Math.abs(this.date.getTime() - originalDate.getTime());
+            if (diff > maxDays) {
+                calendar.setTime(this.date);
+            }
+            newDate = calendar.getTime();
+            diffMilli = Math.abs(newDate.getTime() - originalDate.getTime());
             diff = TimeUnit.DAYS.convert(diffMilli, TimeUnit.MILLISECONDS);
         }
         return (int)diff;
@@ -174,15 +172,17 @@ public class GameManager {
         this.coins = this.coins.subtract(BigInteger.valueOf(amt));
     }
 
-    public void incPop() {
-        incPop(1);
+    public Boolean incPop() {
+        return incPop(1);
     }
 
-    public void incPop(int amt) {
+    public Boolean incPop(int amt) {
+        BigInteger orig = this.population;
         this.population = this.population.add(BigInteger.valueOf(amt));
         if (this.population.compareTo(this.popCap) > 0) {
             this.population = this.popCap;
         }
+        return !orig.equals(this.population);
     }
 
     public void subPop(int amt) {

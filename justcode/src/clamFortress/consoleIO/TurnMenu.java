@@ -5,9 +5,9 @@ import clamFortress.game.logic.*;
 import clamFortress.utilities.persistence.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 public class TurnMenu extends AbstractConsole  {
-
 
     @Override
     protected void initializeCommands() {
@@ -28,7 +28,8 @@ public class TurnMenu extends AbstractConsole  {
                 new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
                 return;
             case SKIP_TURN:
-                currentGame.advanceTurn();
+                Integer dateInc = currentGame.advanceTurn();
+                Logger.getGlobal().info("\nGlobal Score: " + Database.getPlayerScore() + "\nTime Elapsed: " + dateInc + " Days");
                 printPrompt(PromptMessage.TURN_MENU, true);
             case SCORE_REALLY_BIG_HACKS:
                 Database.score(1000);

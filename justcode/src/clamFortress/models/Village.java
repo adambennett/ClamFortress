@@ -19,6 +19,7 @@ public class Village {
     private AbstractRegion  biome;
     private Era             currentEra;
     private Double          averageAge = 0.0;
+    private Inventory       inventory;
 
     private Integer agility = 0;
     private Integer strength = 0;
@@ -55,6 +56,7 @@ public class Village {
     public Village(AbstractRegion biome, Era currentEra) {
         this.biome = biome;
         this.currentEra = currentEra;
+        this.inventory = new Inventory();
     }
 
     public Boolean canRunEncounter(AbstractEncounter encounter) {
@@ -88,6 +90,10 @@ public class Village {
         } else {
             return true;
         }
+    }
+
+    public ArrayList<Survivor> getSurvivors() {
+        return population;
     }
 
     public void addToPopulation(Survivor s) {

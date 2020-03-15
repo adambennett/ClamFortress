@@ -1,7 +1,9 @@
 package clamFortress.consoleIO;
 
+import clamFortress.actions.*;
 import clamFortress.enums.*;
 import clamFortress.game.logic.*;
+import clamFortress.models.beings.player.*;
 import clamFortress.utilities.persistence.*;
 
 import java.util.*;
@@ -35,5 +37,21 @@ public class TurnMenu extends AbstractConsole  {
                 Database.score(1000);
                 printPrompt(PromptMessage.TURN_MENU, true);
         }
+    }
+
+    private void heal() {
+        currentGame.actionManager.addToBottom(new Healing(currentGame.getVillage().getSurvivors()));
+
+        /*
+        Survivor targetHealer = new Survivor();
+        int sumTotalHeal = targetHealer.getHealamt();
+        for (Survivor  s : currentGame.getVillage().getSurvivors()) {
+            if (s.hp < s.maxHp) {
+                currentGame.actionManager.addToBottom(new Healing(s, targetHealer));
+                sumTotalHeal -= 10;
+            }
+            if (sumTotalHeal < 0) { break; }
+        }
+        */
     }
 }

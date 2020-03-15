@@ -1,11 +1,11 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.player.*;
+import clamFortress.game.*;
 
 public class Raiding extends AbstractGameAction {
 
-    public Raiding(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Raiding(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.RAIDING;
     }
 

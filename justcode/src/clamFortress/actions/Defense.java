@@ -1,11 +1,11 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.player.*;
+import clamFortress.game.*;
 
 public class Defense extends AbstractGameAction {
 
-    public Defense(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Defense(Game game) {
+
         this.actionType = ActionType.DEFENDING;
     }
 

@@ -1,11 +1,11 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.player.*;
+import clamFortress.game.*;
 
 public class Harvesting extends AbstractGameAction {
 
-    public Harvesting(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Harvesting(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.HARVESTING;
     }
 

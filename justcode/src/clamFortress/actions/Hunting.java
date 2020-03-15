@@ -13,6 +13,6 @@ public class Hunting extends AbstractGameAction {
     @Override
     public void update() {
 
-        Board.getAnimalsInRegionOnBoard();
+
     }
 }

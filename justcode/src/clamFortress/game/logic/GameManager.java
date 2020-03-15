@@ -8,13 +8,13 @@ import java.util.concurrent.*;
 public class GameManager {
 
     private BigInteger turnNumber;
-    private BigInteger wood;
-    private BigInteger stone;
-    private BigInteger coins;
-    private BigInteger faith;
-    private BigInteger mana;
-    private BigInteger population;
-    private BigInteger popCap;
+    private Integer wood;
+    private Integer stone;
+    private Integer coins;
+    private Integer faith;
+    private Integer mana;
+    private Integer population;
+    private Integer popCap;
     private Date date;
     private String season;
     private static final GameManager instance;
@@ -30,13 +30,6 @@ public class GameManager {
 
     private GameManager() {
         this.turnNumber = BigInteger.valueOf(1);
-        this.wood = BigInteger.valueOf(0);
-        this.stone = BigInteger.valueOf(0);
-        this.coins = BigInteger.valueOf(0);
-        this.faith = BigInteger.valueOf(0);
-        this.mana = BigInteger.valueOf(0);
-        this.population = BigInteger.valueOf(0);
-        this.popCap = BigInteger.valueOf(0);
         this.date = new Date();
         updateSeason();
     }
@@ -47,13 +40,6 @@ public class GameManager {
 
     public static void reset() {
         instance.turnNumber = BigInteger.valueOf(1);
-        instance.wood = BigInteger.valueOf(0);
-        instance.stone = BigInteger.valueOf(0);
-        instance.coins = BigInteger.valueOf(0);
-        instance.faith = BigInteger.valueOf(0);
-        instance.mana = BigInteger.valueOf(0);
-        instance.population = BigInteger.valueOf(0);
-        instance.popCap = BigInteger.valueOf(0);
         instance.date = new Date();
         instance.updateSeason();
     }
@@ -116,136 +102,16 @@ public class GameManager {
         this.turnNumber = this.turnNumber.add(BigInteger.valueOf(amt));
     }
 
-    public void incWood() {
-        incWood(1);
-    }
-
-    public void incWood(int amt) {
-        this.wood = this.wood.add(BigInteger.valueOf(amt));
-    }
-
-    public void subWood(int amt) {
-        this.wood = this.wood.subtract(BigInteger.valueOf(amt));
-    }
-
-    public void incStone() {
-        incStone(1);
-    }
-
-    public void incStone(int amt) {
-        this.stone = this.stone.add(BigInteger.valueOf(amt));
-    }
-
-    public void subStone(int amt) {
-        this.stone = this.stone.subtract(BigInteger.valueOf(amt));
-    }
-
-    public void incFaith() {
-        incFaith(1);
-    }
-
-    public void incFaith(int amt) {
-        this.faith = this.faith.add(BigInteger.valueOf(amt));
-    }
-
-    public void subFaith(int amt) {
-        this.faith = this.faith.subtract(BigInteger.valueOf(amt));
-    }
-
-    public void incMana() {
-        incMana(1);
-    }
-
-    public void incMana(int amt) {
-        this.mana = this.mana.add(BigInteger.valueOf(amt));
-    }
-
-    public void subMana(int amt) {
-        this.mana = this.mana.subtract(BigInteger.valueOf(amt));
-    }
-
-    public void incCoins() {
-        incCoins(1);
-    }
-
-    public void incCoins(int amt) {
-        this.coins = this.coins.add(BigInteger.valueOf(amt));
-    }
-
-    public void subCoins(int amt) {
-        this.coins = this.coins.subtract(BigInteger.valueOf(amt));
-    }
-
-    public Boolean incPop() {
-        return incPop(1);
-    }
-
-    public Boolean incPop(int amt) {
-        BigInteger orig = this.population;
-        this.population = this.population.add(BigInteger.valueOf(amt));
-        if (this.population.compareTo(this.popCap) > 0) {
-            this.population = this.popCap;
-        }
-        return !orig.equals(this.population);
-    }
-
-    public void subPop(int amt) {
-        this.population = this.population.subtract(BigInteger.valueOf(amt));
-    }
-
-    public void incPopCap() {
-        incPopCap(1);
-    }
-
-    public void incPopCap(int amt) {
-        this.popCap = this.popCap.add(BigInteger.valueOf(amt));
-    }
-
-    public void subPopCap(int amt) {
-        this.popCap = this.popCap.subtract(BigInteger.valueOf(amt));
-    }
-
 
     public BigInteger getTurnNumber() {
         return turnNumber;
     }
-
-    public BigInteger getWood() {
-        return wood;
-    }
-
-    public BigInteger getStone() {
-        return stone;
-    }
-
-    public BigInteger getCoins() {
-        return coins;
-    }
-
-    public BigInteger getFaith() {
-        return faith;
-    }
-
-    public BigInteger getMana() {
-        return mana;
-    }
-
-    public BigInteger getPopulation() {
-        return population;
-    }
-
-    public BigInteger getPopCap() {
-        return popCap;
-    }
-
     public Date getDate() {
         return date;
     }
-
     public String getDateString() {
         return date.toString();
     }
-
     public String getSeason() {
         updateSeason();
         return season;

@@ -12,6 +12,7 @@ import clamFortress.models.beings.player.*;
 import clamFortress.models.buildings.abstracts.*;
 import clamFortress.tech.eras.*;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public class Village {
@@ -36,19 +37,25 @@ public class Village {
     private Integer engineeringAvg = 0;
     private Integer health = 0;
     private Integer clay = 0;
+    private Integer brick = 0;
     private Integer rock = 0;
+    private Integer stone =0;
     private Integer spacegoo = 0;
-    private Integer iron = 0;
-    private Integer copper = 0;
-    private Integer gold = 0;
+    private Integer ironOre = 0;
+    private Integer copperOre = 0;
+    private Integer goldOre = 0;
+    private Integer coins = 0;
     private Integer sand = 0;
     private Integer flowers = 0;
     private Integer seeds = 0;
-    private Integer brick = 0;
+    private Integer wood = 0;
     private Integer lumber = 0;
     private Integer glass = 0;
     private Integer art = 0;
     private Integer jewelery = 0;
+    private Integer faith = 0;
+    private Integer mana = 0;
+    private Integer popCap = 0;
     private Integer buildingLimit = 5;
     private Integer defence = 0;
     private Integer attackPower = 0;
@@ -260,27 +267,27 @@ public class Village {
     }
 
     public Integer getIron() {
-        return iron;
+        return ironOre;
     }
 
     public void setIron(Integer iron) {
-        this.iron = iron;
+        this.ironOre = iron;
     }
 
-    public Integer getCopper() {
-        return copper;
+    public Integer getCopperOre() {
+        return copperOre;
     }
 
-    public void setCopper(Integer copper) {
-        this.copper = copper;
+    public void setCopperOre(Integer copperOre) {
+        this.copperOre = copperOre;
     }
 
-    public Integer getGold() {
-        return gold;
+    public Integer getGoldOre() {
+        return goldOre;
     }
 
-    public void setGold(Integer gold) {
-        this.gold = gold;
+    public void setGoldOre(Integer goldOre) {
+        this.goldOre = goldOre;
     }
 
     public Integer getSand() {
@@ -418,4 +425,123 @@ public class Village {
     public void setEngineeringAvg() {
         this.engineeringAvg = engineering/population.size();
     }
+
+
+    public void setStone(Integer stone) {
+        this.stone = stone;
+    }
+
+
+    public void setWood(Integer wood) {
+        this.wood = wood;
+    }
+
+
+
+    public Integer getWood() {
+        return wood;
+    }
+
+    public Integer getStone() {
+        return stone;
+    }
+
+    public Integer getCoins() {
+        return coins;
+    }
+
+    public Integer getFaith() {
+        return faith;
+    }
+
+    public Integer getMana() {
+        return mana;
+    }
+
+    public Integer getPopulation() {
+        return population.size();
+    }
+
+    public Integer getPopCap() {
+        return popCap;
+    }
+
+
+    public void incWood() {
+        incWood(1);
+    }
+
+    public void incWood(int amt) {
+        this.wood = this.wood+=amt;
+    }
+
+    public void subWood(int amt) {
+        this.wood -= amt;
+    }
+
+    public void incStone() {
+
+        incStone(1);
+    }
+
+    public void incStone(int amt) {
+        this.stone += amt;
+    }
+
+    public void subStone(int amt) {
+        this.stone -= amt;
+    }
+
+    public void incFaith() {
+        incFaith(1);
+    }
+
+    public void incFaith(int amt) {
+        this.faith += amt;
+    }
+
+    public void subFaith(int amt) {
+        this.faith -= amt;
+    }
+
+    public void incMana() {
+        incMana(1);
+    }
+
+    public void incMana(int amt) {
+        this.mana += amt;
+    }
+
+    public void subMana(int amt) {
+        this.mana -= amt;
+    }
+
+    public void incCoins() {
+        incCoins(1);
+    }
+
+    public void incCoins(int amt) {
+        this.coins += amt;
+    }
+
+    public void subCoins(int amt) {
+        this.coins -= amt;
+    }
+
+    public void subPop(Survivor s) {
+        this.population.remove(s);
+    }
+
+    public void incPopCap() {
+        incPopCap(1);
+    }
+
+    public void incPopCap(int amt) {
+        this.popCap += amt;
+    }
+
+    public void subPopCap(int amt) {
+        this.popCap = amt;
+    }
+
 }

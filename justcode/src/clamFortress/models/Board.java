@@ -19,7 +19,7 @@ public class Board {
   private  Map<Flowers,Integer> flowersOnBoard;
   private  Integer mineableCopperOreOnBoard;
   private  Integer mineableIronOreOnBoard;
-  private  Map<Gems,Integer> mineableGemsOnBoard;
+  private  Integer mineableGemsOnBoard;
   private  Integer fishableFishOnBoard;
   private  Map<Animal,Integer> animalsInRegionOnBoard;
   private  Integer healingItemsOnBoard;
@@ -90,11 +90,11 @@ public class Board {
       this.mineableIronOreOnBoard = mineableIronOreOnBoard;
    }
 
-   public Map<Gems, Integer> getMineableGemsOnBoard() {
+   public Integer getMineableGemsOnBoard() {
       return mineableGemsOnBoard;
    }
 
-   public void setMineableGemsOnBoard(Map<Gems, Integer> mineableGemsOnBoard) {
+   public void setMineableGemsOnBoard(Integer mineableGemsOnBoard) {
       this.mineableGemsOnBoard = mineableGemsOnBoard;
    }
 
@@ -121,4 +121,60 @@ public class Board {
    public void setHealingItemsOnBoard(Integer healingItemsOnBoard) {
       this.healingItemsOnBoard = healingItemsOnBoard;
    }
+
+   public void reduceTreesOnBoard(Integer amountToCutDown){
+      this.numberOfTreesOnBoard -= amountToCutDown;
+       if(this.numberOfTreesOnBoard < 0){
+           this.numberOfTreesOnBoard =0;
+       }
+   }
+
+   public void reduceStoneOnBoard(Integer amountToMine){
+      this.mineableStoneOnBoard -= amountToMine;
+      if(this.mineableStoneOnBoard < 0){
+          this.mineableStoneOnBoard = 0;
+      }
+   }
+
+    public void reduceCopperOreOnBoard(Integer amountToMine){
+        this.mineableCopperOreOnBoard -= amountToMine;
+        if(this.mineableCopperOreOnBoard < 0){
+            this.mineableCopperOreOnBoard = 0;
+        }
+    }
+
+    public void reduceIronOreOnBoard(Integer amountToMine){
+      this.mineableIronOreOnBoard -= amountToMine;
+        if(this.mineableIronOreOnBoard < 0){
+            this.mineableIronOreOnBoard = 0;
+        }
+    }
+
+    public void reduceGemsOnBoard(Integer amountToMine){
+        this.mineableGemsOnBoard -= amountToMine;
+        if(this.mineableGemsOnBoard < 0){
+            this.mineableGemsOnBoard = 0;
+        }
+    }
+
+    public void reduceFishOnBoard(Integer amountToMine){
+        this.fishableFishOnBoard -= amountToMine;
+        if(this.fishableFishOnBoard < 0){
+            this.fishableFishOnBoard = 0;
+        }
+    }
+
+    public void reduceHuntableAnimals(Integer amountToHunt){
+      this.huntableAnimalsOnBoard -= amountToHunt;
+      if(this.huntableAnimalsOnBoard < 0){
+          huntableAnimalsOnBoard = 0;
+      }
+    }
+
+    public void reduceHealingItemsOnBoard(Integer amountToUse){
+      this.healingItemsOnBoard -= amountToUse;
+      if(this.healingItemsOnBoard < 0){
+          healingItemsOnBoard = 0;
+      }
+    }
 }

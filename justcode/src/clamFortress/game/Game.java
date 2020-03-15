@@ -29,7 +29,7 @@ public class Game {
     private final Race playerRace;
     private final Modes difficulty;
 
-    // Default Settings
+    // Default Settings (for tests)
     public Game() {
         this(Modes.DEFAULT, Race.HUMAN, new Grasslands());
     }
@@ -57,19 +57,12 @@ public class Game {
         this.surroundingCheckEnabled = !customDifficultyMods.contains(15);
     }
 
-    public Game(Integer difficulty, Race chosenRace, AbstractRegion stratingBiome) {
-        this(Modes.getModeFromValue(difficulty), chosenRace, stratingBiome);
-    }
-
     public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
-        if (gameDifficulty.equals(Modes.RANDOM)) {
-            gameDifficulty = Modes.getRandomMode();
-        }
         this.difficulty = gameDifficulty;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
         this.gameBoard = new NewBoard(startingBiome);
-        switch (gameDifficulty) {
+        switch (difficulty) {
             case DEFAULT:
                 // Bad
                 this.toughEnemies = true;

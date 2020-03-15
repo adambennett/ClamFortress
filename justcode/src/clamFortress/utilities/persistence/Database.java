@@ -2,12 +2,12 @@ package clamFortress.utilities.persistence;
 
 public class Database {
 
-    private static Integer playerScore;
-    private static Boolean dwarvesUnlocked;
-    private static Boolean elvesUnlocked;
-    private static Boolean aliensUnlocked;
-    private static Boolean clamanUnlocked;
-    private static Boolean orcsUnlocked;
+    private static Integer playerScore = 0;
+    private static Boolean dwarvesUnlocked = false;
+    private static Boolean elvesUnlocked = false;
+    private static Boolean aliensUnlocked = false;
+    private static Boolean clamanUnlocked = false;
+    private static Boolean orcsUnlocked = false;
 
     public static void loadDatabase() {}
 

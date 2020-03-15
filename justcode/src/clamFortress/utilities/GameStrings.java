@@ -1,5 +1,7 @@
 package clamFortress.utilities;
 
+import clamFortress.consoleIO.*;
+import clamFortress.enums.*;
 import clamFortress.game.logic.*;
 import clamFortress.utilities.persistence.*;
 
@@ -18,7 +20,18 @@ public class GameStrings {
     private static String customDifficulty;
 
 
+    private static String format(String s, String lenCheck, String endString) {
+        while (s.length() < lenCheck.length()) {
+            s += " ";
+        }
+        s += endString + "\n";
+        return s;
+    }
+
     private static void loadStrings() {
+        openingBlurb = "Blah blah help your guys survive and thrive... watch out for cLAmS";
+
+
         openGame =
                 "**************************************************\n" +
                 "***                Clam Fortress               ***\n" +
@@ -104,11 +117,10 @@ public class GameStrings {
                 "***                6 | Tundra                  ***\n" +
                 "**************************************************\n";
 
-        openingBlurb = "Blah blah help your guys survive and thrive... watch out for CLams";
-
         GameManager game = GameManager.getInstance();
-        String endString = "***\n";
+        String endString = "***";
         String lenCheck = "************************************************************";
+        String otherlen = "*******************************";
         String mana = "" + game.getMana();
         String faith = "" + game.getFaith();
         String coins = "" + game.getCoins();
@@ -119,33 +131,28 @@ public class GameStrings {
         String date = "***  " + game.getDateString() + " :: ";
         String season = game.getSeason();
         String fullDate = date + season;
-        ArrayList<String> toFormat = new ArrayList<>();
         String surroundings = "***                1 | Surrounding Region Report            ***\n";
-        // TODO: Check Game for allow surroundings check
-        toFormat.add(mana);
-        toFormat.add(faith);
-        toFormat.add(coins);
-        toFormat.add(stone);
-        toFormat.add(wood);
-        toFormat.add(population);
-        toFormat.add(turnNumber);
-        toFormat.add(fullDate);
-        for (String s : toFormat) {
-            while (s.length() < lenCheck.length()) {
-                s += " ";
-            }
-            s += endString;
+        if (AbstractConsole.getCurrentGame() != null && !AbstractConsole.getCurrentGame().getSurroundingCheckEnabled()) {
+            surroundings =          "***                1 | [DISABLED]                           ***\n";
         }
+        mana = format(mana, otherlen, endString);
+        coins = format(coins, otherlen, endString);
+        stone = format(stone, otherlen, endString);
+        wood = format(wood, otherlen, endString);
+        population = format(population, otherlen, endString);
+        turnNumber = format(turnNumber, otherlen, endString);
+        fullDate = format(fullDate, lenCheck, endString);
+        faith = format(faith, otherlen, endString);
         turnMenu =
                 "***************************************************************\n" +
-                toFormat.get(7) +
-                "***           Turn Number :: " + toFormat.get(6) +
-                "***            Population :: " + toFormat.get(5) +
-                "***                  Wood :: " + toFormat.get(4) +
-                "***                 Stone :: " + toFormat.get(3) +
-                "***                 Coins :: " + toFormat.get(2) +
-                "***                 Faith :: " + toFormat.get(1) +
-                "***                  Mana :: " + toFormat.get(0) +
+                    fullDate +
+                "***           Turn Number :: " + turnNumber +
+                "***            Population :: " + population +
+                "***                  Wood :: " + wood +
+                "***                 Stone :: " + stone +
+                "***                 Coins :: " + coins +
+                "***                 Faith :: " + faith +
+                "***                  Mana :: " + mana +
                 "***---------------------------------------------------------***\n" +
                 surroundings +
                 "***                2 | Village Resources                    ***\n" +
@@ -158,9 +165,24 @@ public class GameStrings {
                 "***************************************************************\n";
     }
 
-    public static String getStringFromPromptType(/*TODO: add enum parameter*/) {
+    public static String getStringFromPromptType(PromptMessage msg) {
         loadStrings();
-        // switch on parameter to return proper string
+        switch (msg) {
+            case BIOME_MENU:
+                return chooseBiome;
+            case CUSTOM_DIFF_MENU:
+                return customDifficulty;
+            case DIFF_MENU:
+                return chooseDifficulty;
+            case LOGIN_MENU:
+                return openGame;
+            case RACE_MENU:
+                return chooseRace;
+            case TURN_MENU:
+                return turnMenu;
+            case BLURB:
+                return openingBlurb;
+        }
         return "";
     }
 

@@ -54,6 +54,13 @@ public class GameManager {
         this.date = c.getTime();
     }
 
+    public void incDateByMonth() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(this.date);
+        c.add(Calendar.MONTH, 1);
+        this.date = c.getTime();
+    }
+
     public void incTurns() {
         incTurns(1);
     }

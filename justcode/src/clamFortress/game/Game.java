@@ -15,13 +15,19 @@ import clamFortress.models.buildings.abstracts.*;
 import clamFortress.tech.eras.*;
 import clamFortress.utilities.persistence.*;
 
+import javax.swing.*;
 import java.util.*;
 import java.util.logging.*;
 
 public class Game {
 
+    // Nested Objects
+    public ActionManager actionManager;
     private final Board gameBoard;
     private final GameManager gameManager;
+    private final Village village;
+
+    // Difficulty Modifiers
     private final Boolean toughEnemies;
     private final Boolean hostileEnemies;
     private final Boolean slowResourceGain;
@@ -39,7 +45,6 @@ public class Game {
     private final Boolean surroundingCheckEnabled;
     private final Race playerRace;
     private final Modes difficulty;
-    private final Village village;
 
     // Default Settings (for tests)
     public Game() {
@@ -48,6 +53,7 @@ public class Game {
 
     // Custom Difficulty
     public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
+        this.actionManager = new ActionManager();
         this.difficulty = Modes.CUSTOM;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
@@ -74,6 +80,7 @@ public class Game {
     }
 
     public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
+        this.actionManager = new ActionManager();
         this.difficulty = gameDifficulty;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
@@ -223,6 +230,9 @@ public class Game {
         } else {
             dateInc += gameManager.advanceDate(25, 45);
         }
+
+        actionManager.update();
+
         Database.score(dateInc);
         gameManager.incTurns();
         return dateInc;
@@ -337,5 +347,9 @@ public class Game {
 
     public Modes getDifficulty() {
         return difficulty;
+    }
+
+    public Village getVillage() {
+        return village;
     }
 }

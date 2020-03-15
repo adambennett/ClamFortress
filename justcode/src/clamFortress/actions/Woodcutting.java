@@ -1,19 +1,22 @@
 package clamFortress.actions;
 
-import clamFortress.game.Game;
+import clamFortress.game.*;
+import clamFortress.models.*;
 import clamFortress.models.beings.player.*;
 
 public class Woodcutting extends AbstractGameAction {
 
-    private Game game;
-
-    public Woodcutting(Integer amountOfWood, Game game) {
-        this.setValues(null, amountOfWood);
-        this.game = game;
+    public Woodcutting(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.WOODCUTTING;
     }
 
     @Override
-    public void update(){
-    }
+    public void update() {
+     if(currentGame.getGameBoard().getNumberOfTreesOnBoard() > 0){
+
+     }
+            this.isDone = true;
+        }
 }
+

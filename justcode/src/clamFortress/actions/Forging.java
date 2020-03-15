@@ -1,11 +1,12 @@
 package clamFortress.actions;
 
+import clamFortress.game.*;
 import clamFortress.models.beings.player.*;
 
 public class Forging extends AbstractGameAction {
 
-    public Forging(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Forging(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.FORGING;
     }
 

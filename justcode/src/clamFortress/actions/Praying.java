@@ -1,11 +1,11 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.player.*;
+import clamFortress.game.*;
 
 public class Praying extends AbstractGameAction {
 
-    public Praying(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Praying(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.PRAYING;
     }
 

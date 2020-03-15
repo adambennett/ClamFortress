@@ -19,13 +19,21 @@ public class Village {
     private AbstractRegion  biome;
     private Era             currentEra;
     private Double          averageAge = 0.0;
+    private Inventory       inventory;
+
 
     private Integer agility = 0;
+    private Integer agilityAvg = 0;
     private Integer strength = 0;
+    private Integer strengthAvg = 0;
     private Integer intelligence = 0;
+    private Integer intelligenceAvg = 0;
     private Integer dexterity = 0;
+    private Integer dexterityAvg = 0;
     private Integer magic = 0;
+    private Integer magicAvg =0;
     private Integer engineering = 0;
+    private Integer engineeringAvg = 0;
     private Integer health = 0;
     private Integer clay = 0;
     private Integer rock = 0;
@@ -42,6 +50,8 @@ public class Village {
     private Integer art = 0;
     private Integer jewelery = 0;
     private Integer buildingLimit = 5;
+    private Integer defence = 0;
+    private Integer attackPower = 0;
 
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
     private ArrayList<AbstractBuilding> buildings = new ArrayList<>();
@@ -55,6 +65,7 @@ public class Village {
     public Village(AbstractRegion biome, Era currentEra) {
         this.biome = biome;
         this.currentEra = currentEra;
+        this.inventory = new Inventory();
     }
 
     public Boolean canRunEncounter(AbstractEncounter encounter) {
@@ -90,8 +101,20 @@ public class Village {
         }
     }
 
+    public ArrayList<Survivor> getSurvivors() {
+        return population;
+    }
+
     public void addToPopulation(Survivor s) {
+
         this.population.add(s);
+        this.strength += s.getStrength();
+        this.agility += s.getAgility();
+        this.intelligence += s.getIntelligence();
+        this.dexterity += s.getDexterity();
+        this.magic += s.getMagic();
+        this.engineering += s.getEngineering();
+        this.health += s.getHealthPoints();
     }
 
     public Boolean addBuilding(AbstractBuilding b) {
@@ -104,6 +127,12 @@ public class Village {
 
     public void addBandits(AbstractBandits banditEncounter) {
         this.occupyingBandits.addAll(banditEncounter.getBandits());
+    }
+
+    public void reduceBandits(){
+        if(occupyingBandits.size() > 0) {
+            occupyingBandits.remove(occupyingBandits.size() - 1);
+        }
     }
 
     public void addMiracle(AbstractMiracle m) {
@@ -316,5 +345,77 @@ public class Village {
 
     public void setJewelery(Integer jewelery) {
         this.jewelery = jewelery;
+    }
+
+    public Integer getDefense(){
+        return this.defence;
+    }
+
+    public void setDefence(Integer defence){
+        this.defence = defence;
+    }
+
+    public void incDefense(Integer incAmount){
+        this.defence += incAmount;
+    }
+
+    public Integer getAttackPower(){
+        return this.attackPower;
+    }
+
+    public void setAttackPower(Integer attackPower){
+        this.attackPower = attackPower;
+    }
+
+    public void incAttack(Integer incAmount){
+        this.attackPower+=incAmount;
+    }
+
+    public Integer getAgilityAvg() {
+        return agilityAvg;
+    }
+
+    public void setAgilityAvg() {
+        this.agilityAvg = agility/population.size();
+    }
+
+    public Integer getStrengthAvg() {
+        return strengthAvg;
+    }
+
+    public void setStrengthAvg() {
+        this.strengthAvg = strength/population.size();
+    }
+
+    public Integer getIntelligenceAvg() {
+        return intelligenceAvg;
+    }
+
+    public void setIntelligenceAvg() {
+        this.intelligenceAvg = intelligence/population.size();
+    }
+
+    public Integer getDexterityAvg() {
+        return dexterityAvg;
+    }
+
+    public void setDexterityAvg( ) {
+        this.dexterityAvg = dexterity/population.size();
+    }
+
+    public Integer getMagicAvg() {
+        return magicAvg;
+    }
+
+    public void setMagicAvg() {
+        this.magicAvg = magic/population.size();
+    }
+
+    public Integer getEngineeringAvg() {
+        return engineeringAvg;
+    }
+
+    public void setEngineeringAvg() {
+        this.engineeringAvg = engineering/population.size();
     }
 }

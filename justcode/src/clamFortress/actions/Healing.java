@@ -3,19 +3,21 @@ package clamFortress.actions;
 import clamFortress.models.Board;
 import clamFortress.models.beings.player.*;
 
+import java.util.*;
+
 public class Healing extends AbstractGameAction {
 
 
-    public Healing(Survivor source, Survivor target) {
-        this.setValues(source,target,0);
+    public Healing(ArrayList<Survivor> population) {
         this.actionType = ActionType.HEALING;
     }
 
     @Override
     public void update() {
-        Integer healAmount = 10;
+        // TODO: improve
+        /*Integer healAmount = 10;
 
-        if(source.getIntelligence() >= 7/*placeholder number*/){
+        if(source.getIntelligence() >= 7/*placeholder number){
             healAmount+=10;
         }
         if(Board.getHealingItemsOnBoard() > 0){
@@ -23,6 +25,7 @@ public class Healing extends AbstractGameAction {
             healAmount+=10;
         }
         target.setHealthPoints(target.getHealthPoints()+healAmount);
+        */
         this.isDone = true;
     }
 }

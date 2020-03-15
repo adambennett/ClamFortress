@@ -1,11 +1,11 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.player.*;
+import clamFortress.game.*;
 
 public class Planting extends AbstractGameAction {
 
-    public Planting(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Planting(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.PLANTING;
     }
 

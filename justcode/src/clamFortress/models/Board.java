@@ -12,17 +12,17 @@ import java.util.*;
 
 public class Board {
 
-  private static Integer numberOfTreesOnBoard;
-  private static Integer mineableStoneOnBoard;
-  private static Integer huntableAnimalsOnBoard;
-  private static Integer colectableClayOnBoard;
-  private static Map<Flowers,Integer> flowersOnBoard;
-  private static Integer mineableCopperOreOnBoard;
-  private static Integer mineableIronOreOnBoard;
-  private static Map<Gems,Integer> mineableGemsOnBoard;
-  private static Integer fishableFishOnBoard;
-  private static Map<Animal,Integer> animalsInRegionOnBoard;
-  private static Integer healingItemsOnBoard;
+  private  Integer numberOfTreesOnBoard;
+  private  Integer mineableStoneOnBoard;
+  private  Integer huntableAnimalsOnBoard;
+  private  Integer colectableClayOnBoard;
+  private  Map<Flowers,Integer> flowersOnBoard;
+  private  Integer mineableCopperOreOnBoard;
+  private  Integer mineableIronOreOnBoard;
+  private  Map<Gems,Integer> mineableGemsOnBoard;
+  private  Integer fishableFishOnBoard;
+  private  Map<Animal,Integer> animalsInRegionOnBoard;
+  private  Integer healingItemsOnBoard;
   private ArrayList<AbstractAliens> aliensOnBoard;
 
   public Board() {
@@ -34,91 +34,91 @@ public class Board {
   }
 
 
-   public static Integer getNumberOfTreesOnBoard() {
+   public  Integer getNumberOfTreesOnBoard() {
        return numberOfTreesOnBoard;
    }
 
-   public static void setNumberOfTreesOnBoard(Integer numberOfTreesOnBoard) {
-      Board.numberOfTreesOnBoard = numberOfTreesOnBoard;
+   public  void setNumberOfTreesOnBoard(Integer numberOfTreesOnBoard) {
+      this.numberOfTreesOnBoard = numberOfTreesOnBoard;
    }
 
-   public static Integer getMineableStoneOnBoard() {
+   public Integer getMineableStoneOnBoard() {
       return mineableStoneOnBoard;
    }
 
-   public static void setMineableStoneOnBoard(Integer mineableStoneOnBoard) {
-      Board.mineableStoneOnBoard = mineableStoneOnBoard;
+   public void setMineableStoneOnBoard(Integer mineableStoneOnBoard) {
+      this.mineableStoneOnBoard = mineableStoneOnBoard;
    }
 
-   public static Integer getHuntableAnimalsOnBoard() {
+   public Integer getHuntableAnimalsOnBoard() {
       return huntableAnimalsOnBoard;
    }
 
-   public static void setHuntableAnimalsOnBoard(Integer huntableAnimalsOnBoard) {
-      Board.huntableAnimalsOnBoard = huntableAnimalsOnBoard;
+   public void setHuntableAnimalsOnBoard(Integer huntableAnimalsOnBoard) {
+      this.huntableAnimalsOnBoard = huntableAnimalsOnBoard;
    }
 
-   public static Integer getColectableClayOnBoard() {
+   public Integer getColectableClayOnBoard() {
       return colectableClayOnBoard;
    }
 
-   public static void setColectableClayOnBoard(Integer colectableClayOnBoard) {
-      Board.colectableClayOnBoard = colectableClayOnBoard;
+   public void setColectableClayOnBoard(Integer colectableClayOnBoard) {
+      this.colectableClayOnBoard = colectableClayOnBoard;
    }
 
-   public static Map<Flowers, Integer> getFlowersOnBoard() {
+   public Map<Flowers, Integer> getFlowersOnBoard() {
       return flowersOnBoard;
    }
 
-   public static void setFlowersOnBoard(Map<Flowers, Integer> flowersOnBoard) {
-      Board.flowersOnBoard = flowersOnBoard;
+   public void setFlowersOnBoard(Map<Flowers, Integer> flowersOnBoard) {
+      this.flowersOnBoard = flowersOnBoard;
    }
 
-   public static Integer getMineableCopperOreOnBoard() {
+   public Integer getMineableCopperOreOnBoard() {
       return mineableCopperOreOnBoard;
    }
 
-   public static void setMineableCopperOreOnBoard(Integer mineableCopperOreOnBoard) {
-      Board.mineableCopperOreOnBoard = mineableCopperOreOnBoard;
+   public void setMineableCopperOreOnBoard(Integer mineableCopperOreOnBoard) {
+      this.mineableCopperOreOnBoard = mineableCopperOreOnBoard;
    }
 
-   public static Integer getMineableIronOreOnBoard() {
+   public Integer getMineableIronOreOnBoard() {
       return mineableIronOreOnBoard;
    }
 
-   public static void setMineableIronOreOnBoard(Integer mineableIronOreOnBoard) {
-      Board.mineableIronOreOnBoard = mineableIronOreOnBoard;
+   public void setMineableIronOreOnBoard(Integer mineableIronOreOnBoard) {
+      this.mineableIronOreOnBoard = mineableIronOreOnBoard;
    }
 
-   public static Map<Gems, Integer> getMineableGemsOnBoard() {
+   public Map<Gems, Integer> getMineableGemsOnBoard() {
       return mineableGemsOnBoard;
    }
 
-   public static void setMineableGemsOnBoard(Map<Gems, Integer> mineableGemsOnBoard) {
-      Board.mineableGemsOnBoard = mineableGemsOnBoard;
+   public void setMineableGemsOnBoard(Map<Gems, Integer> mineableGemsOnBoard) {
+      this.mineableGemsOnBoard = mineableGemsOnBoard;
    }
 
-   public static Integer getFishableFishOnBoard() {
+   public Integer getFishableFishOnBoard() {
       return fishableFishOnBoard;
    }
 
-   public static void setFishableFishOnBoard(Integer fishableFishOnBoard) {
-      Board.fishableFishOnBoard = fishableFishOnBoard;
+   public void setFishableFishOnBoard(Integer fishableFishOnBoard) {
+      this.fishableFishOnBoard = fishableFishOnBoard;
    }
 
-   public static Map<Animal, Integer> getAnimalsInRegionOnBoard() {
+   public Map<Animal, Integer> getAnimalsInRegionOnBoard() {
       return animalsInRegionOnBoard;
    }
 
-   public static void setAnimalsInRegionOnBoard(Map<Animal, Integer> animalsInRegionOnBoard) {
-      Board.animalsInRegionOnBoard = animalsInRegionOnBoard;
+   public void setAnimalsInRegionOnBoard(Map<Animal, Integer> animalsInRegionOnBoard) {
+      this.animalsInRegionOnBoard = animalsInRegionOnBoard;
    }
 
-   public static Integer getHealingItemsOnBoard() {
+   public Integer getHealingItemsOnBoard() {
        return healingItemsOnBoard;
    }
 
-   public static void setHealingItemsOnBoard(Integer healingItemsOnBoard) {
-      Board.healingItemsOnBoard = healingItemsOnBoard;
+   public void setHealingItemsOnBoard(Integer healingItemsOnBoard) {
+      this.healingItemsOnBoard = healingItemsOnBoard;
    }
 }

@@ -1,11 +1,10 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.player.*;
-
+import clamFortress.game.*;
 public class Masonry extends AbstractGameAction {
 
-    public Masonry(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Masonry(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.MASONRY;
     }
 

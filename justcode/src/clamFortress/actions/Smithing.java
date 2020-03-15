@@ -1,11 +1,11 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.player.*;
+import clamFortress.game.*;
 
 public class Smithing extends AbstractGameAction {
 
-    public Smithing(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Smithing(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.SMITHING;
     }
 

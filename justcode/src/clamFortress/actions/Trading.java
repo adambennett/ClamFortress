@@ -1,11 +1,11 @@
 package clamFortress.actions;
 
-import clamFortress.models.beings.player.*;
+import clamFortress.game.*;
 
 public class Trading extends AbstractGameAction {
 
-    public Trading(Survivor source, int amount) {
-        this.setValues(source, amount);
+    public Trading(Game game) {
+        this.setValues(game);
         this.actionType = ActionType.TRADING;
     }
 

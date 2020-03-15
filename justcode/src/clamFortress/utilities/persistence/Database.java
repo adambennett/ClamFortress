@@ -9,9 +9,36 @@ public class Database {
     private static Boolean clamanUnlocked = false;
     private static Boolean orcsUnlocked = false;
 
-    public static void loadDatabase() {}
+    public static void updateUnlocks() {
+        if (playerScore > 500) {
+            aliensUnlocked = true;
+        }
 
-    public static void saveDatabase() {}
+        if (playerScore > 400) {
+            clamanUnlocked = true;
+        }
+
+        if (playerScore > 300) {
+            dwarvesUnlocked = true;
+        }
+
+        if (playerScore > 200) {
+            elvesUnlocked = true;
+        }
+
+        if (playerScore > 100) {
+            orcsUnlocked = true;
+        }
+    }
+
+    public static void loadDatabase() {
+        // load score from file
+        updateUnlocks();
+    }
+
+    public static void saveDatabase() {
+        // write score and saved games to file
+    }
 
     public static void score(Integer amt) {
         Database.playerScore += amt;
@@ -24,7 +51,7 @@ public class Database {
 
     public static void setPlayerScore(Integer playerScore) {
         Database.playerScore = playerScore;
-        if (playerScore < 0) { playerScore = 0; }
+        if (playerScore < 0) { Database.playerScore = 0; }
     }
 
     public static Boolean getDwarvesUnlocked() {
@@ -60,7 +87,7 @@ public class Database {
     }
 
     public static Boolean getOrcsUnlocked() {
-        return  Database.orcsUnlocked;
+        return Database.orcsUnlocked;
     }
 
     public static void setOrcsUnlocked(Boolean orcsUnlocked) {

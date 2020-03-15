@@ -39,6 +39,9 @@ public class Game {
         this.difficulty = Modes.CUSTOM;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
+        this.gameManager.incPopCap(5);
+        this.gameManager.incPop(5);
+        this.gameManager.incWood(100);
         this.gameBoard = new NewBoard(startingBiome);
         this.toughEnemies = customDifficultyMods.contains(1);
         this.slowResourceGain = customDifficultyMods.contains(2);
@@ -61,6 +64,9 @@ public class Game {
         this.difficulty = gameDifficulty;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
+        this.gameManager.incPopCap(5);
+        this.gameManager.incPop(5);
+        this.gameManager.incWood(100);
         this.gameBoard = new NewBoard(startingBiome);
         switch (difficulty) {
             case DEFAULT:

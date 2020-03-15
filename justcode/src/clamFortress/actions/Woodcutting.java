@@ -13,7 +13,7 @@ public class Woodcutting extends AbstractGameAction {
 
     @Override
     public void update() {
-        Integer amountOfWoodToReturn = 0;
+        Integer amountOfWoodToReturn = 15;
      if(currentGame.getGameBoard().getNumberOfTreesOnBoard() > 25){
          if(currentGame.getVillage().getStrengthAvg() > 6){
              if(currentGame.getGameBoard().getNumberOfTreesOnBoard() >50){
@@ -29,6 +29,7 @@ public class Woodcutting extends AbstractGameAction {
          amountOfWoodToReturn += currentGame.getGameBoard().getNumberOfTreesOnBoard();
      }
 
+        currentGame.getVillage().setWood(amountOfWoodToReturn);
 
             this.isDone = true;
     }

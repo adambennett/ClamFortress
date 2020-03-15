@@ -16,6 +16,7 @@ public class TurnMenu extends AbstractConsole  {
         consoleCommands.put("skip", MenuCommands.SKIP_TURN);
         consoleCommands.put("end", MenuCommands.END_GAME);
         consoleCommands.put("cheat", MenuCommands.SCORE_REALLY_BIG_HACKS);
+        consoleCommands.put("0", MenuCommands.CONTINUE);
     }
 
     @Override
@@ -29,13 +30,19 @@ public class TurnMenu extends AbstractConsole  {
                 new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
                 return;
             case SKIP_TURN:
-                Integer dateInc = currentGame.advanceTurn();
-                Logger.getGlobal().info("\nGlobal Score: " + Database.getPlayerScore() + "\nTime Elapsed: " + dateInc + " Days");
-                printPrompt(PromptMessage.TURN_MENU, true);
+                advanceTurn();
             case SCORE_REALLY_BIG_HACKS:
                 Database.score(1000);
                 printPrompt(PromptMessage.TURN_MENU, true);
+            case CONTINUE:
+                new PriorityMenu().printPrompt(PromptMessage.PRIORITY_MENU, true);
         }
+    }
+
+    public void advanceTurn() {
+        Integer dateInc = currentGame.advanceTurn();
+        Logger.getGlobal().info("\nGlobal Score: " + Database.getPlayerScore() + "\nTime Elapsed: " + dateInc + " Days");
+        printPrompt(PromptMessage.TURN_MENU, true);
     }
 
     private void heal() {

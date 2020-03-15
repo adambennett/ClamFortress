@@ -29,7 +29,7 @@ public class GameStrings {
         return s;
     }
 
-    private static void loadStrings() {
+    private static void loadStrings(PriorityManager manager) {
         openingBlurb = "Blah blah help your guys survive and thrive... watch out for cLAmS";
 
 
@@ -78,7 +78,79 @@ public class GameStrings {
                 "***   Choose any combination of custom difficulty options   ***\n" +
                 "***************************************************************\n";
 
-        priorityMenu = "";
+        
+
+        Integer foodPriority1 = manager.getFood1();
+        Integer foodPriority2 = manager.getFood2();
+        Integer foodPriority3 = manager.getFood3();
+        Integer prayPriority = manager.getPray();
+        Integer foragePriority = manager.getForage();
+        Integer woodcutPriority = manager.getWoodcut();
+        Integer stonePickPriority = manager.getStone();
+        Integer miningPriority = manager.getMine();
+        Integer defendPriority = manager.getDefend();
+        Integer harvestPriority = manager.getHarvest();
+        Integer forgePriority = manager.getForge();
+        Integer healPriority = manager.getHeal();
+        Integer scoutPriority = manager.getScout();
+        Integer plantPriority = manager.getPlant();
+        Integer smithPriority = manager.getSmith();
+        Integer smeltPriority = manager.getSmelt();
+        Integer raidPriority = manager.getRaid();
+        Integer engineerPriority = manager.getEngineer();
+        Integer buildPriority = manager.getBuild();
+        Integer tradePriority = manager.getTrade();
+        String ending = "***";
+        String len = "                  ";
+        String lenB = "                          ";
+        String food1 = format(foodPriority1 + ">", len, ending);
+        String food2 = format(foodPriority2 + ">", len, ending);
+        String food3 = format(foodPriority3 + ">", len, ending);
+        String pray = format(prayPriority + ">", len, ending);
+        String forage = format(foragePriority + ">", len, ending);
+        String woody = format(woodcutPriority + ">", len, ending);
+        String stoney = format(stonePickPriority + ">", len, ending);
+        String mine = format(miningPriority + ">", len, ending);
+        String defend = format(defendPriority + ">", len, ending);
+        String harvest = format(harvestPriority + ">", len, ending);
+        String forge = format(forgePriority + ">", len, ending);
+        String heal = format(healPriority + ">", len, ending);
+        String scout = format(scoutPriority + ">", len, ending);
+        String plant = format(plantPriority + ">", len, ending);
+        String smith = format(smithPriority + ">", len, ending);
+        String smelt = format(smeltPriority + ">", len, ending);
+        String raid = format(raidPriority + ">", len, ending);
+        String engineer = format(engineerPriority + ">", len, ending);
+        String build = format(buildPriority + ">", len, ending);
+        String trade = format(tradePriority + ">", len, ending);
+        String points = format("(" + manager.getPointsRemaining() + ")" , lenB, ending);
+        priorityMenu =
+                "***************************************************************\n" +
+                "***                    Priorities " + points +
+                "***---------------------------------------------------------***\n" +
+                "***             1 | DYNAMIC FOOD OPTION1 <" + food1 +
+                "***             2 | DYNAMIC FOOD OPTION2 <" + food2 +
+                "***             3 | DYNAMIC FOOD OPTION3 <" + food3 +
+                "***             4 | Pray                 <" + pray +
+                "***             5 | Forage               <" + forage +
+                "***             6 | Woodcutting          <" + woody +
+                "***             7 | Stone Picking        <" + stoney +
+                "***             8 | Mining               <" + mine +
+                "***             9 | Defending            <" + defend +
+                "***            10 | Harvesting           <" + harvest +
+                "***            11 | Forging              <" + forge +
+                "***            12 | Healing              <" + heal +
+                "***            13 | Scouting             <" + scout +
+                "***            14 | Planting             <" + plant +
+                "***            15 | Smithing             <" + smith +
+                "***            16 | Smelting             <" + smelt +
+                "***            17 | Raiding              <" + raid +
+                "***            18 | Engineering          <" + engineer +
+                "***            19 | Building             <" + build +
+                "***            20 | Trading              <" + trade +
+                "***---------------------------------------------------------***\n" +
+                "***   Choose any combination of options to put points into  ***\n" +
+                "***************************************************************\n";
 
         String orc = "???                     ***\n";
         String elf = orc;
@@ -162,7 +234,7 @@ public class GameStrings {
                 "***                3 | Village Inventory                    ***\n" +
                 "***                4 | Buildings                            ***\n" +
                 "***                5 | Inspect Villagers                    ***\n" +
-                "***                6 | Upgrades                             ***\n" +
+                "***                6 | Train (Random Stat - 200 Coins)      ***\n" +
                 "***---------------------------------------------------------***\n" +
                 "***                0 | Continue to Priorities Menu          ***\n" +
                 "***---------------------------------------------------------***\n" +
@@ -172,8 +244,8 @@ public class GameStrings {
                 "***************************************************************\n";
     }
 
-    public static String getStringFromPromptType(PromptMessage msg) {
-        loadStrings();
+    public static String getStringFromPromptType(PromptMessage msg, PriorityManager manager) {
+        loadStrings(manager);
         switch (msg) {
             case BIOME_MENU:
                 return chooseBiome;
@@ -189,6 +261,8 @@ public class GameStrings {
                 return turnMenu;
             case BLURB:
                 return openingBlurb;
+            case PRIORITY_MENU:
+                return priorityMenu;
         }
         return "";
     }

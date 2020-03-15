@@ -45,6 +45,19 @@ public class GameManager {
         return instance;
     }
 
+    public static void reset() {
+        instance.turnNumber = BigInteger.valueOf(1);
+        instance.wood = BigInteger.valueOf(0);
+        instance.stone = BigInteger.valueOf(0);
+        instance.coins = BigInteger.valueOf(0);
+        instance.faith = BigInteger.valueOf(0);
+        instance.mana = BigInteger.valueOf(0);
+        instance.population = BigInteger.valueOf(0);
+        instance.popCap = BigInteger.valueOf(0);
+        instance.date = new Date();
+        instance.updateSeason();
+    }
+
     private void updateSeason() {
         this.season = seasons[this.date.getMonth()];
     }

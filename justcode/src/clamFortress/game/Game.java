@@ -193,8 +193,8 @@ public class Game {
 
     public Integer advanceTurn() {
         Integer dateInc = gameManager.advanceDateByTurn();
-        Logger.getGlobal().info("Time elapsed: " + dateInc + " Days");
-        Database.score(1);
+        Database.score(dateInc);
+        Logger.getGlobal().info("\nTime elapsed: " + dateInc + " Days\nPlayer Global Score: " + Database.getPlayerScore());
         return dateInc;
     }
 

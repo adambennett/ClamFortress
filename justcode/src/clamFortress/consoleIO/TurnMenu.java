@@ -1,6 +1,7 @@
 package clamFortress.consoleIO;
 
 import clamFortress.enums.*;
+import clamFortress.game.logic.*;
 import clamFortress.utilities.persistence.*;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public class TurnMenu extends AbstractConsole  {
                 Database.saveDatabase();
                 return;
             case END_GAME:
+                GameManager.reset();
                 new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
                 return;
             case SKIP_TURN:

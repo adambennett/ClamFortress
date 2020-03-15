@@ -10,23 +10,23 @@ public class Database {
     private static Boolean orcsUnlocked = false;
 
     public static void updateUnlocks() {
-        if (playerScore > 500) {
+        if (playerScore > 50000) {
             aliensUnlocked = true;
         }
 
-        if (playerScore > 400) {
+        if (playerScore > 10000) {
             clamanUnlocked = true;
         }
 
-        if (playerScore > 300) {
+        if (playerScore > 4000) {
             dwarvesUnlocked = true;
         }
 
-        if (playerScore > 200) {
+        if (playerScore > 1000) {
             elvesUnlocked = true;
         }
 
-        if (playerScore > 100) {
+        if (playerScore > 500) {
             orcsUnlocked = true;
         }
     }

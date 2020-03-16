@@ -17,6 +17,11 @@ public class Inventory {
     }
 
     public Boolean contains(Tool t) {
-        return villageTools.contains(t);
+        for (Tool tool : villageTools) {
+            if (t.getClass().equals(tool.getClass())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

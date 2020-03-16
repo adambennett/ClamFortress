@@ -1,8 +1,10 @@
 package clamFortress.actions;
 
 import clamFortress.game.*;
+import clamFortress.models.tools.gathering.Pickaxe;
 
 public class StonePicking extends AbstractGameAction {
+
 
     public StonePicking(Game game) {
         this.setValues(game);
@@ -11,6 +13,7 @@ public class StonePicking extends AbstractGameAction {
 
     @Override
     public void update() {
+        Integer stoneToReturn = 15;
         this.isDone = true;
     }
 }

@@ -28,7 +28,7 @@ public class Board {
     private Integer clay;
     private Integer copperOre;
     private Integer ironOre;
-    private Integer gold;
+    private Integer goldOre;
     private Integer gems;
     private Integer fish;
     private Integer rocks;
@@ -55,7 +55,7 @@ public class Board {
         this.rocks = 0;
         this.sand = 0;
         this.spacegoo = 0;
-        this.gold = 0;
+        this.goldOre = 0;
         this.aliens = new ArrayList<>();
         this.flowers = new HashMap<>();
         this.animals = new HashMap<>();
@@ -207,8 +207,8 @@ public class Board {
         this.ironOre = ironOre;
     }
 
-    public void setGold(Integer gold) {
-        this.gold = gold;
+    public void setGoldOre(Integer goldOre) {
+        this.goldOre = goldOre;
     }
 
     public void setGems(Integer gems) {
@@ -275,8 +275,8 @@ public class Board {
         return ironOre;
     }
 
-    public Integer getGold() {
-        return gold;
+    public Integer getGoldOre() {
+        return goldOre;
     }
 
     public Integer getGems() {

@@ -2,6 +2,12 @@ package clamFortress.models.animals;
 
 public abstract class Animal {
 
-    private Integer amountOfFoodOnButcher;
+    public Integer amountOfFoodOnHunt;
+
+
+    public Integer getAmountOfFoodOnHunt(){
+        return this.amountOfFoodOnHunt;
+    }
+
 
 }

@@ -2,5 +2,5 @@ package clamFortress.models.animals.sea;
 
 import clamFortress.models.animals.*;
 
-public class Seal extends Animal {
+public class Seal extends SeaAnimal {
 }

@@ -1,6 +1,6 @@
 package clamFortress.models.animals.sea;
 
-import clamFortress.models.animals.*;
 
-public class Dolphin extends Animal {
+
+public class Dolphin extends SeaAnimal {
 }

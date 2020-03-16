@@ -7,7 +7,7 @@ import clamFortress.encounters.plagues.*;
 import clamFortress.encounters.raids.AbstractRaid;
 import clamFortress.game.*;
 import clamFortress.game.regions.*;
-import clamFortress.models.beings.player.Survivor;
+import clamFortress.models.beings.player.*;
 import clamFortress.tech.eras.*;
 import org.junit.*;
 import org.omg.CORBA.INTERNAL;
@@ -155,6 +155,33 @@ public class VillageTest {
 
     @Test
     public void addToPopulation() {
+        Survivor test = new Survivor();
+        Survivor testB = new Survivor();
+        Survivor testC = new Survivor();
+        Survivor testD = new Survivor();
+        Survivor testE = new Survivor();
+        Survivor testF = new Survivor();
+        Survivor testG = new Survivor();
+        test.setAgility(10);
+        testB.setAgility(15);
+        Assert.assertEquals(new Integer(0), village.getAgility());
+        village.addToPopulation(test);
+        village.addToPopulation(testB);
+        village.addToPopulation(testC);
+        village.addToPopulation(testD);
+        village.addToPopulation(testE);
+        village.addToPopulation(testF);
+        village.addToPopulation(testG);
+
+        Integer expectedAgility = 25;
+        Integer expectedSize = 5;
+        Integer actualAgility = village.getAgility();
+        Integer actualSize = village.getSurvivors().size();
+        Integer popSize = village.getPopulation();
+
+        Assert.assertEquals(expectedAgility, actualAgility);
+        Assert.assertEquals(expectedSize, actualSize);
+        Assert.assertEquals(expectedSize, popSize);
     }
 
     @Test

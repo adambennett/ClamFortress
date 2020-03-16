@@ -1,6 +1,7 @@
 package clamFortress.consoleIO;
 
 import clamFortress.enums.*;
+import clamFortress.utilities.persistence.*;
 
 import java.util.*;
 
@@ -10,11 +11,21 @@ public class RaceMenu extends AbstractConsole  {
     @Override
     protected void initializeCommands() {
         consoleCommands.put("1", MenuCommands.HUMAN);
-        consoleCommands.put("2", MenuCommands.ORC);
-        consoleCommands.put("3", MenuCommands.ELF);
-        consoleCommands.put("4", MenuCommands.DWARF);
-        consoleCommands.put("5", MenuCommands.CLAMAN);
-        consoleCommands.put("6", MenuCommands.ALIEN);
+        if (Database.getOrcsUnlocked()) {
+            consoleCommands.put("2", MenuCommands.ORC);
+        }
+        if (Database.getElvesUnlocked()) {
+            consoleCommands.put("3", MenuCommands.ELF);
+        }
+        if (Database.getDwarvesUnlocked()) {
+            consoleCommands.put("4", MenuCommands.DWARF);
+        }
+        if (Database.getClamanUnlocked()) {
+            consoleCommands.put("5", MenuCommands.CLAMAN);
+        }
+        if (Database.getAliensUnlocked()) {
+            consoleCommands.put("6", MenuCommands.ALIEN);
+        }
         consoleCommands.put("7", MenuCommands.RANDOM_RACE);
     }
 

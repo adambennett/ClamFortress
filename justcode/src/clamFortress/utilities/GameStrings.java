@@ -30,6 +30,14 @@ public class GameStrings {
         return s;
     }
 
+    private static String formatNoNL(String s, String lenCheck, String endString) {
+        while (s.length() < lenCheck.length()) {
+            s += " ";
+        }
+        s += endString;
+        return s;
+    }
+
     private static void loadStrings(Game game) {
         priorityMenu = "";
         openingBlurb = "Blah blah help your guys survive and thrive... watch out for cLAmS";
@@ -171,7 +179,28 @@ public class GameStrings {
                 "***************************************************************\n";
     }
     
-    public static void loadPriorityMenu(PriorityManager manager) {        
+    public static void loadPriorityMenu(PriorityManager manager, Game game) {
+        String food1Name = "***             1 | ";
+        String food2Name = "***             2 | ";
+        String food3Name = "***             3 | ";
+        ArrayList<FoodOptions> optionEnums = FoodOptions.getOptionsFromRace(game.getPlayerRace());
+        if (optionEnums.size() > 2) {
+            food1Name += optionEnums.get(0).writeInConsole();
+            food2Name += optionEnums.get(1).writeInConsole();
+            food3Name += optionEnums.get(2).writeInConsole();
+        } else if (optionEnums.size() > 1) {
+            food1Name += optionEnums.get(0).writeInConsole();
+            food2Name += optionEnums.get(1).writeInConsole();
+            food3Name += "[Unavailable]";
+        } else if (optionEnums.size() > 0) {
+            food1Name += optionEnums.get(0).writeInConsole();
+            food2Name += "[Unavailable]";
+            food3Name += "[Unavailable]";
+        }
+        String lenny = "                                         ";
+        food1Name = formatNoNL(food1Name, lenny, "<");
+        food2Name = formatNoNL(food2Name, lenny, "<");
+        food3Name = formatNoNL(food3Name, lenny, "<");
         Integer foodPriority1 = manager.getFood1();
         Integer foodPriority2 = manager.getFood2();
         Integer foodPriority3 = manager.getFood3();
@@ -194,10 +223,11 @@ public class GameStrings {
         Integer tradePriority = manager.getTrade();
         String ending = "***";
         String len = "                  ";
+        String foodLen = "                  ";
         String lenB = "                          ";
-        String food1 = format(foodPriority1 + ">", len, ending);
-        String food2 = format(foodPriority2 + ">", len, ending);
-        String food3 = format(foodPriority3 + ">", len, ending);
+        String food1 = format( foodPriority1 + ">", foodLen, ending);
+        String food2 = format(foodPriority2 + ">", foodLen, ending);
+        String food3 = format(foodPriority3 + ">", foodLen, ending);
         String pray = format(prayPriority + ">", len, ending);
         String forage = format(foragePriority + ">", len, ending);
         String woody = format(woodcutPriority + ">", len, ending);
@@ -220,9 +250,9 @@ public class GameStrings {
                 "***************************************************************\n" +
                         "***                    Priorities " + points +
                         "***---------------------------------------------------------***\n" +
-                        "***             1 | DYNAMIC FOOD OPTION1 <" + food1 +
-                        "***             2 | DYNAMIC FOOD OPTION2 <" + food2 +
-                        "***             3 | DYNAMIC FOOD OPTION3 <" + food3 +
+                        food1Name + food1 +
+                        food2Name + food2 +
+                        food3Name + food3 +
                         "***             4 | Pray                 <" + pray +
                         "***             5 | Forage               <" + forage +
                         "***             6 | Woodcutting          <" + woody +
@@ -265,7 +295,7 @@ public class GameStrings {
             case BLURB:
                 return openingBlurb;
             case PRIORITY_MENU:
-                loadPriorityMenu(game.priorityManager);
+                loadPriorityMenu(game.priorityManager, game);
                 return priorityMenu;
         }
         return "";

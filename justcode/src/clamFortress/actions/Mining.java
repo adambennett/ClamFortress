@@ -10,7 +10,6 @@ public class Mining extends AbstractGameAction {
 
     @Override
     public void update() {
-        // do building logic
         this.isDone = true;
     }
 }

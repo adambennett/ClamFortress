@@ -12,8 +12,6 @@ public class Fishing extends AbstractGameAction {
 
     @Override
     public void update() {
-        // do building logic
         this.isDone = true;
-
     }
 }

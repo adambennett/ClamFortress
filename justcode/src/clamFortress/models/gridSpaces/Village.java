@@ -155,9 +155,7 @@ public class Village extends AbstractGridSpace {
         return false;
     }
 
-    public void addBandits(AbstractBandits banditEncounter) {
-        this.occupyingBandits.addAll(banditEncounter.getBandits());
-    }
+
 
     public void reduceBandits(){
         if(occupyingBandits.size() > 0) {
@@ -165,402 +163,305 @@ public class Village extends AbstractGridSpace {
         }
     }
 
+    // Adding to lists
     public void addMiracle(AbstractMiracle m) {
         this.activeMiracles.add(m);
     }
-
     public void addDisaster(AbstractDisaster d) {
         this.ongoingDisasters.add(d);
     }
-
     public void addPlague(AbstractPlague p) {
         this.ongoingPlagues.add(p);
     }
-
     public void addHostileRaid(AbstractRaid r) {
         this.ongoingOpponentRaids.add(r);
     }
-
     public void addFriendlyRaid(AbstractRaid r) {
         this.ongoingFriendlyRaids.add(r);
     }
-
-    public Integer getHunger() {
-        return hunger;
+    public void addBandits(AbstractBandits banditEncounter) {
+        this.occupyingBandits.addAll(banditEncounter.getBandits());
     }
 
+    // Setters
     public void setHunger(Integer hunger) {
         this.hunger = hunger;
     }
-
-    public Integer getBuildingLimit() {
-        return buildingLimit;
-    }
-
     public void setBuildingLimit(Integer buildingLimit) {
         this.buildingLimit = buildingLimit;
     }
-
-    public Era getCurrentEra() {
-        return currentEra;
-    }
-
-    public Double getAgeAvg() {
-        return ageAvg;
-    }
-
-
-
-    public Integer getAgility() {
-        return agility;
-    }
-
-
-
-    public Integer getStrength() {
-        return strength;
-    }
-
-
-
-    public Integer getIntelligence() {
-        return intelligence;
-    }
-
-
-
-    public Integer getDexterity() {
-        return dexterity;
-    }
-
-
-
-    public Integer getMagic() {
-        return magic;
-    }
-
-
-    public Integer getEngineering() {
-        return engineering;
-    }
-
-    public Integer getHealth() {
-        return health;
-    }
-
-    public Integer getClay() {
-        return clay;
-    }
-
     public void setClay(Integer clay) {
         this.clay = clay;
     }
-
-    public Integer getRock() {
-        return rock;
-    }
-
-    public void setRock(Integer rock) {
-        this.rock = rock;
-    }
-
-    public Integer getSpacegoo() {
-        return spacegoo;
-    }
-
+    public void setRock(Integer rock) { this.rock = rock; }
     public void setSpacegoo(Integer spacegoo) {
         this.spacegoo = spacegoo;
     }
-
-    public Integer getIron() {
-        return ironOre;
-    }
-
     public void setIron(Integer iron) {
         this.ironOre = iron;
     }
-
-    public Integer getCopperOre() {
-        return copperOre;
-    }
-
     public void setCopperOre(Integer copperOre) {
         this.copperOre = copperOre;
     }
-
-    public Integer getGoldOre() {
-        return goldOre;
-    }
-
     public void setGoldOre(Integer goldOre) {
         this.goldOre = goldOre;
     }
-
-    public Integer getSand() {
-        return sand;
-    }
-
     public void setSand(Integer sand) {
         this.sand = sand;
     }
-
-    public Integer getFlowers() {
-        return flowers;
-    }
-
     public void setFlowers(Integer flowers) {
         this.flowers = flowers;
     }
-
-    public Integer getSeeds() {
-        return seeds;
-    }
-
     public void setSeeds(Integer seeds) {
         this.seeds = seeds;
     }
-
-    public Integer getBrick() {
-        return brick;
-    }
-
     public void setBrick(Integer brick) {
         this.brick = brick;
     }
-
-    public Integer getLumber() {
-        return lumber;
-    }
-
     public void setLumber(Integer lumber) {
         this.lumber = lumber;
     }
-
-    public Integer getGlass() {
-        return glass;
-    }
-
     public void setGlass(Integer glass) {
         this.glass = glass;
     }
-
-    public Integer getArt() {
-        return art;
-    }
-
     public void setArt(Integer art) {
         this.art = art;
     }
-
-    public Integer getJewelery() {
-        return jewelery;
-    }
-
     public void setJewelery(Integer jewelery) {
         this.jewelery = jewelery;
     }
-
-    public Integer getDefense(){
-        return this.defence;
-    }
-
     public void setDefence(Integer defence){
         this.defence = defence;
     }
-
-    public void incDefense(Integer incAmount){
-        this.defence += incAmount;
-    }
-
-    public Integer getAttackPower(){
-        return this.attackPower;
-    }
-
     public void setAttackPower(Integer attackPower){
         this.attackPower = attackPower;
     }
-
-    public void incAttack(Integer incAmount){
-        this.attackPower+=incAmount;
-    }
-
-    public Double getAgilityAvg() {
-        return agilityAvg;
-    }
-
-    public Double getStrengthAvg() {
-        return strengthAvg;
-    }
-
-    public Double getIntelligenceAvg() {
-        return intelligenceAvg;
-    }
-
-    public Double getDexterityAvg() {
-        return dexterityAvg;
-    }
-
-    public Double getMagicAvg() {
-        return magicAvg;
-    }
-
-    public Double getEngineeringAvg() {
-        return engineeringAvg;
-    }
-
     public void setStone(Integer stone) {
         this.stone = stone;
     }
-
     public void setWood(Integer wood) {
         this.wood = wood;
     }
 
+    // Getters
+    public Integer getHunger() {
+        return hunger;
+    }
+    public Integer getBuildingLimit() {
+        return buildingLimit;
+    }
+    public Era getCurrentEra() {
+        return currentEra;
+    }
+    public Double getAgeAvg() {
+        return ageAvg;
+    }
+    public Integer getAgility() {
+        return agility;
+    }
+    public Integer getStrength() {
+        return strength;
+    }
+    public Integer getIntelligence() {
+        return intelligence;
+    }
+    public Integer getDexterity() {
+        return dexterity;
+    }
+    public Integer getMagic() {
+        return magic;
+    }
+    public Integer getEngineering() {
+        return engineering;
+    }
+    public Integer getHealth() {
+        return health;
+    }
+    public Integer getClay() {
+        return clay;
+    }
+    public Integer getRock() {
+        return rock;
+    }
+    public Integer getSpacegoo() {
+        return spacegoo;
+    }
+    public Integer getIron() {
+        return ironOre;
+    }
+    public Integer getCopperOre() {
+        return copperOre;
+    }
+    public Integer getGoldOre() {
+        return goldOre;
+    }
+    public Integer getSand() {
+        return sand;
+    }
+    public Integer getFlowers() {
+        return flowers;
+    }
+    public Integer getSeeds() {
+        return seeds;
+    }
+    public Integer getBrick() {
+        return brick;
+    }
+    public Integer getLumber() {
+        return lumber;
+    }
+    public Integer getGlass() {
+        return glass;
+    }
+    public Integer getArt() {
+        return art;
+    }
+    public Integer getJewelery() {
+        return jewelery;
+    }
+    public Double getAgilityAvg() {
+        return agilityAvg;
+    }
+    public Double getStrengthAvg() {
+        return strengthAvg;
+    }
+    public Double getIntelligenceAvg() {
+        return intelligenceAvg;
+    }
+    public Double getDexterityAvg() {
+        return dexterityAvg;
+    }
+    public Double getMagicAvg() {
+        return magicAvg;
+    }
+    public Double getEngineeringAvg() {
+        return engineeringAvg;
+    }
+    public Integer getDefense(){
+        return this.defence;
+    }
+    public Integer getAttackPower(){
+        return this.attackPower;
+    }
     public Integer getWood() {
         return this.wood;
     }
-
     public Integer getStone() {
         return this.stone;
     }
-
     public Integer getCoins() {
         return this.coins;
     }
-
     public Integer getFaith() {
         return this.faith;
     }
-
     public Integer getMana() {
         return this.mana;
     }
-
     public Integer getPopulation() {
         return this.population.size();
     }
-
     public Integer getPopCap() {
         return this.popCap;
     }
-
     public Integer getTotalAge() {
         return totalAge;
     }
-
     public Inventory getInventory() {
         return inventory;
     }
-
     public Integer getDefence() {
         return defence;
     }
-
     public Integer getIronOre() {
         return ironOre;
     }
-
     public ArrayList<Bandit> getOccupyingBandits() {
         return occupyingBandits;
     }
-
+    public ArrayList<AbstractBuilding> getBuildings() {
+        return buildings;
+    }
     public ArrayList<AbstractMiracle> getActiveMiracles() {
         return activeMiracles;
     }
-
     public ArrayList<AbstractDisaster> getOngoingDisasters() {
         return ongoingDisasters;
     }
-
     public ArrayList<AbstractPlague> getOngoingPlagues() {
         return ongoingPlagues;
     }
-
     public ArrayList<AbstractRaid> getOngoingOpponentRaids() {
         return ongoingOpponentRaids;
     }
-
     public ArrayList<AbstractRaid> getOngoingFriendlyRaids() {
         return ongoingFriendlyRaids;
     }
 
+    // Increment Variables
+    public void incDefense(Integer incAmount){
+        this.defence += incAmount;
+    }
+    public void incAttack(Integer incAmount){
+        this.attackPower+=incAmount;
+    }
     public void incWood() {
         incWood(1);
     }
-
     public void incWood(int amt) {
         this.wood = this.wood+=amt;
     }
-
-    public void subWood(int amt) {
-        this.wood -= amt;
-    }
-
     public void incStone() {
         incStone(1);
     }
-
     public void incStone(int amt) {
         this.stone += amt;
     }
-
-    public void subStone(int amt) {
-        this.stone -= amt;
-    }
-
     public void incFaith() {
         incFaith(1);
     }
-
     public void incFaith(int amt) {
         this.faith += amt;
     }
-
-    public void subFaith(int amt) {
-        this.faith -= amt;
-    }
-
     public void incMana() {
         incMana(1);
     }
-
     public void incMana(int amt) {
         this.mana += amt;
     }
-
-    public void subMana(int amt) {
-        this.mana -= amt;
-    }
-
-    public void incCoins() {
-        incCoins(1);
-    }
-
+    public void incCoins() { incCoins(1); }
     public void incCoins(int amt) {
         this.coins += amt;
     }
-
-    public void subCoins(int amt) {
-        this.coins -= amt;
-    }
-
-    public void subPop(Survivor s) {
-        this.population.remove(s);
-    }
-
     public void incPopCap() {
         incPopCap(1);
     }
-
     public void incPopCap(int amt) {
         this.popCap += amt;
     }
 
+    // Decrement Variables
     public void subPopCap(int amt) {
         this.popCap = amt;
     }
-
-    public ArrayList<AbstractBuilding> getBuildings() {
-        return buildings;
+    public void subCoins(int amt) {
+        this.coins -= amt;
     }
+    public void subPop(Survivor s) {
+        this.population.remove(s);
+    }
+    public void subMana(int amt) {
+        this.mana -= amt;
+    }
+    public void subFaith(int amt) {
+        this.faith -= amt;
+    }
+    public void subStone(int amt) {
+        this.stone -= amt;
+    }
+    public void subWood(int amt) {
+        this.wood -= amt;
+    }
+
+
 }

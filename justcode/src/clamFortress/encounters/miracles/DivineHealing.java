@@ -4,7 +4,7 @@ import clamFortress.models.*;
 
 public class DivineHealing extends AbstractMiracle {
     @Override
-    public void runEncounter(Village village, Board board) {
+    public void runEncounter(Board board) {
 
     }
 }

@@ -1,16 +1,18 @@
 package clamFortress.consoleIO;
 
 import clamFortress.enums.*;
+import clamFortress.game.*;
 
 import java.util.*;
 
 public class PriorityMenu extends AbstractConsole {
 
+    public PriorityMenu() { super(); }
+
     @Override
     protected void initializeCommands() {
-        manager = currentGame.priorityManager;
-        //manager.setPointsRemaining(currentGame.getVillage().getSurvivors().size());
-        manager.setPointsRemaining(200);
+        manager = Game.priorityManager;
+        manager.setPointsRemaining(manager.getPointsRemaining() + Game.getVillage().getSurvivors().size());
         consoleCommands.put("1", MenuCommands.DYNAMIC_FOOD_A);
         consoleCommands.put("2", MenuCommands.DYNAMIC_FOOD_B);
         consoleCommands.put("3", MenuCommands.DYNAMIC_FOOD_C);
@@ -31,6 +33,13 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("18", MenuCommands.ENGINEERING);
         consoleCommands.put("19", MenuCommands.BUILDING);
         consoleCommands.put("20", MenuCommands.TRADING);
+        consoleCommands.put("0", MenuCommands.CONTINUE);
+    }
+
+    private void runActions() {
+        currentGame.fillActionManagerWithSimpleActions();
+        // complicated actions logic
+        currentGame.runActions();
     }
 
     @Override
@@ -38,7 +47,14 @@ public class PriorityMenu extends AbstractConsole {
         Integer amt = 0;
         if (args.size() > 0) {
         try { amt = Integer.parseInt(args.get(0)); } catch (NumberFormatException ignored) { }}
+        if (amt > manager.getPointsRemaining()) {
+            amt = manager.getPointsRemaining();
+        }
         switch(cmd) {
+            case CONTINUE:
+                runActions();
+                new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
+                break;
             case DYNAMIC_FOOD_A:
                 manager.setFood1(manager.getFood1() + amt);
                 manager.setPointsRemaining(manager.getPointsRemaining() - amt);
@@ -120,14 +136,10 @@ public class PriorityMenu extends AbstractConsole {
                 manager.setPointsRemaining(manager.getPointsRemaining() - amt);
                 break;
         }
+    }
 
-        if (manager.getPointsRemaining() > 0) {
-            printPrompt(PromptMessage.PRIORITY_MENU, true);
-        } else {
-            currentGame.fillActionManagerWithSimpleActions();
-            // complicated actions logic
-            currentGame.runActions();
-            new TurnMenu().advanceTurn();
-        }
+    @Override
+    protected void postMultiline() {
+        printPrompt(PromptMessage.PRIORITY_MENU, true, true);
     }
 }

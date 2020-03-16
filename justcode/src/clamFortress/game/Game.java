@@ -13,204 +13,103 @@ import clamFortress.game.regions.*;
 import clamFortress.models.*;
 import clamFortress.models.beings.player.*;
 import clamFortress.models.buildings.abstracts.*;
-import clamFortress.tech.eras.*;
+import clamFortress.models.gridSpaces.*;
+import clamFortress.models.resources.natural.*;
 import clamFortress.utilities.persistence.*;
 
-import javax.swing.*;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.logging.*;
 
 public class Game {
 
+    public static boolean isLoaded = false;
+
     // Nested Objects
-    public ActionManager actionManager;
-    public PriorityManager priorityManager;
-    private final Board gameBoard;
-    private final GameManager gameManager;
-    private final Village village;
+    public  static ActionManager actionManager;
+    public  static PriorityManager priorityManager;
+    private static Board gameBoard;
+    private static GameManager gameManager;
 
     // Difficulty Modifiers
-    private final Boolean toughEnemies;
-    private final Boolean hostileEnemies;
-    private final Boolean slowResourceGain;
-    private final Boolean frequentBadEvents;
-    private final Boolean terribleDisasters;
-    private final Boolean handicappedStartEquipment;
-    private final Boolean moreNetherworlds;
-    private final Boolean lessEffectiveTools;
-    private final Boolean limitedBlueprintAccess;
-    private final Boolean tradingEnabled;
-    private final Boolean magicEnabled;
-    private final Boolean aliensEnabled;
-    private final Boolean healingEnabled;
-    private final Boolean faithEnabled;
-    private final Boolean surroundingCheckEnabled;
-    private final Race playerRace;
-    private final Modes difficulty;
+    private static Boolean toughEnemies;
+    private static Boolean hostileEnemies;
+    private static Boolean slowResourceGain;
+    private static Boolean frequentBadEvents;
+    private static Boolean terribleDisasters;
+    private static Boolean handicappedStartEquipment;
+    private static Boolean moreNetherworlds;
+    private static Boolean lessEffectiveTools;
+    private static Boolean limitedBlueprintAccess;
+    private static Boolean tradingEnabled;
+    private static Boolean magicEnabled;
+    private static Boolean aliensEnabled;
+    private static Boolean healingEnabled;
+    private static Boolean faithEnabled;
+    private static Boolean surroundingCheckEnabled;
+    private static Race playerRace;
+    private static Modes difficulty;
 
     // Default Settings (for tests)
     public Game() {
         this(Modes.DEFAULT, Race.HUMAN, new Grasslands());
     }
 
-    // Custom Difficulty
-    public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
-        this.actionManager = new ActionManager();
-        this.priorityManager = new PriorityManager();
-        this.difficulty = Modes.CUSTOM;
-        this.playerRace = chosenRace;
-        this.gameManager = GameManager.getInstance();
-        this.gameBoard = new Board();
-        this.village = new Village(startingBiome, new StoneAge());
-        this.village.incPopCap(5);
-        this.village.incWood(100);
-        // TODO: Add 5 villagers of the chosen race to the village
-        this.toughEnemies = customDifficultyMods.contains(1);
-        this.slowResourceGain = customDifficultyMods.contains(2);
-        this.frequentBadEvents = customDifficultyMods.contains(3);
-        this.terribleDisasters = customDifficultyMods.contains(4);
-        this.handicappedStartEquipment = customDifficultyMods.contains(5);
-        this.moreNetherworlds = customDifficultyMods.contains(6);
-        this.hostileEnemies = customDifficultyMods.contains(8);
-        this.lessEffectiveTools = customDifficultyMods.contains(7);
-        this.limitedBlueprintAccess = customDifficultyMods.contains(9);
-        this.tradingEnabled = !customDifficultyMods.contains(10);
-        this.magicEnabled = !customDifficultyMods.contains(11);
-        this.aliensEnabled = !customDifficultyMods.contains(12);
-        this.healingEnabled = !customDifficultyMods.contains(13);
-        this.faithEnabled = !customDifficultyMods.contains(14);
-        this.surroundingCheckEnabled = !customDifficultyMods.contains(15);
+    public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
+        difficulty = gameDifficulty;
+        actionManager = new ActionManager();
+        priorityManager = new PriorityManager();
+        playerRace = chosenRace;
+        gameManager = GameManager.getInstance();
+        gameBoard = new Board(startingBiome, 50, 50);
+        int highRoll = getVillage().getPopCap();
+        int lowRoll = 1;
+        if (highRoll < 2) { highRoll = 2; }
+        int startingSurvivors = ThreadLocalRandom.current().nextInt(lowRoll, highRoll);
+        new NewSurvivors().addToVillage(startingSurvivors);
+        updateDifficultyBools();
+        isLoaded = true;
     }
 
-    public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
-        this.actionManager = new ActionManager();
-        this.priorityManager = new PriorityManager();
-        this.difficulty = gameDifficulty;
-        this.playerRace = chosenRace;
-        this.gameManager = GameManager.getInstance();
-        this.gameBoard = new Board();
-        this.village = new Village(startingBiome, new StoneAge());
-        this.village.incPopCap(5);
-        this.village.incWood(100);
-        // TODO: Add 5 villagers of the chosen race to the village
-        switch (difficulty) {
-            case DEFAULT:
-                // Bad
-                this.toughEnemies = true;
-                this.moreNetherworlds = true;
+    // Custom Difficulty
+    public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
+        difficulty = Modes.CUSTOM;
+        actionManager = new ActionManager();
+        priorityManager = new PriorityManager();        
+        playerRace = chosenRace;
+        gameManager = GameManager.getInstance();
+        gameBoard = new Board(startingBiome, 50, 50);
+        int highRoll = getVillage().getPopCap();
+        int lowRoll = 1;
+        if (highRoll < 2) { highRoll = 2; }
 
-                // Good
-                this.hostileEnemies = false;
-                this.slowResourceGain = false;
-                this.frequentBadEvents = false;
-                this.terribleDisasters = false;
-                this.handicappedStartEquipment = false;
-                this.limitedBlueprintAccess = false;
-                this.lessEffectiveTools = false;
-                this.tradingEnabled = true;
-                this.magicEnabled = true;
-                this.faithEnabled = true;
-                this.aliensEnabled = true;
-                this.healingEnabled = true;
-                this.surroundingCheckEnabled = true;
-                break;
-            case HARD:
-                // Bad
-                this.toughEnemies = true;
-                this.hostileEnemies = true;
-                this.handicappedStartEquipment = true;
-                this.moreNetherworlds = true;
-                this.faithEnabled = false;
-                this.tradingEnabled = false;
+        lowRoll = 199;
+        highRoll = 200;
 
-                // Good
-                this.slowResourceGain = false;
-                this.frequentBadEvents = false;
-                this.terribleDisasters = false;
-                this.lessEffectiveTools = false;
-                this.limitedBlueprintAccess = false;
-                this.magicEnabled = true;
-                this.aliensEnabled = true;
-                this.healingEnabled = true;
-                this.surroundingCheckEnabled = true;
-                break;
-            case BRUTAL:
-                // Bad
-                this.toughEnemies = true;
-                this.hostileEnemies = true;
-                this.handicappedStartEquipment = true;
-                this.moreNetherworlds = true;
-                this.faithEnabled = false;
-                this.tradingEnabled = false;
-                this.slowResourceGain = true;
-                this.frequentBadEvents = true;
-                this.surroundingCheckEnabled = false;
+        int startingSurvivors = ThreadLocalRandom.current().nextInt(lowRoll, highRoll);
+        new NewSurvivors().addToVillage(startingSurvivors);
+        toughEnemies = customDifficultyMods.contains(1);
+        slowResourceGain = customDifficultyMods.contains(2);
+        frequentBadEvents = customDifficultyMods.contains(3);
+        terribleDisasters = customDifficultyMods.contains(4);
+        handicappedStartEquipment = customDifficultyMods.contains(5);
+        moreNetherworlds = customDifficultyMods.contains(6);
+        hostileEnemies = customDifficultyMods.contains(8);
+        lessEffectiveTools = customDifficultyMods.contains(7);
+        limitedBlueprintAccess = customDifficultyMods.contains(9);
+        tradingEnabled = !customDifficultyMods.contains(10);
+        magicEnabled = !customDifficultyMods.contains(11);
+        aliensEnabled = !customDifficultyMods.contains(12);
+        healingEnabled = !customDifficultyMods.contains(13);
+        faithEnabled = !customDifficultyMods.contains(14);
+        surroundingCheckEnabled = !customDifficultyMods.contains(15);
+        isLoaded = true;
+    }
 
-                // Good
-                this.terribleDisasters = false;
-                this.lessEffectiveTools = false;
-                this.limitedBlueprintAccess = false;
-                this.magicEnabled = true;
-                this.aliensEnabled = true;
-                this.healingEnabled = true;
-                break;
-            case NIGHTMARE:
-                // Bad
-                this.toughEnemies = true;
-                this.hostileEnemies = true;
-                this.handicappedStartEquipment = true;
-                this.moreNetherworlds = true;
-                this.faithEnabled = false;
-                this.tradingEnabled = false;
-                this.slowResourceGain = true;
-                this.frequentBadEvents = true;
-                this.surroundingCheckEnabled = false;
-                this.terribleDisasters = true;
-                this.lessEffectiveTools = true;
-                this.limitedBlueprintAccess = true;
-
-                // Good
-                this.magicEnabled = true;
-                this.aliensEnabled = true;
-                this.healingEnabled = true;
-                break;
-            case IMPOSSIBLE:
-                // All bad
-                this.toughEnemies = true;
-                this.hostileEnemies = true;
-                this.slowResourceGain = true;
-                this.frequentBadEvents = true;
-                this.terribleDisasters = true;
-                this.handicappedStartEquipment = true;
-                this.moreNetherworlds = true;
-                this.lessEffectiveTools = true;
-                this.limitedBlueprintAccess = true;
-                this.tradingEnabled = false;
-                this.magicEnabled = false;
-                this.faithEnabled = false;
-                this.aliensEnabled = false;
-                this.healingEnabled = false;
-                this.surroundingCheckEnabled = false;
-                break;
-            default:
-                // All good
-                this.toughEnemies = false;
-                this.hostileEnemies = false;
-                this.slowResourceGain = false;
-                this.frequentBadEvents = false;
-                this.terribleDisasters = false;
-                this.handicappedStartEquipment = false;
-                this.moreNetherworlds = false;
-                this.lessEffectiveTools = false;
-                this.limitedBlueprintAccess = false;
-                this.tradingEnabled = true;
-                this.magicEnabled = true;
-                this.faithEnabled = true;
-                this.aliensEnabled = true;
-                this.healingEnabled = true;
-                this.surroundingCheckEnabled = true;
-                break;
-        }
+    public static ArrayList<Flowers> generateRandomFlowers() {
+        ArrayList<Flowers> flows = new ArrayList<>();
+        // TODO: Add flowers based on difficulty
+        return flows;
     }
 
     public Integer advanceTurn() {
@@ -219,9 +118,9 @@ public class Game {
         if (encounters.size() > 0) {
             dateInc += gameManager.advanceDate(5, 15);
             for (AbstractEncounter enc : encounters) {
-                if (village.canRunEncounter(enc)) {
+                if (gameBoard.getVillage().canRunEncounter(enc)) {
                     Logger.getGlobal().info("\nRandom encounter!! Encounter: " + enc.toString() + "\n");
-                    enc.runEncounter(village, gameBoard);
+                    enc.runEncounter(gameBoard);
                 } else {
                     Logger.getGlobal().info("\nSkipped encounter due to it being active already. Encounter: " + enc.toString() + "\n");
                 }
@@ -250,6 +149,12 @@ public class Game {
     }
 
     public void fillActionManagerWithSimpleActions() {
+        actionManager.addToTurnStart(new NewSurvivors());
+
+        for (int i = 0; i < priorityManager.getScout(); i++) {
+            actionManager.addToTurnEnd(new Scouting(this));
+        }
+
         for (int i = 0; i < priorityManager.getPray(); i++) {
             actionManager.addToBottom(new Praying(this));
         }
@@ -288,114 +193,240 @@ public class Game {
     }
 
     public void newCitizen(Survivor s) {
-        village.addToPopulation(s);
+        gameBoard.getVillage().addToPopulation(s);
     }
 
     public Boolean newBuilding(AbstractBuilding b) {
-        return village.addBuilding(b);
+        return gameBoard.getVillage().addBuilding(b);
     }
 
     public void newMiracle(AbstractMiracle m) {
-        village.addMiracle(m);
+        gameBoard.getVillage().addMiracle(m);
     }
 
     public void newDisaster(AbstractDisaster d) {
-        village.addDisaster(d);
+        gameBoard.getVillage().addDisaster(d);
     }
 
     public void newPlague(AbstractPlague p) {
-        village.addPlague(p);
+        gameBoard.getVillage().addPlague(p);
     }
 
     public void newHostileRaid(AbstractRaid r) {
-        village.addHostileRaid(r);
+        gameBoard.getVillage().addHostileRaid(r);
     }
 
     public void newFriendlyRaid(AbstractRaid r) {
-        village.addFriendlyRaid(r);
+        gameBoard.getVillage().addFriendlyRaid(r);
     }
 
     public void banditEncounter(AbstractBandits encounter) {
-        village.addBandits(encounter);
+        gameBoard.getVillage().addBandits(encounter);
     }
 
-    public Board getGameBoard() {
+    public static Board getGameBoard() {
         return gameBoard;
     }
 
-    public GameManager getGameManager() {
+    public static GameManager getGameManager() {
         return gameManager;
     }
 
-    public Boolean getToughEnemies() {
+    public static Boolean getToughEnemies() {
         return toughEnemies;
     }
 
-    public Boolean getHostileEnemies() {
+    public static Boolean getHostileEnemies() {
         return hostileEnemies;
     }
 
-    public Boolean getSlowResourceGain() {
+    public static Boolean getSlowResourceGain() {
         return slowResourceGain;
     }
 
-    public Boolean getFrequentBadEvents() {
+    public static Boolean getFrequentBadEvents() {
         return frequentBadEvents;
     }
 
-    public Boolean getTerribleDisasters() {
+    public static Boolean getTerribleDisasters() {
         return terribleDisasters;
     }
 
-    public Boolean getHandicappedStartEquipment() {
+    public static Boolean getHandicappedStartEquipment() {
         return handicappedStartEquipment;
     }
 
-    public Boolean getMoreNetherworlds() {
+    public static Boolean getMoreNetherworlds() {
         return moreNetherworlds;
     }
 
-    public Boolean getLessEffectiveTools() {
+    public static Boolean getLessEffectiveTools() {
         return lessEffectiveTools;
     }
 
-    public Boolean getLimitedBlueprintAccess() {
+    public static Boolean getLimitedBlueprintAccess() {
         return limitedBlueprintAccess;
     }
 
-    public Boolean getTradingEnabled() {
+    public static Boolean getTradingEnabled() {
         return tradingEnabled;
     }
 
-    public Boolean getMagicEnabled() {
+    public static Boolean getMagicEnabled() {
         return magicEnabled;
     }
 
-    public Boolean getAliensEnabled() {
+    public static Boolean getAliensEnabled() {
         return aliensEnabled;
     }
 
-    public Boolean getHealingEnabled() {
+    public static Boolean getHealingEnabled() {
         return healingEnabled;
     }
 
-    public Boolean getFaithEnabled() {
+    public static Boolean getFaithEnabled() {
         return faithEnabled;
     }
 
-    public Boolean getSurroundingCheckEnabled() {
+    public static Boolean getSurroundingCheckEnabled() {
         return surroundingCheckEnabled;
     }
 
-    public Race getPlayerRace() {
+    public static Race getPlayerRace() {
         return playerRace;
     }
 
-    public Modes getDifficulty() {
+    public static Modes getDifficulty() {
         return difficulty;
     }
 
-    public Village getVillage() {
-        return village;
+    public static void setDifficulty(Modes newDifficulty) {
+        difficulty = newDifficulty;
+        updateDifficultyBools();
+    }
+    
+    public static Village getVillage() {
+        return gameBoard.getVillage();
+    }
+
+    public static void updateDifficultyBools() {
+        switch (difficulty) {
+            case DEFAULT:
+                // Bad
+                toughEnemies = true;
+                moreNetherworlds = true;
+
+                // Good
+                hostileEnemies = false;
+                slowResourceGain = false;
+                frequentBadEvents = false;
+                terribleDisasters = false;
+                handicappedStartEquipment = false;
+                limitedBlueprintAccess = false;
+                lessEffectiveTools = false;
+                tradingEnabled = true;
+                magicEnabled = true;
+                faithEnabled = true;
+                aliensEnabled = true;
+                healingEnabled = true;
+                surroundingCheckEnabled = true;
+                break;
+            case HARD:
+                // Bad
+                toughEnemies = true;
+                hostileEnemies = true;
+                handicappedStartEquipment = true;
+                moreNetherworlds = true;
+                faithEnabled = false;
+                tradingEnabled = false;
+
+                // Good
+                slowResourceGain = false;
+                frequentBadEvents = false;
+                terribleDisasters = false;
+                lessEffectiveTools = false;
+                limitedBlueprintAccess = false;
+                magicEnabled = true;
+                aliensEnabled = true;
+                healingEnabled = true;
+                surroundingCheckEnabled = true;
+                break;
+            case BRUTAL:
+                // Bad
+                toughEnemies = true;
+                hostileEnemies = true;
+                handicappedStartEquipment = true;
+                moreNetherworlds = true;
+                faithEnabled = false;
+                tradingEnabled = false;
+                slowResourceGain = true;
+                frequentBadEvents = true;
+                surroundingCheckEnabled = false;
+
+                // Good
+                terribleDisasters = false;
+                lessEffectiveTools = false;
+                limitedBlueprintAccess = false;
+                magicEnabled = true;
+                aliensEnabled = true;
+                healingEnabled = true;
+                break;
+            case NIGHTMARE:
+                // Bad
+                toughEnemies = true;
+                hostileEnemies = true;
+                handicappedStartEquipment = true;
+                moreNetherworlds = true;
+                faithEnabled = false;
+                tradingEnabled = false;
+                slowResourceGain = true;
+                frequentBadEvents = true;
+                surroundingCheckEnabled = false;
+                terribleDisasters = true;
+                lessEffectiveTools = true;
+                limitedBlueprintAccess = true;
+
+                // Good
+                magicEnabled = true;
+                aliensEnabled = true;
+                healingEnabled = true;
+                break;
+            case IMPOSSIBLE:
+                // All bad
+                toughEnemies = true;
+                hostileEnemies = true;
+                slowResourceGain = true;
+                frequentBadEvents = true;
+                terribleDisasters = true;
+                handicappedStartEquipment = true;
+                moreNetherworlds = true;
+                lessEffectiveTools = true;
+                limitedBlueprintAccess = true;
+                tradingEnabled = false;
+                magicEnabled = false;
+                faithEnabled = false;
+                aliensEnabled = false;
+                healingEnabled = false;
+                surroundingCheckEnabled = false;
+                break;
+            default:
+                // All good
+                toughEnemies = false;
+                hostileEnemies = false;
+                slowResourceGain = false;
+                frequentBadEvents = false;
+                terribleDisasters = false;
+                handicappedStartEquipment = false;
+                moreNetherworlds = false;
+                lessEffectiveTools = false;
+                limitedBlueprintAccess = false;
+                tradingEnabled = true;
+                magicEnabled = true;
+                faithEnabled = true;
+                aliensEnabled = true;
+                healingEnabled = true;
+                surroundingCheckEnabled = true;
+                break;
+        }
     }
 }

@@ -48,5 +48,7 @@ public enum MenuCommands {
     ENGINEERING,
     BUILDING,
     TRADING,
+    SAVE,
+    RESOURCES,
     SCORE_REALLY_BIG_HACKS
 }

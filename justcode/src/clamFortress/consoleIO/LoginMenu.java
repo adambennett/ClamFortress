@@ -5,7 +5,7 @@ import clamFortress.utilities.builders.*;
 
 import java.util.*;
 
-public class LoginMenu extends AbstractConsole  {
+public class LoginMenu extends AbstractConsole {
 
     @Override
     protected void initializeCommands() {

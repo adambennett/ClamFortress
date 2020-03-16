@@ -61,6 +61,7 @@ public abstract class AbstractGameAction {
         SCOUTING,
         SMITHING,
         TRADING,
+        NEW_SURVIVORS,
         WOODCUTTING;
 
         private ActionType() {

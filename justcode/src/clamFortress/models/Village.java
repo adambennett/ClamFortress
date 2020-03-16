@@ -436,31 +436,31 @@ public class Village {
     }
 
     public Integer getWood() {
-        return wood;
+        return this.wood;
     }
 
     public Integer getStone() {
-        return stone;
+        return this.stone;
     }
 
     public Integer getCoins() {
-        return coins;
+        return this.coins;
     }
 
     public Integer getFaith() {
-        return faith;
+        return this.faith;
     }
 
     public Integer getMana() {
-        return mana;
+        return this.mana;
     }
 
     public Integer getPopulation() {
-        return population.size();
+        return this.population.size();
     }
 
     public Integer getPopCap() {
-        return popCap;
+        return this.popCap;
     }
 
     public void incWood() {

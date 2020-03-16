@@ -13,5 +13,7 @@ public class Engineering extends AbstractGameAction {
     @Override
     public void update() {
         // do building logic
+        this.isDone = true;
+
     }
 }

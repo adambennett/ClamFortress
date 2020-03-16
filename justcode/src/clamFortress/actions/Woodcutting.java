@@ -29,9 +29,9 @@ public class Woodcutting extends AbstractGameAction {
          amountOfWoodToReturn += currentGame.getGameBoard().getNumberOfTreesOnBoard();
      }
 
-        currentGame.getVillage().setWood(amountOfWoodToReturn);
+        currentGame.getVillage().incWood(amountOfWoodToReturn);
 
-            this.isDone = true;
+        this.isDone = true;
     }
 }
 

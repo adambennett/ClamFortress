@@ -12,7 +12,7 @@ public class Hunting extends AbstractGameAction {
 
     @Override
     public void update() {
-
+        this.isDone = true;
 
     }
 }

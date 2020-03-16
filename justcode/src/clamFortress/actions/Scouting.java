@@ -16,5 +16,6 @@ public class Scouting extends AbstractGameAction {
     public void update() {
         // Board.discover(this.region);
         // this.isDone = true;
+        this.isDone = true;
     }
 }

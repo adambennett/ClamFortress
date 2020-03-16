@@ -4,13 +4,10 @@ import clamFortress.encounters.*;
 import clamFortress.encounters.disasters.*;
 import clamFortress.encounters.miracles.*;
 import clamFortress.encounters.plagues.*;
-import clamFortress.game.*;
 import clamFortress.game.regions.*;
 import clamFortress.models.beings.player.*;
 import clamFortress.tech.eras.*;
 import org.junit.*;
-
-import static org.junit.Assert.*;
 
 public class VillageTest {
 
@@ -70,7 +67,7 @@ public class VillageTest {
         village.setGlass(expectedGlass);
         village.setGoldOre(expectedGoldOre);
         village.setHunger(expectedHunger);
-        village.setIron(expectedIron);
+        village.setIronOre(expectedIron);
         village.setJewelery(expectedJewelery);
         village.setLumber(expectedLumber);
         village.setRock(expectedRock);
@@ -93,7 +90,7 @@ public class VillageTest {
         Integer actualGlass = village.getGlass();
         Integer actualGoldOre = village.getGoldOre();
         Integer actualHunger = village.getHunger();
-        Integer actualIron = village.getIron();
+        Integer actualIron = village.getIronOre();
         Integer actualJewelery = village.getJewelery();
         Integer actualLumber = village.getLumber();
         Integer actualRock = village.getRock();
@@ -158,8 +155,14 @@ public class VillageTest {
         Survivor testE = new Survivor();
         Survivor testF = new Survivor();
         Survivor testG = new Survivor();
-        test.setAgility(10);
-        testB.setAgility(15);
+        test.setAgility(100);
+        test.setIntelligence(100);
+        test.setDexterity(100);
+        test.setMagic(100);
+        test.setHealthPoints(60);
+        test.setEngineering(100);
+        test.setAge(80);
+        test.setStrength(100);
         Assert.assertEquals(new Integer(0), village.getAgility());
         village.addToPopulation(test);
         village.addToPopulation(testB);
@@ -168,14 +171,37 @@ public class VillageTest {
         village.addToPopulation(testE);
         village.addToPopulation(testF);
         village.addToPopulation(testG);
-
-        Integer expectedAgility = 25;
-        Integer expectedSize = 5;
         Integer actualAgility = village.getAgility();
         Integer actualSize = village.getSurvivors().size();
         Integer popSize = village.getPopulation();
-
-        Assert.assertEquals(expectedAgility, actualAgility);
+        Integer actualInt = village.getIntelligence();
+        Integer actualDex = village.getDexterity();
+        Integer actualMagic = village.getMagic();
+        Integer actualHealth = village.getHealth();
+        Integer actualTotalAge = village.getTotalAge();
+        Integer actualTotalStr = village.getStrength();
+        Double actualIntAvg = village.getIntelligenceAvg();
+        Double actualDexAvg = village.getDexterityAvg();
+        Double actualAgiAvg = village.getAgilityAvg();
+        Double actualMagAvg = village.getMagicAvg();
+        Double actualEngAvg = village.getEngineeringAvg();
+        Double actualAvgAge = village.getAgeAvg();
+        Integer expectedSize = 5;
+        Integer expected = 100;
+        Double expectedDub = 20.0;
+        Assert.assertEquals(expected, actualInt);
+        Assert.assertEquals(expected, actualDex);
+        Assert.assertEquals(expected, actualMagic);
+        Assert.assertEquals(expected, actualHealth);
+        Assert.assertEquals(expected, actualTotalAge);
+        Assert.assertEquals(expected, actualTotalStr);
+        Assert.assertEquals(expected, actualAgility);
+        Assert.assertEquals(expectedDub, actualIntAvg);
+        Assert.assertEquals(expectedDub, actualDexAvg);
+        Assert.assertEquals(expectedDub, actualAgiAvg);
+        Assert.assertEquals(expectedDub, actualMagAvg);
+        Assert.assertEquals(expectedDub, actualEngAvg);
+        Assert.assertEquals(expectedDub, actualAvgAge);
         Assert.assertEquals(expectedSize, actualSize);
         Assert.assertEquals(expectedSize, popSize);
     }

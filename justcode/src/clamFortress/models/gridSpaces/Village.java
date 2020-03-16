@@ -127,7 +127,7 @@ public class Village extends AbstractGridSpace {
         this.agilityAvg =         (double)this.agility / (double) this.population.size();
         this.strengthAvg =        (double)this.strength / (double) this.population.size();
         this.intelligenceAvg =    (double)this.intelligence / (double) this.population.size();
-        this.dexterityAvg =       (double)this.defence / (double) this.population.size();
+        this.dexterityAvg =       (double)this.dexterity / (double) this.population.size();
         this.magicAvg =           (double)this.magic / (double) this.population.size();
         this.engineeringAvg =     (double)this.engineering / (double) this.population.size();
     }
@@ -197,7 +197,7 @@ public class Village extends AbstractGridSpace {
     public void setSpacegoo(Integer spacegoo) {
         this.spacegoo = spacegoo;
     }
-    public void setIron(Integer iron) {
+    public void setIronOre(Integer iron) {
         this.ironOre = iron;
     }
     public void setCopperOre(Integer copperOre) {
@@ -286,7 +286,7 @@ public class Village extends AbstractGridSpace {
     public Integer getSpacegoo() {
         return spacegoo;
     }
-    public Integer getIron() {
+    public Integer getIronOre() {
         return ironOre;
     }
     public Integer getCopperOre() {
@@ -372,9 +372,6 @@ public class Village extends AbstractGridSpace {
     }
     public Integer getDefence() {
         return defence;
-    }
-    public Integer getIronOre() {
-        return ironOre;
     }
     public ArrayList<Bandit> getOccupyingBandits() {
         return occupyingBandits;

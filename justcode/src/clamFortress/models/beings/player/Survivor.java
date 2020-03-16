@@ -3,6 +3,7 @@ package clamFortress.models.beings.player;
 import clamFortress.enums.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public  class Survivor {
     private Integer agility;
@@ -34,14 +35,19 @@ public  class Survivor {
     }
 
     //This is a nullary constructor because im not sure if we are going to have each one use the constructor from Survivor
-    public Survivor(){};
-
-    public void putRelation(Survivor s, Relation r) {
-        // put new relation in map @ s
-    }
-
-    public void getRelations(Survivor s) {
-        this.relations.get(s);
+    public Survivor(){
+        this.agility = 0;
+        this.strength = 0;
+        this.dexterity = 0;
+        this.intelligence = 0;
+        this.magic = 0;
+        this.engineering = 0;
+        this.healthPoints = 10;
+        this.age = 5;
+        this.name = "Villager";
+        this.race = Race.HUMAN;
+        this.gender = Gender.MALE;
+        this.relations = new HashMap<>();
     }
 
     public Integer getAgility() {

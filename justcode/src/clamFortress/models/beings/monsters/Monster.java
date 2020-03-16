@@ -4,7 +4,7 @@ import clamFortress.enums.*;
 
 import java.util.*;
 
-public abstract class Monster {
+public class Monster {
 
     private Integer agility;
     private Integer strength;
@@ -32,7 +32,19 @@ public abstract class Monster {
         this.race = race;
     }
 
-    public Monster(){};
+    public Monster(){
+        this.agility = 0;
+        this.strength = 0;
+        this.dexterity = 0;
+        this.intelligence = 0;
+        this.magic = 0;
+        this.engineering = 0;
+        this.healthPoints = 10;
+        this.age = 5;
+        this.name = "Monster";
+        this.race = Race.HUMAN;
+        this.gender = Gender.MALE;
+    }
 
     public Integer getAgility() {
         return agility;

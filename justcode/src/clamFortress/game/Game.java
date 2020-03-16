@@ -190,6 +190,8 @@ public class Game {
         for (int i = 0; i < priorityManager.getHeal(); i++) {
             actionManager.addToBottom(new Healing(this));
         }
+
+        // TODO: Add hunger subtract survivors action to end of turn queue
     }
 
     public void newCitizen(Survivor s) {

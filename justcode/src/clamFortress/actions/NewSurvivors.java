@@ -17,6 +17,7 @@ public class NewSurvivors extends AbstractGameAction {
 
     @Override
     public void update() {
+        // TODO: Check Hunger level and subtract some new survivors based on random roll with it
         int pop = Game.getVillage().getPopulation();
         int popCap = Game.getVillage().getPopCap();
         int diff = popCap - pop;

@@ -198,7 +198,6 @@ public class GameStrings {
     }
 
     public static void loadPriorityMenu() {
-        PriorityManager manager = Game.priorityManager;
         String food1Name = "***             1 | ";
         String food2Name = "***             2 | ";
         String food3Name = "***             3 | ";
@@ -224,26 +223,26 @@ public class GameStrings {
         food1Name = formatNoNL(food1Name, lenny);
         food2Name = formatNoNL(food2Name, lenny);
         food3Name = formatNoNL(food3Name, lenny);
-        Integer foodPriority1 = manager.getFood1();
-        Integer foodPriority2 = manager.getFood2();
-        Integer foodPriority3 = manager.getFood3();
-        Integer prayPriority = manager.getPray();
-        Integer foragePriority = manager.getForage();
-        Integer woodcutPriority = manager.getWoodcut();
-        Integer stonePickPriority = manager.getStone();
-        Integer miningPriority = manager.getMine();
-        Integer defendPriority = manager.getDefend();
-        Integer harvestPriority = manager.getHarvest();
-        Integer forgePriority = manager.getForge();
-        Integer healPriority = manager.getHeal();
-        Integer scoutPriority = manager.getScout();
-        Integer plantPriority = manager.getPlant();
-        Integer smithPriority = manager.getSmith();
-        Integer smeltPriority = manager.getSmelt();
-        Integer raidPriority = manager.getRaid();
-        Integer engineerPriority = manager.getEngineer();
-        Integer buildPriority = manager.getBuild();
-        Integer tradePriority = manager.getTrade();
+        Integer foodPriority1 = PriorityManager.getFood1();
+        Integer foodPriority2 = PriorityManager.getFood2();
+        Integer foodPriority3 = PriorityManager.getFood3();
+        Integer prayPriority = PriorityManager.getPray();
+        Integer foragePriority = PriorityManager.getForage();
+        Integer woodcutPriority = PriorityManager.getWoodcut();
+        Integer stonePickPriority = PriorityManager.getStone();
+        Integer miningPriority = PriorityManager.getMine();
+        Integer defendPriority = PriorityManager.getDefend();
+        Integer harvestPriority = PriorityManager.getHarvest();
+        Integer forgePriority = PriorityManager.getForge();
+        Integer healPriority = PriorityManager.getHeal();
+        Integer scoutPriority = PriorityManager.getScout();
+        Integer plantPriority = PriorityManager.getPlant();
+        Integer smithPriority = PriorityManager.getSmith();
+        Integer smeltPriority = PriorityManager.getSmelt();
+        Integer raidPriority = PriorityManager.getRaid();
+        Integer engineerPriority = PriorityManager.getEngineer();
+        Integer buildPriority = PriorityManager.getBuild();
+        Integer tradePriority = PriorityManager.getTrade();
         String ending = "***";
         String len = "                  ";
         String foodLen = "                  ";
@@ -268,7 +267,7 @@ public class GameStrings {
         String engineer = format(engineerPriority + ">", len, ending);
         String build = format(buildPriority + ">", len, ending);
         String trade = format(tradePriority + ">", len, ending);
-        String points = format("(" + manager.getPointsRemaining() + ")" , lenB, ending);
+        String points = format("(" + PriorityManager.getPointsRemaining() + ")" , lenB, ending);
         priorityMenu =
                         "***************************************************************\n" +
                         "***                      PRIORITY PHASE                     ***\n" +

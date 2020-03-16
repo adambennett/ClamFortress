@@ -1,6 +1,7 @@
 package clamFortress.game;
 
 import clamFortress.actions.*;
+import clamFortress.consoleIO.*;
 import clamFortress.encounters.*;
 import clamFortress.encounters.bandits.*;
 import clamFortress.encounters.disasters.*;
@@ -28,7 +29,6 @@ public class Game {
 
     // Nested Objects
     public  static ActionManager actionManager;
-    public  static PriorityManager priorityManager;
     private static Board gameBoard;
     private static GameManager gameManager;
 
@@ -58,16 +58,13 @@ public class Game {
 
     public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
         TechTree.resetTechTree();
+        PriorityManager.reset(true);
         difficulty = gameDifficulty;
         actionManager = new ActionManager();
-        priorityManager = new PriorityManager();
         playerRace = chosenRace;
         gameManager = GameManager.getInstance();
         gameBoard = new Board(startingBiome, 50, 50);
-        int highRoll = getVillage().getPopCap();
-        int lowRoll = 1;
-        if (highRoll < 2) { highRoll = 2; }
-        int startingSurvivors = ThreadLocalRandom.current().nextInt(lowRoll, highRoll);
+        int startingSurvivors = ThreadLocalRandom.current().nextInt(0, 5);
         new NewSurvivors().addToVillage(startingSurvivors);
         updateDifficultyBools();
         isLoaded = true;
@@ -76,20 +73,13 @@ public class Game {
     // Custom Difficulty
     public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
         TechTree.resetTechTree();
+        PriorityManager.reset(true);
         difficulty = Modes.CUSTOM;
         actionManager = new ActionManager();
-        priorityManager = new PriorityManager();        
         playerRace = chosenRace;
         gameManager = GameManager.getInstance();
         gameBoard = new Board(startingBiome, 50, 50);
-        int highRoll = getVillage().getPopCap();
-        int lowRoll = 1;
-        if (highRoll < 2) { highRoll = 2; }
-
-        lowRoll = 199;
-        highRoll = 200;
-
-        int startingSurvivors = ThreadLocalRandom.current().nextInt(lowRoll, highRoll);
+        int startingSurvivors = ThreadLocalRandom.current().nextInt(0, 5);
         new NewSurvivors().addToVillage(startingSurvivors);
         toughEnemies = customDifficultyMods.contains(1);
         slowResourceGain = customDifficultyMods.contains(2);
@@ -115,7 +105,7 @@ public class Game {
         return flows;
     }
 
-    public Integer advanceTurn() {
+    public static Integer advanceTurn() {
         Integer dateInc = 0;
         ArrayList<AbstractEncounter> encounters = EncounterManager.generateEncounters();
         if (encounters.size() > 0) {
@@ -144,53 +134,54 @@ public class Game {
         return dateInc;
     }
 
-    public void runActions() {
+    public static void runActions() {
         while (!actionManager.actions.isEmpty() || !actionManager.preTurnActions.isEmpty() || !actionManager.postTurnActions.isEmpty()) {
             actionManager.update();
         }
-        priorityManager.reset();
+        PriorityManager.reset(difficulty.compareTo(Modes.HARD) > 0);
     }
 
-    public void fillActionManagerWithSimpleActions() {
+    public static void fillActionManagerWithSimpleActions() {
         actionManager.addToTurnStart(new NewSurvivors());
+        actionManager.addToTurnEnd(new EndPhaseHunger());
 
-        for (int i = 0; i < priorityManager.getScout(); i++) {
+        for (int i = 0; i < PriorityManager.getScout(); i++) {
             actionManager.addToTurnEnd(new Scouting());
         }
 
-        for (int i = 0; i < priorityManager.getPray(); i++) {
+        for (int i = 0; i < PriorityManager.getPray(); i++) {
             actionManager.addToBottom(new Praying());
         }
 
-        for (int i = 0; i < priorityManager.getForage(); i++) {
+        for (int i = 0; i < PriorityManager.getForage(); i++) {
             actionManager.addToBottom(new Foraging());
         }
 
-        for (int i = 0; i < priorityManager.getWoodcut(); i++) {
+        for (int i = 0; i < PriorityManager.getWoodcut(); i++) {
             actionManager.addToBottom(new Woodcutting());
         }
 
-        for (int i = 0; i < priorityManager.getStone(); i++) {
+        for (int i = 0; i < PriorityManager.getStone(); i++) {
             actionManager.addToBottom(new StonePicking());
         }
 
-        for (int i = 0; i < priorityManager.getMine(); i++) {
+        for (int i = 0; i < PriorityManager.getMine(); i++) {
             actionManager.addToBottom(new Mining());
         }
 
-        for (int i = 0; i < priorityManager.getDefend(); i++) {
+        for (int i = 0; i < PriorityManager.getDefend(); i++) {
             actionManager.addToBottom(new Defense());
         }
 
-        for (int i = 0; i < priorityManager.getHarvest(); i++) {
+        for (int i = 0; i < PriorityManager.getHarvest(); i++) {
             actionManager.addToBottom(new Harvesting());
         }
 
-        for (int i = 0; i < priorityManager.getForge(); i++) {
+        for (int i = 0; i < PriorityManager.getForge(); i++) {
             actionManager.addToBottom(new Forging());
         }
 
-        for (int i = 0; i < priorityManager.getHeal(); i++) {
+        for (int i = 0; i < PriorityManager.getHeal(); i++) {
             actionManager.addToBottom(new Healing());
         }
 
@@ -224,12 +215,16 @@ public class Game {
         difficulty = newDifficulty;
         updateDifficultyBools();
     }
-    
+
+    public static Modes getDifficulty() {
+        return difficulty;
+    }
+
     public static Village getVillage() {
         return gameBoard.getVillage();
     }
 
-    public static void updateDifficultyBools() {
+    private static void updateDifficultyBools() {
         switch (difficulty) {
             case DEFAULT:
                 // Bad

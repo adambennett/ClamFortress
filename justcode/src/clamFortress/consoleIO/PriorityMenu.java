@@ -2,6 +2,7 @@ package clamFortress.consoleIO;
 
 import clamFortress.enums.*;
 import clamFortress.game.*;
+import clamFortress.game.logic.*;
 
 import java.util.*;
 
@@ -11,8 +12,8 @@ public class PriorityMenu extends AbstractConsole {
 
     @Override
     protected void initializeCommands() {
-        manager = Game.priorityManager;
-        manager.setPointsRemaining(manager.getPointsRemaining() + Game.getVillage().getSurvivors().size());
+        int newPoints = PriorityManager.getPointsRemaining() + Game.getVillage().getPopulation();
+        PriorityManager.setPointsRemaining(newPoints);
         consoleCommands.put("1", MenuCommands.DYNAMIC_FOOD_A);
         consoleCommands.put("2", MenuCommands.DYNAMIC_FOOD_B);
         consoleCommands.put("3", MenuCommands.DYNAMIC_FOOD_C);
@@ -37,9 +38,9 @@ public class PriorityMenu extends AbstractConsole {
     }
 
     private void runActions() {
-        currentGame.fillActionManagerWithSimpleActions();
+        Game.fillActionManagerWithSimpleActions();
         // complicated actions logic
-        currentGame.runActions();
+        Game.runActions();
     }
 
     @Override
@@ -47,8 +48,8 @@ public class PriorityMenu extends AbstractConsole {
         Integer amt = 0;
         if (args.size() > 0) {
         try { amt = Integer.parseInt(args.get(0)); } catch (NumberFormatException ignored) { }}
-        if (amt > manager.getPointsRemaining()) {
-            amt = manager.getPointsRemaining();
+        if (amt > PriorityManager.getPointsRemaining()) {
+            amt = PriorityManager.getPointsRemaining();
         }
         switch(cmd) {
             case CONTINUE:
@@ -56,84 +57,84 @@ public class PriorityMenu extends AbstractConsole {
                 new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
                 break;
             case DYNAMIC_FOOD_A:
-                manager.setFood1(manager.getFood1() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setFood1(PriorityManager.getFood1() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case DYNAMIC_FOOD_B:
-                manager.setFood2(manager.getFood2() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setFood2(PriorityManager.getFood2() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case DYNAMIC_FOOD_C:
-                manager.setFood3(manager.getFood3() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setFood3(PriorityManager.getFood3() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case PRAY:
-                manager.setPray(manager.getPray() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setPray(PriorityManager.getPray() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case FORAGE:
-                manager.setForage(manager.getForage() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setForage(PriorityManager.getForage() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case WOODCUTTING:
-                manager.setWoodcut(manager.getWoodcut() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setWoodcut(PriorityManager.getWoodcut() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case STONE_PICK:
-                manager.setStone(manager.getStone() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setStone(PriorityManager.getStone() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case MINING:
-                manager.setMine(manager.getMine() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setMine(PriorityManager.getMine() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case DEFENDING:
-                manager.setDefend(manager.getDefend() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setDefend(PriorityManager.getDefend() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case HARVESTING:
-                manager.setHarvest(manager.getHarvest() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setHarvest(PriorityManager.getHarvest() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case FORGING:
-                manager.setForge(manager.getForge() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setForge(PriorityManager.getForge() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case HEALING:
-                manager.setHeal(manager.getHeal() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setHeal(PriorityManager.getHeal() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case SCOUTING:
-                manager.setScout(manager.getScout() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setScout(PriorityManager.getScout() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case PLANTING:
-                manager.setPlant(manager.getPlant() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setPlant(PriorityManager.getPlant() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case SMITHING:
-                manager.setSmith(manager.getSmith() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setSmith(PriorityManager.getSmith() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case SMELTING:
-                manager.setSmelt(manager.getSmelt() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setSmelt(PriorityManager.getSmelt() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case RAIDING:
-                manager.setRaid(manager.getRaid() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setRaid(PriorityManager.getRaid() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case ENGINEERING:
-                manager.setEngineer(manager.getEngineer() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setEngineer(PriorityManager.getEngineer() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case BUILDING:
-                manager.setBuild(manager.getBuild() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setBuild(PriorityManager.getBuild() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
             case TRADING:
-                manager.setTrade(manager.getTrade() + amt);
-                manager.setPointsRemaining(manager.getPointsRemaining() - amt);
+                PriorityManager.setTrade(PriorityManager.getTrade() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 break;
         }
     }

@@ -37,7 +37,7 @@ public class Board {
     private Integer healingItems;
 
     public Board(AbstractRegion startingBiome, int xMax, int yMax) {
-        this.village = new Village(startingBiome, new StoneAge());
+        this.village = new Village(startingBiome);
         this.village.setxPos(0);
         this.village.setyPos(0);
         this.gridXMax = xMax;

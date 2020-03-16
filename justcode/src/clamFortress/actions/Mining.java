@@ -1,6 +1,7 @@
 package clamFortress.actions;
 
 import clamFortress.game.*;
+import clamFortress.tech.*;
 import clamFortress.tech.eras.BronzeAge;
 
 public class Mining extends AbstractGameAction {
@@ -11,7 +12,7 @@ public class Mining extends AbstractGameAction {
 
     @Override
     public void update() {
-        if(Game.getVillage().getCurrentEra() instanceof BronzeAge){
+        if(TechTree.getCurrentEra() instanceof BronzeAge){
 
         }
         this.isDone = true;

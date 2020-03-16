@@ -16,22 +16,19 @@ import static org.junit.Assert.*;
 public class VillageTest {
 
     private static Village village;
-    private static Era startEra;
     private static AbstractRegion startBiome;
 
     @Before
     public void setup() {
 
         startBiome = new Grasslands();
-        startEra = new BronzeAge();
-        village = new Village(startBiome, startEra);
+        village = new Village(startBiome);
     }
 
     @Test
     public void constructorTest() {
         Assert.assertNotNull(village);
         Assert.assertEquals(startBiome, village.getBiome());
-        Assert.assertEquals(startEra, village.getCurrentEra());
     }
 
     @Test

@@ -12,7 +12,6 @@ public abstract class AbstractConsole {
 
     protected static Game currentGame;
     protected static GameBuilder builder;
-    protected static PriorityManager manager;
     protected Map<String, MenuCommands> consoleCommands;
 
     protected abstract void initializeCommands();
@@ -75,7 +74,7 @@ public abstract class AbstractConsole {
     }
 
     public void findAndProcessMultilineCommand(ArrayList<String> args) {
-        Map<String, ArrayList<String>> parsedCommands = new HashMap<>();
+        LinkedHashMap<String, ArrayList<String>> parsedCommands = new LinkedHashMap<>();
         for (int i = 0; i < args.size(); i++) {
             String cmdCheck = args.get(i);
             ArrayList<String> localArgs = new ArrayList<>();
@@ -89,6 +88,7 @@ public abstract class AbstractConsole {
                 parsedCommands.put(cmdCheck, newListOfArgs);
             } else {
                 parsedCommands.put(cmdCheck, localArgs);
+                i++;
             }
 
         }

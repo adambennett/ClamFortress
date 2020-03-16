@@ -37,7 +37,7 @@ public class TurnMenu extends AbstractConsole {
                 new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
                 return;
             case SKIP_TURN:
-                currentGame.fillActionManagerWithSimpleActions();
+                Game.fillActionManagerWithSimpleActions();
                 advanceTurn();
             case RESOURCES:
                 new ResourceMenu().printPrompt(PromptMessage.RESOURCE_VIEW, true);
@@ -55,7 +55,7 @@ public class TurnMenu extends AbstractConsole {
     }
 
     public void advanceTurn() {
-        Integer dateInc = currentGame.advanceTurn();
+        Integer dateInc = Game.advanceTurn();
         Logger.getGlobal().info("\nGlobal Score: " + Database.getPlayerScore() + "\nTime Elapsed: " + dateInc + " Days");
         printPrompt(PromptMessage.TURN_MENU, true);
     }

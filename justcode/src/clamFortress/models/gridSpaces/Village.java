@@ -17,7 +17,6 @@ import java.util.*;
 
 public class Village extends AbstractGridSpace {
 
-    private Era currentEra;
     private final Inventory inventory;
 
     // Limits
@@ -38,6 +37,8 @@ public class Village extends AbstractGridSpace {
     private Integer health =            0;
     private Integer totalAge =          0;
     private Integer hunger =            0;
+    private Integer famine =            0;
+    private Integer food =              0;
 
     // Average Stats
     private Double ageAvg =             0.0;
@@ -79,9 +80,8 @@ public class Village extends AbstractGridSpace {
     private ArrayList<AbstractRaid>     ongoingFriendlyRaids = new ArrayList<>();
     private ArrayList<Survivor>         population = new ArrayList<>();
 
-    public Village(AbstractRegion biome, Era currentEra) {
+    public Village(AbstractRegion biome) {
         this.biome = biome;
-        this.currentEra = currentEra;
         this.inventory = new Inventory();
     }
 
@@ -147,6 +147,18 @@ public class Village extends AbstractGridSpace {
         }
     }
 
+    public void updateAfterRemoving(Survivor s) {
+        this.strength -= s.getStrength();
+        this.agility -= s.getAgility();
+        this.intelligence -= s.getIntelligence();
+        this.dexterity -= s.getDexterity();
+        this.magic -= s.getMagic();
+        this.engineering -= s.getEngineering();
+        this.health -= s.getHealthPoints();
+        this.totalAge -= s.getAge();
+        updateAverageStats();
+    }
+
     public Boolean addBuilding(AbstractBuilding b) {
         if (buildings.size() < buildingLimit) {
             buildings.add(b);
@@ -196,6 +208,12 @@ public class Village extends AbstractGridSpace {
     public void setPopCap(Integer popCap){this.popCap = popCap;}
     public void setHunger(Integer hunger) {
         this.hunger = hunger;
+        if (this.hunger > 100) {
+            this.hunger = 100;
+        }
+        if (this.hunger < 0) {
+            this.hunger = 0;
+        }
     }
     public void setBuildingLimit(Integer buildingLimit) {
         this.buildingLimit = buildingLimit;
@@ -216,11 +234,9 @@ public class Village extends AbstractGridSpace {
     public void setGoldOre(Integer goldOre) {
         this.goldOre = goldOre;
     }
-
     public void setCoins(Integer coins){
      this.coins=coins;
     }
-
     public void setSand(Integer sand) {
         this.sand = sand;
     }
@@ -263,6 +279,13 @@ public class Village extends AbstractGridSpace {
     public void setFaith(Integer faith){
         this.faith = faith;
     }
+    public void setFood(Integer food) {
+        this.food = food;
+    }
+
+    public void setFamine(Integer famine) {
+        this.famine = famine;
+    }
 
     // Getters
     public Integer getHunger() {
@@ -270,9 +293,6 @@ public class Village extends AbstractGridSpace {
     }
     public Integer getBuildingLimit() {
         return buildingLimit;
-    }
-    public Era getCurrentEra() {
-        return currentEra;
     }
     public Double getAgeAvg() {
         return ageAvg;
@@ -340,6 +360,9 @@ public class Village extends AbstractGridSpace {
     public Integer getJewelery() {
         return jewelery;
     }
+    public Integer getFood() {
+        return food;
+    }
     public Double getAgilityAvg() {
         return agilityAvg;
     }
@@ -388,6 +411,11 @@ public class Village extends AbstractGridSpace {
     public Integer getTotalAge() {
         return totalAge;
     }
+
+    public Integer getFamine() {
+        return famine;
+    }
+
     public Inventory getInventory() {
         return inventory;
     }

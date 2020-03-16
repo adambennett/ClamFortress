@@ -1,6 +1,7 @@
 package clamFortress.models.beings.player;
 
 import clamFortress.enums.*;
+import clamFortress.models.resources.refined.food.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -48,6 +49,10 @@ public  class Survivor {
         this.race = Race.HUMAN;
         this.gender = Gender.MALE;
         this.relations = new HashMap<>();
+    }
+
+    public void feed(AbstractFood food) {
+        this.setHealthPoints(this.healthPoints + food.getHealing());
     }
 
     public Integer getAgility() {

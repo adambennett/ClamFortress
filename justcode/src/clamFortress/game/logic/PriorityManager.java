@@ -1,240 +1,222 @@
 package clamFortress.game.logic;
 
-import clamFortress.actions.*;
-import clamFortress.enums.*;
-import clamFortress.game.*;
-import clamFortress.game.regions.*;
-import clamFortress.models.resources.refined.*;
 
-import javax.swing.*;
-import java.util.*;
-import java.util.concurrent.*;
 
 public class PriorityManager {
 
-    private Integer pointsRemaining = 0;
-    private Integer food1 = 0;
-    private Integer food2 = 0;
-    private Integer food3 = 0;
-    private Integer pray = 0;
-    private Integer forage = 0;
-    private Integer woodcut = 0;
-    private Integer stone = 0;
-    private Integer mine = 0;
-    private Integer defend = 0;
-    private Integer harvest = 0;
-    private Integer forge = 0;
-    private Integer heal = 0;
-    private Integer scout = 0;
-    private Integer plant = 0;
-    private Integer smith = 0;
-    private Integer smelt = 0;
-    private Integer raid = 0;
-    private Integer engineer = 0;
-    private Integer build = 0;
-    private Integer trade = 0;
+    private static Integer  pointsRemaining = 0;
+    private static Integer  food1 = 0;
+    private static Integer  food2 = 0;
+    private static Integer  food3 = 0;
+    private static Integer  pray = 0;
+    private static Integer  forage = 0;
+    private static Integer  woodcut = 0;
+    private static Integer  stone = 0;
+    private static Integer  mine = 0;
+    private static Integer  defend = 0;
+    private static Integer  harvest = 0;
+    private static Integer  forge = 0;
+    private static Integer  heal = 0;
+    private static Integer  scout = 0;
+    private static Integer  plant = 0;
+    private static Integer  smith = 0;
+    private static Integer  smelt = 0;
+    private static Integer  raid = 0;
+    private static Integer  engineer = 0;
+    private static Integer  build = 0;
+    private static Integer  trade = 0;
 
-    public void updatePoints(int popSize) {
-        this.pointsRemaining = popSize;
+    public static void reset(boolean resetPoints) {
+        if (resetPoints) {
+            pointsRemaining = 0;
+        }
+        food1 = 0;
+        food2 = 0;
+        food3 = 0;
+        pray = 0;
+        forage = 0;
+        woodcut = 0;
+        stone = 0;
+        mine = 0;
+        defend = 0;
+        harvest = 0;
+        forge = 0;
+        heal = 0;
+        scout = 0;
+        plant = 0;
+        smith = 0;
+        smelt = 0;
+        raid = 0;
+        engineer = 0;
+        build = 0;
+        trade = 0;
     }
 
-    public void reset() {
-        this.pointsRemaining = 0;
-        this.food1 = 0;
-        this.food2 = 0;
-        this.food3 = 0;
-        this.pray = 0;
-        this.forage = 0;
-        this.woodcut = 0;
-        this.stone = 0;
-        this.mine = 0;
-        this.defend = 0;
-        this.harvest = 0;
-        this.forge = 0;
-        this.heal = 0;
-        this.scout = 0;
-        this.plant = 0;
-        this.smith = 0;
-        this.smelt = 0;
-        this.raid = 0;
-        this.engineer = 0;
-        this.build = 0;
-        this.trade = 0;
-    }
-
-    public Integer getPointsRemaining() {
+    public static Integer getPointsRemaining() {
         return pointsRemaining;
     }
 
-    public void setPointsRemaining(Integer pointsRemaining) {
-        this.pointsRemaining = pointsRemaining;
+    public static void setPointsRemaining(Integer pointsRemaining) {
+        PriorityManager.pointsRemaining = pointsRemaining;
     }
 
-    public ArrayList<AbstractGameAction> getActionsByPriorities() {
-        return null;
-    }
-
-    private Integer getRoll(Integer priority) {
-        return (priority < 1) ? 0 : ThreadLocalRandom.current().nextInt(0, priority);
-    }
-
-    public Integer getFood1() {
+    public static Integer getFood1() {
         return food1;
     }
 
-    public void setFood1(Integer food1) {
-        this.food1 = food1;
+    public static void setFood1(Integer food1) {
+        PriorityManager.food1 = food1;
     }
 
-    public Integer getFood2() {
+    public static Integer getFood2() {
         return food2;
     }
 
-    public void setFood2(Integer food2) {
-        this.food2 = food2;
+    public static void setFood2(Integer food2) {
+        PriorityManager.food2 = food2;
     }
 
-    public Integer getFood3() {
+    public static Integer getFood3() {
         return food3;
     }
 
-    public void setFood3(Integer food3) {
-        this.food3 = food3;
+    public static void setFood3(Integer food3) {
+        PriorityManager.food3 = food3;
     }
 
-    public Integer getPray() {
+    public static Integer getPray() {
         return pray;
     }
 
-    public void setPray(Integer pray) {
-        this.pray = pray;
+    public static void setPray(Integer pray) {
+        PriorityManager.pray = pray;
     }
 
-    public Integer getForage() {
+    public static Integer getForage() {
         return forage;
     }
 
-    public void setForage(Integer forage) {
-        this.forage = forage;
+    public static void setForage(Integer forage) {
+        PriorityManager.forage = forage;
     }
 
-    public Integer getWoodcut() {
+    public static Integer getWoodcut() {
         return woodcut;
     }
 
-    public void setWoodcut(Integer woodcut) {
-        this.woodcut = woodcut;
+    public static void setWoodcut(Integer woodcut) {
+        PriorityManager.woodcut = woodcut;
     }
 
-    public Integer getStone() {
+    public static Integer getStone() {
         return stone;
     }
 
-    public void setStone(Integer stone) {
-        this.stone = stone;
+    public static void setStone(Integer stone) {
+        PriorityManager.stone = stone;
     }
 
-    public Integer getMine() {
+    public static Integer getMine() {
         return mine;
     }
 
-    public void setMine(Integer mine) {
-        this.mine = mine;
+    public static void setMine(Integer mine) {
+        PriorityManager.mine = mine;
     }
 
-    public Integer getDefend() {
+    public static Integer getDefend() {
         return defend;
     }
 
-    public void setDefend(Integer defend) {
-        this.defend = defend;
+    public static void setDefend(Integer defend) {
+        PriorityManager.defend = defend;
     }
 
-    public Integer getHarvest() {
+    public static Integer getHarvest() {
         return harvest;
     }
 
-    public void setHarvest(Integer harvest) {
-        this.harvest = harvest;
+    public static void setHarvest(Integer harvest) {
+        PriorityManager.harvest = harvest;
     }
 
-    public Integer getForge() {
+    public static Integer getForge() {
         return forge;
     }
 
-    public void setForge(Integer forge) {
-        this.forge = forge;
+    public static void setForge(Integer forge) {
+        PriorityManager.forge = forge;
     }
 
-    public Integer getHeal() {
+    public static Integer getHeal() {
         return heal;
     }
 
-    public void setHeal(Integer heal) {
-        this.heal = heal;
+    public static void setHeal(Integer heal) {
+        PriorityManager.heal = heal;
     }
 
-    public Integer getScout() {
+    public static Integer getScout() {
         return scout;
     }
 
-    public void setScout(Integer scout) {
-        this.scout = scout;
+    public static void setScout(Integer scout) {
+        PriorityManager.scout = scout;
     }
 
-    public Integer getPlant() {
+    public static Integer getPlant() {
         return plant;
     }
 
-    public void setPlant(Integer plant) {
-        this.plant = plant;
+    public static void setPlant(Integer plant) {
+        PriorityManager.plant = plant;
     }
 
-    public Integer getSmith() {
+    public static Integer getSmith() {
         return smith;
     }
 
-    public void setSmith(Integer smith) {
-        this.smith = smith;
+    public static void setSmith(Integer smith) {
+        PriorityManager.smith = smith;
     }
 
-    public Integer getSmelt() {
+    public static Integer getSmelt() {
         return smelt;
     }
 
-    public void setSmelt(Integer smelt) {
-        this.smelt = smelt;
+    public static void setSmelt(Integer smelt) {
+        PriorityManager.smelt = smelt;
     }
 
-    public Integer getRaid() {
+    public static Integer getRaid() {
         return raid;
     }
 
-    public void setRaid(Integer raid) {
-        this.raid = raid;
+    public static void setRaid(Integer raid) {
+        PriorityManager.raid = raid;
     }
 
-    public Integer getEngineer() {
+    public static Integer getEngineer() {
         return engineer;
     }
 
-    public void setEngineer(Integer engineer) {
-        this.engineer = engineer;
+    public static void setEngineer(Integer engineer) {
+        PriorityManager.engineer = engineer;
     }
 
-    public Integer getBuild() {
+    public static Integer getBuild() {
         return build;
     }
 
-    public void setBuild(Integer build) {
-        this.build = build;
+    public static void setBuild(Integer build) {
+        PriorityManager.build = build;
     }
 
-    public Integer getTrade() {
+    public static Integer getTrade() {
         return trade;
     }
 
-    public void setTrade(Integer trade) {
-        this.trade = trade;
+    public static void setTrade(Integer trade) {
+        PriorityManager.trade = trade;
     }
 }

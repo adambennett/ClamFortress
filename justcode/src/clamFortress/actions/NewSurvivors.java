@@ -22,7 +22,14 @@ public class NewSurvivors extends AbstractGameAction {
         int popCap = Game.getVillage().getPopCap();
         int diff = popCap - pop;
         if (pop < popCap && diff > 0) {
-            addToVillage(ThreadLocalRandom.current().nextInt(0, diff));
+            int amtOfNewSurvivors = ThreadLocalRandom.current().nextInt(0, diff);
+            int high = Game.getVillage().getHunger();
+            if (high < 1) { high = 1; }
+            int hungerRoll = ThreadLocalRandom.current().nextInt(0, high);
+            amtOfNewSurvivors -= hungerRoll;
+            if (amtOfNewSurvivors > 0) {
+                addToVillage(amtOfNewSurvivors);
+            }
         }
         this.isDone = true;
     }

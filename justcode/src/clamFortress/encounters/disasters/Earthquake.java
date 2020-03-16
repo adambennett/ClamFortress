@@ -1,10 +1,11 @@
 package clamFortress.encounters.disasters;
 
+import clamFortress.game.*;
 import clamFortress.models.*;
 
 public class Earthquake extends AbstractDisaster {
     @Override
-    public void runEncounter(Board board) {
-        board.getVillage().addDisaster(this);
+    public void runEncounter() {
+        Game.getVillage().addDisaster(this);
     }
 }

@@ -163,7 +163,7 @@ public class GameStrings {
         fullDate = format(fullDate, lenCheck, endString);
         faith = format(faith, otherlen, endString);
         turnMenu =
-                "***************************************************************\n" +
+                        "***************************************************************\n" +
                         "***                      STANDBY PHASE                      ***\n" +
                         "***************************************************************\n" +
                         fullDate +

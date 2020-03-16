@@ -15,6 +15,7 @@ import clamFortress.models.beings.player.*;
 import clamFortress.models.buildings.abstracts.*;
 import clamFortress.models.gridSpaces.*;
 import clamFortress.models.resources.natural.*;
+import clamFortress.tech.*;
 import clamFortress.utilities.persistence.*;
 
 import java.util.*;
@@ -56,6 +57,7 @@ public class Game {
     }
 
     public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
+        TechTree.resetTechTree();
         difficulty = gameDifficulty;
         actionManager = new ActionManager();
         priorityManager = new PriorityManager();
@@ -73,6 +75,7 @@ public class Game {
 
     // Custom Difficulty
     public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
+        TechTree.resetTechTree();
         difficulty = Modes.CUSTOM;
         actionManager = new ActionManager();
         priorityManager = new PriorityManager();        
@@ -120,7 +123,7 @@ public class Game {
             for (AbstractEncounter enc : encounters) {
                 if (gameBoard.getVillage().canRunEncounter(enc)) {
                     Logger.getGlobal().info("\nRandom encounter!! Encounter: " + enc.toString() + "\n");
-                    enc.runEncounter(gameBoard);
+                    enc.runEncounter();
                 } else {
                     Logger.getGlobal().info("\nSkipped encounter due to it being active already. Encounter: " + enc.toString() + "\n");
                 }

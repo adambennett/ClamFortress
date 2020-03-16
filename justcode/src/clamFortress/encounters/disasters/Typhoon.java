@@ -4,7 +4,7 @@ import clamFortress.models.*;
 
 public class Typhoon extends AbstractDisaster {
     @Override
-    public void runEncounter(Board board) {
+    public void runEncounter() {
 
     }
 }

@@ -163,6 +163,15 @@ public class Village extends AbstractGridSpace {
         }
     }
 
+    public Boolean containsVillager(Survivor s){
+        for (Survivor sur: population) {
+            if (sur.equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Adding to lists
     public void addMiracle(AbstractMiracle m) {
         this.activeMiracles.add(m);
@@ -184,6 +193,7 @@ public class Village extends AbstractGridSpace {
     }
 
     // Setters
+    public void setPopCap(Integer popCap){this.popCap = popCap;}
     public void setHunger(Integer hunger) {
         this.hunger = hunger;
     }
@@ -206,6 +216,11 @@ public class Village extends AbstractGridSpace {
     public void setGoldOre(Integer goldOre) {
         this.goldOre = goldOre;
     }
+
+    public void setCoins(Integer coins){
+     this.coins=coins;
+    }
+
     public void setSand(Integer sand) {
         this.sand = sand;
     }
@@ -241,6 +256,12 @@ public class Village extends AbstractGridSpace {
     }
     public void setWood(Integer wood) {
         this.wood = wood;
+    }
+    public void setMana(Integer mana){
+        this.mana = mana;
+    }
+    public void setFaith(Integer faith){
+        this.faith = faith;
     }
 
     // Getters
@@ -439,25 +460,43 @@ public class Village extends AbstractGridSpace {
 
     // Decrement Variables
     public void subPopCap(int amt) {
-        this.popCap = amt;
+        this.popCap -= amt;
+        if(this.popCap <0){
+            this.popCap = 0;
+        }
     }
     public void subCoins(int amt) {
         this.coins -= amt;
+        if(this.coins <0){
+            this.coins = 0;
+        }
     }
-    public void subPop(Survivor s) {
+    public void removeSurvivor(Survivor s) {
         this.population.remove(s);
     }
     public void subMana(int amt) {
         this.mana -= amt;
+        if(this.mana < 0){
+            this.mana = 0;
+        }
     }
     public void subFaith(int amt) {
         this.faith -= amt;
+        if(this.faith < 0){
+            this.faith = 0;
+        }
     }
     public void subStone(int amt) {
         this.stone -= amt;
+        if(this.stone < 0){
+            this.stone = 0;
+        }
     }
     public void subWood(int amt) {
         this.wood -= amt;
+        if(this.wood < 0){
+            this.wood = 0;
+        }
     }
 
 

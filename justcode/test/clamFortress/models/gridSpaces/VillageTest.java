@@ -4,10 +4,14 @@ import clamFortress.encounters.*;
 import clamFortress.encounters.disasters.*;
 import clamFortress.encounters.miracles.*;
 import clamFortress.encounters.plagues.*;
+import clamFortress.encounters.raids.AbstractRaid;
+import clamFortress.game.*;
 import clamFortress.game.regions.*;
 import clamFortress.models.beings.player.*;
 import clamFortress.tech.eras.*;
 import org.junit.*;
+
+import static org.junit.Assert.*;
 
 public class VillageTest {
 
@@ -208,26 +212,50 @@ public class VillageTest {
 
     @Test
     public void addBuilding() {
+        //need properbuildings
     }
 
     @Test
     public void addBandits() {
+   //need bandit ecounters
     }
 
     @Test
     public void reduceBandits() {
+        //need bandit encounters
     }
 
     @Test
     public void addMiracle() {
+        AbstractMiracle testM = new Blessing();
+        village.addMiracle(testM);
+        ArrayList<AbstractMiracle> ongoingM = village.getActiveMiracles();
+        Boolean actual = ongoingM.contains(testM);
+
+        Assert.assertTrue(actual);
     }
 
     @Test
     public void addDisaster() {
+        AbstractDisaster testD = new Fire();
+        village.addDisaster(testD);
+        ArrayList<AbstractDisaster> ongoingD = village.getOngoingDisasters();
+        Boolean actual = ongoingD.contains(testD);
+        Boolean expected = true;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void addPlague() {
+        AbstractPlague testP = new Bubonic();
+        village.addPlague(testP);
+        ArrayList<AbstractPlague> ongoing = village.getOngoingPlagues();
+        Boolean actual = ongoing.contains(testP);
+        Boolean expected = true;
+
+        Assert.assertEquals(expected,actual);
+
     }
 
     @Test
@@ -240,85 +268,243 @@ public class VillageTest {
 
     @Test
     public void incDefense() {
+        village.setDefence(50);
+        village.incDefense(1010);
+
+        Integer actual = village.getDefence();
+        Integer expected = 1060;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void incAttack() {
+        village.setAttackPower(100);
+        village.incAttack(50);
+
+        Integer actual = village.getAttackPower();
+        Integer expected = 150;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void incWood() {
+        village.setWood(100);
+        village.incWood();
+
+        Integer actual = village.getWood();
+        Integer expected = 101;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void testIncWood() {
+        village.setWood(100);
+        village.incWood(100);
+
+        Integer actual = village.getWood();
+        Integer expected = 200;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void subWood() {
+        village.setWood(100);
+        village.subWood(150);
+
+        Integer actual = village.getWood();
+        Integer expected = 0;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void incStone() {
+        village.setStone(100);
+        village.incStone();
+
+        Integer actual = village.getStone();
+        Integer expected = 101;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void testIncStone() {
+        village.setStone(100);
+        village.incStone(100);
+
+        Integer actual = village.getStone();
+        Integer expected = 200;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void subStone() {
+        village.setStone(100);
+        village.subStone(50);
+
+        Integer actual = village.getStone();
+        Integer expected = 50;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void incFaith() {
+        village.setFaith(100);
+        village.incFaith();
+
+        Integer actual = village.getFaith();
+        Integer expected = 101;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void testIncFaith() {
+        village.setFaith(100);
+        village.incFaith(55);
+
+        Integer actual = village.getFaith();
+        Integer expected = 155;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void subFaith() {
+        village.setFaith(100);
+        village.subFaith(300);
+
+        Integer actual = village.getFaith();
+        Integer expected = 0;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void incMana() {
+        village.setMana(100);
+        village.incMana();
+
+        Integer actual = village.getMana();
+        Integer expected = 101;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void testIncMana() {
+        village.setMana(100);
+        village.incMana(100);
+
+        Integer actual = village.getMana();
+        Integer expected = 200;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void subMana() {
+        village.setMana(100);
+        village.subMana(500);
+
+        Integer actual = village.getMana();
+        Integer expected = 0;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void incCoins() {
+        village.setCoins(50);
+        village.incCoins();
+
+        Integer actual = village.getCoins();
+        Integer expected = 51;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void testIncCoins() {
+        village.setCoins(50);
+        village.incCoins(100);
+
+        Integer actual = village.getCoins();
+        Integer expected = 150;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void subCoins() {
+        village.setCoins(50);
+        village.subCoins(25);
+
+        Integer actual = village.getCoins();
+        Integer expected = 25;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void subPop() {
+        Survivor tester = new Survivor();
+        village.addToPopulation(tester);
+        village.removeSurvivor(tester);
+        Boolean actual = village.containsVillager(tester);
+        Boolean expected = false;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void incPopCap() {
+        village.setPopCap(5);
+        village.incPopCap();
+
+        Integer actual = village.getPopCap();
+        Integer expected = 6;
+
+        Assert.assertEquals(expected,actual);
     }
 
     @Test
     public void testIncPopCap() {
+        village.setPopCap(5);
+        village.incPopCap(10);
+
+        Integer actual = village.getPopCap();
+        Integer expected = 15;
+
+        Assert.assertEquals(expected,actual);
+
     }
 
     @Test
     public void subPopCap() {
+        village.setPopCap(5);
+        village.subPopCap(2);
+        Integer actual = village.getPopCap();
+        Integer expected = 3;
+
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void testSetPopCap(){
+        village.incPopCap(50);
+        village.setPopCap(10);
+
+        Integer actual = village.getPopCap();
+        Integer expected = 10;
+
+        Assert.assertEquals(expected,actual);
     }
 }

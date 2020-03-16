@@ -12,7 +12,6 @@ public class Forging extends AbstractGameAction {
 
     @Override
     public void update() {
-        // do building logic
         this.isDone = true;
 
     }

@@ -5,14 +5,14 @@ import clamFortress.utilities.*;
 
 import java.util.*;
 
-public class CustomDifficultyMenu extends AbstractConsole  {
+public class CustomDifficultyMenu extends AbstractConsole {
 
     // Unused for this menu
     protected void initializeCommands() {}
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {}
 
     public void printPromptCustomOptions() {
-        String promptString = GameStrings.getStringFromPromptType(PromptMessage.CUSTOM_DIFF_MENU, currentGame);
+        String promptString = GameStrings.getStringFromPromptType(PromptMessage.CUSTOM_DIFF_MENU);
         ConsoleServices.print(promptString);
         getUserInputForCustomOptions();
     }

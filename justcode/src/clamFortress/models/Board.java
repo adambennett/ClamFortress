@@ -1,191 +1,305 @@
 package clamFortress.models;
 
 import clamFortress.encounters.alien.*;
+import clamFortress.game.regions.*;
 import clamFortress.models.animals.Animal;
-import clamFortress.models.resources.*;
+import clamFortress.models.gridSpaces.*;
 import clamFortress.models.resources.natural.Flowers;
-import clamFortress.models.resources.natural.Gems;
 
-import clamFortress.models.tools.medical.HealingTool;
+import clamFortress.tech.eras.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Board {
 
-    private  Integer numberOfTreesOnBoard;
-    private  Integer mineableStoneOnBoard;
-    private  Integer huntableAnimalsOnBoard;
-    private  Integer colectableClayOnBoard;
-    private  Integer mineableCopperOreOnBoard;
-    private  Integer mineableIronOreOnBoard;
-    private  Integer mineableGemsOnBoard;
-    private  Integer fishableFishOnBoard;
-    private  Integer healingItemsOnBoard;
-    private  Map<Flowers,Integer> flowersOnBoard;
-    private  Map<Animal,Integer> animalsInRegionOnBoard;
-    private  ArrayList<AbstractAliens> aliensOnBoard;
+    private Village village;
 
-    public Board() {
-      numberOfTreesOnBoard = 0;
-      mineableStoneOnBoard = 0;
-      huntableAnimalsOnBoard = 0;
-      colectableClayOnBoard = 0;
-      mineableCopperOreOnBoard = 0;
-      mineableIronOreOnBoard = 0;
-      mineableGemsOnBoard = 0;
-      fishableFishOnBoard = 0;
-      healingItemsOnBoard = 0;
-      aliensOnBoard = new ArrayList<>();
-      flowersOnBoard = new HashMap<>();
-      animalsInRegionOnBoard = new HashMap<>();
-  }
+    private Integer gridXMax;
+    private Integer gridYMax;
+    private ArrayList<AbstractGridSpace> grid;
 
-  public void addAlienEncounter(AbstractAliens a) {
-      aliensOnBoard.add(a);
-  }
+    private ArrayList<AbstractAliens> aliens;
+    private Map<Flowers,Integer> flowers;
+    private Map<Animal,Integer> animals;
 
+    private Integer trees;
+    private Integer stone;
+    private Integer clay;
+    private Integer copperOre;
+    private Integer ironOre;
+    private Integer gold;
+    private Integer gems;
+    private Integer fish;
+    private Integer rocks;
+    private Integer sand;
+    private Integer spacegoo;
+    private Integer healingItems;
 
-   public  Integer getNumberOfTreesOnBoard() {
-       return numberOfTreesOnBoard;
-   }
+    public Board(AbstractRegion startingBiome, int xMax, int yMax) {
+        this.village = new Village(startingBiome, new StoneAge());
+        this.village.setxPos(0);
+        this.village.setyPos(0);
+        this.gridXMax = xMax;
+        this.gridYMax = yMax;
+        this.grid = new ArrayList<>();
+        this.grid.add(this.village);
+        this.trees = 0;
+        this.stone = 0;
+        this.clay = 0;
+        this.copperOre = 0;
+        this.ironOre = 0;
+        this.gems = 0;
+        this.fish = 0;
+        this.healingItems = 0;
+        this.rocks = 0;
+        this.sand = 0;
+        this.spacegoo = 0;
+        this.gold = 0;
+        this.aliens = new ArrayList<>();
+        this.flowers = new HashMap<>();
+        this.animals = new HashMap<>();
+    }
 
-   public  void setNumberOfTreesOnBoard(Integer numberOfTreesOnBoard) {
-      this.numberOfTreesOnBoard = numberOfTreesOnBoard;
-   }
+    public AbstractGridSpace getRandomRegion() {
+        int x = 0;
+        int y = 0;
+        boolean canAdd = true;
+        do {
+            canAdd = true;
+            for (AbstractGridSpace space : grid) {
+                if (space.getyPos().equals(y) && space.getxPos().equals(x)) {
+                    canAdd = false;
+                    break;
+                }
+            }
+            if (!canAdd) {
+                x = ThreadLocalRandom.current().nextInt(0, gridXMax);
+                y = ThreadLocalRandom.current().nextInt(0, gridYMax);
+            }
+        } while (!canAdd);
+        return getRandomRegion(x, y);
+    }
 
-   public Integer getMineableStoneOnBoard() {
-      return mineableStoneOnBoard;
-   }
+    public AbstractGridSpace getRandomRegion(int x, int y) {
+        int randTrees = ThreadLocalRandom.current().nextInt(1, 20);
+        int randStones = ThreadLocalRandom.current().nextInt(1, 15);
+        int randRocks = ThreadLocalRandom.current().nextInt(1, 10);
+        return new GrassSpace(x, y, randTrees, randStones, randRocks);
+    }
 
-   public void setMineableStoneOnBoard(Integer mineableStoneOnBoard) {
-      this.mineableStoneOnBoard = mineableStoneOnBoard;
-   }
+    public Boolean discover(AbstractGridSpace region) {
+        return addGridSpace(region);
+    }
 
-   public Integer getHuntableAnimalsOnBoard() {
-      return huntableAnimalsOnBoard;
-   }
+    public Boolean addGridSpace(AbstractGridSpace space) {
+        boolean canAdd = true;
+        for (AbstractGridSpace a : grid) {
+            if (a.getxPos().equals(space.getxPos()) && a.getyPos().equals(space.getyPos())) {
+                canAdd = false;
+                break;
+            } else if (space.getxPos() >= gridXMax || space.getyPos() >= gridYMax) {
+                canAdd = false;
+                break;
+            }
+        }
+        if (canAdd) {
+            this.grid.add(space);
+            return true;
+        }
+        return false;
+    }
 
-   public void setHuntableAnimalsOnBoard(Integer huntableAnimalsOnBoard) {
-      this.huntableAnimalsOnBoard = huntableAnimalsOnBoard;
-   }
+    public void addAnimals(Animal animal) {
+        addAnimals(animal, 1);
+    }
 
-   public Integer getColectableClayOnBoard() {
-      return colectableClayOnBoard;
-   }
+    public void addAnimals(Animal animal, int amt) {
+        if (this.animals.containsKey(animal)) {
+            this.animals.put(animal, this.animals.get(animal) + amt);
+        } else {
+            this.animals.put(animal, amt);
+        }
+    }
 
-   public void setColectableClayOnBoard(Integer colectableClayOnBoard) {
-      this.colectableClayOnBoard = colectableClayOnBoard;
-   }
+    public void addFlowers(Flowers flower) {
+        addFlowers(flower, 1);
+    }
 
-   public Map<Flowers, Integer> getFlowersOnBoard() {
-      return flowersOnBoard;
-   }
+    public void addFlowers(Flowers flower, int amt) {
+        if (this.flowers.containsKey(flower)) {
+            this.flowers.put(flower, this.flowers.get(flower) + amt);
+        } else {
+            this.flowers.put(flower, amt);
+        }
+    }
 
-   public void setFlowersOnBoard(Map<Flowers, Integer> flowersOnBoard) {
-      this.flowersOnBoard = flowersOnBoard;
-   }
+    public void addAlienEncounter(AbstractAliens a) {
+        aliens.add(a);
+    }
 
-   public Integer getMineableCopperOreOnBoard() {
-      return mineableCopperOreOnBoard;
-   }
+    public void reduceTreesOnBoard(Integer amountToCutDown){
+        this.trees -= amountToCutDown;
+        if(this.trees < 0){
+            this.trees =0;
+        }
+    }
 
-   public void setMineableCopperOreOnBoard(Integer mineableCopperOreOnBoard) {
-      this.mineableCopperOreOnBoard = mineableCopperOreOnBoard;
-   }
-
-   public Integer getMineableIronOreOnBoard() {
-      return mineableIronOreOnBoard;
-   }
-
-   public void setMineableIronOreOnBoard(Integer mineableIronOreOnBoard) {
-      this.mineableIronOreOnBoard = mineableIronOreOnBoard;
-   }
-
-   public Integer getMineableGemsOnBoard() {
-      return mineableGemsOnBoard;
-   }
-
-   public void setMineableGemsOnBoard(Integer mineableGemsOnBoard) {
-      this.mineableGemsOnBoard = mineableGemsOnBoard;
-   }
-
-   public Integer getFishableFishOnBoard() {
-      return fishableFishOnBoard;
-   }
-
-   public void setFishableFishOnBoard(Integer fishableFishOnBoard) {
-      this.fishableFishOnBoard = fishableFishOnBoard;
-   }
-
-   public Map<Animal, Integer> getAnimalsInRegionOnBoard() {
-      return animalsInRegionOnBoard;
-   }
-
-   public void setAnimalsInRegionOnBoard(Map<Animal, Integer> animalsInRegionOnBoard) {
-      this.animalsInRegionOnBoard = animalsInRegionOnBoard;
-   }
-
-   public Integer getHealingItemsOnBoard() {
-       return healingItemsOnBoard;
-   }
-
-   public void setHealingItemsOnBoard(Integer healingItemsOnBoard) {
-      this.healingItemsOnBoard = healingItemsOnBoard;
-   }
-
-   public void reduceTreesOnBoard(Integer amountToCutDown){
-      this.numberOfTreesOnBoard -= amountToCutDown;
-       if(this.numberOfTreesOnBoard < 0){
-           this.numberOfTreesOnBoard =0;
-       }
-   }
-
-   public void reduceStoneOnBoard(Integer amountToMine){
-      this.mineableStoneOnBoard -= amountToMine;
-      if(this.mineableStoneOnBoard < 0){
-          this.mineableStoneOnBoard = 0;
-      }
-   }
+    public void reduceStoneOnBoard(Integer amountToMine){
+        this.stone -= amountToMine;
+        if(this.stone < 0){
+            this.stone = 0;
+        }
+    }
 
     public void reduceCopperOreOnBoard(Integer amountToMine){
-        this.mineableCopperOreOnBoard -= amountToMine;
-        if(this.mineableCopperOreOnBoard < 0){
-            this.mineableCopperOreOnBoard = 0;
+        this.copperOre -= amountToMine;
+        if(this.copperOre < 0){
+            this.copperOre = 0;
         }
     }
 
     public void reduceIronOreOnBoard(Integer amountToMine){
-      this.mineableIronOreOnBoard -= amountToMine;
-        if(this.mineableIronOreOnBoard < 0){
-            this.mineableIronOreOnBoard = 0;
+        this.ironOre -= amountToMine;
+        if(this.ironOre < 0){
+            this.ironOre = 0;
         }
     }
 
     public void reduceGemsOnBoard(Integer amountToMine){
-        this.mineableGemsOnBoard -= amountToMine;
-        if(this.mineableGemsOnBoard < 0){
-            this.mineableGemsOnBoard = 0;
+        this.gems -= amountToMine;
+        if(this.gems < 0){
+            this.gems = 0;
         }
     }
 
     public void reduceFishOnBoard(Integer amountToMine){
-        this.fishableFishOnBoard -= amountToMine;
-        if(this.fishableFishOnBoard < 0){
-            this.fishableFishOnBoard = 0;
+        this.fish -= amountToMine;
+        if(this.fish < 0){
+            this.fish = 0;
         }
     }
 
-    public void reduceHuntableAnimals(Integer amountToHunt){
-      this.huntableAnimalsOnBoard -= amountToHunt;
-      if(this.huntableAnimalsOnBoard < 0){
-          huntableAnimalsOnBoard = 0;
-      }
+    public void reduceHealingItemsOnBoard(Integer amountToUse){
+        this.healingItems -= amountToUse;
+        if(this.healingItems < 0){
+            healingItems = 0;
+        }
     }
 
-    public void reduceHealingItemsOnBoard(Integer amountToUse){
-      this.healingItemsOnBoard -= amountToUse;
-      if(this.healingItemsOnBoard < 0){
-          healingItemsOnBoard = 0;
-      }
+    public void setTrees(Integer trees) {
+        this.trees = trees;
+    }
+
+    public void setStone(Integer stone) {
+        this.stone = stone;
+    }
+
+    public void setClay(Integer clay) {
+        this.clay = clay;
+    }
+
+    public void setCopperOre(Integer copperOre) {
+        this.copperOre = copperOre;
+    }
+
+    public void setIronOre(Integer ironOre) {
+        this.ironOre = ironOre;
+    }
+
+    public void setGold(Integer gold) {
+        this.gold = gold;
+    }
+
+    public void setGems(Integer gems) {
+        this.gems = gems;
+    }
+
+    public void setFish(Integer fish) {
+        this.fish = fish;
+    }
+
+    public void setRocks(Integer rocks) {
+        this.rocks = rocks;
+    }
+
+    public void setSand(Integer sand) {
+        this.sand = sand;
+    }
+
+    public void setSpacegoo(Integer spacegoo) {
+        this.spacegoo = spacegoo;
+    }
+
+    public void setHealingItems(Integer healingItems) {
+        this.healingItems = healingItems;
+    }
+
+    public Village getVillage() {
+        return village;
+    }
+
+    public ArrayList<AbstractGridSpace> getGrid() {
+        return grid;
+    }
+
+    public ArrayList<AbstractAliens> getAliens() {
+        return aliens;
+    }
+
+    public Map<Flowers, Integer> getFlowers() {
+        return flowers;
+    }
+
+    public Map<Animal, Integer> getAnimals() {
+        return animals;
+    }
+
+    public Integer getTrees() {
+        return trees;
+    }
+
+    public Integer getStone() {
+        return stone;
+    }
+
+    public Integer getClay() {
+        return clay;
+    }
+
+    public Integer getCopperOre() {
+        return copperOre;
+    }
+
+    public Integer getIronOre() {
+        return ironOre;
+    }
+
+    public Integer getGold() {
+        return gold;
+    }
+
+    public Integer getGems() {
+        return gems;
+    }
+
+    public Integer getFish() {
+        return fish;
+    }
+
+    public Integer getRocks() {
+        return rocks;
+    }
+
+    public Integer getSand() {
+        return sand;
+    }
+
+    public Integer getSpacegoo() {
+        return spacegoo;
+    }
+
+    public Integer getHealingItems() {
+        return healingItems;
     }
 }

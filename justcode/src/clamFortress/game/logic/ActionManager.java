@@ -13,12 +13,10 @@ public class ActionManager {
     public AbstractGameAction previous;
     public Phase phase;
     public boolean hasControl;
-    public boolean turnHasEnded;
 
     public ActionManager() {
         this.phase = Phase.WAITING_ON_USER;
         this.hasControl = true;
-        this.turnHasEnded = false;
     }
 
     public void addToBottom(AbstractGameAction action) {
@@ -60,24 +58,20 @@ public class ActionManager {
         }
     }
 
-    public void endTurn() {
-        this.turnHasEnded = true;
-    }
-
     private void getNextAction() {
-        if (!this.actions.isEmpty()) {
-            this.current = this.actions.remove(0);
-            this.phase = Phase.EXECUTING_ACTIONS;
-            this.hasControl = true;
-        }
-
-        else if (!this.preTurnActions.isEmpty()) {
+        if (!this.preTurnActions.isEmpty()) {
             this.current = this.preTurnActions.remove(0);
             this.phase = Phase.EXECUTING_ACTIONS;
             this.hasControl = true;
         }
 
-        else if (this.turnHasEnded && !this.postTurnActions.isEmpty()) {
+        else if (!this.actions.isEmpty()) {
+            this.current = this.actions.remove(0);
+            this.phase = Phase.EXECUTING_ACTIONS;
+            this.hasControl = true;
+        }
+
+        else if (!this.postTurnActions.isEmpty()) {
             this.current = this.postTurnActions.remove(0);
             this.phase = Phase.EXECUTING_ACTIONS;
             this.hasControl = true;

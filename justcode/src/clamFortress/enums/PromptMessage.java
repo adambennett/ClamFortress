@@ -8,5 +8,7 @@ public enum PromptMessage {
     RACE_MENU,
     TURN_MENU,
     PRIORITY_MENU,
+    END_PHASE,
+    RESOURCE_VIEW,
     BLURB
 }

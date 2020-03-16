@@ -1,4 +1,4 @@
-package clamFortress.models;
+package clamFortress.models.gridSpaces;
 
 import clamFortress.encounters.*;
 import clamFortress.encounters.bandits.*;
@@ -7,59 +7,68 @@ import clamFortress.encounters.miracles.*;
 import clamFortress.encounters.plagues.*;
 import clamFortress.encounters.raids.*;
 import clamFortress.game.regions.*;
+import clamFortress.models.*;
 import clamFortress.models.beings.monsters.*;
 import clamFortress.models.beings.player.*;
 import clamFortress.models.buildings.abstracts.*;
 import clamFortress.tech.eras.*;
 
-import java.math.BigInteger;
 import java.util.*;
 
-public class Village {
+public class Village extends AbstractGridSpace {
 
-    private AbstractRegion  biome;
-    private Era             currentEra;
-    private Double          averageAge = 0.0;
-    private Inventory       inventory;
+    private Era currentEra;
+    private final Inventory inventory;
 
+    // Limits
+    private Integer popCap =            5;
+    private Integer buildingLimit =     5;
 
-    private Integer agility = 0;
-    private Integer agilityAvg = 0;
-    private Integer strength = 0;
-    private Integer strengthAvg = 0;
-    private Integer intelligence = 0;
-    private Integer intelligenceAvg = 0;
-    private Integer dexterity = 0;
-    private Integer dexterityAvg = 0;
-    private Integer magic = 0;
-    private Integer magicAvg =0;
-    private Integer engineering = 0;
-    private Integer engineeringAvg = 0;
-    private Integer health = 0;
-    private Integer clay = 0;
-    private Integer brick = 0;
-    private Integer rock = 0;
-    private Integer stone =0;
-    private Integer spacegoo = 0;
-    private Integer ironOre = 0;
-    private Integer copperOre = 0;
-    private Integer goldOre = 0;
-    private Integer coins = 0;
-    private Integer sand = 0;
-    private Integer flowers = 0;
-    private Integer seeds = 0;
-    private Integer wood = 0;
-    private Integer lumber = 0;
-    private Integer glass = 0;
-    private Integer art = 0;
-    private Integer jewelery = 0;
-    private Integer faith = 0;
-    private Integer mana = 0;
-    private Integer popCap = 0;
-    private Integer buildingLimit = 5;
-    private Integer defence = 0;
-    private Integer attackPower = 0;
+    // Combat
+    private Integer defence =           0;
+    private Integer attackPower =       0;
 
+    // Total Stats
+    private Integer agility =           0;
+    private Integer strength =          0;
+    private Integer intelligence =      0;
+    private Integer dexterity =         0;
+    private Integer magic =             0;
+    private Integer engineering =       0;
+    private Integer health =            0;
+    private Integer totalAge =          0;
+
+    // Average Stats
+    private Double ageAvg =             0.0;
+    private Double agilityAvg =         0.0;
+    private Double strengthAvg =        0.0;
+    private Double intelligenceAvg =    0.0;
+    private Double dexterityAvg =       0.0;
+    private Double magicAvg =           0.0;
+    private Double engineeringAvg =     0.0;
+
+    // Resources
+    private Integer wood =              100;
+    private Integer art =               0;
+    private Integer brick =             0;
+    private Integer clay =              0;
+    private Integer coins =             0;
+    private Integer copperOre =         0;
+    private Integer faith =             0;
+    private Integer flowers =           0;
+    private Integer glass =             0;
+    private Integer goldOre =           0;
+    private Integer ironOre =           0;
+    private Integer jewelery =          0;
+    private Integer lumber =            0;
+    private Integer mana =              0;
+    private Integer rock =              0;
+    private Integer sand =              0;
+    private Integer seeds =             0;
+    private Integer spacegoo =          0;
+    private Integer stone =             0;
+
+    // Lists
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
     private ArrayList<AbstractBuilding> buildings = new ArrayList<>();
     private ArrayList<AbstractMiracle>  activeMiracles = new ArrayList<>();
@@ -111,6 +120,16 @@ public class Village {
     public ArrayList<Survivor> getSurvivors() {
         return population;
     }
+    
+    public void updateAverageStats() {
+        ageAvg =             (double)this.totalAge / (double)this.population.size();
+        agilityAvg =         (double)this.agility / (double) this.population.size();
+        strengthAvg =        (double)this.strength / (double) this.population.size();
+        intelligenceAvg =    (double)this.intelligence / (double) this.population.size();
+        dexterityAvg =       (double)this.defence / (double) this.population.size();
+        magicAvg =           (double)this.magic / (double) this.population.size();
+        engineeringAvg =     (double)this.engineering / (double) this.population.size();
+    }
 
     public void addToPopulation(Survivor s) {
         if (population.size() < popCap) {
@@ -122,6 +141,8 @@ public class Village {
             this.magic += s.getMagic();
             this.engineering += s.getEngineering();
             this.health += s.getHealthPoints();
+            this.totalAge += s.getAge();
+            updateAverageStats();
         }
     }
 
@@ -163,10 +184,6 @@ public class Village {
         this.ongoingFriendlyRaids.add(r);
     }
 
-    public AbstractRegion getBiome() {
-        return biome;
-    }
-
     public Integer getBuildingLimit() {
         return buildingLimit;
     }
@@ -179,12 +196,12 @@ public class Village {
         return currentEra;
     }
 
-    public Double getAverageAge() {
-        return averageAge;
+    public Double getAgeAvg() {
+        return ageAvg;
     }
 
-    public void setAverageAge(Double averageAge) {
-        this.averageAge = averageAge;
+    public void setAgeAvg(Double ageAvg) {
+        this.ageAvg = ageAvg;
     }
 
     public Integer getAgility() {
@@ -379,52 +396,52 @@ public class Village {
         this.attackPower+=incAmount;
     }
 
-    public Integer getAgilityAvg() {
+    public Double getAgilityAvg() {
         return agilityAvg;
     }
 
     public void setAgilityAvg() {
-        this.agilityAvg = agility/population.size();
+        this.agilityAvg = (double)agility/(double)population.size();
     }
 
-    public Integer getStrengthAvg() {
+    public Double getStrengthAvg() {
         return strengthAvg;
     }
 
     public void setStrengthAvg() {
-        this.strengthAvg = strength/population.size();
+        this.strengthAvg = (double)strength/(double)population.size();
     }
 
-    public Integer getIntelligenceAvg() {
+    public Double getIntelligenceAvg() {
         return intelligenceAvg;
     }
 
     public void setIntelligenceAvg() {
-        this.intelligenceAvg = intelligence/population.size();
+        this.intelligenceAvg = (double)intelligence/(double)population.size();
     }
 
-    public Integer getDexterityAvg() {
+    public Double getDexterityAvg() {
         return dexterityAvg;
     }
 
     public void setDexterityAvg( ) {
-        this.dexterityAvg = dexterity/population.size();
+        this.dexterityAvg = (double)dexterity/(double)population.size();
     }
 
-    public Integer getMagicAvg() {
+    public Double getMagicAvg() {
         return magicAvg;
     }
 
     public void setMagicAvg() {
-        this.magicAvg = magic/population.size();
+        this.magicAvg = (double)magic/(double)population.size();
     }
 
-    public Integer getEngineeringAvg() {
+    public Double getEngineeringAvg() {
         return engineeringAvg;
     }
 
     public void setEngineeringAvg() {
-        this.engineeringAvg = engineering/population.size();
+        this.engineeringAvg = (double)engineering/(double)population.size();
     }
 
     public void setStone(Integer stone) {
@@ -463,6 +480,46 @@ public class Village {
         return this.popCap;
     }
 
+    public Integer getTotalAge() {
+        return totalAge;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public Integer getDefence() {
+        return defence;
+    }
+
+    public Integer getIronOre() {
+        return ironOre;
+    }
+
+    public ArrayList<Bandit> getOccupyingBandits() {
+        return occupyingBandits;
+    }
+
+    public ArrayList<AbstractMiracle> getActiveMiracles() {
+        return activeMiracles;
+    }
+
+    public ArrayList<AbstractDisaster> getOngoingDisasters() {
+        return ongoingDisasters;
+    }
+
+    public ArrayList<AbstractPlague> getOngoingPlagues() {
+        return ongoingPlagues;
+    }
+
+    public ArrayList<AbstractRaid> getOngoingOpponentRaids() {
+        return ongoingOpponentRaids;
+    }
+
+    public ArrayList<AbstractRaid> getOngoingFriendlyRaids() {
+        return ongoingFriendlyRaids;
+    }
+
     public void incWood() {
         incWood(1);
     }
@@ -476,7 +533,6 @@ public class Village {
     }
 
     public void incStone() {
-
         incStone(1);
     }
 

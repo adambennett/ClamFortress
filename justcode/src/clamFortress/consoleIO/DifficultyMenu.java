@@ -4,7 +4,7 @@ import clamFortress.enums.*;
 
 import java.util.*;
 
-public class DifficultyMenu extends AbstractConsole  {
+public class DifficultyMenu extends AbstractConsole {
 
 
     @Override

@@ -1,13 +1,12 @@
 package clamFortress.consoleIO;
 
 import clamFortress.enums.*;
-import clamFortress.game.*;
 import clamFortress.game.regions.*;
 
 import java.util.*;
 import java.util.logging.*;
 
-public class BiomeMenu extends AbstractConsole  {
+public class BiomeMenu extends AbstractConsole {
 
 
     @Override

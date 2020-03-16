@@ -5,8 +5,7 @@ import clamFortress.models.beings.player.*;
 
 public class Foraging extends AbstractGameAction {
 
-    public Foraging(Game game) {
-        this.setValues(game);
+    public Foraging() {
         this.actionType = ActionType.FORAGING;
     }
 

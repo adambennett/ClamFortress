@@ -4,8 +4,7 @@ import clamFortress.game.*;
 
 public class Trading extends AbstractGameAction {
 
-    public Trading(Game game) {
-        this.setValues(game);
+    public Trading() {
         this.actionType = ActionType.TRADING;
     }
 

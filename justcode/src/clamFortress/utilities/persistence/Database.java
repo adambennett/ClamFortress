@@ -10,25 +10,11 @@ public class Database {
     private static Boolean orcsUnlocked = false;
 
     public static void updateUnlocks() {
-        if (playerScore > 50000) {
-            aliensUnlocked = true;
-        }
-
-        if (playerScore > 10000) {
-            clamanUnlocked = true;
-        }
-
-        if (playerScore > 4000) {
-            dwarvesUnlocked = true;
-        }
-
-        if (playerScore > 1000) {
-            elvesUnlocked = true;
-        }
-
-        if (playerScore > 500) {
-            orcsUnlocked = true;
-        }
+        if (playerScore > 50000) { aliensUnlocked  = true; }
+        if (playerScore > 10000) { clamanUnlocked  = true; }
+        if (playerScore > 4000)  { dwarvesUnlocked = true; }
+        if (playerScore > 1000)  { elvesUnlocked   = true; }
+        if (playerScore > 500)   { orcsUnlocked   = true;  }
     }
 
     public static void loadDatabase() {
@@ -42,51 +28,29 @@ public class Database {
 
     public static void score(Integer amt) {
         Database.playerScore += amt;
-        if ( Database.playerScore < 0) {  Database.playerScore = 0; }
+        if (Database.playerScore < 0) {
+            Database.playerScore = 0;
+        }
         updateUnlocks();
     }
 
     public static Integer getPlayerScore() {
-        return  Database.playerScore;
+        return Database.playerScore;
     }
-
     public static Boolean getDwarvesUnlocked() {
-        return  Database.dwarvesUnlocked;
+        return Database.dwarvesUnlocked;
     }
-
-    public static void setDwarvesUnlocked(Boolean dwarvesUnlocked) {
-        Database.dwarvesUnlocked = dwarvesUnlocked;
-    }
-
     public static Boolean getElvesUnlocked() {
-        return  Database.elvesUnlocked;
+        return Database.elvesUnlocked;
     }
-
-    public static void setElvesUnlocked(Boolean elvesUnlocked) {
-        Database.elvesUnlocked = elvesUnlocked;
-    }
-
     public static Boolean getAliensUnlocked() {
-        return  Database.aliensUnlocked;
+        return Database.aliensUnlocked;
     }
-
-    public static void setAliensUnlocked(Boolean aliensUnlocked) {
-        Database.aliensUnlocked = aliensUnlocked;
-    }
-
     public static Boolean getClamanUnlocked() {
-        return  Database.clamanUnlocked;
+        return Database.clamanUnlocked;
     }
-
-    public static void setClamanUnlocked(Boolean clamanUnlocked) {
-        Database.clamanUnlocked = clamanUnlocked;
-    }
-
     public static Boolean getOrcsUnlocked() {
         return Database.orcsUnlocked;
     }
 
-    public static void setOrcsUnlocked(Boolean orcsUnlocked) {
-        Database.orcsUnlocked = orcsUnlocked;
-    }
 }

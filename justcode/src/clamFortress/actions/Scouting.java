@@ -9,9 +9,8 @@ public class Scouting extends AbstractGameAction {
 
     private AbstractGridSpace region;
 
-    public Scouting(Game game) {
-        this.actionType = ActionType.DISCOVER;
-        this.currentGame = game;
+    public Scouting() {
+        this.actionType = ActionType.SCOUTING;
         this.region = Game.getGameBoard().getRandomRegion();
     }
 

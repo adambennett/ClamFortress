@@ -4,8 +4,7 @@ import clamFortress.game.*;
 
 public class Harvesting extends AbstractGameAction {
 
-    public Harvesting(Game game) {
-        this.setValues(game);
+    public Harvesting() {
         this.actionType = ActionType.HARVESTING;
     }
 

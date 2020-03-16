@@ -4,8 +4,7 @@ import clamFortress.game.*;
 
 public class Smithing extends AbstractGameAction {
 
-    public Smithing(Game game) {
-        this.setValues(game);
+    public Smithing() {
         this.actionType = ActionType.SMITHING;
     }
 

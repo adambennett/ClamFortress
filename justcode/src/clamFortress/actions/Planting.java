@@ -4,8 +4,7 @@ import clamFortress.game.*;
 
 public class Planting extends AbstractGameAction {
 
-    public Planting(Game game) {
-        this.setValues(game);
+    public Planting() {
         this.actionType = ActionType.PLANTING;
     }
 

@@ -4,8 +4,7 @@ import clamFortress.game.*;
 
 public class Smelting extends AbstractGameAction {
 
-    public Smelting(Game game) {
-        this.setValues(game);
+    public Smelting() {
         this.actionType = ActionType.MASONRY;
     }
 

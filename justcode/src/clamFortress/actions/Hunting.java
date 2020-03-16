@@ -5,8 +5,7 @@ import clamFortress.models.Board;
 
 public class Hunting extends AbstractGameAction {
 
-    public Hunting(Game game) {
-        this.setValues(game);
+    public Hunting() {
         this.actionType = ActionType.HUNTING;
     }
 

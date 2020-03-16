@@ -9,8 +9,7 @@ import java.util.*;
 public class Healing extends AbstractGameAction {
 
 
-    public Healing(Game game) {
-        this.currentGame = game;
+    public Healing() {
         this.actionType = ActionType.HEALING;
     }
 

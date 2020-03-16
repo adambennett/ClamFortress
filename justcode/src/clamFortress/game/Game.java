@@ -155,43 +155,43 @@ public class Game {
         actionManager.addToTurnStart(new NewSurvivors());
 
         for (int i = 0; i < priorityManager.getScout(); i++) {
-            actionManager.addToTurnEnd(new Scouting(this));
+            actionManager.addToTurnEnd(new Scouting());
         }
 
         for (int i = 0; i < priorityManager.getPray(); i++) {
-            actionManager.addToBottom(new Praying(this));
+            actionManager.addToBottom(new Praying());
         }
 
         for (int i = 0; i < priorityManager.getForage(); i++) {
-            actionManager.addToBottom(new Foraging(this));
+            actionManager.addToBottom(new Foraging());
         }
 
         for (int i = 0; i < priorityManager.getWoodcut(); i++) {
-            actionManager.addToBottom(new Woodcutting(this));
+            actionManager.addToBottom(new Woodcutting());
         }
 
         for (int i = 0; i < priorityManager.getStone(); i++) {
-            actionManager.addToBottom(new StonePicking(this));
+            actionManager.addToBottom(new StonePicking());
         }
 
         for (int i = 0; i < priorityManager.getMine(); i++) {
-            actionManager.addToBottom(new Mining(this));
+            actionManager.addToBottom(new Mining());
         }
 
         for (int i = 0; i < priorityManager.getDefend(); i++) {
-            actionManager.addToBottom(new Defense(this));
+            actionManager.addToBottom(new Defense());
         }
 
         for (int i = 0; i < priorityManager.getHarvest(); i++) {
-            actionManager.addToBottom(new Harvesting(this));
+            actionManager.addToBottom(new Harvesting());
         }
 
         for (int i = 0; i < priorityManager.getForge(); i++) {
-            actionManager.addToBottom(new Forging(this));
+            actionManager.addToBottom(new Forging());
         }
 
         for (int i = 0; i < priorityManager.getHeal(); i++) {
-            actionManager.addToBottom(new Healing(this));
+            actionManager.addToBottom(new Healing());
         }
 
         // TODO: Add hunger subtract survivors action to end of turn queue
@@ -204,38 +204,6 @@ public class Game {
         // replace EndMenu console with that manager
     }
 
-    public void newCitizen(Survivor s) {
-        gameBoard.getVillage().addToPopulation(s);
-    }
-
-    public Boolean newBuilding(AbstractBuilding b) {
-        return gameBoard.getVillage().addBuilding(b);
-    }
-
-    public void newMiracle(AbstractMiracle m) {
-        gameBoard.getVillage().addMiracle(m);
-    }
-
-    public void newDisaster(AbstractDisaster d) {
-        gameBoard.getVillage().addDisaster(d);
-    }
-
-    public void newPlague(AbstractPlague p) {
-        gameBoard.getVillage().addPlague(p);
-    }
-
-    public void newHostileRaid(AbstractRaid r) {
-        gameBoard.getVillage().addHostileRaid(r);
-    }
-
-    public void newFriendlyRaid(AbstractRaid r) {
-        gameBoard.getVillage().addFriendlyRaid(r);
-    }
-
-    public void banditEncounter(AbstractBandits encounter) {
-        gameBoard.getVillage().addBandits(encounter);
-    }
-
     public static Board getGameBoard() {
         return gameBoard;
     }
@@ -244,72 +212,12 @@ public class Game {
         return gameManager;
     }
 
-    public static Boolean getToughEnemies() {
-        return toughEnemies;
-    }
-
-    public static Boolean getHostileEnemies() {
-        return hostileEnemies;
-    }
-
-    public static Boolean getSlowResourceGain() {
-        return slowResourceGain;
-    }
-
-    public static Boolean getFrequentBadEvents() {
-        return frequentBadEvents;
-    }
-
-    public static Boolean getTerribleDisasters() {
-        return terribleDisasters;
-    }
-
-    public static Boolean getHandicappedStartEquipment() {
-        return handicappedStartEquipment;
-    }
-
-    public static Boolean getMoreNetherworlds() {
-        return moreNetherworlds;
-    }
-
-    public static Boolean getLessEffectiveTools() {
-        return lessEffectiveTools;
-    }
-
-    public static Boolean getLimitedBlueprintAccess() {
-        return limitedBlueprintAccess;
-    }
-
-    public static Boolean getTradingEnabled() {
-        return tradingEnabled;
-    }
-
-    public static Boolean getMagicEnabled() {
-        return magicEnabled;
-    }
-
-    public static Boolean getAliensEnabled() {
-        return aliensEnabled;
-    }
-
-    public static Boolean getHealingEnabled() {
-        return healingEnabled;
-    }
-
-    public static Boolean getFaithEnabled() {
-        return faithEnabled;
-    }
-
     public static Boolean getSurroundingCheckEnabled() {
         return surroundingCheckEnabled;
     }
 
     public static Race getPlayerRace() {
         return playerRace;
-    }
-
-    public static Modes getDifficulty() {
-        return difficulty;
     }
 
     public static void setDifficulty(Modes newDifficulty) {

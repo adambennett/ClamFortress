@@ -5,8 +5,7 @@ import clamFortress.models.beings.player.*;
 
 public class Fishing extends AbstractGameAction {
 
-    public Fishing(Game game) {
-        this.setValues(game);
+    public Fishing() {
         this.actionType = ActionType.FISHING;
     }
 

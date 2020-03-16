@@ -6,8 +6,7 @@ import clamFortress.models.tools.gathering.Pickaxe;
 public class StonePicking extends AbstractGameAction {
 
 
-    public StonePicking(Game game) {
-        this.setValues(game);
+    public StonePicking() {
         this.actionType = ActionType.MASONRY;
     }
 

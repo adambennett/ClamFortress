@@ -4,8 +4,7 @@ import clamFortress.game.*;
 
 public class Recreating extends AbstractGameAction {
 
-    public Recreating(Game game) {
-        this.setValues(game);
+    public Recreating() {
         this.actionType = ActionType.RECREATING;
     }
 

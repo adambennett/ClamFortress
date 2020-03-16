@@ -5,8 +5,7 @@ import clamFortress.models.beings.player.*;
 
 public class Forging extends AbstractGameAction {
 
-    public Forging(Game game) {
-        this.setValues(game);
+    public Forging() {
         this.actionType = ActionType.FORGING;
     }
 

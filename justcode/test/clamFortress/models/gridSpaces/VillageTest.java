@@ -4,12 +4,12 @@ import clamFortress.encounters.*;
 import clamFortress.encounters.disasters.*;
 import clamFortress.encounters.miracles.*;
 import clamFortress.encounters.plagues.*;
-import clamFortress.encounters.raids.AbstractRaid;
-import clamFortress.game.*;
 import clamFortress.game.regions.*;
 import clamFortress.models.beings.player.*;
 import clamFortress.tech.eras.*;
 import org.junit.*;
+
+import java.util.*;
 
 import static org.junit.Assert.*;
 

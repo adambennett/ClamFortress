@@ -4,8 +4,7 @@ import clamFortress.game.*;
 
 public class Sailing extends AbstractGameAction {
 
-    public Sailing(Game game) {
-        this.setValues(game);
+    public Sailing() {
         this.actionType = ActionType.SAILING;
     }
 

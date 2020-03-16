@@ -5,8 +5,7 @@ import clamFortress.models.beings.player.*;
 
 public class Engineering extends AbstractGameAction {
 
-    public Engineering(Game game) {
-        this.setValues(game);
+    public Engineering() {
         this.actionType = ActionType.ENGINEERING;
     }
 

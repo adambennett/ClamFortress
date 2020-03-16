@@ -5,8 +5,7 @@ import clamFortress.models.gridSpaces.CitySpace;
 
 public class Raiding extends AbstractGameAction {
 
-    public Raiding(Game game, CitySpace citySpace) {
-        this.setValues(game);
+    public Raiding(CitySpace citySpace) {
         this.actionType = ActionType.RAIDING;
     }
 

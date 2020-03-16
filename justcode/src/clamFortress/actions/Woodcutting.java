@@ -4,30 +4,29 @@ import clamFortress.game.*;
 
 public class Woodcutting extends AbstractGameAction {
 
-    public Woodcutting(Game game) {
-        this.setValues(game);
+    public Woodcutting() {
         this.actionType = ActionType.WOODCUTTING;
     }
 
     @Override
     public void update() {
         Integer amountOfWoodToReturn = 15;
-     if(currentGame.getGameBoard().getTrees() > 25){
-         if(currentGame.getVillage().getStrengthAvg() > 6){
-             if(currentGame.getGameBoard().getTrees() >50){
-                 amountOfWoodToReturn+=50;
-             } else{
-                 amountOfWoodToReturn += currentGame.getGameBoard().getTrees();
-             }
-             currentGame.getGameBoard().reduceTreesOnBoard(50);
-         }
+        if(Game.getGameBoard().getTrees() > 25){
+            if(Game.getVillage().getStrengthAvg() > 6){
+                if(Game.getGameBoard().getTrees() >50){
+                    amountOfWoodToReturn+=50;
+                } else{
+                    amountOfWoodToReturn += Game.getGameBoard().getTrees();
+                }
+                Game.getGameBoard().reduceTreesOnBoard(50);
+            }
 
 
-     } else{
-         amountOfWoodToReturn += currentGame.getGameBoard().getTrees();
-     }
+        } else{
+            amountOfWoodToReturn += Game.getGameBoard().getTrees();
+        }
 
-        currentGame.getVillage().incWood(amountOfWoodToReturn);
+        Game.getVillage().incWood(amountOfWoodToReturn);
 
         this.isDone = true;
     }

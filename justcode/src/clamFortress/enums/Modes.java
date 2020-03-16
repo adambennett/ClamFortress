@@ -29,13 +29,4 @@ public enum Modes {
         rands.add(Modes.NIGHTMARE);
         return rands.get(ThreadLocalRandom.current().nextInt(rands.size()));
     }
-
-    public static Modes getModeFromValue(Integer val) {
-        for (Modes m : Modes.values()) {
-            if (m.value == val) {
-                return m;
-            }
-        }
-        return Modes.DEFAULT;
-    }
 }

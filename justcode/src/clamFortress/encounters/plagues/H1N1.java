@@ -4,7 +4,7 @@ import clamFortress.models.*;
 
 public class H1N1 extends AbstractPlague {
     @Override
-    public void runEncounter(Village village, Board board) {
-        village.addPlague(this);
+    public void runEncounter(Board board) {
+        board.getVillage().addPlague(this);
     }
 }

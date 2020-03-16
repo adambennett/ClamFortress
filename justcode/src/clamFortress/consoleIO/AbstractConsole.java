@@ -10,13 +10,16 @@ import java.util.*;
 
 public abstract class AbstractConsole {
 
-    protected static Game currentGame = new Game();
+    protected static Game currentGame;
     protected static GameBuilder builder;
     protected static PriorityManager manager;
     protected Map<String, MenuCommands> consoleCommands;
 
     protected abstract void initializeCommands();
     public abstract void processCommand(MenuCommands cmd, ArrayList<String> args);
+
+    // Implement in multiline command processing consoles
+    protected void postMultiline() {}
 
     public AbstractConsole() {
         consoleCommands = new HashMap<>();
@@ -47,13 +50,17 @@ public abstract class AbstractConsole {
         return this.consoleCommands != null && this.consoleCommands.containsKey(cmd.toLowerCase());
     }
 
-    protected void getUserInput() {
+    protected void getUserInput(boolean multiline) {
         String input = ConsoleServices.getStringInput("");
         String[] splited = input.split("\\s+");
         ArrayList<String> argus = new ArrayList<>();
         Collections.addAll(argus, splited);
         while (argus.size() < 1) { argus = generateUserInput(); }
-        findAndProcessCommand(argus);
+        if (multiline) {
+            findAndProcessMultilineCommand(argus);
+        } else {
+            findAndProcessCommand(argus);
+        }
     }
 
 
@@ -67,16 +74,53 @@ public abstract class AbstractConsole {
         }
     }
 
+    public void findAndProcessMultilineCommand(ArrayList<String> args) {
+        Map<String, ArrayList<String>> parsedCommands = new HashMap<>();
+        for (int i = 0; i < args.size(); i++) {
+            String cmdCheck = args.get(i);
+            ArrayList<String> localArgs = new ArrayList<>();
+            int otherIndex = i + 1;
+            if (otherIndex < args.size()) {
+                localArgs.add(args.get(otherIndex));
+            }
+            if (parsedCommands.containsKey(cmdCheck)) {
+                ArrayList<String> newListOfArgs = parsedCommands.get(cmdCheck);
+                newListOfArgs.addAll(localArgs);
+                parsedCommands.put(cmdCheck, newListOfArgs);
+            } else {
+                parsedCommands.put(cmdCheck, localArgs);
+            }
+
+        }
+        boolean ranGoodCommand = false;
+        for (Map.Entry<String, ArrayList<String>> entry : parsedCommands.entrySet()) {
+            if (commandExists(entry.getKey())) {
+                this.processCommand(this.consoleCommands.get(entry.getKey()), entry.getValue());
+                ranGoodCommand = true;
+            }
+        }
+
+        if (!ranGoodCommand) {
+            runOnInvalidCommand(this);
+        } else {
+            postMultiline();
+        }
+    }
+
     public void printPrompt(PromptMessage message, boolean promptForInput) {
-        String promptString = GameStrings.getStringFromPromptType(message, currentGame);
+        printPrompt(message, promptForInput, false);
+    }
+
+    public void printPrompt(PromptMessage message, boolean promptForInput, boolean multiline) {
+        String promptString = GameStrings.getStringFromPromptType(message);
         ConsoleServices.print(promptString);
         if (promptForInput) {
-            getUserInput();
+            getUserInput(multiline);
         }
     }
 
     private void runOnInvalidCommand(AbstractConsole currentConsole) {
-        ConsoleServices.print("Bad command! Please enter a valid command, or enter 'Help'.");
+        ConsoleServices.print("Bad command! Please enter a valid command.");
         if (currentConsole instanceof BiomeMenu) {
             BiomeMenu console = (BiomeMenu) this;
             console.printPrompt(PromptMessage.BIOME_MENU, true);

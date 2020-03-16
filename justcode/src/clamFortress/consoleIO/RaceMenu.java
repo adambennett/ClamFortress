@@ -5,7 +5,7 @@ import clamFortress.utilities.persistence.*;
 
 import java.util.*;
 
-public class RaceMenu extends AbstractConsole  {
+public class RaceMenu extends AbstractConsole {
 
 
     @Override

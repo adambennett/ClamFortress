@@ -4,5 +4,5 @@ import clamFortress.models.*;
 
 public abstract class AbstractEncounter {
 
-    public abstract void runEncounter(Village village, Board board);
+    public abstract void runEncounter(Board board);
 }

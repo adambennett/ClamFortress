@@ -192,6 +192,13 @@ public class Game {
         }
 
         // TODO: Add hunger subtract survivors action to end of turn queue
+        // hunger should be calculated: each survivor tries to eat 1 food
+        // gain 1% hunger for each survivor that cant
+        // max 100% hunger, certain thresholds should apply more punishing behavior
+
+        // make new end phase manager that holds all strings to print at end of turn
+        // just print them normally, dont format
+        // replace EndMenu console with that manager
     }
 
     public void newCitizen(Survivor s) {

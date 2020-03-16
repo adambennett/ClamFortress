@@ -37,6 +37,7 @@ public class Village extends AbstractGridSpace {
     private Integer engineering =       0;
     private Integer health =            0;
     private Integer totalAge =          0;
+    private Integer hunger =            0;
 
     // Average Stats
     private Double ageAvg =             0.0;
@@ -122,13 +123,13 @@ public class Village extends AbstractGridSpace {
     }
     
     public void updateAverageStats() {
-        ageAvg =             (double)this.totalAge / (double)this.population.size();
-        agilityAvg =         (double)this.agility / (double) this.population.size();
-        strengthAvg =        (double)this.strength / (double) this.population.size();
-        intelligenceAvg =    (double)this.intelligence / (double) this.population.size();
-        dexterityAvg =       (double)this.defence / (double) this.population.size();
-        magicAvg =           (double)this.magic / (double) this.population.size();
-        engineeringAvg =     (double)this.engineering / (double) this.population.size();
+        this.ageAvg =             (double)this.totalAge / (double)this.population.size();
+        this.agilityAvg =         (double)this.agility / (double) this.population.size();
+        this.strengthAvg =        (double)this.strength / (double) this.population.size();
+        this.intelligenceAvg =    (double)this.intelligence / (double) this.population.size();
+        this.dexterityAvg =       (double)this.defence / (double) this.population.size();
+        this.magicAvg =           (double)this.magic / (double) this.population.size();
+        this.engineeringAvg =     (double)this.engineering / (double) this.population.size();
     }
 
     public void addToPopulation(Survivor s) {
@@ -184,6 +185,14 @@ public class Village extends AbstractGridSpace {
         this.ongoingFriendlyRaids.add(r);
     }
 
+    public Integer getHunger() {
+        return hunger;
+    }
+
+    public void setHunger(Integer hunger) {
+        this.hunger = hunger;
+    }
+
     public Integer getBuildingLimit() {
         return buildingLimit;
     }
@@ -200,64 +209,43 @@ public class Village extends AbstractGridSpace {
         return ageAvg;
     }
 
-    public void setAgeAvg(Double ageAvg) {
-        this.ageAvg = ageAvg;
-    }
+
 
     public Integer getAgility() {
         return agility;
     }
 
-    public void setAgility(Integer agility) {
-        this.agility = agility;
-    }
+
 
     public Integer getStrength() {
         return strength;
     }
 
-    public void setStrength(Integer strength) {
-        this.strength = strength;
-    }
+
 
     public Integer getIntelligence() {
         return intelligence;
     }
 
-    public void setIntelligence(Integer intelligence) {
-        this.intelligence = intelligence;
-    }
+
 
     public Integer getDexterity() {
         return dexterity;
     }
 
-    public void setDexterity(Integer dexterity) {
-        this.dexterity = dexterity;
-    }
+
 
     public Integer getMagic() {
         return magic;
     }
 
-    public void setMagic(Integer magic) {
-        this.magic = magic;
-    }
 
     public Integer getEngineering() {
         return engineering;
     }
 
-    public void setEngineering(Integer engineering) {
-        this.engineering = engineering;
-    }
-
     public Integer getHealth() {
         return health;
-    }
-
-    public void setHealth(Integer health) {
-        this.health = health;
     }
 
     public Integer getClay() {
@@ -400,48 +388,24 @@ public class Village extends AbstractGridSpace {
         return agilityAvg;
     }
 
-    public void setAgilityAvg() {
-        this.agilityAvg = (double)agility/(double)population.size();
-    }
-
     public Double getStrengthAvg() {
         return strengthAvg;
-    }
-
-    public void setStrengthAvg() {
-        this.strengthAvg = (double)strength/(double)population.size();
     }
 
     public Double getIntelligenceAvg() {
         return intelligenceAvg;
     }
 
-    public void setIntelligenceAvg() {
-        this.intelligenceAvg = (double)intelligence/(double)population.size();
-    }
-
     public Double getDexterityAvg() {
         return dexterityAvg;
-    }
-
-    public void setDexterityAvg( ) {
-        this.dexterityAvg = (double)dexterity/(double)population.size();
     }
 
     public Double getMagicAvg() {
         return magicAvg;
     }
 
-    public void setMagicAvg() {
-        this.magicAvg = (double)magic/(double)population.size();
-    }
-
     public Double getEngineeringAvg() {
         return engineeringAvg;
-    }
-
-    public void setEngineeringAvg() {
-        this.engineeringAvg = (double)engineering/(double)population.size();
     }
 
     public void setStone(Integer stone) {

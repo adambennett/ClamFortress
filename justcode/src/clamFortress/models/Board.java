@@ -12,21 +12,32 @@ import java.util.*;
 
 public class Board {
 
-  private  Integer numberOfTreesOnBoard;
-  private  Integer mineableStoneOnBoard;
-  private  Integer huntableAnimalsOnBoard;
-  private  Integer colectableClayOnBoard;
-  private  Map<Flowers,Integer> flowersOnBoard;
-  private  Integer mineableCopperOreOnBoard;
-  private  Integer mineableIronOreOnBoard;
-  private  Integer mineableGemsOnBoard;
-  private  Integer fishableFishOnBoard;
-  private  Map<Animal,Integer> animalsInRegionOnBoard;
-  private  Integer healingItemsOnBoard;
-  private ArrayList<AbstractAliens> aliensOnBoard;
+    private  Integer numberOfTreesOnBoard;
+    private  Integer mineableStoneOnBoard;
+    private  Integer huntableAnimalsOnBoard;
+    private  Integer colectableClayOnBoard;
+    private  Integer mineableCopperOreOnBoard;
+    private  Integer mineableIronOreOnBoard;
+    private  Integer mineableGemsOnBoard;
+    private  Integer fishableFishOnBoard;
+    private  Integer healingItemsOnBoard;
+    private  Map<Flowers,Integer> flowersOnBoard;
+    private  Map<Animal,Integer> animalsInRegionOnBoard;
+    private  ArrayList<AbstractAliens> aliensOnBoard;
 
-  public Board() {
+    public Board() {
+      numberOfTreesOnBoard = 0;
+      mineableStoneOnBoard = 0;
+      huntableAnimalsOnBoard = 0;
+      colectableClayOnBoard = 0;
+      mineableCopperOreOnBoard = 0;
+      mineableIronOreOnBoard = 0;
+      mineableGemsOnBoard = 0;
+      fishableFishOnBoard = 0;
+      healingItemsOnBoard = 0;
       aliensOnBoard = new ArrayList<>();
+      flowersOnBoard = new HashMap<>();
+      animalsInRegionOnBoard = new HashMap<>();
   }
 
   public void addAlienEncounter(AbstractAliens a) {

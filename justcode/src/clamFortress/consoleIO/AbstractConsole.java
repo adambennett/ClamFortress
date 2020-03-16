@@ -12,7 +12,7 @@ public abstract class AbstractConsole {
 
     protected static Game currentGame = new Game();
     protected static GameBuilder builder;
-    protected PriorityManager manager;
+    protected static PriorityManager manager;
     protected Map<String, MenuCommands> consoleCommands;
 
     protected abstract void initializeCommands();
@@ -20,7 +20,6 @@ public abstract class AbstractConsole {
 
     public AbstractConsole() {
         consoleCommands = new HashMap<>();
-        manager = new PriorityManager(currentGame);
         initializeCommands();
     }
 

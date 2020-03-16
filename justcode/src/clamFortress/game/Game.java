@@ -1,5 +1,6 @@
 package clamFortress.game;
 
+import clamFortress.actions.*;
 import clamFortress.encounters.*;
 import clamFortress.encounters.bandits.*;
 import clamFortress.encounters.disasters.*;
@@ -55,7 +56,7 @@ public class Game {
     // Custom Difficulty
     public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
         this.actionManager = new ActionManager();
-        this.priorityManager = new PriorityManager(this);
+        this.priorityManager = new PriorityManager();
         this.difficulty = Modes.CUSTOM;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
@@ -83,7 +84,7 @@ public class Game {
 
     public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
         this.actionManager = new ActionManager();
-        this.priorityManager = new PriorityManager(this);
+        this.priorityManager = new PriorityManager();
         this.difficulty = gameDifficulty;
         this.playerRace = chosenRace;
         this.gameManager = GameManager.getInstance();
@@ -239,6 +240,51 @@ public class Game {
         Database.score(dateInc);
         gameManager.incTurns();
         return dateInc;
+    }
+
+    public void runActions() {
+        while (!actionManager.actions.isEmpty() || !actionManager.preTurnActions.isEmpty() || !actionManager.postTurnActions.isEmpty()) {
+            actionManager.update();
+        }
+        priorityManager.reset();
+    }
+
+    public void fillActionManagerWithSimpleActions() {
+        for (int i = 0; i < priorityManager.getPray(); i++) {
+            actionManager.addToBottom(new Praying(this));
+        }
+
+        for (int i = 0; i < priorityManager.getForage(); i++) {
+            actionManager.addToBottom(new Foraging(this));
+        }
+
+        for (int i = 0; i < priorityManager.getWoodcut(); i++) {
+            actionManager.addToBottom(new Woodcutting(this));
+        }
+
+        for (int i = 0; i < priorityManager.getStone(); i++) {
+            actionManager.addToBottom(new StonePicking(this));
+        }
+
+        for (int i = 0; i < priorityManager.getMine(); i++) {
+            actionManager.addToBottom(new Mining(this));
+        }
+
+        for (int i = 0; i < priorityManager.getDefend(); i++) {
+            actionManager.addToBottom(new Defense(this));
+        }
+
+        for (int i = 0; i < priorityManager.getHarvest(); i++) {
+            actionManager.addToBottom(new Harvesting(this));
+        }
+
+        for (int i = 0; i < priorityManager.getForge(); i++) {
+            actionManager.addToBottom(new Forging(this));
+        }
+
+        for (int i = 0; i < priorityManager.getHeal(); i++) {
+            actionManager.addToBottom(new Healing(this));
+        }
     }
 
     public void newCitizen(Survivor s) {

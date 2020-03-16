@@ -1,5 +1,7 @@
 package clamFortress.game.logic;
 
+import clamFortress.actions.*;
+
 import java.math.*;
 import java.text.*;
 import java.util.*;

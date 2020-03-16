@@ -33,60 +33,33 @@ public class PriorityManager {
     private Integer engineer = 0;
     private Integer build = 0;
     private Integer trade = 0;
-    private final Race chosenRace;
-    private final ActionManager actionManager;
-    private final Game game;
-    
-    public PriorityManager(Game game) {
-        if (game != null) {
-            this.chosenRace = null;
-            this.pointsRemaining = 5;
-            this.actionManager = new ActionManager();
-        } else {
-            this.chosenRace = game.getPlayerRace();
-           // this.pointsRemaining = game.getVillage().getSurvivors().size();
-            this.pointsRemaining = 200;
-            this.actionManager = game.actionManager;
-        }
-        this.game = game;
+
+    public void updatePoints(int popSize) {
+        this.pointsRemaining = popSize;
     }
 
-    public void runSimplePriorityLogic() {
-        for (int i = 0; i < pray; i++) {
-            actionManager.addToBottom(new Praying(game));
-        }
-
-        for (int i = 0; i < forage; i++) {
-            actionManager.addToBottom(new Foraging(game));
-        }
-
-        for (int i = 0; i < woodcut; i++) {
-            actionManager.addToBottom(new Woodcutting(game));
-        }
-
-        for (int i = 0; i < stone; i++) {
-            actionManager.addToBottom(new StonePicking(game));
-        }
-
-        for (int i = 0; i < mine; i++) {
-            actionManager.addToBottom(new Mining(game));
-        }
-
-        for (int i = 0; i < defend; i++) {
-            actionManager.addToBottom(new Defense(game));
-        }
-
-        for (int i = 0; i < harvest; i++) {
-            actionManager.addToBottom(new Harvesting(game));
-        }
-
-        for (int i = 0; i < forge; i++) {
-            actionManager.addToBottom(new Forging(game));
-        }
-
-        for (int i = 0; i < heal; i++) {
-            actionManager.addToBottom(new Healing(game));
-        }
+    public void reset() {
+        this.pointsRemaining = 0;
+        this.food1 = 0;
+        this.food2 = 0;
+        this.food3 = 0;
+        this.pray = 0;
+        this.forage = 0;
+        this.woodcut = 0;
+        this.stone = 0;
+        this.mine = 0;
+        this.defend = 0;
+        this.harvest = 0;
+        this.forge = 0;
+        this.heal = 0;
+        this.scout = 0;
+        this.plant = 0;
+        this.smith = 0;
+        this.smelt = 0;
+        this.raid = 0;
+        this.engineer = 0;
+        this.build = 0;
+        this.trade = 0;
     }
 
     public Integer getPointsRemaining() {
@@ -263,9 +236,5 @@ public class PriorityManager {
 
     public void setTrade(Integer trade) {
         this.trade = trade;
-    }
-
-    public Race getChosenRace() {
-        return chosenRace;
     }
 }

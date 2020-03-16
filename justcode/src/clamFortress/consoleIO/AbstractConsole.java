@@ -102,9 +102,8 @@ public abstract class AbstractConsole {
 
         if (!ranGoodCommand) {
             runOnInvalidCommand(this);
-        } else {
-            postMultiline();
         }
+        postMultiline();
     }
 
     public void printPrompt(PromptMessage message, boolean promptForInput) {

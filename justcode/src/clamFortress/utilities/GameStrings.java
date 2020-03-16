@@ -145,6 +145,8 @@ public class GameStrings {
         String coins = "" + Game.getVillage().getCoins();
         String stone = "" + Game.getVillage().getStone();
         String wood = "" + Game.getVillage().getWood();
+        String hunger = "" + Game.getVillage().getHunger();
+        String famine = "" + Game.getVillage().getFamine();
         String population = "" + Game.getVillage().getPopulation() + " / " + Game.getVillage().getPopCap();
         String turnNumber = "" + Game.getGameManager().getTurnNumber();
         String date = "***  " + Game.getGameManager().getDateString() + " :: ";
@@ -162,6 +164,8 @@ public class GameStrings {
         turnNumber = format(turnNumber, otherlen, endString);
         fullDate = format(fullDate, lenCheck, endString);
         faith = format(faith, otherlen, endString);
+        hunger = format(hunger, otherlen, endString);
+        famine = format(famine, otherlen, endString);
         turnMenu =
                         "***************************************************************\n" +
                         "***                      STANDBY PHASE                      ***\n" +
@@ -174,6 +178,8 @@ public class GameStrings {
                         "***                 Coins :: " + coins +
                         "***                 Faith :: " + faith +
                         "***                  Mana :: " + mana +
+                        "***                Hunger :: " + hunger +
+                        "***                Famine :: " + famine +
                         "***---------------------------------------------------------***\n" +
                         surroundings +
                         "***                2 | View All Village Stats               ***\n" +

@@ -21,6 +21,11 @@ public class GameStrings {
     private static String customDifficulty;
     private static String priorityMenu;
 
+    public static String capFirstLetter(String s) {
+        String color = s.toLowerCase();
+        color = color.substring(0, 1).toUpperCase() + color.substring(1, color.length());
+        return color;
+    }
 
     private static String format(String s, String lenCheck, String endString) {
         while (s.length() < lenCheck.length()) {
@@ -185,15 +190,19 @@ public class GameStrings {
         String food3Name = "***             3 | ";
         ArrayList<FoodOptions> optionEnums = FoodOptions.getOptionsFromRace(game.getPlayerRace());
         if (optionEnums.size() > 2) {
-            food1Name += optionEnums.get(0).writeInConsole();
-            food2Name += optionEnums.get(1).writeInConsole();
-            food3Name += optionEnums.get(2).writeInConsole();
+            food1Name += capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
+            food2Name += capFirstLetter(optionEnums.get(1).writeInConsole().toLowerCase());
+            food3Name += capFirstLetter(optionEnums.get(2).writeInConsole().toLowerCase());
         } else if (optionEnums.size() > 1) {
-            food1Name += optionEnums.get(0).writeInConsole();
-            food2Name += optionEnums.get(1).writeInConsole();
+            food1Name += capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
+            food2Name += capFirstLetter(optionEnums.get(1).writeInConsole().toLowerCase());
             food3Name += "[Unavailable]";
         } else if (optionEnums.size() > 0) {
-            food1Name += optionEnums.get(0).writeInConsole();
+            food1Name += capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
+            food2Name += "[Unavailable]";
+            food3Name += "[Unavailable]";
+        } else {
+            food1Name += "[Unavailable]";
             food2Name += "[Unavailable]";
             food3Name += "[Unavailable]";
         }

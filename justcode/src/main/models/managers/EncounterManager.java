@@ -54,9 +54,9 @@ public class EncounterManager {
 
     public static ArrayList<AbstractEncounter> generateEncounters(int roll) {
         ArrayList<AbstractEncounter> currentEncounters = new ArrayList<>();
-        //if (roll == 43) {
+        if (roll == 43) {
             currentEncounters.add(getRandomEncounter());
-        //}
+        }
         return currentEncounters;
     }
 

@@ -481,6 +481,7 @@ public class Village extends AbstractNode {
         this.wood +=amt;
     }
     public void incFood(int amt){this.food += amt;}
+    public void incRock(int amt){this.rock += amt;}
     public void incStone() {
         incStone(1);
     }

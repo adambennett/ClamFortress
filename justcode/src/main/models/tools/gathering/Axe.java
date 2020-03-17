@@ -1,4 +1,6 @@
 package main.models.tools.gathering;
 
-public class Axe {
+import main.models.tools.Tool;
+
+public class Axe extends Tool {
 }

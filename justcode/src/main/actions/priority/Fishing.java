@@ -25,7 +25,7 @@ public class Fishing extends AbstractGameAction {
         if (fish < 2) {
             fish = 2;
         }
-        for (AbstractArtifact rod : Game.getVillage().getArtifacts()) {
+        for (AbstractArtifact rod : Game.getVillage().getInventory().getArtifacts()) {
             fish *= rod.multiplyFoodOnFishing();
         }
         Game.getVillage().incFood(fish);

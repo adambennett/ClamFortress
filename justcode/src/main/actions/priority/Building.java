@@ -21,7 +21,7 @@ public class Building extends AbstractGameAction {
     public void update() {
         if (this.newBuilding.canBuild()) {
             int inc = this.popCapInc;
-            for (AbstractArtifact art : Game.getVillage().getArtifacts()) {
+            for (AbstractArtifact art : Game.getVillage().getInventory().getArtifacts()) {
                 inc += art.modifyPopCapIncreases();
             }
             Game.getVillage().incPopCap(inc);

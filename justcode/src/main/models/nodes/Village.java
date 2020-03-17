@@ -73,6 +73,7 @@ public class Village extends AbstractNode {
     private ArrayList<AbstractArtifact> artifacts = new ArrayList<>();
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
     private ArrayList<AbstractBuilding> buildings = new ArrayList<>();
+    private ArrayList<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
     private ArrayList<AbstractMiracle>  activeMiracles = new ArrayList<>();
     private ArrayList<AbstractDisaster> ongoingDisasters = new ArrayList<>();
     private ArrayList<AbstractPlague>   ongoingPlagues = new ArrayList<>();
@@ -163,7 +164,9 @@ public class Village extends AbstractNode {
         return false;
     }
 
-
+    public Boolean addUncompletedBuilding(AbstractBuilding b) {
+        return uncompletedBuildings.add(b);
+    }
 
     public void reduceBandits(){
         if(occupyingBandits.size() > 0) {
@@ -451,6 +454,11 @@ public class Village extends AbstractNode {
     public ArrayList<AbstractBuilding> getBuildings() {
         return buildings;
     }
+
+    public ArrayList<AbstractBuilding> getUncompletedBuildings() {
+        return uncompletedBuildings;
+    }
+
     public ArrayList<AbstractMiracle> getActiveMiracles() {
         return activeMiracles;
     }

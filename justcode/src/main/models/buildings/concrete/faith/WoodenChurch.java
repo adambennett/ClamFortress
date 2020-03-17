@@ -4,7 +4,7 @@ import main.models.buildings.abstracts.*;
 
 public class WoodenChurch extends AbstractFaithBuilding {
 
-    public WoodenChurch(int faithBonus) {
-        super(faithBonus);
+    public WoodenChurch(int faithBonus, int popCapInc) {
+        super("Wooden Church", faithBonus, popCapInc);
     }
 }

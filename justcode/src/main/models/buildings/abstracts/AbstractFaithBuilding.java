@@ -4,7 +4,8 @@ public abstract class AbstractFaithBuilding extends AbstractBuilding {
 
     protected Integer prayBonus;
 
-    public AbstractFaithBuilding(int faithBonus) {
+    public AbstractFaithBuilding(String name, int faithBonus, int popCapInc) {
+        super(name, popCapInc);
         this.prayBonus = faithBonus;
     }
 

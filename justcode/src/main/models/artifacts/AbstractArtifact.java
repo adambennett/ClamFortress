@@ -5,6 +5,10 @@ public class AbstractArtifact {
 
     public AbstractArtifact(String name) { this.name = name; }
 
+    public Integer multiplyFoodOnFishing() { return 0; }
+
+    public Integer multiplyFoodOnHunting() { return 0; }
+
     public String getName() {
         return name;
     }
@@ -15,5 +19,5 @@ public class AbstractArtifact {
 
     public Integer modifyDef() { return 0; }
 
-
+    public Integer modifyPopCapIncreases() { return 0; }
 }

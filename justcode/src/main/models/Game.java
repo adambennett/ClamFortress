@@ -4,6 +4,7 @@ import main.actions.priority.*;
 import main.actions.utility.*;
 import main.encounters.*;
 import main.enums.*;
+import main.models.buildings.abstracts.*;
 import main.models.nodes.biomes.*;
 import main.models.animals.*;
 import main.models.animals.sea.*;
@@ -202,6 +203,18 @@ public class Game {
 
         for (int i = 0; i < PriorityManager.getHeal(); i++) {
             actionManager.addToBottom(new Healing());
+        }
+
+        if (getVillage().getUncompletedBuildings().size() > 0) {
+            for (int i = 0; i < PriorityManager.getBuild(); i++) {
+                int randIndex = ThreadLocalRandom.current().nextInt(getVillage().getUncompletedBuildings().size());
+                AbstractBuilding rand = getVillage().getUncompletedBuildings().get(randIndex);
+                actionManager.addToBottom(new Building(rand));
+            }
+        }
+
+        for (int i = 0; i < PriorityManager.getEngineer(); i++) {
+            actionManager.addToBottom(new Engineering(BuildingManager.getRandomBuilding()));
         }
 
         actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc));

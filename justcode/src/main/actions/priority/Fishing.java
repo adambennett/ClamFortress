@@ -2,32 +2,34 @@ package main.actions.priority;
 
 import main.actions.*;
 import main.models.Game;
-import main.models.artifacts.PodsRod;
+import main.models.artifacts.*;
+import main.models.managers.*;
 
 import java.util.Random;
 
 public class Fishing extends AbstractGameAction {
 
-    private Random random = new Random();
-    private PodsRod rod = new PodsRod();
+    private Random random;
+
+    public Fishing() { this.random = new Random(); }
 
     @Override
     public void update() {
+        int fish = 0;
         int fishOnBoard = Game.getGameBoard().getFish().size();
-        if (fishOnBoard > 0){
+        if (fishOnBoard > 0) {
             int rando = random.nextInt(fishOnBoard);
-            Integer foodToReturn = Game.getGameBoard().getFish().get(rando).getAmountOfFoodOnHunt();
+            fish += Game.getGameBoard().getFish().get(rando).getAmountOfFoodOnHunt();
             Game.getGameBoard().getFish().remove(rando);
-                if(Game.getVillage().getInventory().containsArtifact(rod)){
-                foodToReturn *= rod.modifyFoodOnFishing();
-
-                }
-            Game.getVillage().incFood(foodToReturn);
-        } else{
-            Game.getVillage().incFood(1);
         }
-
-
+        if (fish < 2) {
+            fish = 2;
+        }
+        for (AbstractArtifact rod : Game.getVillage().getArtifacts()) {
+            fish *= rod.multiplyFoodOnFishing();
+        }
+        Game.getVillage().incFood(fish);
+        OutputManager.addToBottom("Fished " + fish + " new food");
         this.isDone = true;
     }
 }

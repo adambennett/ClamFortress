@@ -1,9 +1,7 @@
 package main.utilities;
 
-import main.enums.*;
-import main.models.*;
-import main.models.managers.*;
-import main.utilities.persistence.*;
+
+import main.models.Game;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -105,17 +103,42 @@ public class GameStrings {
         return s;
     }
 
+    public static void newRaceMenu() {
+        String leftAlignFormat = "| %-15s | %-4d |%n";
+        String headerFormat = "| %-s20 |";
+        String topLine = "+-----------------+------+%n";
+        String botLine = "+-----------------+------+%n";
+        String header = "Choose Village Race";
+        String headerBreak = "+-----------------+------+%n";
+        String orc = "???";
+        String elf = orc;
+        String dwarf = orc;
+        String claman = orc;
+        String alien = orc;
+        boolean isOrcUnlocked = main.utilities.persistence.Database.getOrcsUnlocked();
+        boolean isElfUnlocked = main.utilities.persistence.Database.getElvesUnlocked();
+        boolean isDwarfUnlocked = main.utilities.persistence.Database.getDwarvesUnlocked();
+        boolean isClamanUnlocked = main.utilities.persistence.Database.getClamanUnlocked();
+        boolean isAlienUnlocked = main.utilities.persistence.Database.getAliensUnlocked();
+        if (isAlienUnlocked) { alien = "Alien"; }
+        if (isClamanUnlocked) { claman = "Claman"; }
+        if (isDwarfUnlocked) { dwarf = "Dwarf"; }
+        if (isElfUnlocked) { elf = "Elf"; }
+        if (isOrcUnlocked) { orc = "Orc"; }
+
+    }
+
     public static void loadRaceMenu() {
         String orc = "???                     ***\n";
         String elf = orc;
         String dwarf = orc;
         String claman = orc;
         String alien = orc;
-        boolean isOrcUnlocked = Database.getOrcsUnlocked();
-        boolean isElfUnlocked = Database.getElvesUnlocked();
-        boolean isDwarfUnlocked = Database.getDwarvesUnlocked();
-        boolean isClamanUnlocked = Database.getClamanUnlocked();
-        boolean isAlienUnlocked = Database.getAliensUnlocked();
+        boolean isOrcUnlocked = main.utilities.persistence.Database.getOrcsUnlocked();
+        boolean isElfUnlocked = main.utilities.persistence.Database.getElvesUnlocked();
+        boolean isDwarfUnlocked = main.utilities.persistence.Database.getDwarvesUnlocked();
+        boolean isClamanUnlocked = main.utilities.persistence.Database.getClamanUnlocked();
+        boolean isAlienUnlocked = main.utilities.persistence.Database.getAliensUnlocked();
         if (isAlienUnlocked) { alien = "Alien                   ***\n"; }
         if (isClamanUnlocked) { claman = "Claman                  ***\n"; }
         if (isDwarfUnlocked) { dwarf = "Dwarf                   ***\n"; }
@@ -139,7 +162,7 @@ public class GameStrings {
         String endString = "***";
         String lenCheck = "************************************************************";
         String otherlen = "*******************************";
-        String mana = "" + Game.getVillage().getMana();
+        String mana = "" + main.models.Game.getVillage().getMana();
         String faith = "" + Game.getVillage().getFaith();
         String coins = "" + Game.getVillage().getCoins();
         String stone = "" + Game.getVillage().getStone();
@@ -206,7 +229,7 @@ public class GameStrings {
         String food1Name = "***             1 | ";
         String food2Name = "***             2 | ";
         String food3Name = "***             3 | ";
-        ArrayList<FoodOptions> optionEnums = FoodOptions.getOptionsFromRace(Game.getPlayerRace());
+        ArrayList<main.enums.FoodOptions> optionEnums = main.enums.FoodOptions.getOptionsFromRace(Game.getPlayerRace());
         if (optionEnums.size() > 2) {
             food1Name += capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
             food2Name += capFirstLetter(optionEnums.get(1).writeInConsole().toLowerCase());
@@ -228,26 +251,26 @@ public class GameStrings {
         food1Name = formatNoNL(food1Name, lenny);
         food2Name = formatNoNL(food2Name, lenny);
         food3Name = formatNoNL(food3Name, lenny);
-        Integer foodPriority1 = PriorityManager.getFood1();
-        Integer foodPriority2 = PriorityManager.getFood2();
-        Integer foodPriority3 = PriorityManager.getFood3();
-        Integer prayPriority = PriorityManager.getPray();
-        Integer foragePriority = PriorityManager.getForage();
-        Integer woodcutPriority = PriorityManager.getWoodcut();
-        Integer stonePickPriority = PriorityManager.getStone();
-        Integer miningPriority = PriorityManager.getMine();
-        Integer defendPriority = PriorityManager.getDefend();
-        Integer harvestPriority = PriorityManager.getHarvest();
-        Integer forgePriority = PriorityManager.getForge();
-        Integer healPriority = PriorityManager.getHeal();
-        Integer scoutPriority = PriorityManager.getScout();
-        Integer plantPriority = PriorityManager.getPlant();
-        Integer smithPriority = PriorityManager.getSmith();
-        Integer smeltPriority = PriorityManager.getSmelt();
-        Integer raidPriority = PriorityManager.getRaid();
-        Integer engineerPriority = PriorityManager.getEngineer();
-        Integer buildPriority = PriorityManager.getBuild();
-        Integer tradePriority = PriorityManager.getTrade();
+        Integer foodPriority1 = main.models.managers.PriorityManager.getFood1();
+        Integer foodPriority2 = main.models.managers.PriorityManager.getFood2();
+        Integer foodPriority3 = main.models.managers.PriorityManager.getFood3();
+        Integer prayPriority = main.models.managers.PriorityManager.getPray();
+        Integer foragePriority = main.models.managers.PriorityManager.getForage();
+        Integer woodcutPriority = main.models.managers.PriorityManager.getWoodcut();
+        Integer stonePickPriority = main.models.managers.PriorityManager.getStone();
+        Integer miningPriority = main.models.managers.PriorityManager.getMine();
+        Integer defendPriority = main.models.managers.PriorityManager.getDefend();
+        Integer harvestPriority = main.models.managers.PriorityManager.getHarvest();
+        Integer forgePriority = main.models.managers.PriorityManager.getForge();
+        Integer healPriority = main.models.managers.PriorityManager.getHeal();
+        Integer scoutPriority = main.models.managers.PriorityManager.getScout();
+        Integer plantPriority = main.models.managers.PriorityManager.getPlant();
+        Integer smithPriority = main.models.managers.PriorityManager.getSmith();
+        Integer smeltPriority = main.models.managers.PriorityManager.getSmelt();
+        Integer raidPriority = main.models.managers.PriorityManager.getRaid();
+        Integer engineerPriority = main.models.managers.PriorityManager.getEngineer();
+        Integer buildPriority = main.models.managers.PriorityManager.getBuild();
+        Integer tradePriority = main.models.managers.PriorityManager.getTrade();
         String ending = "***";
         String len = "                  ";
         String foodLen = "                  ";
@@ -272,7 +295,7 @@ public class GameStrings {
         String engineer = format(engineerPriority + ">", len, ending);
         String build = format(buildPriority + ">", len, ending);
         String trade = format(tradePriority + ">", len, ending);
-        String points = format("(" + PriorityManager.getPointsRemaining() + ")" , lenB, ending);
+        String points = format("(" + main.models.managers.PriorityManager.getPointsRemaining() + ")" , lenB, ending);
         priorityMenu =
                         "***************************************************************\n" +
                         "***                      PRIORITY PHASE                     ***\n" +
@@ -379,7 +402,7 @@ public class GameStrings {
                 "*************************************************\n";
     }
 
-    public static String getStringFromPromptType(PromptMessage msg) {
+    public static String getStringFromPromptType(main.enums.PromptMessage msg) {
         switch (msg) {
             case BIOME_MENU:
                 return chooseBiome;

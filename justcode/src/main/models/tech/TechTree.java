@@ -23,6 +23,10 @@ public class TechTree {
         tail = head.advanceToEnd();
     }
 
+    public static Era getHead() {
+        return head;
+    }
+
     public static void setTree(Era newHead, Era newTail) {
         head = newHead;
         tail = newTail;

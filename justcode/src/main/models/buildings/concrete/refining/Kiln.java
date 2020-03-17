@@ -1,4 +1,10 @@
 package main.models.buildings.concrete.refining;
 
-public class Kiln {
+import main.models.buildings.abstracts.*;
+
+public class Kiln extends AbstractRefining {
+
+    public Kiln(String name, int popCapInc) {
+        super("Kiln", popCapInc);
+    }
 }

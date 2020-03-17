@@ -3,190 +3,190 @@ package main.models;
 
 import org.junit.*;
 
-class BoardTest {
+public class BoardTest {
 
     @Test
-    void getRandomRegion() {
+    public void getRandomRegion() {
     }
 
     @Test
-    void testGetRandomRegion() {
+    public void testGetRandomRegion() {
     }
 
     @Test
-    void discover() {
+    public void discover() {
     }
 
     @Test
-    void addGridSpace() {
+    public void addGridSpace() {
     }
 
     @Test
-    void addAnimals() {
+    public void addAnimals() {
     }
 
     @Test
-    void testAddAnimals() {
+    public void testAddAnimals() {
     }
 
     @Test
-    void addFlowers() {
+    public void addFlowers() {
     }
 
     @Test
-    void testAddFlowers() {
+    public void testAddFlowers() {
     }
 
     @Test
-    void addAlienEncounter() {
+    public void addAlienEncounter() {
     }
 
     @Test
-    void reduceTreesOnBoard() {
+    public void reduceTreesOnBoard() {
     }
 
     @Test
-    void reduceStoneOnBoard() {
+    public void reduceStoneOnBoard() {
     }
 
     @Test
-    void reduceCopperOreOnBoard() {
+    public void reduceCopperOreOnBoard() {
     }
 
     @Test
-    void reduceIronOreOnBoard() {
+    public void reduceIronOreOnBoard() {
     }
 
     @Test
-    void reduceGemsOnBoard() {
+    public void reduceGemsOnBoard() {
     }
 
     @Test
-    void reduceFishOnBoard() {
+    public void reduceFishOnBoard() {
     }
 
     @Test
-    void reduceHealingItemsOnBoard() {
+    public void reduceHealingItemsOnBoard() {
     }
 
     @Test
-    void setTrees() {
+    public void setTrees() {
     }
 
     @Test
-    void setStone() {
+    public void setStone() {
     }
 
     @Test
-    void setClay() {
+    public void setClay() {
     }
 
     @Test
-    void setCopperOre() {
+    public void setCopperOre() {
     }
 
     @Test
-    void setIronOre() {
+    public void setIronOre() {
     }
 
     @Test
-    void setGoldOre() {
+    public void setGoldOre() {
     }
 
     @Test
-    void setGems() {
+    public void setGems() {
     }
 
     @Test
-    void setFish() {
+    public void setFish() {
     }
 
     @Test
-    void setRocks() {
+    public void setRocks() {
     }
 
     @Test
-    void setSand() {
+    public void setSand() {
     }
 
     @Test
-    void setSpacegoo() {
+    public void setSpacegoo() {
     }
 
     @Test
-    void setHealingItems() {
+    public void setHealingItems() {
     }
 
     @Test
-    void getVillage() {
+    public void getVillage() {
     }
 
     @Test
-    void getGrid() {
+    public void getGrid() {
     }
 
     @Test
-    void getAliens() {
+    public void getAliens() {
     }
 
     @Test
-    void getFlowers() {
+    public void getFlowers() {
     }
 
     @Test
-    void getAnimals() {
+    public void getAnimals() {
     }
 
     @Test
-    void getTrees() {
+    public void getTrees() {
     }
 
     @Test
-    void getStone() {
+    public void getStone() {
     }
 
     @Test
-    void getClay() {
+    public void getClay() {
     }
 
     @Test
-    void getCopperOre() {
+    public void getCopperOre() {
     }
 
     @Test
-    void getIronOre() {
+    public void getIronOre() {
     }
 
     @Test
-    void getGoldOre() {
+    public void getGoldOre() {
     }
 
     @Test
-    void getGems() {
+    public void getGems() {
     }
 
     @Test
-    void getFish() {
+    public void getFish() {
     }
 
     @Test
-    void getRocks() {
+    public void getRocks() {
     }
 
     @Test
-    void getSand() {
+    public void getSand() {
     }
 
     @Test
-    void getSpacegoo() {
+    public void getSpacegoo() {
     }
 
     @Test
-    void getHealingItems() {
+    public void getHealingItems() {
     }
 
     @Test
-    void addFishTest(){
+    public void addFishTest(){
 
     }
 }

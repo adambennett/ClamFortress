@@ -4,10 +4,10 @@ import main.models.items.artifacts.PodsRod;
 import main.models.nodes.*;
 import org.junit.*;
 
-class InventoryTest {
+public class InventoryTest {
 
     @Test
-    void addArtifact() {
+    public void addArtifact() {
         PodsRod rod = new PodsRod();
         Village inv = Game.getVillage();
 
@@ -21,14 +21,14 @@ class InventoryTest {
     }
 
     @Test
-    void addTool() {
+    public void addTool() {
     }
 
     @Test
-    void containsTool() {
+    public void containsTool() {
     }
 
     @Test
-    void containsArtifact() {
+    public void containsArtifact() {
     }
 }

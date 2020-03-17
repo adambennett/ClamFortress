@@ -3,13 +3,8 @@ package main.models.items.artifacts;
 import main.models.items.*;
 
 public abstract class AbstractArtifact extends AbstractItem {
-    private String name;
 
     public AbstractArtifact(String name) { super(name); }
-
-    public String getName() {
-        return name;
-    }
 
     public Integer multiplyFoodOnFishing() { return 1; }
 

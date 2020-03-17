@@ -7,4 +7,9 @@ public class Roasting extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Roasting clone() {
+        return new Roasting();
+    }
 }

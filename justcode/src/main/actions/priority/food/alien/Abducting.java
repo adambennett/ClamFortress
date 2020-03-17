@@ -7,4 +7,9 @@ public class Abducting extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Abducting clone() {
+        return new Abducting();
+    }
 }

@@ -9,4 +9,9 @@ public class Forging extends AbstractGameAction {
         this.isDone = true;
 
     }
+
+    @Override
+    public Forging clone() {
+        return new Forging();
+    }
 }

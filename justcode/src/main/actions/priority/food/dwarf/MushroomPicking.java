@@ -7,4 +7,9 @@ public class MushroomPicking extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public MushroomPicking clone() {
+        return new MushroomPicking();
+    }
 }

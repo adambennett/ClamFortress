@@ -4,8 +4,8 @@ import main.models.animals.*;
 
 public class Horse extends Animal {
 
-    public Horse(){
-        this.amountOfFoodOnHunt = 210;
+    public Horse() {
+        super(210);
     }
 
     @Override

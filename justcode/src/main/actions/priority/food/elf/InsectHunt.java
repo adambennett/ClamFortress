@@ -7,4 +7,9 @@ public class InsectHunt extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public InsectHunt clone() {
+        return new InsectHunt();
+    }
 }

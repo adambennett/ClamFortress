@@ -8,10 +8,12 @@ public class Mining extends AbstractGameAction {
 
     @Override
     public void update() {
-        if(TechTree.getCurrentEra() instanceof BronzeAge){
-
-        }
         this.isDone = true;
+    }
+
+    @Override
+    public Mining clone() {
+        return new Mining();
     }
 
 

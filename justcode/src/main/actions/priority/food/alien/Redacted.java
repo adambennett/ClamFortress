@@ -7,4 +7,9 @@ public class Redacted extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Redacted clone() {
+        return new Redacted();
+    }
 }

@@ -19,4 +19,9 @@ public class RockPicking extends AbstractGameAction {
         }
         this.isDone = true;
     }
+
+    @Override
+    public RockPicking clone() {
+        return new RockPicking();
+    }
 }

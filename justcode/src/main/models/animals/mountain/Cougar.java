@@ -3,7 +3,7 @@ package main.models.animals.mountain;
 public class Cougar extends MountainAnimal {
 
     public Cougar(){
-        this.amountOfFoodOnHunt = 145;
+        super(145);
     }
 
     @Override

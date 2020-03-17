@@ -19,4 +19,9 @@ public class Engineering extends AbstractGameAction {
         OutputManager.addToBot("Added new " + this.newBuilding.getName() + " Project to Building Queue");
         this.isDone = true;
     }
+
+    @Override
+    public Engineering clone() {
+        return new Engineering(newBuilding);
+    }
 }

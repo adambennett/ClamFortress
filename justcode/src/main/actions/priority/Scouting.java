@@ -23,4 +23,9 @@ public class Scouting extends AbstractGameAction {
             region = Game.getGameBoard().getRandomRegion();
         }
     }
+
+    @Override
+    public Scouting clone() {
+        return new Scouting();
+    }
 }

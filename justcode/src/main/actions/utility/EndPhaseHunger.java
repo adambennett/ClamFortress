@@ -56,4 +56,9 @@ public class EndPhaseHunger extends AbstractGameAction {
         this.isDone = true;
     }
 
+    @Override
+    public EndPhaseHunger clone() {
+        return new EndPhaseHunger();
+    }
+
 }

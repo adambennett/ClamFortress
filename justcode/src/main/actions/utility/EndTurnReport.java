@@ -20,4 +20,9 @@ public class EndTurnReport extends AbstractGameAction {
         OutputManager.print();
         this.isDone = true;
     }
+
+    @Override
+    public EndTurnReport clone() {
+        return new EndTurnReport(this.dateInc);
+    }
 }

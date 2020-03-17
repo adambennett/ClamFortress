@@ -2,8 +2,8 @@ package main.models.animals.desert;
 
 public class Armadillo extends DesertAnimal {
 
-    public Armadillo(){
-        this.amountOfFoodOnHunt = 25;
+    public Armadillo() {
+        super(10);
     }
 
     @Override

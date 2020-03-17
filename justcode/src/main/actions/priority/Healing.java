@@ -11,4 +11,9 @@ public class Healing extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Healing clone() {
+        return new Healing();
+    }
 }

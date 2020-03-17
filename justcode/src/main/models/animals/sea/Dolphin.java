@@ -4,7 +4,7 @@ package main.models.animals.sea;
 public class Dolphin extends SeaAnimal {
 
     public Dolphin(){
-        this.amountOfFoodOnHunt = 115;
+        super(115);
     }
 
     @Override

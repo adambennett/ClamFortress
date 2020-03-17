@@ -7,4 +7,9 @@ public class RiverSearch extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public RiverSearch clone() {
+        return new RiverSearch();
+    }
 }

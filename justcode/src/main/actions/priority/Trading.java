@@ -8,4 +8,9 @@ public class Trading extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Trading clone() {
+        return new Trading();
+    }
 }

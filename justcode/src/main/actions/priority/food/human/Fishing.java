@@ -32,4 +32,9 @@ public class Fishing extends AbstractGameAction {
         OutputManager.addToBot("Fished " + fish + " new food");
         this.isDone = true;
     }
+
+    @Override
+    public AbstractGameAction clone() {
+        return new Fishing();
+    }
 }

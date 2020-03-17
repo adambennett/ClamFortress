@@ -4,8 +4,8 @@ import main.models.animals.*;
 
 public class Cat extends Animal {
 
-    public Cat(){
-        this.amountOfFoodOnHunt = 22;
+    public Cat() {
+        super(22);
     }
 
     @Override

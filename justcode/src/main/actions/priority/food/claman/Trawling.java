@@ -7,4 +7,9 @@ public class Trawling extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Trawling clone() {
+        return new Trawling();
+    }
 }

@@ -21,13 +21,18 @@ public class NewSurvivors extends AbstractGameAction {
             int amtOfNewSurvivors = ThreadLocalRandom.current().nextInt(0, diff);
             int high = Game.getVillage().getHunger();
             if (high < 1) { high = 1; }
-            int hungerRoll = ThreadLocalRandom.current().nextInt(0, high);
+            int hungerRoll = ThreadLocalRandom.current().nextInt(0, high+1);
             amtOfNewSurvivors -= hungerRoll;
             if (amtOfNewSurvivors > 0) {
                 addToVillage(amtOfNewSurvivors);
             }
         }
         this.isDone = true;
+    }
+
+    @Override
+    public NewSurvivors clone() {
+        return new NewSurvivors();
     }
 
     public void addToVillage(int amt) {

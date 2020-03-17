@@ -1,4 +1,9 @@
 package main.models.animals.tundra;
 
-public class TundraAnimal {
+import main.models.animals.*;
+
+public abstract class TundraAnimal extends Animal {
+    public TundraAnimal(int amt) {
+        super(amt);
+    }
 }

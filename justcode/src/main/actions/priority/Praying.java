@@ -29,5 +29,10 @@ public class Praying extends AbstractGameAction {
         this.isDone = true;
     }
 
+    @Override
+    public Praying clone() {
+        return new Praying();
+    }
+
 
 }

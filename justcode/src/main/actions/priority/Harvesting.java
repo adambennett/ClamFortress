@@ -10,5 +10,10 @@ public class Harvesting extends AbstractGameAction {
 
     }
 
+    @Override
+    public Harvesting clone() {
+        return new Harvesting();
+    }
+
 
 }

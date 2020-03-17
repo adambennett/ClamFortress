@@ -5,7 +5,7 @@ import main.models.animals.*;
 public class Turkey extends Animal {
 
     public Turkey(){
-        this.amountOfFoodOnHunt = 22;
+        super(22);
     }
 
     @Override

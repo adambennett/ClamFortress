@@ -8,4 +8,9 @@ public class Smelting extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Smelting clone() {
+        return new Smelting();
+    }
 }

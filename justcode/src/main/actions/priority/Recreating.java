@@ -8,4 +8,9 @@ public class Recreating extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Recreating clone() {
+        return new Recreating();
+    }
 }

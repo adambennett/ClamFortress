@@ -3,7 +3,7 @@ package main.models.animals.sea;
 public class Fish extends SeaAnimal {
 
     public Fish(){
-        this.amountOfFoodOnHunt = 20;
+        super(20);
     }
 
     @Override

@@ -8,4 +8,9 @@ public class Planting extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Planting clone() {
+        return new Planting();
+    }
 }

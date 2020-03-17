@@ -5,7 +5,7 @@ import main.models.nodes.City;
 
 public class Raiding extends AbstractGameAction {
 
-    private City city;
+    private final City city;
 
     public Raiding(City cityNode) {
         this.city = cityNode;
@@ -14,5 +14,10 @@ public class Raiding extends AbstractGameAction {
     @Override
     public void update() {
         this.isDone = true;
+    }
+
+    @Override
+    public Raiding clone() {
+        return new Raiding(this.city);
     }
 }

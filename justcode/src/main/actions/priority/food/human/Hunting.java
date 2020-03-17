@@ -33,4 +33,9 @@ public class Hunting extends AbstractGameAction {
         OutputManager.addToBot("Hunted " + animals + " new food");
         this.isDone = true;
     }
+
+    @Override
+    public Hunting clone() {
+        return new Hunting();
+    }
 }

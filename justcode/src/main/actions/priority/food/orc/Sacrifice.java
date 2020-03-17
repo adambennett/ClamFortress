@@ -7,4 +7,9 @@ public class Sacrifice extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Sacrifice clone() {
+        return new Sacrifice();
+    }
 }

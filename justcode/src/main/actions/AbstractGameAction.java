@@ -1,6 +1,6 @@
 package main.actions;
 
-public abstract class AbstractGameAction {
+public abstract class AbstractGameAction implements Cloneable {
 
     public boolean isDone;
     public int amount;
@@ -10,5 +10,8 @@ public abstract class AbstractGameAction {
     }
 
     public abstract void update();
+
+    @Override
+    public abstract AbstractGameAction clone();
 
 }

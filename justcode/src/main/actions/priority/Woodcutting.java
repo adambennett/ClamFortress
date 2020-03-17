@@ -2,6 +2,7 @@ package main.actions.priority;
 
 import main.actions.*;
 import main.models.*;
+import main.models.resources.natural.*;
 
 public class Woodcutting extends AbstractGameAction {
 
@@ -23,6 +24,11 @@ public class Woodcutting extends AbstractGameAction {
         Game.getVillage().incWood(amountOfWoodToReturn);
 
         this.isDone = true;
+    }
+
+    @Override
+    public Woodcutting clone() {
+        return new Woodcutting();
     }
 }
 

@@ -8,4 +8,9 @@ public class Smithing extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Smithing clone() {
+        return new Smithing();
+    }
 }

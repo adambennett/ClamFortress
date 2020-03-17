@@ -9,4 +9,9 @@ public class Foraging extends AbstractGameAction {
         this.isDone = true;
 
     }
+
+    @Override
+    public Foraging clone() {
+        return new Foraging();
+    }
 }

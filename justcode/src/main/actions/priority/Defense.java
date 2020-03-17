@@ -14,4 +14,9 @@ public class Defense extends AbstractGameAction {
         }
         this.isDone = true;
     }
+
+    @Override
+    public Defense clone() {
+        return new Defense();
+    }
 }

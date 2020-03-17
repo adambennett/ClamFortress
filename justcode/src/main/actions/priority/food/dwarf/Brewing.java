@@ -7,4 +7,9 @@ public class Brewing extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Brewing clone() {
+        return new Brewing();
+    }
 }

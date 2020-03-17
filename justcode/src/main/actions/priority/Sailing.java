@@ -8,4 +8,9 @@ public class Sailing extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Sailing clone() {
+        return new Sailing();
+    }
 }

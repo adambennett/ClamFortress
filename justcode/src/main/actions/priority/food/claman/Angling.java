@@ -7,4 +7,9 @@ public class Angling extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Angling clone() {
+        return new Angling();
+    }
 }

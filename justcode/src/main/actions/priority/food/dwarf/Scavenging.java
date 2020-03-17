@@ -7,4 +7,9 @@ public class Scavenging extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Scavenging clone() {
+        return new Scavenging();
+    }
 }

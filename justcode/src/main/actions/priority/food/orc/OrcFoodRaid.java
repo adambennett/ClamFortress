@@ -7,4 +7,9 @@ public class OrcFoodRaid extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public OrcFoodRaid clone() {
+        return new OrcFoodRaid();
+    }
 }

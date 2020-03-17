@@ -7,4 +7,9 @@ public class OrcHunting extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public OrcHunting clone() {
+        return new OrcHunting();
+    }
 }

@@ -7,4 +7,9 @@ public class Diving extends AbstractGameAction {
     public void update() {
         this.isDone = true;
     }
+
+    @Override
+    public Diving clone() {
+        return new Diving();
+    }
 }

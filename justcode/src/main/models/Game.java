@@ -200,8 +200,18 @@ public class Game {
         actionManager.addToTurnStart(new NewSurvivors());
         actionManager.addToTurnEnd(new EndPhaseHunger());
 
-        for (AbstractGameAction a : getFoodActions()) {
-            actionManager.addToBottom(a);
+        ArrayList<AbstractGameAction> foodActions = getFoodActions();
+        for (int i = 0; i < PriorityManager.getFood1(); i++) {
+            actionManager.addToBottom(foodActions.get(0));
+            foodActions.get(0).isDone = false;
+        }
+
+        for (int i = 0; i < PriorityManager.getFood2(); i++) {
+            actionManager.addToBottom(foodActions.get(1).clone());
+        }
+
+        for (int i = 0; i < PriorityManager.getFood3(); i++) {
+            actionManager.addToBottom(foodActions.get(2).clone());
         }
 
         for (int i = 0; i < PriorityManager.getScout(); i++) {

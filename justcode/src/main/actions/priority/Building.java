@@ -42,4 +42,9 @@ public class Building extends AbstractGameAction {
         }
         this.isDone = true;
     }
+
+    @Override
+    public Building clone() {
+        return new Building(this.newBuilding);
+    }
 }

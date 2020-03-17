@@ -1,11 +1,13 @@
 package main.models.items.artifacts;
 
-public class MoonShield extends AbstractArtifact {
+import main.interfaces.*;
+
+public class MoonShield extends AbstractArtifact implements Unique {
 
     private static final Integer defBoost = 15;
 
     public MoonShield() {
-        super("Moon Shield");
+        super("Moon Shield", "Increases your defense by 15.");
     }
 
     @Override

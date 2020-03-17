@@ -1,4 +1,9 @@
 package main.models.items.tools.gathering;
 
-public class Net {
+import main.models.items.tools.*;
+
+public class Net extends AbstractGatheringTool {
+    public Net() {
+        super("Net", "");
+    }
 }

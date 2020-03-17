@@ -1,4 +1,9 @@
 package main.models.items.tools.gathering;
 
-public class Hoe {
+import main.models.items.tools.*;
+
+public class Hoe extends AbstractGatheringTool {
+    public Hoe() {
+        super("Hoe", "");
+    }
 }

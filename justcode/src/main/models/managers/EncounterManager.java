@@ -7,6 +7,7 @@ import main.encounters.disasters.*;
 import main.encounters.merchant.*;
 import main.encounters.miracles.*;
 import main.encounters.plagues.*;
+import main.models.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -45,6 +46,52 @@ public class EncounterManager {
         encounters.add(new Pandemic());
         encounters.add(new SARS());
         encounters.add(new SpanishFlu());
+        if (!Game.getVillage().getInventory().containsItem("Rabbit's Foot")) {
+            encounters.add(new AlienInvasion());
+            encounters.add(new Earthquake());
+            encounters.add(new Fire());
+            encounters.add(new Flood());
+            encounters.add(new Hurricane());
+            encounters.add(new Tornado());
+            encounters.add(new Tsunami());
+            encounters.add(new Typhoon());
+            encounters.add(new Volcano());
+            encounters.add(new Bubonic());
+            encounters.add(new Contagion());
+            encounters.add(new COVID19());
+            encounters.add(new H1N1());
+            encounters.add(new Pandemic());
+            encounters.add(new SARS());
+            encounters.add(new SpanishFlu());
+            encounters.add(new AlienInvasion());
+            encounters.add(new Earthquake());
+            encounters.add(new Fire());
+            encounters.add(new Flood());
+            encounters.add(new Hurricane());
+            encounters.add(new Tornado());
+            encounters.add(new Tsunami());
+            encounters.add(new Typhoon());
+            encounters.add(new Volcano());
+            encounters.add(new Bubonic());
+            encounters.add(new Contagion());
+            encounters.add(new COVID19());
+            encounters.add(new H1N1());
+            encounters.add(new Pandemic());
+            encounters.add(new SARS());
+            encounters.add(new SpanishFlu());
+        } else {
+            encounters.add(new ArtifactMerchant());
+            encounters.add(new Blessing());
+            encounters.add(new DivineHealing());
+            encounters.add(new DivineIntervention());
+            encounters.add(new Wisdom());
+            encounters.add(new ArtifactMerchant());
+            encounters.add(new Blessing());
+            encounters.add(new DivineHealing());
+            encounters.add(new DivineIntervention());
+            encounters.add(new Wisdom());
+        }
+
         return encounters.get(ThreadLocalRandom.current().nextInt(encounters.size()));
     }
 

@@ -14,9 +14,9 @@ public class InventoryTest {
         PodsRod rod = new PodsRod();
         Inventory inv = Game.getVillage().getInventory();
 
-        inv.addArtifact(rod);
+        inv.addItem(rod);
 
-        Boolean actual = inv.containsArtifact(rod);
+        Boolean actual = inv.containsItem(rod.getName());
         Boolean expected = true;
 
         Assert.assertEquals(expected,actual);
@@ -28,9 +28,9 @@ public class InventoryTest {
         Pickaxe pickaxe = new Pickaxe();
         Inventory inventory = Game.getVillage().getInventory();
 
-        inventory.addTool(pickaxe);
+        inventory.addItem(pickaxe);
 
-        Boolean actual = inventory.containsTool(pickaxe);
+        Boolean actual = inventory.containsItem(pickaxe);
         Boolean expected = true;
 
 

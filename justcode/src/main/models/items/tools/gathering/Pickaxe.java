@@ -1,6 +1,9 @@
 package main.models.items.tools.gathering;
 
-import main.models.items.tools.Tool;
+import main.models.items.tools.AbstractTool;
 
-public class Pickaxe extends Tool {
+public class Pickaxe extends AbstractGatheringTool {
+    public Pickaxe() {
+        super("Pickaxe", "");
+    }
 }

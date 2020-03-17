@@ -85,11 +85,11 @@ public class ActionManager {
         }
     }
 
-    public static enum Phase {
+    public enum Phase {
         WAITING_ON_USER,
         EXECUTING_ACTIONS;
 
-        private Phase() {
+        Phase() {
         }
     }
 

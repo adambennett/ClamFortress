@@ -1,4 +1,9 @@
 package main.models.items.tools.engineering;
 
-public class Hammer {
+import main.models.items.tools.*;
+
+public class Hammer extends AbstractEngTool {
+    public Hammer() {
+        super("Hammer", "");
+    }
 }

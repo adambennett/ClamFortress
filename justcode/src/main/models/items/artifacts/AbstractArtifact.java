@@ -4,7 +4,7 @@ import main.models.items.*;
 
 public abstract class AbstractArtifact extends AbstractItem {
 
-    public AbstractArtifact(String name) { super(name); }
+    public AbstractArtifact(String name, String desc) { super(name, desc); }
 
     public Integer multiplyFoodOnFishing() { return 1; }
 

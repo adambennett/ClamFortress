@@ -9,15 +9,10 @@ import java.util.*;
 
 public class Inventory {
 
-    private ArrayList<Tool> villageTools;
     private ArrayList<AbstractItem> items;
-    private ArrayList<AbstractArtifact> artifacts;
 
     public Inventory() {
-
-        villageTools = new ArrayList<>();
         items = new ArrayList<>();
-        artifacts = new ArrayList<>();
     }
 
     public void addItem(AbstractItem item){
@@ -26,67 +21,58 @@ public class Inventory {
         }
     }
 
-    public void addTool(Tool t) {
-        villageTools.add(t);
-    }
-
-    public Boolean containsTool(Tool t) {
-        for (Tool tool : villageTools) {
-            if (t.getClass().equals(tool.getClass())) {
+    public Boolean containsItem(AbstractItem t) {
+        for (AbstractItem item : items) {
+            if (item.getName().equals(t.getName())) {
                 return true;
             }
         }
         return false;
     }
 
-    public Boolean hasArtifact(AbstractArtifact art) {
-        for (AbstractArtifact a : this.artifacts) {
-            if (a.getClass().equals(art.getClass())) {
+    public Boolean containsItem(String name){
+        for (AbstractItem item : items) {
+            if (item.getName().equals(name)) {
                 return true;
             }
         }
         return false;
-    }
-
-    public Boolean containsArtifact(AbstractArtifact artifact ){
-        for (AbstractArtifact a : artifacts) {
-            if (a.getClass().equals(artifact.getClass())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void addArtifact(AbstractArtifact art) { if (!hasArtifact(art)) { this.artifacts.add(art); }}
-
-    public ArrayList<Tool> getVillageTools() {
-        return villageTools;
-    }
-
-    public void setVillageTools(ArrayList<Tool> villageTools) {
-        this.villageTools = villageTools;
     }
 
     public ArrayList<AbstractItem> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<AbstractItem> items) {
-        this.items = items;
-    }
-
     public ArrayList<AbstractArtifact> getArtifacts() {
-        return artifacts;
+        ArrayList<AbstractArtifact> arts = new ArrayList<>();
+        for (AbstractItem i : items) {
+            if (i instanceof AbstractArtifact) {
+                arts.add((AbstractArtifact) i);
+            }
+        }
+        return arts;
     }
 
-    public void setArtifacts(ArrayList<AbstractArtifact> artifacts) {
-        this.artifacts = artifacts;
+    public ArrayList<AbstractTool> getTools() {
+        ArrayList<AbstractTool> arts = new ArrayList<>();
+        for (AbstractItem i : items) {
+            if (i instanceof AbstractTool) {
+                arts.add((AbstractTool) i);
+            }
+        }
+        return arts;
     }
 
     @Override
     public String toString() {
+        String itemString = "";
+        for (AbstractItem i : items) {
+            itemString += i.getName() + ", ";
+        }
+        itemString = itemString.substring(0, itemString.length()-2);
         return "Inventory{" +
-                "villageTools=" + villageTools +
+                "items=" + itemString +
                 '}';
     }
+
 }

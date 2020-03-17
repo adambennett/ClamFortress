@@ -473,8 +473,9 @@ public class Village extends AbstractGridSpace {
         incWood(1);
     }
     public void incWood(int amt) {
-        this.wood = this.wood+=amt;
+        this.wood +=amt;
     }
+    public void incFood(int amt){this.food += amt;}
     public void incStone() {
         incStone(1);
     }

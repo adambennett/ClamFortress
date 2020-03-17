@@ -1,15 +1,19 @@
 package main.models;
 
-import main.encounters.alien.*;
-import main.game.regions.*;
+import main.encounters.alien.AbstractAliens;
+import main.game.regions.AbstractRegion;
+import main.game.regions.Grasslands;
 import main.models.animals.Animal;
-import main.models.artifacts.*;
-import main.models.gridSpaces.*;
+import main.models.gridSpaces.AbstractGridSpace;
+import main.models.gridSpaces.GrassSpace;
+import main.models.gridSpaces.Village;
 import main.models.resources.natural.Flowers;
 
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.logging.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 public class Board {
 
@@ -120,7 +124,7 @@ public class Board {
 
     public void addAnimals(Animal animal, int amt) {
         for (int i = 0; i < amt; i++) {
-                animals.add(animal);
+                animals.add(animal.clone());
             }
         }
 

@@ -11,11 +11,12 @@ Random random = new Random();
 
     @Override
     public void update() {
-        Integer rando = random.nextInt( Game.getGameBoard().getAnimals().size());
-        Integer foodToReturn = 0;
+        int rando = random.nextInt( Game.getGameBoard().getAnimals().size());
 
-        Game.getGameBoard().getAnimals();
 
+        Integer foodToReturn = Game.getGameBoard().getAnimals().get(rando).getAmountOfFoodOnHunt();
+        Game.getGameBoard().getAnimals().remove(rando);
+        Game.getVillage().incFood(foodToReturn);
         this.isDone = true;
     }
 }

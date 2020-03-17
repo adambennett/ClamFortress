@@ -3,7 +3,7 @@ package main.actions;
 import main.actions.priority.Fishing;
 import main.models.Game;
 import main.models.animals.sea.Penguin;
-import main.models.artifacts.PodsRod;
+import main.models.items.artifacts.PodsRod;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -2,7 +2,7 @@ package main.actions.priority;
 
 import main.actions.*;
 import main.models.*;
-import main.models.artifacts.*;
+import main.models.items.artifacts.*;
 import main.models.buildings.abstracts.*;
 
 import java.util.concurrent.*;

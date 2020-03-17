@@ -1,11 +1,9 @@
 package main.models;
 
-import main.models.artifacts.PodsRod;
+import main.models.items.artifacts.PodsRod;
 import main.models.nodes.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
 

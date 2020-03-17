@@ -1,6 +1,6 @@
 package main.models.managers;
 
-import main.models.artifacts.*;
+import main.models.items.artifacts.*;
 
 import java.util.*;
 import java.util.concurrent.*;

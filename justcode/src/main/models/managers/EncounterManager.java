@@ -7,7 +7,6 @@ import main.encounters.disasters.*;
 import main.encounters.merchant.*;
 import main.encounters.miracles.*;
 import main.encounters.plagues.*;
-import main.models.artifacts.*;
 
 import java.util.*;
 import java.util.concurrent.*;

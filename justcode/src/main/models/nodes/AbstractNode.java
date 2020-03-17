@@ -1,7 +1,7 @@
 package main.models.nodes;
 
 import main.models.nodes.biomes.*;
-import main.models.artifacts.*;
+import main.models.items.artifacts.*;
 import main.models.managers.*;
 
 import java.util.concurrent.*;

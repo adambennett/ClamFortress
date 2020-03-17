@@ -3,7 +3,7 @@ package main.actions.priority;
 import main.actions.*;
 import main.enums.*;
 import main.models.*;
-import main.models.artifacts.*;
+import main.models.items.artifacts.*;
 import main.models.buildings.abstracts.*;
 import main.models.managers.*;
 

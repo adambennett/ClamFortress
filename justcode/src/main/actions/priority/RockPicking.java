@@ -2,7 +2,7 @@ package main.actions.priority;
 
 import main.actions.*;
 import main.models.Game;
-import main.models.tools.gathering.Pickaxe;
+import main.models.items.tools.gathering.Pickaxe;
 
 public class RockPicking extends AbstractGameAction {
 

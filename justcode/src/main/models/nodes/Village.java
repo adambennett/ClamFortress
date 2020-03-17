@@ -8,7 +8,7 @@ import main.encounters.plagues.*;
 import main.encounters.raids.*;
 import main.models.nodes.biomes.*;
 import main.models.*;
-import main.models.artifacts.*;
+import main.models.items.artifacts.*;
 import main.models.people.*;
 import main.models.buildings.abstracts.*;
 

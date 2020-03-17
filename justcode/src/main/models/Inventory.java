@@ -1,16 +1,24 @@
 package main.models;
 
-import main.models.artifacts.AbstractArtifact;
-import main.models.tools.*;
+import main.interfaces.*;
+import main.models.items.*;
+import main.models.items.tools.*;
 
 import java.util.*;
 
 public class Inventory {
 
     private ArrayList<Tool> villageTools;
+    private ArrayList<AbstractItem> items;
 
     public Inventory() {
         villageTools = new ArrayList<>();
+    }
+
+    public void addItem(AbstractItem item){
+        if (!(item instanceof Unique && items.contains(item))) {
+            items.add(item);
+        }
     }
 
     public void addTool(Tool t) {

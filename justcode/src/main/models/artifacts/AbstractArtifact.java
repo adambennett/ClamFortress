@@ -5,13 +5,13 @@ public abstract class AbstractArtifact {
 
     public AbstractArtifact(String name) { this.name = name; }
 
-    public Integer multiplyFoodOnFishing() { return 1; }
-
-    public Integer multiplyFoodOnHunting() { return 1; }
-
     public String getName() {
         return name;
     }
+
+    public Integer multiplyFoodOnFishing() { return 1; }
+
+    public Integer multiplyFoodOnHunting() { return 1; }
 
     public Integer modifyFaithInc() { return 0; }
 
@@ -20,4 +20,5 @@ public abstract class AbstractArtifact {
     public Integer modifyDef() { return 0; }
 
     public Integer modifyPopCapIncreases() { return 0; }
+
 }

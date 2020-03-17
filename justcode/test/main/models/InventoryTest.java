@@ -1,23 +1,22 @@
 package main.models;
 
 import main.models.items.artifacts.PodsRod;
-import main.models.nodes.*;
 import org.junit.*;
 
 public class InventoryTest {
 
     @Test
     public void addArtifact() {
+        Game.startGame();
         PodsRod rod = new PodsRod();
-        Village inv = Game.getVillage();
+        Inventory inv = Game.getVillage().getInventory();
 
         inv.addArtifact(rod);
 
-        Boolean actual = inv.getArtifacts().contains(rod);
+        Boolean actual = inv.containsArtifact(rod);
         Boolean expected = true;
 
         Assert.assertEquals(expected,actual);
-        System.out.println(inv.toString());
     }
 
     @Test

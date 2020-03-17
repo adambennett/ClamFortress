@@ -26,7 +26,7 @@ public class Hunting extends AbstractGameAction {
         if (animals < 2) {
             animals = 2;
         }
-        for (AbstractArtifact spear : Game.getVillage().getArtifacts()) {
+        for (AbstractArtifact spear : Game.getVillage().getInventory().getArtifacts()) {
             animals *= spear.multiplyFoodOnHunting();
         }
         Game.getVillage().incFood(animals);

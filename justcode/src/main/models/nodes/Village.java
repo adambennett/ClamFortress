@@ -70,7 +70,6 @@ public class Village extends AbstractNode {
     private Integer totalHP =           0;
 
     // Lists
-    private ArrayList<AbstractArtifact> artifacts = new ArrayList<>();
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
     private ArrayList<AbstractBuilding> buildings = new ArrayList<>();
     private ArrayList<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
@@ -184,17 +183,10 @@ public class Village extends AbstractNode {
         return false;
     }
 
-    public Boolean hasArtifact(AbstractArtifact art) {
-        for (AbstractArtifact a : this.artifacts) {
-            if (a.getClass().equals(art.getClass())) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     // Adding to lists
-    public void addArtifact(AbstractArtifact art) { if (!hasArtifact(art)) { this.artifacts.add(art); }}
+
     public void addMiracle(AbstractMiracle m) {
         if (this.canRunEncounter(m)) {
             this.activeMiracles.add(m);
@@ -404,14 +396,14 @@ public class Village extends AbstractNode {
 
     public Integer getDefense(){
         int atk = this.defence;
-        for (AbstractArtifact a : this.artifacts) {
+        for (AbstractArtifact a : inventory.getArtifacts()) {
             atk += a.modifyDef();
         }
         return atk;
     }
     public Integer getAttackPower(){
         int atk = this.attackPower;
-        for (AbstractArtifact a : this.artifacts) {
+        for (AbstractArtifact a : inventory.getArtifacts()) {
             atk += a.modifyAtk();
         }
         return atk;
@@ -446,9 +438,7 @@ public class Village extends AbstractNode {
     public ArrayList<Survivor> getSurvivors() {
         return population;
     }
-    public ArrayList<AbstractArtifact> getArtifacts() {
-        return artifacts;
-    }
+
     public ArrayList<Bandit> getOccupyingBandits() {
         return occupyingBandits;
     }

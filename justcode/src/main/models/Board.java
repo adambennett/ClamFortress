@@ -112,7 +112,7 @@ public class Board {
         if (canAdd) {
             this.grid.add(space);
             if (space.hasArtifact()) {
-                village.addArtifact(space.getArtifact());
+                village.getInventory().addArtifact(space.getArtifact());
                 if (GameStrings.startsWithVowel(space.getArtifact().getName())) {
                     OutputManager.addToTop("Found an " + space.getArtifact().getName() + " on a newly discovered space!");
                 } else {

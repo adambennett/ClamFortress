@@ -21,7 +21,7 @@ public class Praying extends AbstractGameAction {
             faithBuildingMod = 10;
         }
 
-        for (AbstractArtifact a : Game.getVillage().getArtifacts()) {
+        for (AbstractArtifact a : Game.getVillage().getInventory().getArtifacts()) {
             faithBuildingMod += a.modifyFaithInc();
         }
 

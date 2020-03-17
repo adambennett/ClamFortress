@@ -22,15 +22,15 @@ public class EndPhaseHunger extends AbstractGameAction {
             if (foodAmt>0) {
                 foodAmt--;
                 int healAmt = 100;
-                if (Game.getDifficulty().compareTo(Modes.IMPOSSIBLE) >= 0) {
+                if (Game.getDifficulty().compareTo(Difficulty.IMPOSSIBLE) >= 0) {
                     healAmt = 10;
-                } else if (Game.getDifficulty().compareTo(Modes.NIGHTMARE) >= 0) {
+                } else if (Game.getDifficulty().compareTo(Difficulty.NIGHTMARE) >= 0) {
                     healAmt = 15;
-                } else if (Game.getDifficulty().compareTo(Modes.BRUTAL) >= 0) {
+                } else if (Game.getDifficulty().compareTo(Difficulty.BRUTAL) >= 0) {
                     healAmt = 25;
-                } else if (Game.getDifficulty().compareTo(Modes.HARD) >= 0) {
+                } else if (Game.getDifficulty().compareTo(Difficulty.HARD) >= 0) {
                     healAmt = 40;
-                } else if (Game.getDifficulty().compareTo(Modes.DEFAULT) >= 0) {
+                } else if (Game.getDifficulty().compareTo(Difficulty.DEFAULT) >= 0) {
                     healAmt = 50;
                 }
                 s.feed(new PlaceholderFood(healAmt));

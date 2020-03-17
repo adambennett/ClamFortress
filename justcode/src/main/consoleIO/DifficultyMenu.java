@@ -23,30 +23,30 @@ public class DifficultyMenu extends AbstractConsole {
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
             case EASY:
-                builder.setDifficulty(Modes.EASY);
+                builder.setDifficulty(Difficulty.EASY);
                 break;
             case STANDARD:
-                builder.setDifficulty(Modes.DEFAULT);
+                builder.setDifficulty(Difficulty.DEFAULT);
                 break;
             case HARD:
-                builder.setDifficulty(Modes.HARD);
+                builder.setDifficulty(Difficulty.HARD);
                 break;
             case BRUTAL:
-                builder.setDifficulty(Modes.BRUTAL);
+                builder.setDifficulty(Difficulty.BRUTAL);
                 break;
             case NIGHTMARE:
-                builder.setDifficulty(Modes.NIGHTMARE);
+                builder.setDifficulty(Difficulty.NIGHTMARE);
                 break;
             case IMPOSSIBLE:
-                builder.setDifficulty(Modes.IMPOSSIBLE);
+                builder.setDifficulty(Difficulty.IMPOSSIBLE);
                 break;
             case CUSTOM:
-                builder.setDifficulty(Modes.CUSTOM);
+                builder.setDifficulty(Difficulty.CUSTOM);
                 CustomDifficultyMenu cdm = new CustomDifficultyMenu();
                 cdm.printPromptCustomOptions();
                 break;
             case RANDOM:
-                builder.setDifficulty(Modes.RANDOM);
+                builder.setDifficulty(Difficulty.RANDOM);
                 break;
         }
 

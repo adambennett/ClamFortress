@@ -30,7 +30,7 @@ public class TurnMenu extends AbstractConsole {
                 printPrompt(PromptMessage.TURN_MENU, true);
             case EXIT:
                 Database.saveDatabase();
-                return;
+                break;
             case END_GAME:
                 GameManager.reset();
                 new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);

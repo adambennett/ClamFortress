@@ -41,14 +41,14 @@ public class Game {
     private static Boolean faithEnabled;
     private static Boolean surroundingCheckEnabled;
     private static Race playerRace;
-    private static Modes difficulty;
+    private static Difficulty difficulty;
 
     // Default Settings (for tests)
     public Game() {
-        this(Modes.DEFAULT, Race.HUMAN, new Grasslands());
+        this(Difficulty.DEFAULT, Race.HUMAN, new Grasslands());
     }
 
-    public Game(Modes gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
+    public Game(Difficulty gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
         TechTree.resetTechTree();
         PriorityManager.reset(true);
         difficulty = gameDifficulty;
@@ -66,7 +66,7 @@ public class Game {
     public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
         TechTree.resetTechTree();
         PriorityManager.reset(true);
-        difficulty = Modes.CUSTOM;
+        difficulty = Difficulty.CUSTOM;
         actionManager = new ActionManager();
         playerRace = chosenRace;
         gameManager = GameManager.getInstance();
@@ -130,7 +130,7 @@ public class Game {
         while (!actionManager.actions.isEmpty() || !actionManager.preTurnActions.isEmpty() || !actionManager.postTurnActions.isEmpty()) {
             actionManager.update();
         }
-        PriorityManager.reset(difficulty.compareTo(Modes.HARD) > 0);
+        PriorityManager.reset(difficulty.compareTo(Difficulty.HARD) > 0);
     }
 
     public static void fillActionManagerWithSimpleActions() {
@@ -203,12 +203,12 @@ public class Game {
         return playerRace;
     }
 
-    public static void setDifficulty(Modes newDifficulty) {
+    public static void setDifficulty(Difficulty newDifficulty) {
         difficulty = newDifficulty;
         updateDifficultyBools();
     }
 
-    public static Modes getDifficulty() {
+    public static Difficulty getDifficulty() {
         return difficulty;
     }
 

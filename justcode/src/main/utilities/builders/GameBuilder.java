@@ -8,19 +8,19 @@ import java.util.*;
 
 public class GameBuilder {
 
-    private Modes difficulty;
+    private Difficulty difficulty;
     private Race race;
     private ArrayList<Integer> customMods;
     private AbstractRegion startBiome;
 
     public GameBuilder(){
-        this.difficulty = Modes.DEFAULT;
+        this.difficulty = Difficulty.DEFAULT;
         this.race = Race.HUMAN;
         this.customMods = new ArrayList<>();
         this.startBiome = new Grasslands();
     }
 
-    public void setDifficulty(Modes difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -37,17 +37,17 @@ public class GameBuilder {
     }
 
     public Game buildGame() {
-        if (this.difficulty.equals(Modes.RANDOM)) {
-            this.difficulty = Modes.getRandomMode();
+        if (this.difficulty.equals(Difficulty.RANDOM)) {
+            this.difficulty = Difficulty.getRandomMode();
         }
-        if (this.difficulty.equals(Modes.CUSTOM)) {
+        if (this.difficulty.equals(Difficulty.CUSTOM)) {
             return new Game(this.race, this.customMods, this.startBiome);
         } else {
             return new Game(this.difficulty, this.race, this.startBiome);
         }
     }
 
-    public Modes getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 

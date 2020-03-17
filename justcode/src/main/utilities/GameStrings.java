@@ -2,16 +2,30 @@ package main.utilities;
 
 
 import main.models.Game;
+import main.models.nodes.*;
 
 import java.util.*;
 import java.util.concurrent.*;
 
 public class GameStrings {
 
+    private static ArrayList<Character> vowels;
+
     static {
         chooseRace = "";
         turnMenu = "";
         priorityMenu = "";
+        vowels = new ArrayList<>();
+        vowels.add('A');
+        vowels.add('E');
+        vowels.add('I');
+        vowels.add('O');
+        vowels.add('U');
+        vowels.add('a');
+        vowels.add('e');
+        vowels.add('i');
+        vowels.add('o');
+        vowels.add('u');
     }
 
     private static String chooseRace;
@@ -79,7 +93,13 @@ public class GameStrings {
                     "***   Choose any combination of custom difficulty options   ***\n" +
                     "***************************************************************\n";
 
+    public static Boolean startsWithVowel(String word) {
+        return isVowel(word.charAt(0));
+    }
 
+    public static Boolean isVowel(Character character) {
+        return (character != null) && vowels.contains(character);
+    }
 
     public static String capFirstLetter(String s) {
         String color = s.toLowerCase();
@@ -103,13 +123,8 @@ public class GameStrings {
         return s;
     }
 
-    public static void newRaceMenu() {
-        String leftAlignFormat = "| %-15s | %-4d |%n";
-        String headerFormat = "| %-s20 |";
-        String topLine = "+-----------------+------+%n";
-        String botLine = "+-----------------+------+%n";
-        String header = "Choose Village Race";
-        String headerBreak = "+-----------------+------+%n";
+    public static Map<String, String> getRaces() {
+        String human = "Human";
         String orc = "???";
         String elf = orc;
         String dwarf = orc;
@@ -120,49 +135,55 @@ public class GameStrings {
         boolean isDwarfUnlocked = main.utilities.persistence.Database.getDwarvesUnlocked();
         boolean isClamanUnlocked = main.utilities.persistence.Database.getClamanUnlocked();
         boolean isAlienUnlocked = main.utilities.persistence.Database.getAliensUnlocked();
-        if (isAlienUnlocked) { alien = "Alien"; }
+        if (isAlienUnlocked)  { alien = "Alien";   }
         if (isClamanUnlocked) { claman = "Claman"; }
-        if (isDwarfUnlocked) { dwarf = "Dwarf"; }
-        if (isElfUnlocked) { elf = "Elf"; }
-        if (isOrcUnlocked) { orc = "Orc"; }
+        if (isDwarfUnlocked)  { dwarf = "Dwarf";   }
+        if (isElfUnlocked)    { elf = "Elf";       }
+        if (isOrcUnlocked)    { orc = "Orc";       }
+        Map<String, String> raceMenuMap = new HashMap<>();
+        int index = 1;
+        raceMenuMap.put("" + index, human); index++;
+        raceMenuMap.put("" + index, orc); index++;
+        raceMenuMap.put("" + index, elf); index++;
+        raceMenuMap.put("" + index, dwarf); index++;
+        raceMenuMap.put("" + index, claman); index++;
+        raceMenuMap.put("" + index, alien);
+        return raceMenuMap;
+    }
 
+
+    public static String newMenu(String leftAlignFormat, String headerFormat, String breakLine, String header, Map<String, String> commandToLabelMap) {
+        String finalString = "";
+        finalString += breakLine;
+        finalString += String.format(headerFormat, header);
+        finalString += breakLine;
+        for (Map.Entry<String, String> entry : commandToLabelMap.entrySet()) {
+            finalString += String.format(leftAlignFormat, entry.getKey(), entry.getValue());
+        }
+        finalString += breakLine;
+        return finalString;
     }
 
     public static void loadRaceMenu() {
-        String orc = "???                     ***\n";
-        String elf = orc;
-        String dwarf = orc;
-        String claman = orc;
-        String alien = orc;
-        boolean isOrcUnlocked = main.utilities.persistence.Database.getOrcsUnlocked();
-        boolean isElfUnlocked = main.utilities.persistence.Database.getElvesUnlocked();
-        boolean isDwarfUnlocked = main.utilities.persistence.Database.getDwarvesUnlocked();
-        boolean isClamanUnlocked = main.utilities.persistence.Database.getClamanUnlocked();
-        boolean isAlienUnlocked = main.utilities.persistence.Database.getAliensUnlocked();
-        if (isAlienUnlocked) { alien = "Alien                   ***\n"; }
-        if (isClamanUnlocked) { claman = "Claman                  ***\n"; }
-        if (isDwarfUnlocked) { dwarf = "Dwarf                   ***\n"; }
-        if (isElfUnlocked) { elf = "Elf                     ***\n"; }
-        if (isOrcUnlocked) { orc = "Orc                     ***\n"; }
-        chooseRace =
-                "**************************************************\n" +
-                        "***             Choose Village Race            ***\n" +
-                        "***--------------------------------------------***\n" +
-                        "***                1 | Human                   ***\n" +
-                        "***                2 | " + orc +
-                        "***                3 | " + elf +
-                        "***                4 | " + dwarf +
-                        "***                5 | " + claman +
-                        "***                6 | " + alien +
-                        "***                7 | Random                  ***\n" +
-                        "**************************************************\n";
+        String leftAlignFormat = "| %-2s | %-15s |\n";
+        String headerFormat = "| %-20s |\n";
+        String breakLine = "+----+-----------------+\n";
+        String header = "Choose Village Race";
+        chooseRace = newMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
     }
 
     public static void loadTurnMenu() {
+        String leftAlignFormat = "| %-35s | %-30s |\n";
+        String headerFormat = "| %-65s |\n";
+        String breakLine = "+----+-----------------+\n";
+        String header = "STANDBY PHASE";
+        chooseRace = newMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
+
+
         String endString = "***";
         String lenCheck = "************************************************************";
         String otherlen = "*******************************";
-        String mana = "" + main.models.Game.getVillage().getMana();
+        String mana = "" + main.models.Game.getVillage().getMagic();
         String faith = "" + Game.getVillage().getFaith();
         String coins = "" + Game.getVillage().getCoins();
         String stone = "" + Game.getVillage().getStone();
@@ -218,8 +239,8 @@ public class GameStrings {
                         "***---------------------------------------------------------***\n" +
                         "***                0 | Priorities Phase                     ***\n" +
                         "***---------------------------------------------------------***\n" +
-                        "***             Skip | Skip turn                            ***\n" +
-                        "***              End | End Game                             ***\n" +
+                        "***              End | Skip to End Phase                    ***\n" +
+                        "***             Quit | Finish Game                          ***\n" +
                         "***             Save | Save & Continue                      ***\n" +
                         "***             Exit | Save & Quit                          ***\n" +
                         "***************************************************************\n";
@@ -336,70 +357,62 @@ public class GameStrings {
                 "***----------------------------------------------------------------------------------------------***\n" +
                 "***                                      0 | Standby Phase                                       ***\n" +
                 "***                                      1 | Reprint End Turn Report                             ***\n" +
+                "***----------------------------------------------------------------------------------------------***\n" +
+                "***                                   Skip | Skip to next End Phase                              ***\n" +
+                "***                                   Quit | Finish Game                                         ***\n" +
+                "***                                   Save | Save & Continue                                     ***\n" +
+                "***                                   Exit | Save & Quit                                         ***\n" +
                 "****************************************************************************************************\n";
     }
 
+    public static LinkedHashMap<String, String> getResources() {
+        LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        rsrcMap.put("Population", "" + v.getPopulation() + " / " + v.getPopCap());
+        rsrcMap.put("Buildings", "" + v.getBuildings().size() + " / " + v.getBuildingLimit());
+        rsrcMap.put("Total Village HP", "" + v.getTotalHP());
+        rsrcMap.put("Attack", "" + v.getAttackPower());
+        rsrcMap.put("Defense", "" + v.getDefense());
+        rsrcMap.put("Agility", "" + v.getAgility());
+        rsrcMap.put("Dexterity", "" + v.getDexterity());
+        rsrcMap.put("Engineering", "" + v.getEngineering());
+        rsrcMap.put("Intellect", "" + v.getIntelligence());
+        rsrcMap.put("Magic", "" + v.getMagic());
+        rsrcMap.put("Strength", "" + v.getStrength());
+        rsrcMap.put("Average Age", "" + v.getAgeAvg());
+        rsrcMap.put("Average Agility", "" + v.getAgilityAvg());
+        rsrcMap.put("Average Dexterity", "" + v.getDexterityAvg());
+        rsrcMap.put("Average Engineering", "" + v.getEngineeringAvg());
+        rsrcMap.put("Average Intellect", "" + v.getIntelligenceAvg());
+        rsrcMap.put("Average Magic", "" + v.getMagicAvg());
+        rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
+        rsrcMap.put("Art", "" + v.getArt());
+        rsrcMap.put("Brick", "" + v.getBrick());
+        rsrcMap.put("Clay", "" + v.getClay());
+        rsrcMap.put("Coins", "" + v.getCoins());
+        rsrcMap.put("Copper Ore", "" + v.getCopperOre());
+        rsrcMap.put("Faith", "" + v.getFaith());
+        rsrcMap.put("Flowers", "" + v.getFlowers());
+        rsrcMap.put("Glass", "" + v.getGlass());
+        rsrcMap.put("Gold Ore", "" + v.getGoldOre());
+        rsrcMap.put("Iron Ore", "" + v.getIronOre());
+        rsrcMap.put("Jewelery", "" + v.getJewelery());
+        rsrcMap.put("Lumber", "" + v.getLumber());
+        rsrcMap.put("Rock", "" + v.getRock());
+        rsrcMap.put("Sand", "" + v.getSand());
+        rsrcMap.put("Seeds", "" + v.getSeeds());
+        rsrcMap.put("Spacegoo", "" + v.getSpacegoo());
+        rsrcMap.put("Stone", "" + v.getStone());
+        rsrcMap.put("Wood", "" + v.getWood());
+        return rsrcMap;
+    }
+
     public static void loadResources() {
-        resources =
-                "*************************************************\n" +
-                "***-------------------------------------------***\n" +
-                "*** VILLAGE STATS                             ***\n" +
-                "***-------------------------------------------***\n" +
-                "***   Population        | 30 / 10000          ***\n" +
-                "***   Buildings         | 10 / 2000           ***\n" +
-                "***   Attack            | 100                 ***\n" +
-                "***   Defense           | 200                 ***\n" +
-                "***   Agility           | 49                  ***\n" +
-                "***   Dexterity         | 38                  ***\n" +
-                "***   Engineering       | 27                  ***\n" +
-                "***   Intellect         | 16                  ***\n" +
-                "***   Magic             | 12                  ***\n" +
-                "***   Strength          | 11                  ***\n" +
-                "***-------------------------------------------***\n" +
-                "*** BASE STATS                                ***\n" +
-                "***-------------------------------------------***\n" +
-                "***   Base Agility      | 49                  ***\n" +
-                "***   Base Dexterity    | 38                  ***\n" +
-                "***   Base Engineering  | 33                  ***\n" +
-                "***   Base Intellect    | 40                  ***\n" +
-                "***   Base Magic        | 39                  ***\n" +
-                "***   Base Strength     | 42                  ***\n" +
-                "***   Total Village HP  | 127                 ***\n" +
-                "***-------------------------------------------***\n" +
-                "*** AVERAGES                                  ***\n" +
-                "***-------------------------------------------***\n" +
-                "***   Avg. Age          | 26                  ***\n" +
-                "***   Avg. Agility      | 1.63                ***\n" +
-                "***   Avg. Dexterity    | 1.27                ***\n" +
-                "***   Avg. Engineering  | 1.10                ***\n" +
-                "***   Avg. HP           | 4.23                ***\n" +
-                "***   Avg. Intellect    | 1.33                ***\n" +
-                "***   Avg. Magic        | 1.30                ***\n" +
-                "***   Avg. Strength     | 1.40                ***\n" +
-                "***-------------------------------------------***\n" +
-                "*** RESOURCES                                 ***\n" +
-                "***-------------------------------------------***\n" +
-                "***   Wood              | 100                 ***\n" +
-                "***   Art               | 6                   ***\n" +
-                "***   Brick             | 25                  ***\n" +
-                "***   Clay              | 1134                ***\n" +
-                "***   Coins             | 67                  ***\n" +
-                "***   Copper Ore        | 111                 ***\n" +
-                "***   Faith             | 267                 ***\n" +
-                "***   Flowers           | 25                  ***\n" +
-                "***   Glass             | 12                  ***\n" +
-                "***   Gold Ore          | 8                   ***\n" +
-                "***   Iron Ore          | 22                  ***\n" +
-                "***   Jewelery          | 14                  ***\n" +
-                "***   Lumber            | 876                 ***\n" +
-                "***   Rock              | 230                 ***\n" +
-                "***   Sand              | 2467                ***\n" +
-                "***   Seeds             | 178                 ***\n" +
-                "***   Spacegoo          | 0                   ***\n" +
-                "***   Stone             | 1000                ***\n" +
-                "***-------------------------------------------***\n" +
-                "***                   0 | Standby Menu        ***\n" +
-                "*************************************************\n";
+        String leftAlignFormat = "| %-25s | %-25s |\n";
+        String headerFormat = "| %-53s |\n";
+        String breakLine = "+---------------------------+---------------------------+\n";
+        String header = "Village Stats";
+        resources = newMenu(leftAlignFormat, headerFormat, breakLine, header, getResources());   
     }
 
     public static String getStringFromPromptType(main.enums.PromptMessage msg) {

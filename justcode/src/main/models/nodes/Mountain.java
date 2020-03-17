@@ -18,4 +18,10 @@ public class Mountain extends AbstractNode {
         this.rocks = rocks;
         this.stone = stone;
     }
+
+
+    @Override
+    public String toString() {
+        return "Mountain";
+    }
 }

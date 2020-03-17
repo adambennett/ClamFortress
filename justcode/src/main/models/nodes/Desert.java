@@ -16,4 +16,10 @@ public class Desert extends AbstractNode {
         this.rocks = rocks;
         this.sand = sand;
     }
+
+
+    @Override
+    public String toString() {
+        return "Desert";
+    }
 }

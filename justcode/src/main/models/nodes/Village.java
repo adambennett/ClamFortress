@@ -62,12 +62,12 @@ public class Village extends AbstractNode {
     private Integer ironOre =           0;
     private Integer jewelery =          0;
     private Integer lumber =            0;
-    private Integer mana =              0;
     private Integer rock =              0;
     private Integer sand =              0;
     private Integer seeds =             0;
     private Integer spacegoo =          0;
     private Integer stone =             0;
+    private Integer totalHP =           0;
 
     // Lists
     private ArrayList<AbstractArtifact> artifacts = new ArrayList<>();
@@ -140,6 +140,7 @@ public class Village extends AbstractNode {
             this.engineering += s.getEngineering();
             this.health += s.getHealthPoints();
             this.totalAge += s.getAge();
+            this.totalHP += s.getHealthPoints();
             updateAverageStats();
         }
     }
@@ -288,9 +289,6 @@ public class Village extends AbstractNode {
     public void setWood(Integer wood) {
         this.wood = wood;
     }
-    public void setMana(Integer mana){
-        this.mana = mana;
-    }
     public void setFaith(Integer faith){
         this.faith = faith;
     }
@@ -299,6 +297,10 @@ public class Village extends AbstractNode {
     }
     public void setFamine(Integer famine) {
         this.famine = famine;
+    }
+
+    public void setMagic(Integer magic) {
+        this.magic = magic;
     }
 
     // Getters
@@ -395,6 +397,11 @@ public class Village extends AbstractNode {
     public Double getEngineeringAvg() {
         return engineeringAvg;
     }
+
+    public Integer getTotalHP() {
+        return totalHP;
+    }
+
     public Integer getDefense(){
         int atk = this.defence;
         for (AbstractArtifact a : this.artifacts) {
@@ -421,9 +428,6 @@ public class Village extends AbstractNode {
     public Integer getFaith() {
         return this.faith;
     }
-    public Integer getMana() {
-        return this.mana;
-    }
     public Integer getPopulation() {
         return this.population.size();
     }
@@ -438,9 +442,6 @@ public class Village extends AbstractNode {
     }
     public Inventory getInventory() {
         return inventory;
-    }
-    public Integer getDefence() {
-        return defence;
     }
     public ArrayList<Survivor> getSurvivors() {
         return population;
@@ -502,11 +503,11 @@ public class Village extends AbstractNode {
     public void incFaith(int amt) {
         this.faith += amt;
     }
-    public void incMana() {
-        incMana(1);
+    public void incMagic() {
+        incMagic(1);
     }
-    public void incMana(int amt) {
-        this.mana += amt;
+    public void incMagic(int amt) {
+        this.magic += amt;
     }
     public void incCoins() { incCoins(1); }
     public void incCoins(int amt) {
@@ -535,10 +536,10 @@ public class Village extends AbstractNode {
     public void removeSurvivor(Survivor s) {
         this.population.remove(s);
     }
-    public void subMana(int amt) {
-        this.mana -= amt;
-        if(this.mana < 0){
-            this.mana = 0;
+    public void subMagic(int amt) {
+        this.magic -= amt;
+        if(this.magic < 0){
+            this.magic = 0;
         }
     }
     public void subFaith(int amt) {
@@ -561,4 +562,8 @@ public class Village extends AbstractNode {
     }
 
 
+    @Override
+    public String toString() {
+        return "Village";
+    }
 }

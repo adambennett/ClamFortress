@@ -43,7 +43,7 @@ public class EndPhaseHunger extends AbstractGameAction {
                 int rand = ThreadLocalRandom.current().nextInt(Game.getVillage().getSurvivors().size());
                 Survivor s = Game.getVillage().getSurvivors().remove(rand);
                 Game.getVillage().updateAfterRemoving(s);
-                OutputManager.addToBottom("\n" + s.getName() + " has left your Village due to ongoing famine concerns!");
+                OutputManager.addToBot(s.getName() + " has left your Village due to ongoing famine concerns!");
             }
         }
         double newFamine = numHungry / 4.0;

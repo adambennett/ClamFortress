@@ -7,4 +7,9 @@ public class Contagion extends AbstractPlague {
     public void runEncounter() {
         Game.getVillage().addPlague(this);
     }
+
+    @Override
+    public String toString() {
+        return "An Unknown Contagion has stricken your village!";
+    }
 }

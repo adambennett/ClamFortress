@@ -12,9 +12,10 @@ public class TurnMenu extends AbstractConsole {
     @Override
     protected void initializeCommands() {
         consoleCommands.put("exit", MenuCommands.EXIT);
-        consoleCommands.put("skip", MenuCommands.SKIP_TURN);
-        consoleCommands.put("end", MenuCommands.END_GAME);
+        consoleCommands.put("quit", MenuCommands.END_GAME);
         consoleCommands.put("save", MenuCommands.SAVE);
+        consoleCommands.put("end", MenuCommands.SKIP_TURN);
+        consoleCommands.put("skip", MenuCommands.SKIP_TURN);
         consoleCommands.put("cheat", MenuCommands.SCORE_REALLY_BIG_HACKS);
         consoleCommands.put("0", MenuCommands.CONTINUE);
         consoleCommands.put("2", MenuCommands.RESOURCES);
@@ -30,15 +31,14 @@ public class TurnMenu extends AbstractConsole {
                 break;
             case EXIT:
                 Database.saveDatabase();
-                break;
+                System.exit(0);
             case END_GAME:
                 GameManager.reset();
                 new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
                 break;
             case SKIP_TURN:
                 Game.advanceTurn();
-                OutputManager.reset();
-                printPrompt(PromptMessage.TURN_MENU, true);
+                new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
                 break;
             case RESOURCES:
                 new ResourceMenu().printPrompt(PromptMessage.RESOURCE_VIEW, true);

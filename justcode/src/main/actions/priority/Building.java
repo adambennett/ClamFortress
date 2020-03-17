@@ -1,6 +1,7 @@
 package main.actions.priority;
 
 import main.actions.*;
+import main.enums.*;
 import main.models.*;
 import main.models.artifacts.*;
 import main.models.buildings.abstracts.*;
@@ -29,15 +30,15 @@ public class Building extends AbstractGameAction {
                 Game.getVillage().getUncompletedBuildings().remove(this.newBuilding);
                 int diff = inc - this.newBuilding.getPopCapInc();
                 if (diff > 0) {
-                    OutputManager.addToBottom("New Building " + this.newBuilding.getName() + " increased population cap by " + this.newBuilding.getPopCapInc() + "(+" + diff + ")");
+                    OutputManager.addToBot("New Building " + this.newBuilding.getName() + " increased population cap by " + this.newBuilding.getPopCapInc() + "(+" + diff + ")");
                 } else {
-                    OutputManager.addToBottom("New Building " + this.newBuilding.getName() + " increased population cap by " + inc);
+                    OutputManager.addToBot("New Building " + this.newBuilding.getName() + " increased population cap by " + inc);
                 }
             } else {
-                OutputManager.addToBottom("Building Project " + this.newBuilding.getName() + " has been halted because you have reached the current Building Limit");
+                OutputManager.addToBot("Building Project " + this.newBuilding.getName() + " has been halted because you have reached the current Building Limit", OutputFlag.BUILDING_HALT);
             }
         } else {
-            OutputManager.addToBottom("Cannot build " + this.newBuilding.getName() + " because your current Era is behind the requirements.");
+            OutputManager.addToBot("Cannot build " + this.newBuilding.getName() + " because your current Era is behind the requirements.", OutputFlag.ERA_BEHIND);
         }
         this.isDone = true;
     }

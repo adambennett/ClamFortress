@@ -9,4 +9,7 @@ public abstract class AbstractEncounter {
     public void priorityPhase() {}
 
     public void endPhase() {}
+
+    @Override
+    public abstract String toString();
 }

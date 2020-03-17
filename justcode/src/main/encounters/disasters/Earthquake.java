@@ -7,4 +7,9 @@ public class Earthquake extends AbstractDisaster {
     public void runEncounter() {
         Game.getVillage().addDisaster(this);
     }
+
+    @Override
+    public String toString() {
+        return "There was an Earthquake!";
+    }
 }

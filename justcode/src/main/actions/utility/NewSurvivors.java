@@ -34,7 +34,7 @@ public class NewSurvivors extends AbstractGameAction {
         for (int i = 0; i < amt; i++) {
             Survivor newCitizen = getRandomSurvivor();
             Game.getVillage().addToPopulation(newCitizen);
-            OutputManager.addToBottom(newCitizen.getName() + " has moved into your village!");
+            OutputManager.addToBot(newCitizen.getName() + " has moved into your village!");
         }
     }
 

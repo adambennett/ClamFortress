@@ -7,4 +7,9 @@ public class Fire extends AbstractDisaster {
     public void runEncounter() {
         Game.getVillage().addDisaster(this);
     }
+
+    @Override
+    public String toString() {
+        return "A Fire has ravaged your village!";
+    }
 }

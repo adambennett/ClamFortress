@@ -7,4 +7,9 @@ public class DivineHealing extends AbstractMiracle {
     public void runEncounter() {
         Game.getVillage().addMiracle(this);
     }
+
+    @Override
+    public String toString() {
+        return "Miracle: Divine Healing";
+    }
 }

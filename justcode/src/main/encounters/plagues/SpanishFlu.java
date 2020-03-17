@@ -7,4 +7,9 @@ public class SpanishFlu extends AbstractPlague {
     public void runEncounter() {
         Game.getVillage().addPlague(this);
     }
+
+    @Override
+    public String toString() {
+        return "Spanish Flu has stricken your village!";
+    }
 }

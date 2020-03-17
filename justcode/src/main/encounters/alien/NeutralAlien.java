@@ -5,4 +5,9 @@ public class NeutralAlien extends AbstractAliens {
     public void runEncounter() {
 
     }
+
+    @Override
+    public String toString() {
+        return "Aliens walk among us...";
+    }
 }

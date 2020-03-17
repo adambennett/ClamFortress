@@ -5,4 +5,9 @@ public class AlienInvasion extends AbstractAliens {
     public void runEncounter() {
 
     }
+
+    @Override
+    public String toString() {
+        return "Alien Invasion!!";
+    }
 }

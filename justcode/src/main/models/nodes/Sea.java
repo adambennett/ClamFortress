@@ -14,4 +14,10 @@ public class Sea extends AbstractNode {
         super(x, y, biome);
         this.seaLife = Game.generateRandomAquatic();
     }
+
+
+    @Override
+    public String toString() {
+        return "Ocean";
+    }
 }

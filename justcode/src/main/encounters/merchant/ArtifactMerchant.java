@@ -5,4 +5,9 @@ public class ArtifactMerchant extends AbstractMerchant {
     public void runEncounter() {
 
     }
+
+    @Override
+    public String toString() {
+        return "An Artifact Merchant has visited your village";
+    }
 }

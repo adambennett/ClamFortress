@@ -7,4 +7,9 @@ public class Tornado extends AbstractDisaster {
     public void runEncounter() {
         Game.getVillage().addDisaster(this);
     }
+
+    @Override
+    public String toString() {
+        return "A Tornado is causing chaos!";
+    }
 }

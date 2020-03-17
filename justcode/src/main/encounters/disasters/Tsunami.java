@@ -7,4 +7,9 @@ public class Tsunami extends AbstractDisaster {
     public void runEncounter() {
         Game.getVillage().addDisaster(this);
     }
+
+    @Override
+    public String toString() {
+        return "A Tsunami has devasted your beaches!";
+    }
 }

@@ -6,4 +6,9 @@ public class City extends AbstractNode {
     public City(int x, int y, AbstractBiome biome) {
         super(x, y, biome);
     }
+
+    @Override
+    public String toString() {
+        return "City";
+    }
 }

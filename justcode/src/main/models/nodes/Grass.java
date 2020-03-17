@@ -36,4 +36,10 @@ public class Grass extends AbstractNode {
     public ArrayList<Flowers> getFlowers() {
         return flowers;
     }
+
+
+    @Override
+    public String toString() {
+        return "Grasslands";
+    }
 }

@@ -84,7 +84,7 @@ public class VillageTest {
         Integer actualBrick = village.getBrick();
         Integer actualCopperOre = village.getCopperOre();
         Integer actualBuildLim = village.getBuildingLimit();
-        Integer actualDefence = village.getDefence();
+        Integer actualDefence = village.getDefense();
         Integer actualFlowers = village.getFlowers();
         Integer actualGlass = village.getGlass();
         Integer actualGoldOre = village.getGoldOre();
@@ -266,7 +266,7 @@ public class VillageTest {
         village.setDefence(50);
         village.incDefense(1010);
 
-        Integer actual = village.getDefence();
+        Integer actual = village.getDefense();
         Integer expected = 1060;
 
         Assert.assertEquals(expected,actual);
@@ -384,10 +384,10 @@ public class VillageTest {
 
     @Test
     public void incMana() {
-        village.setMana(100);
-        village.incMana();
+        village.setMagic(100);
+        village.incMagic();
 
-        Integer actual = village.getMana();
+        Integer actual = village.getMagic();
         Integer expected = 101;
 
         Assert.assertEquals(expected,actual);
@@ -395,10 +395,10 @@ public class VillageTest {
 
     @Test
     public void testIncMana() {
-        village.setMana(100);
-        village.incMana(100);
+        village.setMagic(100);
+        village.incMagic(100);
 
-        Integer actual = village.getMana();
+        Integer actual = village.getMagic();
         Integer expected = 200;
 
         Assert.assertEquals(expected,actual);
@@ -406,10 +406,10 @@ public class VillageTest {
 
     @Test
     public void subMana() {
-        village.setMana(100);
-        village.subMana(500);
+        village.setMagic(100);
+        village.subMagic(500);
 
-        Integer actual = village.getMana();
+        Integer actual = village.getMagic();
         Integer expected = 0;
 
         Assert.assertEquals(expected,actual);

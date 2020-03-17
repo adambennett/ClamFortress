@@ -10,6 +10,7 @@ import main.models.nodes.Village;
 import main.models.nodes.biomes.AbstractBiome;
 import main.models.nodes.biomes.Grasslands;
 import main.models.resources.natural.Flowers;
+import main.utilities.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,7 +113,11 @@ public class Board {
             this.grid.add(space);
             if (space.hasArtifact()) {
                 village.addArtifact(space.getArtifact());
-                OutputManager.addToTop("Found a " + space.getArtifact().getName() + " on a newly discovered space!");
+                if (GameStrings.startsWithVowel(space.getArtifact().getName())) {
+                    OutputManager.addToTop("Found an " + space.getArtifact().getName() + " on a newly discovered space!");
+                } else {
+                    OutputManager.addToTop("Found a " + space.getArtifact().getName() + " on a newly discovered space!");
+                }
             }
             return true;
         }

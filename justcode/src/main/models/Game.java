@@ -114,10 +114,8 @@ public class Game {
 
     public static void handleEncounter(AbstractEncounter enc) {
         if (gameBoard.getVillage().canRunEncounter(enc)) {
-            OutputManager.addToBottom("\nRandom encounter!! Encounter: " + enc.toString());
+            OutputManager.addToBot("SPECIAL ENCOUNTER :: " + enc.toString());
             enc.runEncounter();
-        } else {
-            OutputManager.addToBottom("\nSkipped encounter due to it being active already. Encounter: " + enc.toString());
         }
     }
 

@@ -7,4 +7,9 @@ public class COVID19 extends AbstractPlague {
     public void runEncounter() {
         Game.getVillage().addPlague(this);
     }
+
+    @Override
+    public String toString() {
+        return "COVID-19 has stricken your village!";
+    }
 }

@@ -7,4 +7,9 @@ public class Flood extends AbstractDisaster {
     public void runEncounter() {
         Game.getVillage().addDisaster(this);
     }
+
+    @Override
+    public String toString() {
+        return "A Flood has destroyed some of your buildings!";
+    }
 }

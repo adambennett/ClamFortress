@@ -16,7 +16,7 @@ public class Engineering extends AbstractGameAction {
     @Override
     public void update() {
         Game.getVillage().addUncompletedBuilding(this.newBuilding);
-        OutputManager.addToBottom("Added new " + this.newBuilding.getName() + " Project to Building Queue");
+        OutputManager.addToBot("Added new " + this.newBuilding.getName() + " Project to Building Queue");
         this.isDone = true;
     }
 }

@@ -7,4 +7,9 @@ public class SARS extends AbstractPlague {
     public void runEncounter() {
         Game.getVillage().addPlague(this);
     }
+
+    @Override
+    public String toString() {
+        return "SARS has stricken your village!";
+    }
 }

@@ -7,4 +7,9 @@ public class Blessing extends AbstractMiracle {
     public void runEncounter() {
         Game.getVillage().addMiracle(this);
     }
+
+    @Override
+    public String toString() {
+        return "Miracle: Blessing";
+    }
 }

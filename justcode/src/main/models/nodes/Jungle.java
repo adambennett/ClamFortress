@@ -30,4 +30,10 @@ public class Jungle extends AbstractNode {
     public ArrayList<Animal> getAnimals() {
         return animals;
     }
+
+
+    @Override
+    public String toString() {
+        return "Jungle";
+    }
 }

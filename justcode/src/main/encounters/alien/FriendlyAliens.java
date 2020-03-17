@@ -5,4 +5,9 @@ public class FriendlyAliens extends AbstractAliens {
     public void runEncounter() {
 
     }
+
+    @Override
+    public String toString() {
+        return "Friendly Aliens have visited your game...";
+    }
 }

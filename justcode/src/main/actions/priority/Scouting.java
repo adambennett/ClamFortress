@@ -17,7 +17,7 @@ public class Scouting extends AbstractGameAction {
     public void update() {
         boolean discovered = Game.getGameBoard().discover(region);
         if (discovered) {
-            OutputManager.addToBottom("Discovered a new " + region.toString() + " region!");
+            OutputManager.addToBot("Discovered a new " + region.toString() + " region!");
             isDone = true;
         } else {
             region = Game.getGameBoard().getRandomRegion();

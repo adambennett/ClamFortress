@@ -29,7 +29,7 @@ public class Fishing extends AbstractGameAction {
             fish *= rod.multiplyFoodOnFishing();
         }
         Game.getVillage().incFood(fish);
-        OutputManager.addToBottom("Fished " + fish + " new food");
+        OutputManager.addToBot("Fished " + fish + " new food");
         this.isDone = true;
     }
 }

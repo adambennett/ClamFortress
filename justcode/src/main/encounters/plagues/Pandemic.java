@@ -7,4 +7,9 @@ public class Pandemic extends AbstractPlague {
     public void runEncounter() {
         Game.getVillage().addPlague(this);
     }
+
+    @Override
+    public String toString() {
+        return "Mass Pandemic has stricken your village!";
+    }
 }

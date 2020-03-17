@@ -7,4 +7,9 @@ public class Bubonic extends AbstractPlague {
     public void runEncounter() {
         Game.getVillage().addPlague(this);
     }
+
+    @Override
+    public String toString() {
+        return "Bubonic Plague has stricken your village!";
+    }
 }

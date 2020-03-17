@@ -30,7 +30,7 @@ public class Hunting extends AbstractGameAction {
             animals *= spear.multiplyFoodOnHunting();
         }
         Game.getVillage().incFood(animals);
-        OutputManager.addToBottom("Hunted " + animals + " new food");
+        OutputManager.addToBot("Hunted " + animals + " new food");
         this.isDone = true;
     }
 }

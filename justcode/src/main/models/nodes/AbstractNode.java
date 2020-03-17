@@ -54,4 +54,7 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
     public int compareTo(AbstractNode a) {
         return a.xPos.compareTo(this.xPos);
     }
+
+    @Override
+    public abstract String toString();
 }

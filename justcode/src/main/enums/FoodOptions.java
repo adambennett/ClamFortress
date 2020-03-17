@@ -7,9 +7,20 @@ public enum FoodOptions {
     FISHING(Race.HUMAN),
     COOKING(Race.HUMAN),
     RAIDING(Race.ORC),
-    SACRIFICE(Race.ORC),
     HUNTING_ORC(Race.ORC),
-    SCAVENGE(Race.DWARF);
+    SACRIFICE(Race.ORC),
+    INSECT_HUNTING(Race.ELF),
+    RIVER_SEARCH(Race.ELF),
+    ROASTING(Race.ELF),
+    BREW(Race.DWARF),
+    MUSHROOM_PICK(Race.DWARF),
+    SCAVENGE(Race.DWARF),
+    ANGLING(Race.CLAMAN),
+    DIVING(Race.CLAMAN),
+    TRAWL(Race.CLAMAN),
+    ABDUCT(Race.ALIEN),
+    ANALYZE(Race.ALIEN),
+    REDACTED(Race.ALIEN);
 
     private final Race associatedRace;
 

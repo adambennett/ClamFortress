@@ -1,6 +1,6 @@
 package main.actions;
 
-import main.actions.priority.*;
+import main.actions.priority.food.human.*;
 import main.models.Game;
 import main.models.animals.land.bears.BlackBear;
 import org.junit.*;

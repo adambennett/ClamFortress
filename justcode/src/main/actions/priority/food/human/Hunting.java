@@ -1,4 +1,4 @@
-package main.actions.priority;
+package main.actions.priority.food.human;
 
 import main.actions.*;
 import main.models.Game;

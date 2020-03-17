@@ -6,6 +6,8 @@ import main.enums.*;
 import main.game.logic.*;
 import main.game.regions.*;
 import main.models.*;
+import main.models.animals.*;
+import main.models.animals.sea.*;
 import main.models.gridSpaces.*;
 import main.models.resources.natural.*;
 import main.tech.*;
@@ -91,9 +93,22 @@ public class Game {
         isLoaded = true;
     }
 
-    public static ArrayList<Flowers> generateRandomFlowers() {
+    public static ArrayList<Flowers> generateRandomFlowers(AbstractRegion biome) {
         ArrayList<Flowers> flows = new ArrayList<>();
-        // TODO: Add flowers based on difficulty
+        // TODO: Add flowers based on difficulty & biome
+        return flows;
+    }
+
+    public static ArrayList<Animal> generateRandomAnimals(AbstractRegion biome) {
+        ArrayList<Animal> flows = new ArrayList<>();
+        // TODO: Add animals based on difficulty & biome
+        return flows;
+    }
+
+
+    public static ArrayList<SeaAnimal> generateRandomAquatic() {
+        ArrayList<SeaAnimal> flows = new ArrayList<>();
+        // TODO: Add sea life based on difficulty
         return flows;
     }
 
@@ -336,4 +351,5 @@ public class Game {
                 break;
         }
     }
+
 }

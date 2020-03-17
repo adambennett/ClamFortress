@@ -1,16 +1,21 @@
 package main.models.gridSpaces;
 
+import main.game.*;
+import main.game.regions.*;
 import main.models.animals.sea.SeaAnimal;
 
-import java.util.Map;
+import java.util.*;
 
 public class SeaSpace extends AbstractGridSpace {
 
-    Map<SeaAnimal,Integer> fish;
+    private ArrayList<SeaAnimal> seaLife;
 
-    public SeaSpace(int xPos, int yPos, Map<SeaAnimal,Integer> fish){
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.fish=fish;
+    public SeaSpace(int x, int y, AbstractRegion biome) {
+        super(x, y, biome);
+        this.seaLife = Game.generateRandomAquatic();
+    }
+
+    public ArrayList<SeaAnimal> getSeaLife() {
+        return seaLife;
     }
 }

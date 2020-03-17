@@ -1,8 +1,6 @@
 package main.models.animals.sea;
 
-import main.models.animals.*;
-
-public class Platypus extends Animal {
+public class Platypus extends SeaAnimal {
 
     public Platypus(){
         this.amountOfFoodOnHunt = 20;

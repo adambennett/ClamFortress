@@ -196,62 +196,75 @@ public class Game {
         return foodActions;
     }
 
-    public static void fillActionManagerWithSimpleActions(int dateInc) {
+    public static Integer fillActionManagerWithSimpleActions(int dateInc) {
+        int totalActions = 2;
         actionManager.addToTurnStart(new NewSurvivors());
         actionManager.addToTurnEnd(new EndPhaseHunger());
 
         ArrayList<AbstractGameAction> foodActions = getFoodActions();
         for (int i = 0; i < PriorityManager.getFood1(); i++) {
-            actionManager.addToBottom(foodActions.get(0));
-            foodActions.get(0).isDone = false;
+            actionManager.addToBottom(foodActions.get(0).clone());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getFood2(); i++) {
             actionManager.addToBottom(foodActions.get(1).clone());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getFood3(); i++) {
             actionManager.addToBottom(foodActions.get(2).clone());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getScout(); i++) {
             actionManager.addToTurnEnd(new Scouting());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getPray(); i++) {
             actionManager.addToBottom(new Praying());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getForage(); i++) {
             actionManager.addToBottom(new Foraging());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getWoodcut(); i++) {
             actionManager.addToBottom(new Woodcutting());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getStone(); i++) {
             actionManager.addToBottom(new RockPicking());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getMine(); i++) {
             actionManager.addToBottom(new Mining());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getDefend(); i++) {
             actionManager.addToBottom(new Defense());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getHarvest(); i++) {
             actionManager.addToBottom(new Harvesting());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getForge(); i++) {
             actionManager.addToBottom(new Forging());
+            totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getHeal(); i++) {
             actionManager.addToBottom(new Healing());
+            totalActions++;
         }
 
         if (getVillage().getUncompletedBuildings().size() > 0) {
@@ -259,14 +272,17 @@ public class Game {
                 int randIndex = ThreadLocalRandom.current().nextInt(getVillage().getUncompletedBuildings().size());
                 AbstractBuilding rand = getVillage().getUncompletedBuildings().get(randIndex);
                 actionManager.addToBottom(new Building(rand));
+                totalActions++;
             }
         }
 
         for (int i = 0; i < PriorityManager.getEngineer(); i++) {
             actionManager.addToBottom(new Engineering(BuildingManager.getRandomBuilding()));
+            totalActions++;
         }
 
-        actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc));
+        actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc, totalActions));
+        return totalActions;
     }
 
     public static Board getGameBoard() {

@@ -30,6 +30,10 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
         return artifact;
     }
 
+    public void setArtifact(AbstractArtifact art) {
+        this.artifact = art;
+    }
+
     public AbstractBiome getBiome() {
         return biome;
     }

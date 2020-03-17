@@ -124,138 +124,14 @@ public class Board {
         return false;
     }
 
-    public void addAnimals(Animal animal) {
-        addAnimals(animal, 1);
-    }
-
     public void addAnimals(Animal animal, int amt) {
         for (int i = 0; i < amt; i++) {
-                animals.add(animal.clone());
-            }
-        }
-
-
-    public void addFlowers(Flowers flower) {
-        addFlowers(flower, 1);
-    }
-
-    public void addFlowers(Flowers flower, int amt) {
-        if (this.flowers.containsKey(flower)) {
-            this.flowers.put(flower, this.flowers.get(flower) + amt);
-        } else {
-            this.flowers.put(flower, amt);
+            animals.add(animal.clone());
         }
     }
-
-    public void addAlienEncounter(AbstractAliens a) {
-        aliens.add(a);
-    }
-
-    public void reduceTreesOnBoard(Integer amountToCutDown){
-        this.trees -= amountToCutDown;
-        if(this.trees < 0){
-            this.trees =0;
-        }
-    }
-
-    public void reduceStoneOnBoard(Integer amountToMine){
-        this.stone -= amountToMine;
-        if(this.stone < 0){
-            this.stone = 0;
-        }
-    }
-
-    public void reduceCopperOreOnBoard(Integer amountToMine){
-        this.copperOre -= amountToMine;
-        if(this.copperOre < 0){
-            this.copperOre = 0;
-        }
-    }
-
-    public void reduceIronOreOnBoard(Integer amountToMine){
-        this.ironOre -= amountToMine;
-        if(this.ironOre < 0){
-            this.ironOre = 0;
-        }
-    }
-
-    public void reduceGemsOnBoard(Integer amountToMine){
-        this.gems -= amountToMine;
-        if(this.gems < 0){
-            this.gems = 0;
-        }
-    }
-
-
-    public void reduceHealingItemsOnBoard(Integer amountToUse){
-        this.healingItems -= amountToUse;
-        if(this.healingItems < 0){
-            healingItems = 0;
-        }
-    }
-
-    //Board Setters
-
-    public void setTrees(Integer trees) {
-        this.trees = trees;
-    }
-
-    public void setStone(Integer stone) {
-        this.stone = stone;
-    }
-
-    public void setClay(Integer clay) {
-        this.clay = clay;
-    }
-
-    public void setCopperOre(Integer copperOre) {
-        this.copperOre = copperOre;
-    }
-
-    public void setIronOre(Integer ironOre) {
-        this.ironOre = ironOre;
-    }
-
-    public void setGoldOre(Integer goldOre) {
-        this.goldOre = goldOre;
-    }
-
-    public void setGems(Integer gems) {
-        this.gems = gems;
-    }
-
-    public void setRocks(Integer rocks) {
-        this.rocks = rocks;
-    }
-
-    public void setSand(Integer sand) {
-        this.sand = sand;
-    }
-
-    public void setSpacegoo(Integer spacegoo) {
-        this.spacegoo = spacegoo;
-    }
-
-    public void setHealingItems(Integer healingItems) {
-        this.healingItems = healingItems;
-    }
-
-    //Board Getters
 
     public Village getVillage() {
         return village;
-    }
-
-    public ArrayList<AbstractNode> getGrid() {
-        return grid;
-    }
-
-    public ArrayList<AbstractAliens> getAliens() {
-        return aliens;
-    }
-
-    public Map<Flowers, Integer> getFlowers() {
-        return flowers;
     }
 
     public ArrayList<Animal> getAnimals() {
@@ -266,30 +142,6 @@ public class Board {
         return trees;
     }
 
-    public Integer getStone() {
-        return stone;
-    }
-
-    public Integer getClay() {
-        return clay;
-    }
-
-    public Integer getCopperOre() {
-        return copperOre;
-    }
-
-    public Integer getIronOre() {
-        return ironOre;
-    }
-
-    public Integer getGoldOre() {
-        return goldOre;
-    }
-
-    public Integer getGems() {
-        return gems;
-    }
-
     public ArrayList<SeaAnimal> getFish() {
         return fish;
     }
@@ -298,20 +150,13 @@ public class Board {
         return rocks;
     }
 
-    public Integer getSand() {
-        return sand;
+    public void setTrees(Integer trees) {
+        this.trees = trees;
     }
 
-    public Integer getSpacegoo() {
-        return spacegoo;
+    public void setRocks(Integer rocks) {
+        this.rocks = rocks;
     }
-
-    public Integer getHealingItems() {
-        return healingItems;
-    }
-
-
-    //Board Adders
 
     public void addFish(SeaAnimal fishToAdd, Integer amount){
         for (int i = 0; i < amount; i++) {
@@ -319,6 +164,10 @@ public class Board {
         }
     }
 
-
-
+    public void reduceTreesOnBoard(int amt) {
+        this.trees -= amt;
+        if (this.trees < 0) {
+            this.trees = 0;
+        }
+    }
 }

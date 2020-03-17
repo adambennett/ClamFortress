@@ -153,7 +153,7 @@ public class GameStrings {
         String season = Game.getGameManager().getSeason();
         String fullDate = date + season;
         String surroundings = "***                1 | View Board                           ***\n";
-        if (AbstractConsole.getCurrentGame() != null && !Game.getSurroundingCheckEnabled()) {
+        if (!Game.getSurroundingCheckEnabled()) {
             surroundings =          "***                1 | [DISABLED]                           ***\n";
         }
         mana = format(mana, otherlen, endString);
@@ -312,14 +312,8 @@ public class GameStrings {
                 "****************************************************************************************************\n" +
                 "***                                          END PHASE                                           ***\n" +
                 "***----------------------------------------------------------------------------------------------***\n" +
-                "***             Global Score: 99999999999999999999999                                            ***\n" +
-                "***             Time Elapsed: 99 days                                                            ***\n" +
-                "*** Resources Gained (99999): Stone(120), Faith(60), Rocks(120), Gold(600)                       ***\n" +
-                "***      New Survivors (999): Sauron, Scuba Steve, Jeremy, Adam, Rick, James, Matt Perry, ...    ***\n" +
-                "***          New Regions (3): Grasslands (1), Sea (2)                                            ***\n" +
-                "***                                                                                              ***\n" +
-                "***----------------------------------------------------------------------------------------------***\n" +
-                "***                                          0 | Standby Phase                                   ***\n" +
+                "***                                      0 | Standby Phase                                       ***\n" +
+                "***                                      1 | Reprint End Turn Report                             ***\n" +
                 "****************************************************************************************************\n";
     }
 
@@ -417,7 +411,7 @@ public class GameStrings {
         return "";
     }
 
-    public static String getRandomName() {
+    public static String getRandomName(boolean includePokemon) {
         ArrayList<String> names = new ArrayList<>();
         names.add("A Monkey");
         names.add("A Platypus");
@@ -513,6 +507,7 @@ public class GameStrings {
         names.add("Glenna");
         names.add("Graiden");
         names.add("Hadassah");
+        names.add("Han");
         names.add("Hanae");
         names.add("Harriet");
         names.add("Hayfa");
@@ -583,6 +578,55 @@ public class GameStrings {
         names.add("Maggie");
         names.add("Maite");
         names.add("Malik");
+        names.add("Master Hand");
+        names.add("Crazy Hand");
+        names.add("Giovanni");
+        names.add("Lt. Surge");
+        names.add("Gunny");
+        names.add("Gunner");
+        names.add("Hook Man");
+        names.add("Really Slow Guy");
+        names.add("White Knight");
+        names.add("Black Knight");
+        names.add("Knight of Ni");
+        names.add("Saul Goodman");
+        names.add("Walter White");
+        names.add("Jesse Pinkman");
+        names.add("Jon Snow");
+        names.add("Tyrion");
+        names.add("A Dragon");
+        names.add("Dothraki Screamer");
+        names.add("Unsullied Soldier");
+        names.add("Khalessi");
+        names.add("Dany");
+        names.add("Dani");
+        names.add("Danny");
+        names.add("Drew Carey");
+        names.add("Jim Carey");
+        names.add("Idris Elba");
+        names.add("Steve Carell");
+        names.add("Steven Colbert");
+        names.add("John Stewart");
+        names.add("Aragorn");
+        names.add("Legolas");
+        names.add("Gimli");
+        names.add("Frodo");
+        names.add("Samwise Gamgee");
+        names.add("Pippin");
+        names.add("Merry");
+        names.add("Gandalf, the White");
+        names.add("Gandalf, the Grey");
+        names.add("Voldemort");
+        names.add("Harry Potter");
+        names.add("Ronald Weasley");
+        names.add("Fred Weasley");
+        names.add("George Weasley");
+        names.add("Arthur Weasley");
+        names.add("Ginny Weasley");
+        names.add("Percy Weasley");
+        names.add("Molly Weasley");
+        names.add("Hermonine Granger");
+        names.add("Hedwig");
         names.add("Mark");
         names.add("Mary");
         names.add("Mary");
@@ -643,6 +687,7 @@ public class GameStrings {
         names.add("Rick James");
         names.add("Roberto");
         names.add("Robin");
+        names.add("AJ Applegate");
         names.add("RoboCop");
         names.add("Ronan");
         names.add("Russian Spy");
@@ -660,11 +705,14 @@ public class GameStrings {
         names.add("Spock");
         names.add("Spongebob");
         names.add("Stacey");
+        names.add("Stacey's Mom");
         names.add("Stacey");
         names.add("Stella");
         names.add("Steve-O");
         names.add("Stuart");
         names.add("Susan");
+        names.add("Squidward");
+        names.add("Mr. Krabs");
         names.add("Tanek");
         names.add("Tarik");
         names.add("Tariq");
@@ -685,6 +733,201 @@ public class GameStrings {
         names.add("Yolanda");
         names.add("Yosemite Sam");
         names.add("Your Girlfriend");
+        names.add("Emperor Thaurissan");
+        names.add("Deathwing");
+        names.add("Yogg-Saron");
+        names.add("Murloc");
+        names.add("Murloc Tidehunter");
+        names.add("Murloc Rockpool");
+        names.add("Fisheye Guy");
+        names.add("Weird Eye Guy");
+        names.add("Fisheye Girl");
+        names.add("Weird Eye Girl");
+        names.add("Dumb Person");
+        names.add("Smart Person");
+        names.add("King Joghause");
+        names.add("King Flausweussen");
+        names.add("King Nordissanijakivic");
+        names.add("King Swijckiwskty");
+        names.add("King RuntimeError");
+        names.add("King CompileError");
+        names.add("Confused Programmer");
+        names.add("Confused Debugger");
+        names.add("Program Bug");
+        names.add("Program Bug");
+        names.add("Program Bug");
+        names.add("Movie Watcher");
+        names.add("Creepo");
+        names.add("Radiohead");
+        names.add("Nickleback");
+        names.add("The Arbiter");
+        names.add("343 Guilty Spark");
+        names.add("Volcano Worshipper");
+        names.add("Hurricane Worshipper");
+        names.add("Plague Worshipper");
+        names.add("Tornado Worshipper");
+        names.add("Earthquake Worshipper");
+        names.add("Master of Terminals");
+        names.add("Controller of Versions");
+        names.add("Breaker of Convention");
+        names.add("Adam Codeborn of the House Bennett");
+        names.add("King of the First Men");
+        names.add("King of the Andals");
+        names.add("COVID-19 Carrier");
+        names.add("Guy Who Sneezes A Lot (too much)");
+        names.add("Guy Who Sneezes A Lot (just enough)");
+        names.add("Greasy Guy");
+        names.add("Guy Who Says Moist");
+        names.add("Racist Guy");
+        names.add("Politically Correct Guy");
+        names.add("Sacha Baron Cohen");
+        names.add("Nathan Fielder");
+        names.add("Daniel Tosh");
+        names.add("Tony Hinchcliffe");
+        names.add("Brian Redban");
+        names.add("Jeremiah Watkins");
+        names.add("Joelberg");
+        names.add("Molly Stewart");
+        names.add("Andrew Santino");
+        names.add("Bill Burr");
+        names.add("Huel");
+        names.add("Vacuum Repair Guy");
+        names.add("Mr. Beast");
+        names.add("Mark Rober");
+        names.add("NASA Guy");
+        names.add("Elon Musk");
+        names.add("Obama");
+        names.add("George Bush");
+        names.add("George Clinton");
+        names.add("Abraham Lincoln");
+        names.add("Mark Wahlberg");
+        names.add("Marky Mark");
+        names.add("50 Cent");
+        names.add("Eminem");
+        names.add("A Ghost");
+        names.add("Cursed Guy");
+        names.add("Unlucky Guy");
+        names.add("Joyner Lucas");
+        names.add("Luke Holland");
+        names.add("Mark McQuire");
+        names.add("Ed Sheeran");
+        names.add("Hopsin");
+        names.add("Quavo");
+        names.add("Katy Perry");
+        names.add("Billie Eilish");
+        names.add("Sean Evans");
+        names.add("Pete Davidson");
+        names.add("Nicholas Cage");
+        names.add("Nicholas Cage (from Con Air)");
+        names.add("Paul Rudd");
+        names.add("Shaq");
+        names.add("Koby Bryant");
+        names.add("Gordon Ramsey");
+        names.add("Paula Deen");
+        names.add("Margot Robbie");
+        names.add("Olivia Wilde");
+        names.add("Ashton Kutcher");
+        names.add("Shia LaBeouf");
+        names.add("Adam Codeborn of the House Bennett, First of His Name, the Unbroken, King of the Sandals and the First Coders, Hacker of the Great Concrete Sea, Breaker of Conventions, and Master of Terminals");
+        names.add("Daenerys Stormborn of the House Targaryen, First of Her Name, the Unburnt, Queen of the Andals and the First Men, Khaleesi of the Great Grass Sea, Breaker of Chains, and Mother of Dragons");
+        if (includePokemon) {
+            names.add("Bulbasaur");
+            names.add("Ivysaur");
+            names.add("Venusaur");
+            names.add("Charmander");
+            names.add("Charmeleon");
+            names.add("Charizard");
+            names.add("Squirtle");
+            names.add("Wartortle");
+            names.add("Blastoise");
+            names.add("Caterpie");
+            names.add("Butterfree");
+            names.add("Beedrill");
+            names.add("Pidgey");
+            names.add("Rattata");
+            names.add("Ekans");
+            names.add("Pikachu");
+            names.add("Raichu");
+            names.add("Sandshrew");
+            names.add("Nidoqueen");
+            names.add("Nidoking");
+            names.add("Clefairy");
+            names.add("Vulpix");
+            names.add("Ninetales");
+            names.add("Jigglypuff");
+            names.add("Zubat");
+            names.add("Vileplume");
+            names.add("Diglett");
+            names.add("Dugtrio");
+            names.add("Meowth");
+            names.add("Psyduck");
+            names.add("Growlithe");
+            names.add("Arcanine");
+            names.add("Poliwag");
+            names.add("Slowpoke");
+            names.add("Gengar");
+            names.add("Onix");
+            names.add("Cubone");
+            names.add("Hitmonlee");
+            names.add("Hitmonchan");
+            names.add("Lickitung");
+            names.add("Koffing");
+            names.add("Weezing");
+            names.add("Mr.Mime");
+            names.add("Scyther");
+            names.add("Electabuzz");
+            names.add("Magmar");
+            names.add("Pinsir");
+            names.add("Magikarp");
+            names.add("Gyarados");
+            names.add("Eevee");
+            names.add("Vaporeon");
+            names.add("Jolteon");
+            names.add("Flareon");
+            names.add("Snorlax");
+            names.add("Articuno");
+            names.add("Zapdos");
+            names.add("Moltres");
+            names.add("Dragonite");
+            names.add("Mewtwo");
+            names.add("Mew");
+            names.add("Typhlosion");
+            names.add("Totodile");
+            names.add("Hoothoot");
+            names.add("Pichu");
+            names.add("Togepi");
+            names.add("Ampharos");
+            names.add("Marill");
+            names.add("Sudowoodo");
+            names.add("Quagsire");
+            names.add("Espeon");
+            names.add("Umbreon");
+            names.add("Qwilfish");
+            names.add("Shuckle");
+            names.add("Heracross");
+            names.add("Piloswine");
+            names.add("Corsola");
+            names.add("Raikou");
+            names.add("Entei");
+            names.add("Tyranitar");
+            names.add("Lugia");
+            names.add("Ho-Oh");
+            names.add("Celebi");
+            names.add("Treecko");
+            names.add("Torchic");
+            names.add("Blaziken");
+            names.add("Mudkip");
+            names.add("Zigzagoon");
+            names.add("Ralts");
+            names.add("Metagross");
+            names.add("Latias");
+            names.add("Latios");
+            names.add("Kyogre");
+            names.add("Groudon");
+            names.add("Rayquaza");
+            names.add("Jirachi");
+            names.add("Deoxys");
+        }
         return names.get(ThreadLocalRandom.current().nextInt(names.size()));
     }
 

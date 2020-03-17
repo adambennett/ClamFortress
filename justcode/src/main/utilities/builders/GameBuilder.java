@@ -36,14 +36,19 @@ public class GameBuilder {
         this.startBiome = startBiome;
     }
 
-    public Game buildGame() {
-        if (this.difficulty.equals(Difficulty.RANDOM)) {
-            this.difficulty = Difficulty.getRandomMode();
-        }
-        if (this.difficulty.equals(Difficulty.CUSTOM)) {
-            return new Game(this.race, this.customMods, this.startBiome);
-        } else {
-            return new Game(this.difficulty, this.race, this.startBiome);
+    public Boolean buildGame() {
+        try {
+            if (this.difficulty.equals(Difficulty.RANDOM)) {
+                this.difficulty = Difficulty.getRandomMode();
+            }
+            if (this.difficulty.equals(Difficulty.CUSTOM)) {
+                Game.startGame(this.race, this.customMods, this.startBiome);
+            } else {
+                Game.startGame(this.difficulty, this.race, this.startBiome);
+            }
+            return true;
+        } catch (Exception ex) {
+            return false;
         }
     }
 

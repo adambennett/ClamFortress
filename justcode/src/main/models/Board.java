@@ -1,6 +1,7 @@
 package main.models;
 
 import main.encounters.alien.AbstractAliens;
+import main.game.logic.*;
 import main.game.regions.AbstractRegion;
 import main.game.regions.Grasslands;
 import main.models.animals.Animal;
@@ -111,7 +112,7 @@ public class Board {
             this.grid.add(space);
             if (space.hasArtifact()) {
                 village.addArtifact(space.getArtifact());
-                Logger.getGlobal().info("Found an " + space.getArtifact().getName() + " on a newly discovered space!");
+                OutputManager.addToTop("Found a " + space.getArtifact().getName() + " on a newly discovered space!");
             }
             return true;
         }

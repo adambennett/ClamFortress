@@ -41,11 +41,17 @@ public class BiomeMenu extends AbstractConsole {
                 builder.setStartBiome(new Tundra());
                 break;
         }
-        setupGame();
+        boolean setup = setupGame();
+        if (setup) {
+            advanceToFirstTurn();
+        } else {
+            Logger.getGlobal().warning("Game was not created properly, returning to Login Screen");
+            new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
+        }
     }
 
-    private void setupGame() {
-        setCurrentGame(builder.buildGame());
+    public Boolean setupGame() {
+        Boolean toRet = builder.buildGame();
         String gameInfo = "";
         gameInfo += "\n\nGame Information:\n  Difficulty: " + builder.getDifficulty().toString();
         gameInfo += "\n  Race: " + builder.getRace().toString();
@@ -58,6 +64,10 @@ public class BiomeMenu extends AbstractConsole {
         }
         gameInfo += "\n";
         Logger.getGlobal().info(gameInfo);
+        return toRet;
+    }
+
+    public void advanceToFirstTurn() {
         printPrompt(PromptMessage.BLURB, false);
         TurnMenu turnMenu = new TurnMenu();
         turnMenu.printPrompt(PromptMessage.TURN_MENU, true);

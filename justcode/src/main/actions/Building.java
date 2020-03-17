@@ -9,6 +9,5 @@ public class Building extends AbstractGameAction {
     @Override
     public void update() {
         this.isDone = true;
-
     }
 }

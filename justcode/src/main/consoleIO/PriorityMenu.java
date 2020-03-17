@@ -37,12 +37,6 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("0", MenuCommands.CONTINUE);
     }
 
-    private void runActions() {
-        Game.fillActionManagerWithSimpleActions();
-        // complicated actions logic
-        Game.runActions();
-    }
-
     @Override
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         Integer amt = 0;
@@ -53,7 +47,7 @@ public class PriorityMenu extends AbstractConsole {
         }
         switch(cmd) {
             case CONTINUE:
-                runActions();
+                Game.advanceTurn();
                 new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
                 break;
             case DYNAMIC_FOOD_A:

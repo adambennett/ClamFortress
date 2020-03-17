@@ -8,6 +8,10 @@ public final class ConsoleServices {
         System.out.println(message);
     }
 
+    public static void prNONL(String msg) {
+        System.out.print(msg);
+    }
+
     public static Float getFloatInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(prompt);

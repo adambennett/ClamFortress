@@ -2,6 +2,7 @@ package main.actions;
 
 import main.enums.*;
 import main.game.*;
+import main.game.logic.*;
 import main.models.beings.player.*;
 import main.utilities.*;
 import main.utilities.builders.*;
@@ -17,7 +18,6 @@ public class NewSurvivors extends AbstractGameAction {
 
     @Override
     public void update() {
-        // TODO: Check Hunger level and subtract some new survivors based on random roll with it
         int pop = Game.getVillage().getPopulation();
         int popCap = Game.getVillage().getPopCap();
         int diff = popCap - pop;
@@ -38,11 +38,11 @@ public class NewSurvivors extends AbstractGameAction {
         for (int i = 0; i < amt; i++) {
             Survivor newCitizen = getRandomSurvivor();
             Game.getVillage().addToPopulation(newCitizen);
-            Logger.getGlobal().info("\n" + newCitizen.getName() + " has moved into your village!");
+            OutputManager.addToBottom(newCitizen.getName() + " has moved into your village!");
         }
     }
 
-    private Survivor getRandomSurvivor() {
+    public Survivor getRandomSurvivor() {
         int randHP = ThreadLocalRandom.current().nextInt(10, 100);
         int randAge = randHP;
         randHP += ThreadLocalRandom.current().nextInt(-5, 5);
@@ -60,7 +60,7 @@ public class NewSurvivors extends AbstractGameAction {
             gender = Gender.FEMALE;
         }
        return new SurvivorBuilder()
-                .setName(GameStrings.getRandomName())
+                .setName(GameStrings.getRandomName(true))
                 .setHealthPoints(randHP)
                 .setStrength(randStrength)
                 .setIntelligence(randIntel)

@@ -9,6 +9,7 @@ public class ActionManager {
     public ArrayList<AbstractGameAction> actions = new ArrayList<>();
     public ArrayList<AbstractGameAction> preTurnActions = new ArrayList<>();
     public ArrayList<AbstractGameAction> postTurnActions = new ArrayList<>();
+    public AbstractGameAction finalAction;
     public AbstractGameAction current;
     public AbstractGameAction previous;
     public Phase phase;
@@ -34,6 +35,8 @@ public class ActionManager {
     public void addToTurnEnd(AbstractGameAction action) {
         this.postTurnActions.add(action);
     }
+
+    public void setAbsoluteLastAction(AbstractGameAction action) { this.finalAction = action; }
 
     public void update() {
         switch (this.phase) {
@@ -75,6 +78,10 @@ public class ActionManager {
             this.current = this.postTurnActions.remove(0);
             this.phase = Phase.EXECUTING_ACTIONS;
             this.hasControl = true;
+        }
+
+        else if (this.finalAction != null && !this.finalAction.isDone) {
+            this.finalAction.update();
         }
     }
 

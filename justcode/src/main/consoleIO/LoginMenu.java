@@ -2,8 +2,10 @@ package main.consoleIO;
 
 import main.enums.*;
 import main.utilities.builders.*;
+import main.utilities.persistence.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 public class LoginMenu extends AbstractConsole {
 
@@ -20,13 +22,12 @@ public class LoginMenu extends AbstractConsole {
                 setBuilder(new GameBuilder());
                 DifficultyMenu diff = new DifficultyMenu();
                 diff.printPrompt(PromptMessage.DIFF_MENU, true);
-                return;
-            /*case LOAD_GAME:
-                // Database.loadGameStuff();
-                // this.setCurrentGame(Database.theGameWeLoaded);
-                // resume game
-                return;
-            */
+                break;
+            case LOAD_GAME:
+                Database.loadDatabase();
+                Logger.getGlobal().info("No saved games found!");
+                processCommand(MenuCommands.NEW_GAME, new ArrayList<>());
+                break;
         }
     }
 

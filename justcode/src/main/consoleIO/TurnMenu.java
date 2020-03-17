@@ -28,18 +28,22 @@ public class TurnMenu extends AbstractConsole {
             case SAVE:
                 Database.saveDatabase();
                 printPrompt(PromptMessage.TURN_MENU, true);
+                break;
             case EXIT:
                 Database.saveDatabase();
                 break;
             case END_GAME:
                 GameManager.reset();
                 new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
-                return;
+                break;
             case SKIP_TURN:
-                Game.fillActionManagerWithSimpleActions();
-                advanceTurn();
+                Game.advanceTurn();
+                OutputManager.reset();
+                printPrompt(PromptMessage.TURN_MENU, true);
+                break;
             case RESOURCES:
                 new ResourceMenu().printPrompt(PromptMessage.RESOURCE_VIEW, true);
+                break;
             case SCORE_REALLY_BIG_HACKS:
                 int amt = 1000;
                 if (args.size() > 0) {
@@ -47,15 +51,11 @@ public class TurnMenu extends AbstractConsole {
                 }
                 Database.score(amt);
                 printPrompt(PromptMessage.TURN_MENU, true);
+                break;
             case CONTINUE:
                 PriorityMenu priorityMenu = new PriorityMenu();
                 priorityMenu.printPrompt(PromptMessage.PRIORITY_MENU, true, true);
+                break;
         }
-    }
-
-    public void advanceTurn() {
-        Integer dateInc = Game.advanceTurn();
-        Logger.getGlobal().info("\nGlobal Score: " + Database.getPlayerScore() + "\nTime Elapsed: " + dateInc + " Days");
-        printPrompt(PromptMessage.TURN_MENU, true);
     }
 }

@@ -46,11 +46,11 @@ public class Game {
     private static Difficulty difficulty;
 
     // Default Settings (for tests)
-    public Game() {
-        this(Difficulty.DEFAULT, Race.HUMAN, new Grasslands());
+    public static void startGame() {
+        startGame(Difficulty.DEFAULT, Race.HUMAN, new Grasslands());
     }
 
-    public Game(Difficulty gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
+    public static void startGame(Difficulty gameDifficulty, Race chosenRace, AbstractRegion startingBiome) {
         TechTree.resetTechTree();
         PriorityManager.reset(true);
         difficulty = gameDifficulty;
@@ -65,7 +65,7 @@ public class Game {
     }
 
     // Custom Difficulty
-    public Game(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
+    public static void startGame(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractRegion startingBiome) {
         TechTree.resetTechTree();
         PriorityManager.reset(true);
         difficulty = Difficulty.CUSTOM;
@@ -112,43 +112,56 @@ public class Game {
         return flows;
     }
 
-    public static Integer advanceTurn() {
-        Integer dateInc = 0;
-        ArrayList<AbstractEncounter> encounters = EncounterManager.generateEncounters();
-        if (encounters.size() > 0) {
-            dateInc += gameManager.advanceDate(5, 15);
-            for (AbstractEncounter enc : encounters) {
-                if (gameBoard.getVillage().canRunEncounter(enc)) {
-                    Logger.getGlobal().info("\nRandom encounter!! Encounter: " + enc.toString() + "\n");
-                    enc.runEncounter();
-                } else {
-                    Logger.getGlobal().info("\nSkipped encounter due to it being active already. Encounter: " + enc.toString() + "\n");
-                }
-            }
-            int low = 25 - dateInc;
-            int high = 45 - dateInc;
-            if (low < 0) { low = 0; }
-            if (high < 1) { high = 1; }
-            dateInc += gameManager.advanceDate(low, high);
+    public static void handleEncounter(AbstractEncounter enc) {
+        if (gameBoard.getVillage().canRunEncounter(enc)) {
+            OutputManager.addToBottom("\nRandom encounter!! Encounter: " + enc.toString());
+            enc.runEncounter();
         } else {
-            dateInc += gameManager.advanceDate(25, 45);
+            OutputManager.addToBottom("\nSkipped encounter due to it being active already. Encounter: " + enc.toString());
         }
+    }
 
-        actionManager.update();
-
-        Database.score(dateInc);
-        gameManager.incTurns();
+    public static Integer encounterLogic(ArrayList<AbstractEncounter> encounters) {
+        Integer dateInc = gameManager.advanceDate(5, 15);
+        for (AbstractEncounter enc : encounters) {
+            handleEncounter(enc);
+        }
+        int low = 25 - dateInc;
+        int high = 45 - dateInc;
+        if (low < 0) { low = 0; }
+        if (high < 1) { high = 1; }
+        dateInc += gameManager.advanceDate(low, high);
         return dateInc;
     }
 
-    public static void runActions() {
-        while (!actionManager.actions.isEmpty() || !actionManager.preTurnActions.isEmpty() || !actionManager.postTurnActions.isEmpty()) {
-            actionManager.update();
+    public static Integer getDateInc() {
+        Integer dateInc = 0;
+        ArrayList<AbstractEncounter> encounters = EncounterManager.generateEncounters();
+        if (encounters.size() > 0) {
+            dateInc += encounterLogic(encounters);
+        } else {
+            dateInc += gameManager.advanceDate(25, 45);
         }
+        return dateInc;
+    }
+
+    public static void advanceTurn() {
+        Integer dateInc = getDateInc();
+        Database.score(dateInc);
+        gameManager.incTurns();
+        fillActionManagerWithSimpleActions(dateInc);
+        // complicated actions logic
+        runActions();
         PriorityManager.reset(difficulty.compareTo(Difficulty.HARD) > 0);
     }
 
-    public static void fillActionManagerWithSimpleActions() {
+    public static void runActions() {
+        while (!actionManager.actions.isEmpty() || !actionManager.preTurnActions.isEmpty() || !actionManager.postTurnActions.isEmpty() || (actionManager.finalAction != null && !actionManager.finalAction.isDone)) {
+            actionManager.update();
+        }
+    }
+
+    public static void fillActionManagerWithSimpleActions(int dateInc) {
         actionManager.addToTurnStart(new NewSurvivors());
         actionManager.addToTurnEnd(new EndPhaseHunger());
 
@@ -192,14 +205,7 @@ public class Game {
             actionManager.addToBottom(new Healing());
         }
 
-        // TODO: Add hunger subtract survivors action to end of turn queue
-        // hunger should be calculated: each survivor tries to eat 1 food
-        // gain 1% hunger for each survivor that cant
-        // max 100% hunger, certain thresholds should apply more punishing behavior
-
-        // make new end phase manager that holds all strings to print at end of turn
-        // just print them normally, dont format
-        // replace EndMenu console with that manager
+        actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc));
     }
 
     public static Board getGameBoard() {

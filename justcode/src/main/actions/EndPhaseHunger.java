@@ -2,6 +2,7 @@ package main.actions;
 
 import main.enums.*;
 import main.game.*;
+import main.game.logic.*;
 import main.models.beings.player.*;
 import main.models.resources.refined.food.*;
 
@@ -46,7 +47,7 @@ public class EndPhaseHunger extends AbstractGameAction {
                 int rand = ThreadLocalRandom.current().nextInt(Game.getVillage().getSurvivors().size());
                 Survivor s = Game.getVillage().getSurvivors().remove(rand);
                 Game.getVillage().updateAfterRemoving(s);
-                Logger.getGlobal().info("\n" + s.getName() + " has left your Village due to ongoing famine concerns!");
+                OutputManager.addToBottom("\n" + s.getName() + " has left your Village due to ongoing famine concerns!");
             }
         }
         double newFamine = numHungry / 4.0;

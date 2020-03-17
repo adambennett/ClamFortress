@@ -9,7 +9,6 @@ import java.util.*;
 
 public abstract class AbstractConsole {
 
-    protected static Game currentGame;
     protected static GameBuilder builder;
     protected Map<String, MenuCommands> consoleCommands;
 
@@ -22,14 +21,6 @@ public abstract class AbstractConsole {
     public AbstractConsole() {
         consoleCommands = new HashMap<>();
         initializeCommands();
-    }
-
-    public static Game getCurrentGame() {
-        return currentGame;
-    }
-
-    public static void setCurrentGame(Game currentGame) {
-        AbstractConsole.currentGame = currentGame;
     }
 
     public static void setBuilder(GameBuilder builder) {
@@ -142,6 +133,18 @@ public abstract class AbstractConsole {
         else if (currentConsole instanceof TurnMenu) {
             TurnMenu curr = (TurnMenu) this;
             curr.printPrompt(PromptMessage.TURN_MENU, true);
+        }
+        else if (currentConsole instanceof PriorityMenu) {
+            PriorityMenu curr = (PriorityMenu) this;
+            curr.printPrompt(PromptMessage.PRIORITY_MENU, true);
+        }
+        else if (currentConsole instanceof ResourceMenu) {
+            ResourceMenu curr = (ResourceMenu) this;
+            curr.printPrompt(PromptMessage.RESOURCE_VIEW, true);
+        }
+        else if (currentConsole instanceof EndPhaseMenu) {
+            EndPhaseMenu curr = (EndPhaseMenu) this;
+            curr.printPrompt(PromptMessage.END_PHASE, true);
         }
     }
 

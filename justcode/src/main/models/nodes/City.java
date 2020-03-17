@@ -10,7 +10,6 @@ public class City extends AbstractNode {
     private Integer cityDefense;
     private ArrayList<Survivor> cityResidence;
     public City(int x, int y, AbstractBiome biome, Integer cityDefense, ArrayList<Survivor> cityResidence) {
-
         super(x, y, biome);
         this.cityDefense = cityDefense;
         this.cityResidence = cityResidence;

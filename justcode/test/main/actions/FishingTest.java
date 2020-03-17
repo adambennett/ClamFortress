@@ -39,7 +39,7 @@ public class FishingTest {
 
         PodsRod rod = new PodsRod();
         Game.startGame();
-        Game.getVillage().getInventory().addArtifact(rod);
+        Game.getVillage().addArtifact(rod);
         Game.getGameBoard().addFish( new Penguin(),11);
 
         Game.getVillage().setFood(0);

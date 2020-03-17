@@ -8,14 +8,11 @@ import java.util.*;
 public class Inventory {
 
     private ArrayList<Tool> villageTools;
-    private ArrayList<AbstractArtifact> villageArtifacts;
 
     public Inventory() {
-        villageArtifacts = new ArrayList<>();
         villageTools = new ArrayList<>();
     }
 
-    public void addArtifact(AbstractArtifact a){ villageArtifacts.add(a);}
     public void addTool(Tool t) {
         villageTools.add(t);
     }
@@ -29,20 +26,10 @@ public class Inventory {
         return false;
     }
 
-    public Boolean containsArtifact(AbstractArtifact a) {
-        for (AbstractArtifact artifact : villageArtifacts) {
-            if (a.getClass().equals(artifact.getClass())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public String toString() {
         return "Inventory{" +
                 "villageTools=" + villageTools +
-                ", villageArtifacts=" + villageArtifacts +
                 '}';
     }
 }

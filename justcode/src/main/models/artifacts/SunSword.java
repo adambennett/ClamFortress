@@ -5,7 +5,7 @@ public class SunSword extends AbstractArtifact {
     private static final Integer atkBoost = 15;
 
     public SunSword() {
-        super("Sun Sword");
+        super("Sword Of The Morning");
     }
 
     @Override

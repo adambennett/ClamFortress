@@ -182,7 +182,7 @@ public class Game {
         }
 
         for (int i = 0; i < PriorityManager.getStone(); i++) {
-            actionManager.addToBottom(new StonePicking());
+            actionManager.addToBottom(new RockPicking());
         }
 
         for (int i = 0; i < PriorityManager.getMine(); i++) {

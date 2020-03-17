@@ -1,6 +1,6 @@
 package main.models.artifacts;
 
-public class AbstractArtifact {
+public abstract class AbstractArtifact {
     private String name;
 
     public AbstractArtifact(String name) { this.name = name; }

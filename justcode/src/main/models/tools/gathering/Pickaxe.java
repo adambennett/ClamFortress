@@ -1,4 +1,6 @@
 package main.models.tools.gathering;
 
-public class Pickaxe {
+import main.models.tools.Tool;
+
+public class Pickaxe extends Tool {
 }

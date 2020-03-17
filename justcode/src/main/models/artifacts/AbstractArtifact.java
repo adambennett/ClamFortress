@@ -1,9 +1,11 @@
 package main.models.artifacts;
 
-public abstract class AbstractArtifact {
+import main.models.*;
+
+public abstract class AbstractArtifact extends AbstractItem {
     private String name;
 
-    public AbstractArtifact(String name) { this.name = name; }
+    public AbstractArtifact(String name) { super(name); }
 
     public Integer multiplyFoodOnFishing() { return 1; }
 

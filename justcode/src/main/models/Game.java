@@ -1,5 +1,6 @@
 package main.models;
 
+import main.actions.*;
 import main.actions.priority.*;
 import main.actions.utility.*;
 import main.encounters.*;
@@ -163,6 +164,10 @@ public class Game {
         actionManager.addToTurnStart(new NewSurvivors());
         actionManager.addToTurnEnd(new EndPhaseHunger());
 
+        for (AbstractGameAction a : getFoodActions()) {
+            actionManager.addToBottom(a);
+        }
+
         for (int i = 0; i < PriorityManager.getScout(); i++) {
             actionManager.addToTurnEnd(new Scouting());
         }
@@ -245,6 +250,16 @@ public class Game {
 
     public static Village getVillage() {
         return gameBoard.getVillage();
+    }
+
+    public static ArrayList<AbstractGameAction> getFoodActions() {
+        ArrayList<AbstractGameAction> foodActions = new ArrayList<>();
+        if (Game.getPlayerRace().equals(Race.HUMAN)) {
+            foodActions.add(new Hunting());
+        } else if (Game.getPlayerRace().equals(Race.ORC)) {
+            foodActions.add(new Hunting()); // replace with orc thing
+        }
+        return foodActions;
     }
 
     private static void updateDifficultyBools() {

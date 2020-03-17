@@ -1,23 +1,20 @@
 package main.utilities.builders;
 
 import main.enums.*;
-import main.models.beings.player.*;
-
-import java.util.*;
+import main.models.people.*;
 
 public class SurvivorBuilder {
-    private Integer agility;
-    private Integer strength;
-    private Integer dexterity;
-    private Integer intelligence;
-    private Integer magic;
-    private Integer engineering;
-    private Integer healthPoints;
-    private Integer age;
-    private String name;
-    private Gender gender;
-    private Race race;
-    private Map<Survivor, ArrayList<Relation>> relations;
+    private Integer agility = 0;
+    private Integer strength = 0;
+    private Integer dexterity = 0;
+    private Integer intelligence = 0;
+    private Integer magic = 0;
+    private Integer engineering = 0;
+    private Integer healthPoints = 10;
+    private Integer age = 5;
+    private String name = "Villager";
+    private Gender gender = Gender.MALE;
+    private Race race = Race.HUMAN;
 
     public SurvivorBuilder setAgility(Integer agility) {
         this.agility = agility;
@@ -34,7 +31,7 @@ public class SurvivorBuilder {
         return this;
     }
 
-    public SurvivorBuilder setIntelligence(Integer intelligence){
+    public SurvivorBuilder setIntelligence(Integer intelligence) {
         this.intelligence = intelligence;
         return this;
     }
@@ -74,13 +71,7 @@ public class SurvivorBuilder {
         return this;
     }
 
-    public SurvivorBuilder setRelations(Map<Survivor, ArrayList<Relation>> relations) {
-        this.relations = relations;
-        return this;
-    }
-
     public Survivor createSurvivor() {
-
-        return new Survivor(agility, strength, dexterity, intelligence, magic, engineering, healthPoints, age, name, gender, race, relations);
+        return new Survivor(agility, strength, dexterity, intelligence, magic, engineering, healthPoints, age, name, gender, race);
     }
 }

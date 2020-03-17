@@ -1,8 +1,7 @@
 package main.actions;
 
-import main.game.Game;
-import main.game.regions.*;
-import main.models.*;
+import main.actions.priority.*;
+import main.models.Game;
 import main.models.animals.land.bears.BlackBear;
 import org.junit.*;
 

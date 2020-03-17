@@ -1,10 +1,9 @@
 package main.models.resources.natural;
 
-import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.IronIngot;
 
-public class Iron extends NaturalResource implements Refinable, Mineable {
+public class Iron extends NaturalResource {
 
 
     public Iron(){

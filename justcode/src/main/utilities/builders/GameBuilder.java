@@ -1,8 +1,8 @@
 package main.utilities.builders;
 
 import main.enums.*;
-import main.game.*;
-import main.game.regions.*;
+import main.models.*;
+import main.models.nodes.biomes.*;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ public class GameBuilder {
     private Difficulty difficulty;
     private Race race;
     private ArrayList<Integer> customMods;
-    private AbstractRegion startBiome;
+    private AbstractBiome startBiome;
 
     public GameBuilder(){
         this.difficulty = Difficulty.DEFAULT;
@@ -32,14 +32,14 @@ public class GameBuilder {
         this.customMods = customMods;
     }
 
-    public void setStartBiome(AbstractRegion startBiome) {
+    public void setStartBiome(AbstractBiome startBiome) {
         this.startBiome = startBiome;
     }
 
     public Boolean buildGame() {
         try {
             if (this.difficulty.equals(Difficulty.RANDOM)) {
-                this.difficulty = Difficulty.getRandomMode();
+                this.difficulty = Difficulty.getRandomDifficulty();
             }
             if (this.difficulty.equals(Difficulty.CUSTOM)) {
                 Game.startGame(this.race, this.customMods, this.startBiome);
@@ -64,7 +64,7 @@ public class GameBuilder {
         return customMods;
     }
 
-    public AbstractRegion getStartBiome() {
+    public AbstractBiome getStartBiome() {
         return startBiome;
     }
 }

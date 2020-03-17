@@ -1,8 +1,6 @@
 package main.models.animals.jungle;
 
-import main.interfaces.Mythical;
-
-public class Jungleape extends JungleAnimal implements Mythical {
+public class Jungleape extends JungleAnimal {
 
     public Jungleape(){
         this.amountOfFoodOnHunt = 300;

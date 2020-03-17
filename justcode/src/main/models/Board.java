@@ -1,20 +1,19 @@
 package main.models;
 
 import main.encounters.alien.AbstractAliens;
-import main.game.logic.*;
-import main.game.regions.AbstractRegion;
-import main.game.regions.Grasslands;
+import main.models.nodes.biomes.AbstractBiome;
+import main.models.nodes.biomes.Grasslands;
 import main.models.animals.Animal;
-import main.models.gridSpaces.AbstractGridSpace;
-import main.models.gridSpaces.GrassSpace;
-import main.models.gridSpaces.Village;
+import main.models.nodes.AbstractNode;
+import main.models.nodes.Grass;
+import main.models.nodes.Village;
+import main.models.managers.*;
 import main.models.resources.natural.Flowers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Logger;
 
 public class Board {
 
@@ -22,7 +21,7 @@ public class Board {
 
     private Integer gridXMax;
     private Integer gridYMax;
-    private ArrayList<AbstractGridSpace> grid;
+    private ArrayList<AbstractNode> grid;
 
     private ArrayList<AbstractAliens> aliens;
     private Map<Flowers,Integer> flowers;
@@ -41,7 +40,7 @@ public class Board {
     private Integer spacegoo;
     private Integer healingItems;
 
-    public Board(AbstractRegion startingBiome, int xMax, int yMax) {
+    public Board(AbstractBiome startingBiome, int xMax, int yMax) {
         this.village = new Village(startingBiome);
         this.village.setxPos(0);
         this.village.setyPos(0);
@@ -66,13 +65,13 @@ public class Board {
         this.animals = new ArrayList<Animal>();
     }
 
-    public AbstractGridSpace getRandomRegion() {
+    public AbstractNode getRandomRegion() {
         int x = 0;
         int y = 0;
         boolean canAdd = true;
         do {
             canAdd = true;
-            for (AbstractGridSpace space : grid) {
+            for (AbstractNode space : grid) {
                 if (space.getyPos().equals(y) && space.getxPos().equals(x)) {
                     canAdd = false;
                     break;
@@ -86,20 +85,20 @@ public class Board {
         return getRandomRegion(x, y);
     }
 
-    public AbstractGridSpace getRandomRegion(int x, int y) {
+    public AbstractNode getRandomRegion(int x, int y) {
         int randTrees = ThreadLocalRandom.current().nextInt(1, 20);
         int randStones = ThreadLocalRandom.current().nextInt(1, 15);
         int randRocks = ThreadLocalRandom.current().nextInt(1, 10);
-        return new GrassSpace(x, y, randTrees, randStones, randRocks, new Grasslands());
+        return new Grass(x, y, randTrees, randStones, randRocks, new Grasslands());
     }
 
-    public Boolean discover(AbstractGridSpace region) {
+    public Boolean discover(AbstractNode region) {
         return addGridSpace(region);
     }
 
-    public Boolean addGridSpace(AbstractGridSpace space) {
+    public Boolean addGridSpace(AbstractNode space) {
         boolean canAdd = true;
-        for (AbstractGridSpace a : grid) {
+        for (AbstractNode a : grid) {
             if (a.getxPos().equals(space.getxPos()) && a.getyPos().equals(space.getyPos())) {
                 canAdd = false;
                 break;
@@ -247,7 +246,7 @@ public class Board {
         return village;
     }
 
-    public ArrayList<AbstractGridSpace> getGrid() {
+    public ArrayList<AbstractNode> getGrid() {
         return grid;
     }
 

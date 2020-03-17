@@ -1,6 +1,6 @@
 package main.encounters.miracles;
 
-import main.game.*;
+import main.models.*;
 
 public class Blessing extends AbstractMiracle {
     @Override

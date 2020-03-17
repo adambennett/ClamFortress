@@ -1,6 +1,6 @@
 package main.encounters.plagues;
 
-import main.game.*;
+import main.models.*;
 
 public class Bubonic extends AbstractPlague {
     @Override

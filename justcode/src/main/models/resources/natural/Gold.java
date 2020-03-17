@@ -1,10 +1,9 @@
 package main.models.resources.natural;
 
-import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.Coin;
 
-public class Gold extends NaturalResource implements Refinable, Mineable {
+public class Gold extends NaturalResource {
 
     public Gold(){
         this.refined = new Coin();

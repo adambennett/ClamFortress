@@ -17,10 +17,6 @@ public enum FoodOptions {
         this.associatedRace = associatedRace;
     }
 
-    public Race getAssociatedRace() {
-        return associatedRace;
-    }
-
     public String writeInConsole() {
         if (this.equals(HUNTING) || this.equals(HUNTING_ORC)) {
             return "HUNTING";

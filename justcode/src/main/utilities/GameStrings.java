@@ -1,9 +1,8 @@
 package main.utilities;
 
-import main.consoleIO.*;
 import main.enums.*;
-import main.game.*;
-import main.game.logic.*;
+import main.models.*;
+import main.models.managers.*;
 import main.utilities.persistence.*;
 
 import java.util.*;
@@ -23,7 +22,7 @@ public class GameStrings {
     private static String endPhase;
     private static String resources;
 
-    private static final String openingBlurb = "Blah blah help your guys survive and thrive... watch out for cLAmS";
+    private static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
 
     private static final String openGame =
                     "**************************************************\n" +

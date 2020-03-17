@@ -25,7 +25,7 @@ public enum Difficulty {
         return priorityMod;
     }
 
-    public static Difficulty getRandomMode() {
+    public static Difficulty getRandomDifficulty() {
         ArrayList<Difficulty> rands = new ArrayList<>();
         rands.add(Difficulty.IMPOSSIBLE);
         rands.add(Difficulty.EASY);

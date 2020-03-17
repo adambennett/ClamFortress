@@ -1,8 +1,6 @@
 package main.models.animals.jungle;
 
-import main.interfaces.Mythical;
-
-public class Forestdweller extends JungleAnimal implements Mythical {
+public class Forestdweller extends JungleAnimal {
 
     public Forestdweller(){
         this.amountOfFoodOnHunt = 275;

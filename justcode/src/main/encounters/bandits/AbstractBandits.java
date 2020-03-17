@@ -1,7 +1,7 @@
 package main.encounters.bandits;
 
 import main.encounters.*;
-import main.models.beings.monsters.*;
+import main.models.people.*;
 
 import java.util.*;
 

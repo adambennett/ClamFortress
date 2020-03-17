@@ -1,20 +1,20 @@
 package main.utilities.builders;
 
 import main.enums.*;
-import main.models.beings.monsters.*;
+import main.models.people.*;
 
 public class MonsterBuilder {
-    private Integer agility;
-    private Integer strength;
-    private Integer dexterity;
-    private Integer intelligence;
-    private Integer magic;
-    private Integer engineering;
-    private Integer healthPoints;
-    private Integer age;
-    private String name;
-    private Gender gender;
-    private Race race;
+    private Integer agility = 0;
+    private Integer strength = 0;
+    private Integer dexterity = 0;
+    private Integer intelligence = 0;
+    private Integer magic = 0;
+    private Integer engineering = 0;
+    private Integer healthPoints = 10;
+    private Integer age = 5;
+    private String name = "Monster";
+    private Gender gender = Gender.MALE;
+    private Race race = Race.ORC;
 
     public MonsterBuilder setAgility(Integer agility) {
         this.agility = agility;

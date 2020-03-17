@@ -1,10 +1,9 @@
 package main.models.resources.natural;
 
-import main.interfaces.*;
 import main.models.resources.NaturalResource;
 import main.models.resources.refined.Jewelry;
 
-public class Gems extends NaturalResource implements Mineable {
+public class Gems extends NaturalResource {
 
 
     public Gems(){

@@ -1,6 +1,6 @@
 package main.encounters.disasters;
 
-import main.game.*;
+import main.models.*;
 
 public class Earthquake extends AbstractDisaster {
     @Override

@@ -1,10 +1,9 @@
 package main.models.resources.natural;
 
-import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.CopperIngot;
 
-public class Copper extends NaturalResource implements Refinable, Mineable {
+public class Copper extends NaturalResource {
 
 
     public Copper(){

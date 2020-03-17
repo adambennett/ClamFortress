@@ -1,10 +1,9 @@
 package main.models.resources.natural;
 
-import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.Stone;
 
-public class Rock extends NaturalResource implements Refinable, Mineable {
+public class Rock extends NaturalResource {
 
     public Rock(){
         this.refined = new Stone();

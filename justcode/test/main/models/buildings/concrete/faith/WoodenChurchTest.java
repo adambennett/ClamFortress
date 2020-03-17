@@ -8,7 +8,7 @@ public class WoodenChurchTest {
 
     @Before
     public void setUp()  {
-        church = new WoodenChurch(10);
+        church = new WoodenChurch(10, 5);
     }
 
     @Test

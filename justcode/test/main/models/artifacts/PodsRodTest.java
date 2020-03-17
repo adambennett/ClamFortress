@@ -9,7 +9,7 @@ public class PodsRodTest {
     public void podsRodMod(){
         PodsRod rod = new PodsRod();
 
-        Integer actual = rod.modifyFoodOnFishing();
+        Integer actual = rod.multiplyFoodOnFishing();
         Integer expected = 2;
 
         Assert.assertEquals(expected,actual);

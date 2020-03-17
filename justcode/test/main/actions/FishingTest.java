@@ -1,6 +1,6 @@
 package main.actions;
 
-import main.actions.priority.Fishing;
+import main.actions.priority.food.human.Fishing;
 import main.models.Game;
 import main.models.animals.sea.Penguin;
 import main.models.items.artifacts.PodsRod;

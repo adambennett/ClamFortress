@@ -2,6 +2,12 @@ package main.models;
 
 import main.actions.*;
 import main.actions.priority.*;
+import main.actions.priority.food.alien.*;
+import main.actions.priority.food.claman.*;
+import main.actions.priority.food.dwarf.*;
+import main.actions.priority.food.elf.*;
+import main.actions.priority.food.human.*;
+import main.actions.priority.food.orc.*;
 import main.actions.utility.*;
 import main.encounters.*;
 import main.enums.*;
@@ -160,6 +166,36 @@ public class Game {
         }
     }
 
+    public static ArrayList<AbstractGameAction> getFoodActions() {
+        ArrayList<AbstractGameAction> foodActions = new ArrayList<>();
+        if (Game.getPlayerRace().equals(Race.HUMAN)) {
+            foodActions.add(new Hunting());
+            foodActions.add(new Fishing());
+            foodActions.add(new Cooking());
+        } else if (Game.getPlayerRace().equals(Race.ORC)) {
+            foodActions.add(new OrcFoodRaid());
+            foodActions.add(new OrcHunting());
+            foodActions.add(new Sacrifice());
+        } else if (Game.getPlayerRace().equals(Race.ELF)) {
+            foodActions.add(new InsectHunt());
+            foodActions.add(new RiverSearch());
+            foodActions.add(new Roasting());
+        } else if (Game.getPlayerRace().equals(Race.DWARF)) {
+            foodActions.add(new Brewing());
+            foodActions.add(new MushroomPicking());
+            foodActions.add(new Scavenging());
+        } else if (Game.getPlayerRace().equals(Race.CLAMAN)) {
+            foodActions.add(new Angling());
+            foodActions.add(new Diving());
+            foodActions.add(new Trawling());
+        } else if (Game.getPlayerRace().equals(Race.ALIEN)) {
+            foodActions.add(new Abducting());
+            foodActions.add(new Analyzing());
+            foodActions.add(new Redacted());
+        }
+        return foodActions;
+    }
+
     public static void fillActionManagerWithSimpleActions(int dateInc) {
         actionManager.addToTurnStart(new NewSurvivors());
         actionManager.addToTurnEnd(new EndPhaseHunger());
@@ -250,16 +286,6 @@ public class Game {
 
     public static Village getVillage() {
         return gameBoard.getVillage();
-    }
-
-    public static ArrayList<AbstractGameAction> getFoodActions() {
-        ArrayList<AbstractGameAction> foodActions = new ArrayList<>();
-        if (Game.getPlayerRace().equals(Race.HUMAN)) {
-            foodActions.add(new Hunting());
-        } else if (Game.getPlayerRace().equals(Race.ORC)) {
-            foodActions.add(new Hunting()); // replace with orc thing
-        }
-        return foodActions;
     }
 
     private static void updateDifficultyBools() {

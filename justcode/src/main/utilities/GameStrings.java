@@ -151,16 +151,23 @@ public class GameStrings {
         return raceMenuMap;
     }
 
-
     public static String newMenu(String leftAlignFormat, String headerFormat, String breakLine, String header, Map<String, String> commandToLabelMap) {
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(commandToLabelMap);
+        return newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+
+    public static String newMenu(String leftAlignFormat, String headerFormat, String breakLine, String header, ArrayList<Map<String, String>> commandToLabelMapList) {
         String finalString = "";
         finalString += breakLine;
         finalString += String.format(headerFormat, header);
         finalString += breakLine;
-        for (Map.Entry<String, String> entry : commandToLabelMap.entrySet()) {
-            finalString += String.format(leftAlignFormat, entry.getKey(), entry.getValue());
+        for (Map<String, String> map : commandToLabelMapList) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                finalString += String.format(leftAlignFormat, entry.getKey(), entry.getValue());
+            }
+            finalString += breakLine;
         }
-        finalString += breakLine;
         return finalString;
     }
 
@@ -393,6 +400,7 @@ public class GameStrings {
         rsrcMap.put("Copper Ore", "" + v.getCopperOre());
         rsrcMap.put("Faith", "" + v.getFaith());
         rsrcMap.put("Flowers", "" + v.getFlowers());
+        rsrcMap.put("Food", "" + v.getFood());
         rsrcMap.put("Glass", "" + v.getGlass());
         rsrcMap.put("Gold Ore", "" + v.getGoldOre());
         rsrcMap.put("Iron Ore", "" + v.getIronOre());
@@ -412,7 +420,12 @@ public class GameStrings {
         String headerFormat = "| %-53s |\n";
         String breakLine = "+---------------------------+---------------------------+\n";
         String header = "Village Stats";
-        resources = newMenu(leftAlignFormat, headerFormat, breakLine, header, getResources());   
+        Map<String, String> bottom = new HashMap<>();
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(getResources());
+        list.add(bottom);
+        resources = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static String getStringFromPromptType(main.enums.PromptMessage msg) {

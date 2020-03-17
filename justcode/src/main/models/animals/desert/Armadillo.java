@@ -5,6 +5,7 @@ public class Armadillo extends DesertAnimal {
     public Armadillo(){
         this.amountOfFoodOnHunt = 25;
     }
+
     @Override
     public Armadillo clone() {
         return new Armadillo();

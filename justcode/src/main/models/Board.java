@@ -1,13 +1,14 @@
 package main.models;
 
 import main.encounters.alien.AbstractAliens;
-import main.models.nodes.biomes.AbstractBiome;
-import main.models.nodes.biomes.Grasslands;
 import main.models.animals.Animal;
+import main.models.animals.sea.SeaAnimal;
+import main.models.managers.OutputManager;
 import main.models.nodes.AbstractNode;
 import main.models.nodes.Grass;
 import main.models.nodes.Village;
-import main.models.managers.*;
+import main.models.nodes.biomes.AbstractBiome;
+import main.models.nodes.biomes.Grasslands;
 import main.models.resources.natural.Flowers;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Board {
     private ArrayList<AbstractAliens> aliens;
     private Map<Flowers,Integer> flowers;
     private ArrayList<Animal> animals;
+    private ArrayList<SeaAnimal> fish;
 
     private Integer trees;
     private Integer stone;
@@ -34,7 +36,6 @@ public class Board {
     private Integer ironOre;
     private Integer goldOre;
     private Integer gems;
-    private Integer fish;
     private Integer rocks;
     private Integer sand;
     private Integer spacegoo;
@@ -54,7 +55,6 @@ public class Board {
         this.copperOre = 0;
         this.ironOre = 0;
         this.gems = 0;
-        this.fish = 0;
         this.healingItems = 0;
         this.rocks = 0;
         this.sand = 0;
@@ -62,7 +62,8 @@ public class Board {
         this.goldOre = 0;
         this.aliens = new ArrayList<>();
         this.flowers = new HashMap<>();
-        this.animals = new ArrayList<Animal>();
+        this.animals = new ArrayList<>();
+        this.fish = new ArrayList<>();
     }
 
     public AbstractNode getRandomRegion() {
@@ -180,12 +181,6 @@ public class Board {
         }
     }
 
-    public void reduceFishOnBoard(Integer amountToMine){
-        this.fish -= amountToMine;
-        if(this.fish < 0){
-            this.fish = 0;
-        }
-    }
 
     public void reduceHealingItemsOnBoard(Integer amountToUse){
         this.healingItems -= amountToUse;
@@ -193,6 +188,8 @@ public class Board {
             healingItems = 0;
         }
     }
+
+    //Board Setters
 
     public void setTrees(Integer trees) {
         this.trees = trees;
@@ -222,10 +219,6 @@ public class Board {
         this.gems = gems;
     }
 
-    public void setFish(Integer fish) {
-        this.fish = fish;
-    }
-
     public void setRocks(Integer rocks) {
         this.rocks = rocks;
     }
@@ -241,6 +234,8 @@ public class Board {
     public void setHealingItems(Integer healingItems) {
         this.healingItems = healingItems;
     }
+
+    //Board Getters
 
     public Village getVillage() {
         return village;
@@ -290,7 +285,7 @@ public class Board {
         return gems;
     }
 
-    public Integer getFish() {
+    public ArrayList<SeaAnimal> getFish() {
         return fish;
     }
 
@@ -309,4 +304,16 @@ public class Board {
     public Integer getHealingItems() {
         return healingItems;
     }
+
+
+    //Board Adders
+
+    public void addFish(SeaAnimal fishToAdd, Integer amount){
+        for (int i = 0; i < amount; i++) {
+            fish.add((SeaAnimal) fishToAdd.clone());
+        }
+    }
+
+
+
 }

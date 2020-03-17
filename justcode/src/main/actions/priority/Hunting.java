@@ -19,6 +19,7 @@ public class Hunting extends AbstractGameAction {
             int rando = random.nextInt(size);
             Integer foodToReturn = Game.getGameBoard().getAnimals().get(rando).getAmountOfFoodOnHunt();
             Game.getGameBoard().getAnimals().remove(rando);
+
             Game.getVillage().incFood(foodToReturn);
         } else {
             Game.getVillage().incFood(1);

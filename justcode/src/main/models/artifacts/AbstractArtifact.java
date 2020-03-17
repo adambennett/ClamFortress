@@ -15,4 +15,5 @@ public class AbstractArtifact {
 
     public Integer modifyDef() { return 0; }
 
+
 }

@@ -4,7 +4,6 @@ public abstract class Animal implements Cloneable {
 
     public Integer amountOfFoodOnHunt;
 
-
     public Integer getAmountOfFoodOnHunt(){
         return this.amountOfFoodOnHunt;
     }

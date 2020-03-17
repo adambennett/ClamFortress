@@ -7,13 +7,10 @@ import org.junit.*;
 
 public class InventoryTest {
 
-    @Before
-    public void before(){
-        Game.startGame();
-    }
-
     @Test
     public void addArtifact() {
+        Game.startGame();
+
         PodsRod rod = new PodsRod();
         Inventory inv = Game.getVillage().getInventory();
 
@@ -27,6 +24,7 @@ public class InventoryTest {
 
     @Test
     public void addTool() {
+
         Pickaxe pickaxe = new Pickaxe();
         Inventory inventory = Game.getVillage().getInventory();
 
@@ -37,6 +35,16 @@ public class InventoryTest {
 
 
         Assert.assertEquals(actual,expected);
+
+    }
+
+    @Test
+    public void containsTool() {
+    }
+
+    @Test
+    public void containsArtifact() {
+
     }
 
 }

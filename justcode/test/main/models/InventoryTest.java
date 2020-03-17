@@ -24,7 +24,7 @@ public class InventoryTest {
 
     @Test
     public void addTool() {
-
+        Game.startGame();
         Pickaxe pickaxe = new Pickaxe();
         Inventory inventory = Game.getVillage().getInventory();
 
@@ -35,15 +35,6 @@ public class InventoryTest {
 
 
         Assert.assertEquals(actual,expected);
-
-    }
-
-    @Test
-    public void containsTool() {
-    }
-
-    @Test
-    public void containsArtifact() {
 
     }
 

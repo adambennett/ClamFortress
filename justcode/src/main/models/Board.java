@@ -19,7 +19,7 @@ public class Board {
 
     private ArrayList<AbstractAliens> aliens;
     private Map<Flowers,Integer> flowers;
-    private Map<Animal,Integer> animals;
+    private ArrayList<Animal> animals;
 
     private Integer trees;
     private Integer stone;
@@ -56,7 +56,7 @@ public class Board {
         this.goldOre = 0;
         this.aliens = new ArrayList<>();
         this.flowers = new HashMap<>();
-        this.animals = new HashMap<>();
+        this.animals = new ArrayList<Animal>();
     }
 
     public AbstractGridSpace getRandomRegion() {
@@ -113,12 +113,11 @@ public class Board {
     }
 
     public void addAnimals(Animal animal, int amt) {
-        if (this.animals.containsKey(animal)) {
-            this.animals.put(animal, this.animals.get(animal) + amt);
-        } else {
-            this.animals.put(animal, amt);
+        for (int i = 0; i < amt; i++) {
+                animals.add(animal);
+            }
         }
-    }
+
 
     public void addFlowers(Flowers flower) {
         addFlowers(flower, 1);
@@ -249,7 +248,7 @@ public class Board {
         return flowers;
     }
 
-    public Map<Animal, Integer> getAnimals() {
+    public ArrayList<Animal> getAnimals() {
         return animals;
     }
 

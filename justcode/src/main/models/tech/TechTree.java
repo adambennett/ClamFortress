@@ -73,6 +73,7 @@ public class TechTree {
     public static void createTree(ArrayList<Era> eras) {
         head = generateTreeHead(eras);
         tail = head.advanceToEnd();
+        currentEra = head;
     }
 
     public static ArrayList<Era> standardTechTree() {

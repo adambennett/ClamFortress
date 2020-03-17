@@ -1,5 +1,7 @@
 package main.models.gridSpaces;
 
+import main.game.regions.*;
+
 import java.util.ArrayList;
 
 public class DesertSpace extends AbstractGridSpace {
@@ -9,9 +11,8 @@ public class DesertSpace extends AbstractGridSpace {
     private Integer rocks;
     private Integer sand;
 
-    public DesertSpace(int xPos, int yPos, int goldOre, int ironOre, int rocks, int sand) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public DesertSpace(int xPos, int yPos, int goldOre, int ironOre, int rocks, int sand, AbstractRegion biome) {
+        super(xPos, yPos, biome);
         this.goldOre = goldOre;
         this.ironOre = ironOre;
         this.rocks = rocks;

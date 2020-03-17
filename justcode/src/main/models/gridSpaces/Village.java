@@ -8,6 +8,7 @@ import main.encounters.plagues.*;
 import main.encounters.raids.*;
 import main.game.regions.*;
 import main.models.*;
+import main.models.artifacts.*;
 import main.models.beings.monsters.*;
 import main.models.beings.player.*;
 import main.models.buildings.abstracts.*;
@@ -70,6 +71,7 @@ public class Village extends AbstractGridSpace {
     private Integer stone =             0;
 
     // Lists
+    private ArrayList<AbstractArtifact> artifacts = new ArrayList<>();
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
     private ArrayList<AbstractBuilding> buildings = new ArrayList<>();
     private ArrayList<AbstractMiracle>  activeMiracles = new ArrayList<>();
@@ -80,7 +82,7 @@ public class Village extends AbstractGridSpace {
     private ArrayList<Survivor>         population = new ArrayList<>();
 
     public Village(AbstractRegion biome) {
-        this.biome = biome;
+        super(0, 0, biome);
         this.inventory = new Inventory();
     }
 
@@ -117,10 +119,6 @@ public class Village extends AbstractGridSpace {
         }
     }
 
-    public ArrayList<Survivor> getSurvivors() {
-        return population;
-    }
-    
     public void updateAverageStats() {
         this.ageAvg =             (double)this.totalAge / (double)this.population.size();
         this.agilityAvg =         (double)this.agility / (double) this.population.size();
@@ -183,7 +181,17 @@ public class Village extends AbstractGridSpace {
         return false;
     }
 
+    public Boolean hasArtifact(AbstractArtifact art) {
+        for (AbstractArtifact a : this.artifacts) {
+            if (a.getClass().equals(art.getClass())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Adding to lists
+    public void addArtifact(AbstractArtifact art) { if (!hasArtifact(art)) { this.artifacts.add(art); }}
     public void addMiracle(AbstractMiracle m) {
         this.activeMiracles.add(m);
     }
@@ -281,7 +289,6 @@ public class Village extends AbstractGridSpace {
     public void setFood(Integer food) {
         this.food = food;
     }
-
     public void setFamine(Integer famine) {
         this.famine = famine;
     }
@@ -381,10 +388,18 @@ public class Village extends AbstractGridSpace {
         return engineeringAvg;
     }
     public Integer getDefense(){
-        return this.defence;
+        int atk = this.defence;
+        for (AbstractArtifact a : this.artifacts) {
+            atk += a.modifyDef();
+        }
+        return atk;
     }
     public Integer getAttackPower(){
-        return this.attackPower;
+        int atk = this.attackPower;
+        for (AbstractArtifact a : this.artifacts) {
+            atk += a.modifyAtk();
+        }
+        return atk;
     }
     public Integer getWood() {
         return this.wood;
@@ -410,16 +425,20 @@ public class Village extends AbstractGridSpace {
     public Integer getTotalAge() {
         return totalAge;
     }
-
     public Integer getFamine() {
         return famine;
     }
-
     public Inventory getInventory() {
         return inventory;
     }
     public Integer getDefence() {
         return defence;
+    }
+    public ArrayList<Survivor> getSurvivors() {
+        return population;
+    }
+    public ArrayList<AbstractArtifact> getArtifacts() {
+        return artifacts;
     }
     public ArrayList<Bandit> getOccupyingBandits() {
         return occupyingBandits;

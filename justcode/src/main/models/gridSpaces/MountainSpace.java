@@ -1,5 +1,7 @@
 package main.models.gridSpaces;
 
+import main.game.regions.*;
+
 public class MountainSpace extends AbstractGridSpace {
 
     private Integer rocks;
@@ -8,17 +10,14 @@ public class MountainSpace extends AbstractGridSpace {
     private Integer goldOre;
     private Integer copperOre;
 
-
-    public MountainSpace(int xPos, int yPos,int rocks, int ston,int ironOre, int goldOre,int copperOre){
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public MountainSpace(int xPos, int yPos, int rocks, int stone, int ironOre, int goldOre, int copperOre, AbstractRegion biome){
+        super(xPos, yPos, biome);
         this.copperOre = copperOre;
         this.goldOre = goldOre;
         this.ironOre = ironOre;
         this.rocks = rocks;
         this.stone = stone;
     }
-
 
     public Integer getRocks() {
         return rocks;

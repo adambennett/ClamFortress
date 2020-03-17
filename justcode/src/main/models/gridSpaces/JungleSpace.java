@@ -1,38 +1,42 @@
 package main.models.gridSpaces;
 
 
+import main.game.*;
+import main.game.regions.*;
+import main.models.animals.*;
 import main.models.animals.jungle.JungleAnimal;
 import main.models.resources.natural.Flowers;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class JungleSpace extends AbstractGridSpace {
 
     private Integer trees;
-    private Integer ironOre;
     private Integer rocks;
-    private Map<Flowers,Integer> flowers;
-    private Map<JungleAnimal,Integer> animals;
+    private ArrayList<Flowers> flowers;
+    private ArrayList<Animal> animals;
 
-    public JungleSpace(int xPos, int yPos, HashMap<JungleAnimal,Integer> animals, int trees, int rocks, Map<Flowers,Integer> flowers) {
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public JungleSpace(int xPos, int yPos, int trees, int rocks, AbstractRegion biome) {
+        super(xPos, yPos, biome);
         this.trees = trees;
-        this.animals = animals;
         this.rocks = rocks;
-        this.flowers = flowers;
-    }
-
-    public Integer getRocks() {
-        return rocks;
+        this.flowers = Game.generateRandomFlowers(biome);
+        this.animals = Game.generateRandomAnimals(biome);
     }
 
     public Integer getTrees() {
         return trees;
     }
 
-    public Map<Flowers,Integer> getFlowers(){return this.flowers;}
+    public Integer getRocks() {
+        return rocks;
+    }
 
-    public Map<JungleAnimal,Integer> getAnimals(){return this.animals;}
+    public ArrayList<Flowers> getFlowers() {
+        return flowers;
+    }
+
+    public ArrayList<Animal> getAnimals() {
+        return animals;
+    }
 }

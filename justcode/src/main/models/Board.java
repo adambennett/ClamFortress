@@ -3,11 +3,13 @@ package main.models;
 import main.encounters.alien.*;
 import main.game.regions.*;
 import main.models.animals.Animal;
+import main.models.artifacts.*;
 import main.models.gridSpaces.*;
 import main.models.resources.natural.Flowers;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.logging.*;
 
 public class Board {
 
@@ -83,7 +85,7 @@ public class Board {
         int randTrees = ThreadLocalRandom.current().nextInt(1, 20);
         int randStones = ThreadLocalRandom.current().nextInt(1, 15);
         int randRocks = ThreadLocalRandom.current().nextInt(1, 10);
-        return new GrassSpace(x, y, randTrees, randStones, randRocks);
+        return new GrassSpace(x, y, randTrees, randStones, randRocks, new Grasslands());
     }
 
     public Boolean discover(AbstractGridSpace region) {
@@ -103,6 +105,10 @@ public class Board {
         }
         if (canAdd) {
             this.grid.add(space);
+            if (space.hasArtifact()) {
+                village.addArtifact(space.getArtifact());
+                Logger.getGlobal().info("Found an " + space.getArtifact().getName() + " on a newly discovered space!");
+            }
             return true;
         }
         return false;

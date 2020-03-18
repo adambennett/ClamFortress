@@ -8,12 +8,12 @@ public class WoodenChurchTest {
 
     @Before
     public void setUp()  {
-        church = new WoodenChurch(10, 5);
+        church = new WoodenChurch();
     }
 
     @Test
     public void initTest() {
-        Integer expected = 10;
+        Integer expected = 15;
         Integer actual = church.getPrayBonus();
         Assert.assertEquals(expected, actual);
     }

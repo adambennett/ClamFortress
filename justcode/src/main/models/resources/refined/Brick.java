@@ -1,6 +1,7 @@
 package main.models.resources.refined;
 
+import main.interfaces.*;
 import main.models.resources.*;
 
-public class Brick extends RefinedResource {
+public class Brick extends RefinedResource implements ResourceCost {
 }

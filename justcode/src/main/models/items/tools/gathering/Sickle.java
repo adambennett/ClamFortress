@@ -6,4 +6,9 @@ public class Sickle extends AbstractGatheringTool {
     public Sickle() {
         super("Sickle", "");
     }
+
+    @Override
+    public Sickle clone() {
+        return new Sickle();
+    }
 }

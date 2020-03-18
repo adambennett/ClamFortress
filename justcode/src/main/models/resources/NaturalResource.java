@@ -1,6 +1,6 @@
 package main.models.resources;
 
-public abstract class NaturalResource extends Resource {
+public abstract class NaturalResource extends AbstractResource {
 
     public RefinedResource refined;
 

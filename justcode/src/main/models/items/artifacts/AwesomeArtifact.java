@@ -1,6 +1,7 @@
 package main.models.items.artifacts;
 
 import main.interfaces.*;
+import main.models.items.*;
 
 public class AwesomeArtifact extends AbstractArtifact implements Unique {
 
@@ -20,6 +21,11 @@ public class AwesomeArtifact extends AbstractArtifact implements Unique {
     @Override
     public Integer modifyDef() {
         return defBoost;
+    }
+
+    @Override
+    public AwesomeArtifact clone() {
+        return new AwesomeArtifact();
     }
 
     @Override

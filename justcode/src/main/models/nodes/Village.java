@@ -12,6 +12,9 @@ import main.models.*;
 import main.models.items.artifacts.*;
 import main.models.people.*;
 import main.models.buildings.abstracts.*;
+import main.models.resources.*;
+import main.models.resources.natural.*;
+import main.models.resources.refined.*;
 
 import java.util.*;
 
@@ -70,6 +73,7 @@ public class Village extends AbstractNode {
     private Integer stone =             0;
 
     // Lists
+    private ArrayList<AbstractResource> resources = new ArrayList<>();
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
     private ArrayList<AbstractBuilding> buildings = new ArrayList<>();
     private ArrayList<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
@@ -115,6 +119,68 @@ public class Village extends AbstractNode {
             return canRunPlague;
         } else {
             return true;
+        }
+    }
+
+    public Boolean hasEnoughOfResource(AbstractResource resource, int amt) {
+        int sum = 0;
+        for (AbstractResource r : resources) {
+            if (r.getClass().equals(resource.getClass())) {
+                sum++;
+            }
+        }
+        return sum >= amt;
+    }
+
+    public void updateResources() {
+        this.resources.clear();
+        for (int i = 0; i < wood; i++) {
+            this.resources.add(new Wood());
+        }
+        for (int i = 0; i < art; i++) {
+            this.resources.add(new Art());
+        }
+        for (int i = 0; i < brick; i++) {
+            this.resources.add(new Brick());
+        }
+        for (int i = 0; i < clay; i++) {
+            this.resources.add(new Clay());
+        }
+        for (int i = 0; i < copperOre; i++) {
+            this.resources.add(new Copper());
+        }
+        for (int i = 0; i < flowers; i++) {
+            this.resources.add(new Flowers());
+        }
+        for (int i = 0; i < glass; i++) {
+            this.resources.add(new Glass());
+        }
+        for (int i = 0; i < goldOre; i++) {
+            this.resources.add(new Gold());
+        }
+        for (int i = 0; i < ironOre; i++) {
+            this.resources.add(new Iron());
+        }
+        for (int i = 0; i < jewelery; i++) {
+            this.resources.add(new Jewelry());
+        }
+        for (int i = 0; i < lumber; i++) {
+            this.resources.add(new Lumber());
+        }
+        for (int i = 0; i < rock; i++) {
+            this.resources.add(new Rock());
+        }
+        for (int i = 0; i < sand; i++) {
+            this.resources.add(new Sand());
+        }
+        for (int i = 0; i < seeds; i++) {
+            this.resources.add(new Seeds());
+        }
+        for (int i = 0; i < spacegoo; i++) {
+            this.resources.add(new Spacegoo());
+        }
+        for (int i = 0; i < stone; i++) {
+            this.resources.add(new Stone());
         }
     }
 
@@ -433,6 +499,10 @@ public class Village extends AbstractNode {
     }
     public Inventory getInventory() {
         return inventory;
+    }
+    public ArrayList<AbstractResource> getResources() {
+        updateResources();
+        return resources;
     }
     public ArrayList<Survivor> getSurvivors() {
         return population;

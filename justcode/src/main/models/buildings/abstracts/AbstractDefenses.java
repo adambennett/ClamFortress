@@ -1,8 +1,13 @@
 package main.models.buildings.abstracts;
 
+import main.models.resources.*;
+
 public abstract class AbstractDefenses extends AbstractBuilding {
 
-    public AbstractDefenses(String name, int popCapInc) {
-        super(name, popCapInc);
+    private final Integer defense;
+
+    public AbstractDefenses(String name, int resourceCost, int defend, AbstractResource resourceType) {
+        super(name, resourceCost, resourceType);
+        this.defense = defend;
     }
 }

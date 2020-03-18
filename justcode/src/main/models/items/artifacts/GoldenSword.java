@@ -1,6 +1,7 @@
 package main.models.items.artifacts;
 
 import main.interfaces.*;
+import main.models.items.*;
 
 public class GoldenSword extends AbstractArtifact implements Unique, Golden {
 
@@ -14,6 +15,11 @@ public class GoldenSword extends AbstractArtifact implements Unique, Golden {
     @Override
     public Integer modifyAtk() {
         return atkBoost;
+    }
+
+    @Override
+    public GoldenSword clone() {
+        return new GoldenSword();
     }
 
     @Override

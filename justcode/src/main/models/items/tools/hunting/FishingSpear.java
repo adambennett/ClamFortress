@@ -6,4 +6,9 @@ public class FishingSpear extends AbstractFishingTool {
     public FishingSpear() {
         super("Fishing Spear", "");
     }
+
+    @Override
+    public FishingSpear clone() {
+        return new FishingSpear();
+    }
 }

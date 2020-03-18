@@ -6,4 +6,9 @@ public class Hammer extends AbstractEngTool {
     public Hammer() {
         super("Hammer", "");
     }
+
+    @Override
+    public Hammer clone() {
+        return new Hammer();
+    }
 }

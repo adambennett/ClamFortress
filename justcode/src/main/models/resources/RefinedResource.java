@@ -1,4 +1,4 @@
 package main.models.resources;
 
-public abstract class RefinedResource extends Resource {
+public abstract class RefinedResource extends AbstractResource {
 }

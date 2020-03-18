@@ -6,4 +6,9 @@ public class PestleAndMortar extends AbstractCraftingTool {
     public PestleAndMortar() {
         super("Pestle and Mortar", "");
     }
+
+    @Override
+    public PestleAndMortar clone() {
+        return new PestleAndMortar();
+    }
 }

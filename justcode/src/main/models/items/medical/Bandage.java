@@ -7,4 +7,9 @@ public class Bandage extends AbstractMedicalItem {
     public Bandage() {
         super("Bandage", "A healing item.");
     }
+
+    @Override
+    public Bandage clone() {
+        return new Bandage();
+    }
 }

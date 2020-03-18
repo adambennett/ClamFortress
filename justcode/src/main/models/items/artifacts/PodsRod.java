@@ -15,4 +15,9 @@ public class PodsRod extends AbstractArtifact implements Unique {
         return  fishingBoost;
     }
 
+    @Override
+    public PodsRod clone() {
+        return new PodsRod();
+    }
+
 }

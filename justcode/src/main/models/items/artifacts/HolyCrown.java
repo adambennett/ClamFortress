@@ -1,6 +1,7 @@
 package main.models.items.artifacts;
 
 import main.interfaces.*;
+import main.models.items.*;
 
 public class HolyCrown extends AbstractArtifact implements Unique {
 
@@ -12,4 +13,9 @@ public class HolyCrown extends AbstractArtifact implements Unique {
 
     @Override
     public Integer modifyFaithInc() { return faithBonus; }
+
+    @Override
+    public HolyCrown clone() {
+        return new HolyCrown();
+    }
 }

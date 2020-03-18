@@ -6,4 +6,10 @@ public class SeedBag extends AbstractGatheringTool {
     public SeedBag() {
         super("Seed Bag", "");
     }
+
+
+    @Override
+    public SeedBag clone() {
+        return new SeedBag();
+    }
 }

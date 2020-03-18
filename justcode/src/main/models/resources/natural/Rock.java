@@ -1,9 +1,10 @@
 package main.models.resources.natural;
 
+import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.Stone;
 
-public class Rock extends NaturalResource {
+public class Rock extends NaturalResource implements ResourceCost {
 
     public Rock(){
         this.refined = new Stone();

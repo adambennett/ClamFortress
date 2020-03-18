@@ -6,4 +6,9 @@ public class RabbitFoot extends AbstractArtifact implements Unique {
     public RabbitFoot() {
         super("Rabbit's Foot", "Decreases bad random encounter occurrence rate.");
     }
+
+    @Override
+    public RabbitFoot clone() {
+        return new RabbitFoot();
+    }
 }

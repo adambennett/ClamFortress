@@ -15,4 +15,9 @@ public class SunSword extends AbstractArtifact implements Unique {
     public Integer modifyAtk() {
         return atkBoost;
     }
+
+    @Override
+    public SunSword clone() {
+        return new SunSword();
+    }
 }

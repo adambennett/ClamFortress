@@ -6,4 +6,11 @@ public class Net extends AbstractGatheringTool {
     public Net() {
         super("Net", "");
     }
+
+    @Override
+    public Net clone() {
+        return new Net();
+    }
 }
+
+

@@ -1,6 +1,7 @@
 package main.models.items.artifacts;
 
 import main.interfaces.*;
+import main.models.items.*;
 
 public class KingsCoat extends AbstractArtifact implements Unique {
 
@@ -13,5 +14,10 @@ public class KingsCoat extends AbstractArtifact implements Unique {
     @Override
     public Integer modifyPriorityPoints() {
         return priorityBoost;
+    }
+
+    @Override
+    public KingsCoat clone() {
+        return new KingsCoat();
     }
 }

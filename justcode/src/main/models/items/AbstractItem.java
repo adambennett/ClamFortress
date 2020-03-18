@@ -10,7 +10,7 @@ import main.models.buildings.abstracts.*;
 import main.models.nodes.*;
 import main.models.people.*;
 
-public abstract class AbstractItem {
+public abstract class AbstractItem implements Cloneable {
 
     private String name;
     private String desc;
@@ -62,4 +62,7 @@ public abstract class AbstractItem {
 
     @Override
     public boolean equals(Object item) { return (item instanceof AbstractItem) ? (this.name.equals(((AbstractItem) item).getName())) : super.equals(item); }
+
+    @Override
+    public abstract AbstractItem clone();
 }

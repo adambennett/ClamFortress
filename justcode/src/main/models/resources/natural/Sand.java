@@ -1,10 +1,11 @@
 package main.models.resources.natural;
 
+import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.Glass;
 
 
-public class Sand extends NaturalResource {
+public class Sand extends NaturalResource implements ResourceCost {
 
 
     public Sand(){

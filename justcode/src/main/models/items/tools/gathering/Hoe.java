@@ -6,4 +6,9 @@ public class Hoe extends AbstractGatheringTool {
     public Hoe() {
         super("Hoe", "");
     }
+
+    @Override
+    public Hoe clone() {
+        return new Hoe();
+    }
 }

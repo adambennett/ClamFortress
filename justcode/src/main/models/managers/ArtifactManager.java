@@ -15,6 +15,7 @@ public class ArtifactManager {
         artifacts.add(new PodsRod());
         artifacts.add(new RabbitFoot());
         artifacts.add(new GoldenSword());
+        artifacts.add(new KingsCoat());
         return artifacts.get(ThreadLocalRandom.current().nextInt(artifacts.size()));
     }
 }

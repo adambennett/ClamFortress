@@ -2,6 +2,7 @@ package main.utilities.consoleIO;
 
 import main.enums.*;
 import main.models.*;
+import main.models.items.*;
 import main.models.managers.*;
 import main.utilities.persistence.*;
 
@@ -60,6 +61,9 @@ public class TurnMenu extends AbstractConsole {
                 printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case CONTINUE:
+                for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
+                    item.priorityPhase();
+                }
                 PriorityMenu priorityMenu = new PriorityMenu();
                 priorityMenu.printPrompt(PromptMessage.PRIORITY_MENU, true, true);
                 break;

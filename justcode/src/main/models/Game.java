@@ -175,6 +175,9 @@ public class Game {
         // complicated actions logic
         runActions();
         PriorityManager.reset(difficulty.compareTo(Difficulty.HARD) > 0);
+        for (AbstractItem item : getVillage().getInventory().getItems()) {
+            item.endPhase();
+        }
     }
 
     public static void runActions() {

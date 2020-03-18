@@ -3,6 +3,7 @@ package main.utilities;
 
 import main.models.Game;
 import main.models.items.*;
+import main.models.items.artifacts.*;
 import main.models.nodes.*;
 import main.models.people.*;
 
@@ -423,7 +424,11 @@ public class GameStrings {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
         for (AbstractItem item : v.getInventory().getItems()){
-            a.put(item.getName(), item.getDesc());
+            String name = item.getName();
+            if (item instanceof AbstractArtifact) {
+                name += " (A)";
+            }
+            a.put(name, item.getDesc());
         }
         if (a.size() < 1) {
             a.put(" ", " ");
@@ -458,9 +463,9 @@ public class GameStrings {
     }
 
     public static void loadInventory() {
-        String leftAlignFormat = "| %-25s | %-25s |\n";
-        String headerFormat = "| %-53s |\n";
-        String breakLine = "+---------------------------+---------------------------+\n";
+        String leftAlignFormat = "| %-25s | %-85s |\n";
+        String headerFormat = "| %-113s |\n";
+        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
         String header = "Inventory";
         Map<String, String> top = new HashMap<>();
         Map<String, String> bottom = new HashMap<>();

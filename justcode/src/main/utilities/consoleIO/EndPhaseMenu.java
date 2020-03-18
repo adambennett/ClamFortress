@@ -2,6 +2,7 @@ package main.utilities.consoleIO;
 
 import main.enums.*;
 import main.models.*;
+import main.models.items.*;
 import main.models.managers.*;
 import main.utilities.persistence.*;
 
@@ -24,6 +25,9 @@ public class EndPhaseMenu extends AbstractConsole {
         switch (cmd) {
             case CONTINUE:
                 OutputManager.reset();
+                for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
+                    item.standbyPhase();
+                }
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case RESOURCES:

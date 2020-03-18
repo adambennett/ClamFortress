@@ -5,6 +5,7 @@ import main.models.*;
 import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.buildings.abstracts.*;
+import main.models.managers.*;
 
 import java.util.concurrent.*;
 
@@ -18,15 +19,19 @@ public class Praying extends AbstractGameAction {
                 faithBuildingMod += ((AbstractFaithBuilding) b).getPrayBonus();
             }
         }
-        if (faithBuildingMod < 10) {
-            faithBuildingMod = 10;
+        if (faithBuildingMod < 1) {
+            faithBuildingMod = 1;
         }
 
         for (AbstractItem a : Game.getVillage().getInventory().getItems()) {
             faithBuildingMod += a.modifyFaithInc();
         }
 
-        Game.getVillage().incFaith(ThreadLocalRandom.current().nextInt(faithBuildingMod));
+        int amt = ThreadLocalRandom.current().nextInt(faithBuildingMod+1);
+        if (amt > 0) {
+            Game.getVillage().incFaith(amt);
+            OutputManager.addToBot("Praying has earned you " + faithBuildingMod + " Faith");
+        }
         this.isDone = true;
     }
 

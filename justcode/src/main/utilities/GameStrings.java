@@ -211,12 +211,13 @@ public class GameStrings {
         Village v = Game.getVillage();
         a.put("Turn Number", "" + Game.getGameManager().getTurnNumber());
         a.put("Population", "" + Game.getVillage().getPopulation() + " / " + Game.getVillage().getPopCap());
+        a.put("Village HP", "" + Game.getVillage().getHealth() + " / " + Game.getVillage().getHealth());
+        a.put("Resources", "" + Game.getVillage().getResources().size() + " / " + Game.getVillage().getResourceLimit());
         a.put("Buildings", "" + Game.getVillage().getBuildings().size() + " / " + Game.getVillage().getBuildingLimit());
-        a.put("Coins", "" + Game.getVillage().getCoins());
-        a.put("Food", "" + Game.getVillage().getFood());
-        a.put("Hunger", "" + Game.getVillage().getHunger());
-        a.put("Resources", "" + Game.getVillage().getResources().size());
-        a.put("Village HP", "" + Game.getVillage().getHealth());
+        a.put("Food", "" + Game.getVillage().getFood() + " / " + Game.getVillage().getFoodLimit());
+        a.put("Hunger", "" + Game.getVillage().getHunger() + " / " + 100);
+        a.put("Coins", "" + Game.getVillage().getCoins() + " / " + Game.getVillage().getCoinLimit());
+        a.put("Faith", "" + Game.getVillage().getFaith() + " / " + Game.getVillage().getFaithLimit());
         return a;
     }
 
@@ -409,7 +410,7 @@ public class GameStrings {
         Village v = Game.getVillage();
         rsrcMap.put("Population", "" + v.getPopulation() + " / " + v.getPopCap());
         rsrcMap.put("Buildings", "" + v.getBuildings().size() + " / " + v.getBuildingLimit());
-        rsrcMap.put("Total Village HP", "" + v.getHealth());
+        rsrcMap.put("Total Village HP", "" + v.getHealth() + " / " + v.getHealth());
         rsrcMap.put("Attack", "" + v.getAttackPower());
         rsrcMap.put("Defense", "" + v.getDefense());
         rsrcMap.put("Agility", "" + v.getAgility());
@@ -425,9 +426,9 @@ public class GameStrings {
         rsrcMap.put("Average Intellect", "" + v.getIntelligenceAvg());
         rsrcMap.put("Average Magic", "" + v.getMagicAvg());
         rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
-        rsrcMap.put("Coins", "" + v.getCoins());
-        rsrcMap.put("Food", "" + v.getFood());
-        rsrcMap.put("Faith", "" + v.getFaith());
+        rsrcMap.put("Coins", "" + v.getCoins() + " / " + v.getCoinLimit());
+        rsrcMap.put("Food", "" + v.getFood() + " / " + v.getFoodLimit());
+        rsrcMap.put("Faith", "" + v.getFaith() + " / " + v.getFaithLimit());
         Map<String, Integer> occ = new HashMap<>();
         for (AbstractResource resource : v.getResources()) {
            if (occ.containsKey(resource.getName())) {

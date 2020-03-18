@@ -30,6 +30,8 @@ public class Village extends AbstractNode {
     private Integer buildingLimit =     5;
     private Integer foodLimit =         10;
     private Integer resourceLimit =     250;
+    private Integer coinLimit =         500;
+    private Integer faithLimit =        100;
 
     // Combat
     private Integer defence =           0;
@@ -328,6 +330,14 @@ public class Village extends AbstractNode {
         return engineeringAvg;
     }
 
+    public Integer getFaithLimit() {
+        return faithLimit;
+    }
+
+    public Integer getCoinLimit() {
+        return coinLimit;
+    }
+
     public Integer getFoodLimit() {
         return foodLimit;
     }
@@ -405,6 +415,14 @@ public class Village extends AbstractNode {
         this.resourceLimit = resourceLimit;
     }
 
+    public void setCoinLimit(Integer coinLimit) {
+        this.coinLimit = coinLimit;
+    }
+
+    public void setFaithLimit(Integer faithLimit) {
+        this.faithLimit = faithLimit;
+    }
+
     public void incDefense(Integer incAmount){
         this.defence += incAmount;
     }
@@ -426,6 +444,9 @@ public class Village extends AbstractNode {
 
     public void incFaith(int amt) {
         this.faith += amt;
+        if (this.faith > this.faithLimit) {
+            this.faith = this.faithLimit;
+        }
     }
 
     public void incMagic() {
@@ -442,6 +463,9 @@ public class Village extends AbstractNode {
 
     public void incCoins(int amt) {
         this.coins += amt;
+        if (this.coins > this.coinLimit) {
+            this.coins = this.coinLimit;
+        }
     }
 
     public void incPopCap() {

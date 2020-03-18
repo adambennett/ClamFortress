@@ -1,24 +1,15 @@
 package main.models;
 
-import main.actions.*;
 import main.actions.priority.*;
-import main.actions.priority.food.alien.*;
-import main.actions.priority.food.claman.*;
-import main.actions.priority.food.dwarf.*;
-import main.actions.priority.food.elf.*;
-import main.actions.priority.food.human.*;
-import main.actions.priority.food.orc.*;
 import main.actions.utility.*;
 import main.encounters.*;
 import main.enums.*;
 import main.models.buildings.abstracts.*;
-import main.models.items.*;
 import main.models.nodes.biomes.*;
 import main.models.animals.*;
 import main.models.animals.sea.*;
 import main.models.nodes.*;
 import main.models.managers.*;
-import main.models.resources.*;
 import main.models.resources.natural.*;
 import main.models.tech.*;
 import main.utilities.persistence.*;
@@ -187,7 +178,7 @@ public class Game {
         }
         Database.score(dateInc);
         gameManager.incTurns();
-        fillActionManagerWithSimpleActions(dateInc);
+        queueEvergreenActions(dateInc);
         // complicated actions logic
         runActions();
         PriorityManager.reset(difficulty.compareTo(Difficulty.HARD) > 0);
@@ -202,132 +193,23 @@ public class Game {
         }
     }
 
-    public static ArrayList<AbstractGameAction> getFoodActions() {
-        ArrayList<AbstractGameAction> foodActions = new ArrayList<>();
-        if (Game.getPlayerRace().equals(Race.HUMAN)) {
-            foodActions.add(new Hunting());
-            foodActions.add(new Fishing());
-            foodActions.add(new Cooking());
-        } else if (Game.getPlayerRace().equals(Race.ORC)) {
-            foodActions.add(new OrcFoodRaid());
-            foodActions.add(new OrcHunting());
-            foodActions.add(new Sacrifice());
-        } else if (Game.getPlayerRace().equals(Race.ELF)) {
-            foodActions.add(new InsectHunt());
-            foodActions.add(new RiverSearch());
-            foodActions.add(new Roasting());
-        } else if (Game.getPlayerRace().equals(Race.DWARF)) {
-            foodActions.add(new Brewing());
-            foodActions.add(new MushroomPicking());
-            foodActions.add(new Scavenging());
-        } else if (Game.getPlayerRace().equals(Race.CLAMAN)) {
-            foodActions.add(new Angling());
-            foodActions.add(new Diving());
-            foodActions.add(new Trawling());
-        } else if (Game.getPlayerRace().equals(Race.ALIEN)) {
-            foodActions.add(new Abducting());
-            foodActions.add(new Analyzing());
-            foodActions.add(new Redacted());
-        }
-        return foodActions;
-    }
-
-    public static Integer fillActionManagerWithSimpleActions(int dateInc) {
-        int totalActions = 2;
+    public static void queueEvergreenActions(int dateInc) {
         actionManager.addToTurnStart(new NewSurvivors());
         actionManager.addToTurnEnd(new EndPhaseHunger());
-
-        ArrayList<AbstractGameAction> foodActions = getFoodActions();
-        for (int i = 0; i < PriorityManager.getFood1(); i++) {
-            actionManager.addToBottom(foodActions.get(0).clone());
-            for (GameObject obj : Game.getModifierObjects()) {
-                obj.onGatherFood(foodActions.get(0));
-            }
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getFood2(); i++) {
-            actionManager.addToBottom(foodActions.get(1).clone());
-            for (GameObject obj : Game.getModifierObjects()) {
-                obj.onGatherFood(foodActions.get(1));
-            }
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getFood3(); i++) {
-            actionManager.addToBottom(foodActions.get(2).clone());
-            for (GameObject obj : Game.getModifierObjects()) {
-                obj.onGatherFood(foodActions.get(2));
-            }
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getScout(); i++) {
-            actionManager.addToTurnEnd(new Scouting());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getPray(); i++) {
-            actionManager.addToBottom(new Praying());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getForage(); i++) {
-            actionManager.addToBottom(new Foraging());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getWoodcut(); i++) {
-            actionManager.addToBottom(new Woodcutting());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getStone(); i++) {
-            actionManager.addToBottom(new RockPicking());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getMine(); i++) {
-            actionManager.addToBottom(new Mining());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getDefend(); i++) {
-            actionManager.addToBottom(new Defense());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getHarvest(); i++) {
-            actionManager.addToBottom(new Harvesting());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getForge(); i++) {
-            actionManager.addToBottom(new Forging());
-            totalActions++;
-        }
-
-        for (int i = 0; i < PriorityManager.getHeal(); i++) {
-            actionManager.addToBottom(new Healing());
-            totalActions++;
-        }
 
         if (getVillage().getUncompletedBuildings().size() > 0) {
             for (int i = 0; i < PriorityManager.getBuild(); i++) {
                 int randIndex = ThreadLocalRandom.current().nextInt(getVillage().getUncompletedBuildings().size());
                 AbstractBuilding rand = getVillage().getUncompletedBuildings().get(randIndex);
                 actionManager.addToBottom(new Building(rand));
-                totalActions++;
             }
         }
 
         for (int i = 0; i < PriorityManager.getEngineer(); i++) {
             actionManager.addToBottom(new Engineering(BuildingManager.getRandomBuilding()));
-            totalActions++;
         }
 
-        actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc, totalActions));
-        return totalActions;
+        actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc));
     }
 
     public static Board getGameBoard() {

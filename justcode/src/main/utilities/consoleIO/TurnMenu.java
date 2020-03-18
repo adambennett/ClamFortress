@@ -19,6 +19,8 @@ public class TurnMenu extends AbstractConsole {
         consoleCommands.put("cheat", MenuCommands.SCORE_REALLY_BIG_HACKS);
         consoleCommands.put("0", MenuCommands.CONTINUE);
         consoleCommands.put("2", MenuCommands.RESOURCES);
+        consoleCommands.put("3", MenuCommands.INVENTORY);
+        consoleCommands.put("5", MenuCommands.VILLAGERS);
 
     }
 
@@ -41,7 +43,13 @@ public class TurnMenu extends AbstractConsole {
                 new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
                 break;
             case RESOURCES:
-                new ResourceMenu().printPrompt(PromptMessage.RESOURCE_VIEW, true);
+                new MidTurnMenu().printPrompt(PromptMessage.RESOURCE_VIEW, true);
+                break;
+            case INVENTORY:
+                new MidTurnMenu().printPrompt(PromptMessage.INVENTORY_VIEW, true);
+                break;
+            case VILLAGERS:
+                new MidTurnMenu().printPrompt(PromptMessage.VILLAGERS, true);
                 break;
             case SCORE_REALLY_BIG_HACKS:
                 int amt = 1000;

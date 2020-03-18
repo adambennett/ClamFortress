@@ -137,8 +137,8 @@ public abstract class AbstractConsole {
             PriorityMenu curr = (PriorityMenu) this;
             curr.printPrompt(PromptMessage.PRIORITY_MENU, true);
         }
-        else if (currentConsole instanceof ResourceMenu) {
-            ResourceMenu curr = (ResourceMenu) this;
+        else if (currentConsole instanceof MidTurnMenu) {
+            MidTurnMenu curr = (MidTurnMenu) this;
             curr.printPrompt(PromptMessage.RESOURCE_VIEW, true);
         }
         else if (currentConsole instanceof EndPhaseMenu) {

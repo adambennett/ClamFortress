@@ -50,5 +50,7 @@ public enum MenuCommands {
     TRADING,
     SAVE,
     RESOURCES,
+    INVENTORY,
+    VILLAGERS,
     SCORE_REALLY_BIG_HACKS
 }

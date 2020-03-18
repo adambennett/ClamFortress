@@ -10,5 +10,7 @@ public enum PromptMessage {
     PRIORITY_MENU,
     END_PHASE,
     RESOURCE_VIEW,
-    BLURB
+    BLURB,
+    INVENTORY_VIEW,
+    VILLAGERS
 }

@@ -16,7 +16,8 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
         this.xPos = x;
         this.yPos = y;
         this.biome = biome;
-        int artifactRoll = ThreadLocalRandom.current().nextInt(0, 500);
+       // int artifactRoll = ThreadLocalRandom.current().nextInt(0, 500);
+        int artifactRoll = 1;
         if (artifactRoll == 1) {
             this.artifact = ArtifactManager.getRandomArtifact();
         }

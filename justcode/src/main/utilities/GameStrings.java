@@ -2,7 +2,9 @@ package main.utilities;
 
 
 import main.models.Game;
+import main.models.items.*;
 import main.models.nodes.*;
+import main.models.people.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -33,6 +35,8 @@ public class GameStrings {
     private static String priorityMenu;
     private static String endPhase;
     private static String resources;
+    private static String inv;
+    private static String vil;
 
     private static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
 
@@ -415,6 +419,31 @@ public class GameStrings {
         return rsrcMap;
     }
 
+    public static LinkedHashMap<String, String> getInventory() {
+        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        for (AbstractItem item : v.getInventory().getItems()){
+            a.put(item.getName(), item.getDesc());
+        }
+        if (a.size() < 1) {
+            a.put(" ", " ");
+        }
+        return a;
+    }
+
+    public static LinkedHashMap<String, String> getVillagers() {
+        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        for (Survivor s : v.getSurvivors()) {
+            a.put(s.getName(), GameStrings.capFirstLetter(s.getRace().toString().toLowerCase()));
+        }
+        if (a.size() < 1) {
+            a.put(" ", " ");
+        }
+        return a;
+    }
+
+
     public static void loadResources() {
         String leftAlignFormat = "| %-25s | %-25s |\n";
         String headerFormat = "| %-53s |\n";
@@ -426,6 +455,38 @@ public class GameStrings {
         list.add(getResources());
         list.add(bottom);
         resources = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+
+    public static void loadInventory() {
+        String leftAlignFormat = "| %-25s | %-25s |\n";
+        String headerFormat = "| %-53s |\n";
+        String breakLine = "+---------------------------+---------------------------+\n";
+        String header = "Inventory";
+        Map<String, String> top = new HashMap<>();
+        Map<String, String> bottom = new HashMap<>();
+        top.put("Item Name", "Description");
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getInventory());
+        list.add(bottom);
+        inv = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+
+    public static void loadVillagers() {
+        String leftAlignFormat = "| %-25s | %-25s |\n";
+        String headerFormat = "| %-53s |\n";
+        String breakLine = "+---------------------------+---------------------------+\n";
+        String header = "Population";
+        Map<String, String> top = new HashMap<>();
+        Map<String, String> bottom = new HashMap<>();
+        top.put("Villager Name", "Race");
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getVillagers());
+        list.add(bottom);
+        vil = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static String getStringFromPromptType(main.enums.PromptMessage msg) {
@@ -455,6 +516,12 @@ public class GameStrings {
             case RESOURCE_VIEW:
                 loadResources();
                 return resources;
+            case INVENTORY_VIEW:
+                loadInventory();
+                return inv;
+            case VILLAGERS:
+                loadVillagers();
+                return vil;
         }
         return "";
     }

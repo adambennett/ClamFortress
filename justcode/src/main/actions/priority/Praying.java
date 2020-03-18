@@ -2,6 +2,7 @@ package main.actions.priority;
 
 import main.actions.*;
 import main.models.*;
+import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.buildings.abstracts.*;
 
@@ -21,7 +22,7 @@ public class Praying extends AbstractGameAction {
             faithBuildingMod = 10;
         }
 
-        for (AbstractArtifact a : Game.getVillage().getInventory().getArtifacts()) {
+        for (AbstractItem a : Game.getVillage().getInventory().getItems()) {
             faithBuildingMod += a.modifyFaithInc();
         }
 

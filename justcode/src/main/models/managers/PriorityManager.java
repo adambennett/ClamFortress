@@ -1,6 +1,8 @@
 package main.models.managers;
 
 
+import main.models.*;
+import main.models.items.*;
 
 public class PriorityManager {
 
@@ -57,7 +59,13 @@ public class PriorityManager {
     }
 
     public static void setPointsRemaining(Integer pointsRemaining) {
+        int orig = PriorityManager.getPointsRemaining();
         PriorityManager.pointsRemaining = pointsRemaining;
+        int fin = PriorityManager.getPointsRemaining();
+        int diff = fin - orig;
+        for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
+            item.onSpendPriorityPoints(diff);
+        }
     }
 
     public static Integer getFood1() {

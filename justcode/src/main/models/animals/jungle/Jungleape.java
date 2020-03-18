@@ -1,6 +1,6 @@
 package main.models.animals.jungle;
 
-public class Jungleape extends JungleAnimal {
+public class Jungleape extends AbstractJungleAnimal {
 
     public Jungleape() {
         super(300);

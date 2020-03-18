@@ -12,6 +12,7 @@ import main.actions.utility.*;
 import main.encounters.*;
 import main.enums.*;
 import main.models.buildings.abstracts.*;
+import main.models.items.*;
 import main.models.nodes.biomes.*;
 import main.models.animals.*;
 import main.models.animals.sea.*;
@@ -106,15 +107,15 @@ public class Game {
         return flows;
     }
 
-    public static ArrayList<Animal> generateRandomAnimals(AbstractBiome biome) {
-        ArrayList<Animal> flows = new ArrayList<>();
+    public static ArrayList<AbstractAnimal> generateRandomAnimals(AbstractBiome biome) {
+        ArrayList<AbstractAnimal> flows = new ArrayList<>();
         // TODO: Add animals based on difficulty & biome
         return flows;
     }
 
 
-    public static ArrayList<SeaAnimal> generateRandomAquatic() {
-        ArrayList<SeaAnimal> flows = new ArrayList<>();
+    public static ArrayList<AbstractSeaAnimal> generateRandomAquatic() {
+        ArrayList<AbstractSeaAnimal> flows = new ArrayList<>();
         // TODO: Add sea life based on difficulty
         return flows;
     }
@@ -123,6 +124,9 @@ public class Game {
         if (gameBoard.getVillage().canRunEncounter(enc)) {
             OutputManager.addToBot("SPECIAL ENCOUNTER :: " + enc.toString());
             enc.runEncounter();
+            for (AbstractItem item : getVillage().getInventory().getItems()) {
+                item.onRunSpecialEncounter(enc);
+            }
         }
     }
 
@@ -131,8 +135,13 @@ public class Game {
         for (AbstractEncounter enc : encounters) {
             handleEncounter(enc);
         }
+        int highEnd = 45;
+        for (AbstractItem item : getVillage().getInventory().getItems()) {
+            highEnd += item.modifyDateIncrease();
+        }
+        if (highEnd < 45) { highEnd = 45; }
         int low = 25 - dateInc;
-        int high = 45 - dateInc;
+        int high = highEnd - dateInc;
         if (low < 0) { low = 0; }
         if (high < 1) { high = 1; }
         dateInc += gameManager.advanceDate(low, high);
@@ -145,13 +154,21 @@ public class Game {
         if (encounters.size() > 0) {
             dateInc += encounterLogic(encounters);
         } else {
-            dateInc += gameManager.advanceDate(25, 45);
+            int highEnd = 45;
+            for (AbstractItem item : getVillage().getInventory().getItems()) {
+                highEnd += item.modifyDateIncrease();
+            }
+            if (highEnd < 45) { highEnd = 45; }
+            dateInc += gameManager.advanceDate(25, highEnd);
         }
         return dateInc;
     }
 
     public static void advanceTurn() {
         Integer dateInc = getDateInc();
+        for (AbstractItem item : getVillage().getInventory().getItems()) {
+            item.onDateAdvance(dateInc);
+        }
         Database.score(dateInc);
         gameManager.incTurns();
         fillActionManagerWithSimpleActions(dateInc);
@@ -204,16 +221,25 @@ public class Game {
         ArrayList<AbstractGameAction> foodActions = getFoodActions();
         for (int i = 0; i < PriorityManager.getFood1(); i++) {
             actionManager.addToBottom(foodActions.get(0).clone());
+            for (AbstractItem item : getVillage().getInventory().getItems()) {
+                item.onGatherFood(foodActions.get(0));
+            }
             totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getFood2(); i++) {
             actionManager.addToBottom(foodActions.get(1).clone());
+            for (AbstractItem item : getVillage().getInventory().getItems()) {
+                item.onGatherFood(foodActions.get(1));
+            }
             totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getFood3(); i++) {
             actionManager.addToBottom(foodActions.get(2).clone());
+            for (AbstractItem item : getVillage().getInventory().getItems()) {
+                item.onGatherFood(foodActions.get(2));
+            }
             totalActions++;
         }
 
@@ -299,11 +325,6 @@ public class Game {
 
     public static Race getPlayerRace() {
         return playerRace;
-    }
-
-    public static void setDifficulty(Difficulty newDifficulty) {
-        difficulty = newDifficulty;
-        updateDifficultyBools();
     }
 
     public static Difficulty getDifficulty() {

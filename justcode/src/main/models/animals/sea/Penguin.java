@@ -2,7 +2,7 @@ package main.models.animals.sea;
 
 
 
-public class Penguin extends SeaAnimal {
+public class Penguin extends AbstractSeaAnimal {
 
     public Penguin(){
         super(24);

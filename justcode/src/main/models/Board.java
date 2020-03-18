@@ -1,8 +1,15 @@
 package main.models;
 
 import main.encounters.alien.AbstractAliens;
-import main.models.animals.Animal;
-import main.models.animals.sea.SeaAnimal;
+import main.models.animals.AbstractAnimal;
+import main.models.animals.desert.*;
+import main.models.animals.jungle.*;
+import main.models.animals.land.*;
+import main.models.animals.land.bears.*;
+import main.models.animals.mountain.*;
+import main.models.animals.sea.AbstractSeaAnimal;
+import main.models.animals.tundra.*;
+import main.models.items.*;
 import main.models.managers.OutputManager;
 import main.models.nodes.AbstractNode;
 import main.models.nodes.Grass;
@@ -20,16 +27,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Board {
 
     private Village village;
-
     private Integer gridXMax;
     private Integer gridYMax;
-    private ArrayList<AbstractNode> grid;
-
-    private ArrayList<AbstractAliens> aliens;
-    private Map<Flowers,Integer> flowers;
-    private ArrayList<Animal> animals;
-    private ArrayList<SeaAnimal> fish;
-
     private Integer trees;
     private Integer stone;
     private Integer clay;
@@ -41,6 +40,9 @@ public class Board {
     private Integer sand;
     private Integer spacegoo;
     private Integer healingItems;
+    private ArrayList<AbstractNode> grid;
+    private ArrayList<Flowers> flowers;
+    private ArrayList<AbstractAnimal> animals;
 
     public Board(AbstractBiome startingBiome, int xMax, int yMax) {
         this.village = new Village(startingBiome);
@@ -61,10 +63,8 @@ public class Board {
         this.sand = 0;
         this.spacegoo = 0;
         this.goldOre = 0;
-        this.aliens = new ArrayList<>();
-        this.flowers = new HashMap<>();
+        this.flowers = new ArrayList<>();
         this.animals = new ArrayList<>();
-        this.fish = new ArrayList<>();
     }
 
     public AbstractNode getRandomRegion() {
@@ -111,6 +111,9 @@ public class Board {
         }
         if (canAdd) {
             this.grid.add(space);
+            for (AbstractItem item : village.getInventory().getItems()) {
+                item.onDiscoverNewRegion(space);
+            }
             if (space.hasArtifact()) {
                 village.getInventory().addItem(space.getArtifact());
                 if (GameStrings.startsWithVowel(space.getArtifact().getName())) {
@@ -124,9 +127,12 @@ public class Board {
         return false;
     }
 
-    public void addAnimals(Animal animal, int amt) {
+    public void addAnimals(AbstractAnimal animal, int amt) {
         for (int i = 0; i < amt; i++) {
             animals.add(animal.clone());
+            for (AbstractItem item : village.getInventory().getItems()) {
+                item.onAddAnimalToBoard(animal);
+            }
         }
     }
 
@@ -134,16 +140,83 @@ public class Board {
         return village;
     }
 
-    public ArrayList<Animal> getAnimals() {
+    public ArrayList<AbstractAnimal> getAnimals() {
         return animals;
     }
 
-    public Integer getTrees() {
-        return trees;
+    public ArrayList<AbstractDesertAnimal> getDesertAnimals() {
+        ArrayList<AbstractDesertAnimal> toRet = new ArrayList<>();
+        for (AbstractAnimal animal : animals) {
+            if (animal instanceof AbstractDesertAnimal) {
+                toRet.add((AbstractDesertAnimal) animal);
+            }
+        }
+        return toRet;
     }
 
-    public ArrayList<SeaAnimal> getFish() {
-        return fish;
+    public ArrayList<AbstractJungleAnimal> getJungleAnimals() {
+        ArrayList<AbstractJungleAnimal> toRet = new ArrayList<>();
+        for (AbstractAnimal animal : animals) {
+            if (animal instanceof AbstractJungleAnimal) {
+                toRet.add((AbstractJungleAnimal) animal);
+            }
+        }
+        return toRet;
+    }
+
+    public ArrayList<AbstractBear> getBears() {
+        ArrayList<AbstractBear> toRet = new ArrayList<>();
+        for (AbstractAnimal animal : animals) {
+            if (animal instanceof AbstractBear) {
+                toRet.add((AbstractBear) animal);
+            }
+        }
+        return toRet;
+    }
+
+    public ArrayList<AbstractLandAnimal> getLandAnimal() {
+        ArrayList<AbstractLandAnimal> toRet = new ArrayList<>();
+        for (AbstractAnimal animal : animals) {
+            if (animal instanceof AbstractLandAnimal) {
+                toRet.add((AbstractLandAnimal) animal);
+            }
+        }
+        return toRet;
+    }
+
+    public ArrayList<AbstractMountainAnimal> getMountainAnimals() {
+        ArrayList<AbstractMountainAnimal> toRet = new ArrayList<>();
+        for (AbstractAnimal animal : animals) {
+            if (animal instanceof AbstractMountainAnimal) {
+                toRet.add((AbstractMountainAnimal) animal);
+            }
+        }
+        return toRet;
+    }
+
+    public ArrayList<AbstractSeaAnimal> getSeaAnimals() {
+        ArrayList<AbstractSeaAnimal> toRet = new ArrayList<>();
+        for (AbstractAnimal animal : animals) {
+            if (animal instanceof AbstractSeaAnimal) {
+                toRet.add((AbstractSeaAnimal) animal);
+            }
+        }
+        return toRet;
+    }
+
+    public ArrayList<AbstractTundraAnimal> getTundraAnimals() {
+        ArrayList<AbstractTundraAnimal> toRet = new ArrayList<>();
+        for (AbstractAnimal animal : animals) {
+            if (animal instanceof AbstractTundraAnimal) {
+                toRet.add((AbstractTundraAnimal) animal);
+            }
+        }
+        return toRet;
+    }
+
+
+    public Integer getTrees() {
+        return trees;
     }
 
     public Integer getRocks() {
@@ -156,12 +229,6 @@ public class Board {
 
     public void setRocks(Integer rocks) {
         this.rocks = rocks;
-    }
-
-    public void addFish(SeaAnimal fishToAdd, Integer amount){
-        for (int i = 0; i < amount; i++) {
-            fish.add((SeaAnimal) fishToAdd.clone());
-        }
     }
 
     public void reduceTreesOnBoard(int amt) {

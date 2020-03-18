@@ -1,6 +1,6 @@
 package main.Animals;
 
-import main.models.animals.Animal;
+import main.models.animals.AbstractAnimal;
 import main.models.animals.desert.Armadillo;
 import main.models.animals.desert.Camel;
 import main.models.animals.desert.Lizard;
@@ -11,7 +11,7 @@ import main.models.animals.jungle.Wildabeast;
 import main.models.animals.land.*;
 import main.models.animals.land.bears.*;
 import main.models.animals.mountain.Cougar;
-import main.models.animals.mountain.MountainAnimal;
+import main.models.animals.mountain.AbstractMountainAnimal;
 import main.models.animals.mountain.MountainGoat;
 import main.models.animals.mountain.MountainHare;
 import main.models.animals.sea.*;
@@ -20,11 +20,11 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class AnimalTest {
+public class AbstractAnimalTest {
 
     @Test
     public void getAmountOfFoodOnHuntTest(){
-        MountainAnimal mGoat = new MountainGoat();
+        AbstractMountainAnimal mGoat = new MountainGoat();
 
         Integer actual = mGoat.getAmountOfFoodOnHunt();
         Integer expected = 75;
@@ -34,7 +34,7 @@ public class AnimalTest {
 
     @Test
     public void animalCloneTest(){
-        ArrayList<Animal> listOfAnimals = new ArrayList<>();
+        ArrayList<AbstractAnimal> listOfAnimals = new ArrayList<>();
         listOfAnimals.add(new Armadillo().clone());
         listOfAnimals.add(new Camel().clone());
         listOfAnimals.add(new Lizard().clone());
@@ -66,7 +66,7 @@ public class AnimalTest {
 
         Boolean expected = true;
         Boolean actual = null;
-        for (Animal a: listOfAnimals) {
+        for (AbstractAnimal a: listOfAnimals) {
             if(a == null){
                 actual = false;
             }
@@ -78,7 +78,7 @@ public class AnimalTest {
 
     @Test
     public void SeaAnimalsTest(){
-        ArrayList<SeaAnimal> seaAnimals = new ArrayList<>();
+        ArrayList<AbstractSeaAnimal> seaAnimals = new ArrayList<>();
         seaAnimals.add(new Dolphin().clone());
         seaAnimals.add(new Fish().clone());
         seaAnimals.add(new Penguin().clone());
@@ -89,7 +89,7 @@ public class AnimalTest {
 
         Boolean expected = true;
         Boolean actual = null;
-        for(SeaAnimal s : seaAnimals){
+        for(AbstractSeaAnimal s : seaAnimals){
             if(s == null){
                 actual = false;
             }

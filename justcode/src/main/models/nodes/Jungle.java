@@ -13,7 +13,7 @@ public class Jungle extends AbstractNode {
     private Integer trees;
     private Integer rocks;
     private ArrayList<Flowers> flowers;
-    private ArrayList<Animal> animals;
+    private ArrayList<AbstractAnimal> animals;
 
     public Jungle(int xPos, int yPos, int trees, int rocks, AbstractBiome biome) {
         super(xPos, yPos, biome);
@@ -27,7 +27,7 @@ public class Jungle extends AbstractNode {
         return flowers;
     }
 
-    public ArrayList<Animal> getAnimals() {
+    public ArrayList<AbstractAnimal> getAnimals() {
         return animals;
     }
 

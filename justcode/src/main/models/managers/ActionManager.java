@@ -1,6 +1,8 @@
 package main.models.managers;
 
 import main.actions.*;
+import main.models.*;
+import main.models.items.*;
 
 import java.util.*;
 
@@ -50,6 +52,9 @@ public class ActionManager {
 
                 else {
                     this.previous = this.current;
+                    for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
+                        item.afterRunAction(this.current);
+                    }
                     this.current = null;
                     this.getNextAction();
                     // if (waiting on player input) {

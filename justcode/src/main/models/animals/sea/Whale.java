@@ -1,6 +1,6 @@
 package main.models.animals.sea;
 
-public class Whale extends SeaAnimal {
+public class Whale extends AbstractSeaAnimal {
 
     public Whale(){
         super(450);

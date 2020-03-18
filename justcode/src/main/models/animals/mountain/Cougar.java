@@ -1,6 +1,6 @@
 package main.models.animals.mountain;
 
-public class Cougar extends MountainAnimal {
+public class Cougar extends AbstractMountainAnimal {
 
     public Cougar(){
         super(145);

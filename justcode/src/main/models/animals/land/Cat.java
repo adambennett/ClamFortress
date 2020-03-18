@@ -2,7 +2,7 @@ package main.models.animals.land;
 
 import main.models.animals.*;
 
-public class Cat extends Animal {
+public class Cat extends AbstractLandAnimal {
 
     public Cat() {
         super(22);

@@ -54,13 +54,6 @@ public class GameManager {
         this.date = c.getTime();
     }
 
-    public void incDateByMonth() {
-        Calendar c = Calendar.getInstance();
-        c.setTime(this.date);
-        c.add(Calendar.MONTH, 1);
-        this.date = c.getTime();
-    }
-
     public Integer advanceDate(int minDays, int maxDays) {
         Date originalDate = this.date;
         Date newDate = this.date;

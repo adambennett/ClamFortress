@@ -1,6 +1,6 @@
 package main.models.animals.desert;
 
-public class Armadillo extends DesertAnimal {
+public class Armadillo extends AbstractDesertAnimal {
 
     public Armadillo() {
         super(10);

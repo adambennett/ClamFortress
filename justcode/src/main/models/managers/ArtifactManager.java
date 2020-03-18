@@ -13,6 +13,8 @@ public class ArtifactManager {
         artifacts.add(new MoonShield());
         artifacts.add(new SunSword());
         artifacts.add(new PodsRod());
+        artifacts.add(new RabbitFoot());
+        artifacts.add(new GoldenSword());
         return artifacts.get(ThreadLocalRandom.current().nextInt(artifacts.size()));
     }
 }

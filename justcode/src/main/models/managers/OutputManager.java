@@ -1,6 +1,8 @@
 package main.models.managers;
 
 import main.enums.*;
+import main.models.*;
+import main.models.items.*;
 import main.utilities.*;
 
 import java.util.*;
@@ -41,13 +43,28 @@ public class OutputManager {
 
     public static void print() {
         if (outputPool.size() > 0) {
-            String toPrint = "";
-            for (String s : outputPool) {
-                toPrint += s + "\n";
+            String reportString = "REPORT\n------\n";
+
+            String extraTopLine = "";
+            for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
+                extraTopLine += item.addToEndTurnReportTop();
             }
-            toPrint = toPrint.trim();
-            ConsoleServices.print("REPORT\n------\n");
-            ConsoleServices.println(toPrint);
+
+            String output = "";
+            for (String s : outputPool) {
+                output += s + "\n";
+            }
+            output = output.trim();
+
+            String extraBotLine = "";
+            for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
+                extraBotLine += item.addToEndTurnReportBot();
+            }
+
+            ConsoleServices.print(reportString);
+            if (!extraTopLine.equals("")) { ConsoleServices.println(extraTopLine); }
+            ConsoleServices.println(output);
+            if (!extraBotLine.equals("")) { ConsoleServices.println(extraBotLine); }
         }
     }
 

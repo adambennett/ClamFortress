@@ -20,7 +20,7 @@ public class FishingTest {
     public void fishingTestWithoutRod(){
         Game.startGame();
 
-        Game.getGameBoard().addFish( new Penguin(),11);
+        Game.getGameBoard().addAnimals( new Penguin(),11);
 
         Game.getVillage().setFood(0);
 
@@ -40,7 +40,7 @@ public class FishingTest {
         PodsRod rod = new PodsRod();
         Game.startGame();
         Game.getVillage().getInventory().addItem(rod);
-        Game.getGameBoard().addFish( new Penguin(),11);
+        Game.getGameBoard().addAnimals( new Penguin(),11);
 
         Game.getVillage().setFood(0);
 

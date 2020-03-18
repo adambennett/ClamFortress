@@ -1,6 +1,6 @@
 package main.models.animals.land.bears;
 
-public class Pizzly extends Bear {
+public class Pizzly extends AbstractBear {
 
     public Pizzly() {
         super(250);

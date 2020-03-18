@@ -1,7 +1,7 @@
 package main.models.animals.sea;
 
 
-public class Dolphin extends SeaAnimal {
+public class Dolphin extends AbstractSeaAnimal {
 
     public Dolphin(){
         super(115);

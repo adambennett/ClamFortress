@@ -2,6 +2,7 @@ package main.utilities.consoleIO;
 
 import main.enums.*;
 import main.models.*;
+import main.models.items.*;
 import main.models.managers.*;
 
 import java.util.*;
@@ -13,6 +14,9 @@ public class PriorityMenu extends AbstractConsole {
     @Override
     protected void initializeCommands() {
         int newPoints = PriorityManager.getPointsRemaining() + (Game.getVillage().getPopulation() * Game.getDifficulty().getPriorityMod());
+        for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
+            newPoints += item.modifyPriorityPoints();
+        }
         PriorityManager.setPointsRemaining(newPoints);
         consoleCommands.put("1", MenuCommands.DYNAMIC_FOOD_A);
         consoleCommands.put("2", MenuCommands.DYNAMIC_FOOD_B);

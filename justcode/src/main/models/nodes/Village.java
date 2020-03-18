@@ -6,6 +6,7 @@ import main.encounters.disasters.*;
 import main.encounters.miracles.*;
 import main.encounters.plagues.*;
 import main.encounters.raids.*;
+import main.models.items.*;
 import main.models.nodes.biomes.*;
 import main.models.*;
 import main.models.items.artifacts.*;
@@ -67,7 +68,6 @@ public class Village extends AbstractNode {
     private Integer seeds =             0;
     private Integer spacegoo =          0;
     private Integer stone =             0;
-    private Integer totalHP =           0;
 
     // Lists
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
@@ -139,8 +139,10 @@ public class Village extends AbstractNode {
             this.engineering += s.getEngineering();
             this.health += s.getHealthPoints();
             this.totalAge += s.getAge();
-            this.totalHP += s.getHealthPoints();
             updateAverageStats();
+            for (AbstractItem item : inventory.getItems()) {
+                item.onNewCitizen(s);
+            }
         }
     }
 
@@ -154,11 +156,17 @@ public class Village extends AbstractNode {
         this.health -= s.getHealthPoints();
         this.totalAge -= s.getAge();
         updateAverageStats();
+        for (AbstractItem item : inventory.getItems()) {
+            item.onLoseCitizen(s);
+        }
     }
 
     public Boolean addBuilding(AbstractBuilding b) {
         if (buildings.size() < buildingLimit) {
             buildings.add(b);
+            for (AbstractItem item : inventory.getItems()) {
+                item.onNewBuilding(b);
+            }
             return true;
         }
         return false;
@@ -183,33 +191,29 @@ public class Village extends AbstractNode {
         return false;
     }
 
-
-
-    // Adding to lists
-
     public void addMiracle(AbstractMiracle m) {
         if (this.canRunEncounter(m)) {
             this.activeMiracles.add(m);
+            for (AbstractItem item : inventory.getItems()) {
+                item.onNewMiracle(m);
+            }
         }
     }
     public void addDisaster(AbstractDisaster d) {
         if (this.canRunEncounter(d)) {
             this.ongoingDisasters.add(d);
+            for (AbstractItem item : inventory.getItems()) {
+                item.onNewDisaster(d);
+            }
         }
     }
     public void addPlague(AbstractPlague p) {
         if (this.canRunEncounter(p)) {
             this.ongoingPlagues.add(p);
+            for (AbstractItem item : inventory.getItems()) {
+                item.onNewPlague(p);
+            }
         }
-    }
-    public void addHostileRaid(AbstractRaid r) {
-        this.ongoingOpponentRaids.add(r);
-    }
-    public void addFriendlyRaid(AbstractRaid r) {
-        this.ongoingFriendlyRaids.add(r);
-    }
-    public void addBandits(AbstractBandits banditEncounter) {
-        this.occupyingBandits.addAll(banditEncounter.getBandits());
     }
 
     // Setters
@@ -290,7 +294,6 @@ public class Village extends AbstractNode {
     public void setFamine(Integer famine) {
         this.famine = famine;
     }
-
     public void setMagic(Integer magic) {
         this.magic = magic;
     }
@@ -390,20 +393,16 @@ public class Village extends AbstractNode {
         return engineeringAvg;
     }
 
-    public Integer getTotalHP() {
-        return totalHP;
-    }
-
     public Integer getDefense(){
         int atk = this.defence;
-        for (AbstractArtifact a : inventory.getArtifacts()) {
+        for (AbstractItem a : inventory.getItems()) {
             atk += a.modifyDef();
         }
         return atk;
     }
     public Integer getAttackPower(){
         int atk = this.attackPower;
-        for (AbstractArtifact a : inventory.getArtifacts()) {
+        for (AbstractItem a : inventory.getItems()) {
             atk += a.modifyAtk();
         }
         return atk;
@@ -438,18 +437,12 @@ public class Village extends AbstractNode {
     public ArrayList<Survivor> getSurvivors() {
         return population;
     }
-
-    public ArrayList<Bandit> getOccupyingBandits() {
-        return occupyingBandits;
-    }
     public ArrayList<AbstractBuilding> getBuildings() {
         return buildings;
     }
-
     public ArrayList<AbstractBuilding> getUncompletedBuildings() {
         return uncompletedBuildings;
     }
-
     public ArrayList<AbstractMiracle> getActiveMiracles() {
         return activeMiracles;
     }
@@ -458,12 +451,6 @@ public class Village extends AbstractNode {
     }
     public ArrayList<AbstractPlague> getOngoingPlagues() {
         return ongoingPlagues;
-    }
-    public ArrayList<AbstractRaid> getOngoingOpponentRaids() {
-        return ongoingOpponentRaids;
-    }
-    public ArrayList<AbstractRaid> getOngoingFriendlyRaids() {
-        return ongoingFriendlyRaids;
     }
 
     // Increment Variables

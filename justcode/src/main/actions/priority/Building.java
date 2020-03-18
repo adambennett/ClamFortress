@@ -3,6 +3,7 @@ package main.actions.priority;
 import main.actions.*;
 import main.enums.*;
 import main.models.*;
+import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.buildings.abstracts.*;
 import main.models.managers.*;
@@ -21,7 +22,7 @@ public class Building extends AbstractGameAction {
     public void update() {
         if (this.newBuilding.canBuild()) {
             int inc = this.popCapInc;
-            for (AbstractArtifact art : Game.getVillage().getInventory().getArtifacts()) {
+            for (AbstractItem art : Game.getVillage().getInventory().getItems()) {
                 inc += art.modifyPopCapIncreases();
             }
             Game.getVillage().incPopCap(inc);

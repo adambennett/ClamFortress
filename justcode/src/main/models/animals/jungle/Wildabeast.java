@@ -1,6 +1,6 @@
 package main.models.animals.jungle;
 
-public class Wildabeast extends JungleAnimal {
+public class Wildabeast extends AbstractJungleAnimal {
 
     public Wildabeast() {
         super(260);

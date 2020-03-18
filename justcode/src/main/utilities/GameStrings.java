@@ -227,7 +227,7 @@ public class GameStrings {
                         "***                 Stone :: " + stone +
                         "***                 Coins :: " + coins +
                         "***                 Faith :: " + faith +
-                        "***                  Mana :: " + mana +
+                        "***                 Magic :: " + mana +
                         "***                Hunger :: " + hunger +
                         "***                Famine :: " + famine +
                         "***---------------------------------------------------------***\n" +
@@ -377,7 +377,7 @@ public class GameStrings {
         Village v = Game.getVillage();
         rsrcMap.put("Population", "" + v.getPopulation() + " / " + v.getPopCap());
         rsrcMap.put("Buildings", "" + v.getBuildings().size() + " / " + v.getBuildingLimit());
-        rsrcMap.put("Total Village HP", "" + v.getTotalHP());
+        rsrcMap.put("Total Village HP", "" + v.getHealth());
         rsrcMap.put("Attack", "" + v.getAttackPower());
         rsrcMap.put("Defense", "" + v.getDefense());
         rsrcMap.put("Agility", "" + v.getAgility());

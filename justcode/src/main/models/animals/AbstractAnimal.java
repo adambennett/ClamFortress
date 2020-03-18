@@ -1,10 +1,10 @@
 package main.models.animals;
 
-public abstract class Animal implements Cloneable {
+public abstract class AbstractAnimal implements Cloneable {
 
     private Integer amountOfFoodOnHunt;
 
-    public Animal(int amt) {
+    public AbstractAnimal(int amt) {
         this.amountOfFoodOnHunt = amt;
     }
 
@@ -17,6 +17,6 @@ public abstract class Animal implements Cloneable {
     }
 
     @Override
-    public abstract Animal clone();
+    public abstract AbstractAnimal clone();
 
 }

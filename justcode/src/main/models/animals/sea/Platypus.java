@@ -1,6 +1,6 @@
 package main.models.animals.sea;
 
-public class Platypus extends SeaAnimal {
+public class Platypus extends AbstractSeaAnimal {
 
     public Platypus(){
         super(20);

@@ -9,16 +9,14 @@ import main.utilities.persistence.*;
 public class EndTurnReport extends AbstractGameAction {
 
     private Integer dateInc;
-    private Integer actions;
 
-    public EndTurnReport(int dateInc, int actions) {
+    public EndTurnReport(int dateInc) {
         this.dateInc = dateInc;
-        this.actions = actions;
     }
 
     @Override
     public void update() {
-        String toPrint = "\n\nActions Ran: " + this.actions + "\nGlobal Score: " + Database.getPlayerScore() + "\nTime Elapsed: " + dateInc + " Days";
+        String toPrint = "\nGlobal Score: " + Database.getPlayerScore() + "\nTime Elapsed: " + dateInc + " Days";
         OutputManager.addToBot(toPrint, OutputFlag.TIME_ELAPSED);
         OutputManager.print();
         this.isDone = true;
@@ -26,6 +24,6 @@ public class EndTurnReport extends AbstractGameAction {
 
     @Override
     public EndTurnReport clone() {
-        return new EndTurnReport(this.dateInc, this.actions);
+        return new EndTurnReport(this.dateInc);
     }
 }

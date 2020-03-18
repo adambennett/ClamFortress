@@ -111,9 +111,21 @@ public class Board extends GameObject {
                     OutputManager.addToTop("Found a " + space.getItem().getName() + " on a newly discovered space!");
                 }
             }
+            addResources(space.getResources());
+            addAnimals(space.getAnimals());
             return true;
         }
         return false;
+    }
+
+    private void addAnimals(Map<AbstractAnimal, Integer> animals) {
+        for (Map.Entry<AbstractAnimal, Integer> entry : animals.entrySet()) {
+            if (animals.containsKey(entry.getKey())) {
+                animals.put(entry.getKey(), entry.getValue() + animals.get(entry.getKey()));
+            } else {
+                animals.put(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     public void addAnimals(AbstractAnimal animal, int amt) {

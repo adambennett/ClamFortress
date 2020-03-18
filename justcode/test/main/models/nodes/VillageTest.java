@@ -221,6 +221,7 @@ public class VillageTest {
 
     @Test
     public void incFaith() {
+        village.setFaithLimit(999);
         village.setFaith(100);
         village.incFaith();
 
@@ -232,6 +233,7 @@ public class VillageTest {
 
     @Test
     public void testIncFaith() {
+        village.setFaithLimit(999);
         village.setFaith(100);
         village.incFaith(55);
 

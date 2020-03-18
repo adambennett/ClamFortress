@@ -4,8 +4,10 @@ package main.utilities;
 import main.models.Game;
 import main.models.items.*;
 import main.models.items.artifacts.*;
+import main.models.managers.*;
 import main.models.nodes.*;
 import main.models.people.*;
+import main.models.resources.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -176,6 +178,26 @@ public class GameStrings {
         return finalString;
     }
 
+    public static String newNewMenu(String leftAlignFormat, String headerFormat, String breakLine, String header, ArrayList<LinkedHashMap<String, ArrayList<String>>> commandToLabelMapList) {
+        String finalString = "";
+        finalString += breakLine;
+        finalString += String.format(headerFormat, header);
+        finalString += breakLine;
+        for (LinkedHashMap<String, ArrayList<String>> map : commandToLabelMapList) {
+            for (Map.Entry<String, ArrayList<String>> entry : map.entrySet()) {
+                int size = entry.getValue().size() + 1;
+                String[] newArr = new String[size];
+                newArr[0] = entry.getKey();
+                for (int i = 0; i < newArr.length - 1; i++) {
+                    newArr[i+1] = entry.getValue().get(i);
+                }
+                finalString += String.format(leftAlignFormat,newArr);
+            }
+            finalString += breakLine;
+        }
+        return finalString;
+    }
+
     public static void loadRaceMenu() {
         String leftAlignFormat = "| %-2s | %-15s |\n";
         String headerFormat = "| %-20s |\n";
@@ -184,78 +206,83 @@ public class GameStrings {
         chooseRace = newMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
     }
 
-    public static void loadTurnMenu() {
-        String leftAlignFormat = "| %-35s | %-30s |\n";
-        String headerFormat = "| %-65s |\n";
-        String breakLine = "+----+-----------------+\n";
-        String header = "STANDBY PHASE";
-        chooseRace = newMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
+    public static LinkedHashMap<String, String> getTurns() {
+        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        a.put("Turn Number", "" + Game.getGameManager().getTurnNumber());
+        a.put("Population", "" + Game.getVillage().getPopulation() + " / " + Game.getVillage().getPopCap());
+        a.put("Buildings", "" + Game.getVillage().getBuildings().size() + " / " + Game.getVillage().getBuildingLimit());
+        a.put("Coins", "" + Game.getVillage().getCoins());
+        a.put("Food", "" + Game.getVillage().getFood());
+        a.put("Hunger", "" + Game.getVillage().getHunger());
+        a.put("Resources", "" + Game.getVillage().getResources().size());
+        a.put("Village HP", "" + Game.getVillage().getHealth());
+        return a;
+    }
 
-
-        String endString = "***";
-        String lenCheck = "************************************************************";
-        String otherlen = "*******************************";
-        String mana = "" + main.models.Game.getVillage().getMagic();
-        String faith = "" + Game.getVillage().getFaith();
-        String coins = "" + Game.getVillage().getCoins();
-        String stone = "" + Game.getVillage().getStone();
-        String wood = "" + Game.getVillage().getWood();
-        String hunger = "" + Game.getVillage().getHunger();
-        String famine = "" + Game.getVillage().getFamine();
-        String population = "" + Game.getVillage().getPopulation() + " / " + Game.getVillage().getPopCap();
-        String turnNumber = "" + Game.getGameManager().getTurnNumber();
-        String date = "***  " + Game.getGameManager().getDateString() + " :: ";
-        String season = Game.getGameManager().getSeason();
-        String fullDate = date + season;
-        String surroundings = "***                1 | View Board                           ***\n";
-        if (!Game.getSurroundingCheckEnabled()) {
-            surroundings =          "***                1 | [DISABLED]                           ***\n";
+    public static LinkedHashMap<String, String> getTurnCommands() {
+        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+        a.put("2", "Stats");
+        if (Game.getVillage().getInventory().getItems().size() > 0) {
+            a.put("3", "Inventory");
+        } else {
+            a.put("3", "[No Items]");
         }
-        mana = format(mana, otherlen, endString);
-        coins = format(coins, otherlen, endString);
-        stone = format(stone, otherlen, endString);
-        wood = format(wood, otherlen, endString);
-        population = format(population, otherlen, endString);
-        turnNumber = format(turnNumber, otherlen, endString);
-        fullDate = format(fullDate, lenCheck, endString);
-        faith = format(faith, otherlen, endString);
-        hunger = format(hunger, otherlen, endString);
-        famine = format(famine, otherlen, endString);
-        turnMenu =
-                        "***************************************************************\n" +
-                        "***                      STANDBY PHASE                      ***\n" +
-                        "***************************************************************\n" +
-                        fullDate +
-                        "***           Turn Number :: " + turnNumber +
-                        "***            Population :: " + population +
-                        "***                  Wood :: " + wood +
-                        "***                 Stone :: " + stone +
-                        "***                 Coins :: " + coins +
-                        "***                 Faith :: " + faith +
-                        "***                 Magic :: " + mana +
-                        "***                Hunger :: " + hunger +
-                        "***                Famine :: " + famine +
-                        "***---------------------------------------------------------***\n" +
-                        surroundings +
-                        "***                2 | View All Village Stats               ***\n" +
-                        "***                3 | View Inventory                       ***\n" +
-                        "***                4 | View Buildings                       ***\n" +
-                        "***                5 | View Population                      ***\n" +
-                        "***                6 | Fight Plagues                        ***\n" +
-                        "***                7 | Mitigate Disasters                   ***\n" +
-                        "***                8 | Trade with Merchants                 ***\n" +
-                        "***                9 | Miracles                             ***\n" +
-                        "***               10 | Start Raid                           ***\n" +
-                        "***               11 | Interact with Aliens                 ***\n" +
-                        "***               12 | Train (200 Coins)                    ***\n" +
-                        "***---------------------------------------------------------***\n" +
-                        "***                0 | Priorities Phase                     ***\n" +
-                        "***---------------------------------------------------------***\n" +
-                        "***              End | Skip to End Phase                    ***\n" +
-                        "***             Quit | Finish Game                          ***\n" +
-                        "***             Save | Save & Continue                      ***\n" +
-                        "***             Exit | Save & Quit                          ***\n" +
-                        "***************************************************************\n";
+        if (Game.getVillage().getBuildings().size() > 0) {
+            a.put("4", "Buildings");
+        } else {
+            a.put("4", "[No Buildings]");
+        }
+        if (Game.getVillage().getSurvivors().size() > 0) {
+            a.put("5", "Population");
+        } else {
+            a.put("5", "[No Villagers]");
+        }
+        if (Game.getVillage().getVistingMerchants().size() > 0) {
+            a.put("6", "Merchants");
+        } else {
+            a.put("6", "[No Merchants Available]");
+        }
+        if (Game.getVillage().getVistingMerchants().size() > 0) {
+            a.put("6", "Merchants");
+        } else {
+            a.put("6", "[No Merchants Available]");
+        }
+        if (Game.canRaid()) {
+            a.put("7", "Raid a City");
+        } else {
+            a.put("7", "[Raids Unavailable]");
+        }
+        int trainingCost = GameManager.getInstance().getTrainingCost();
+        if (Game.getVillage().getCoins() >= trainingCost) {
+            a.put("8", "Train (" +  trainingCost + " Coins)");
+        } else {
+            a.put("8", "[Not Enough Coins]");
+        }
+        return a;
+    }
+
+    public static void loadTurnMenu() {
+        String leftAlignFormat = "| %28s | %-30s |\n";
+        String headerFormat = "| %-61s |\n";
+        String breakLine = "+------------------------------+--------------------------------+\n";
+        String header = "STANDBY PHASE";
+        LinkedHashMap<String, String> date = new LinkedHashMap<>();
+        LinkedHashMap<String, String> bottom = new LinkedHashMap<>();
+        LinkedHashMap<String, String> megaBottom = new LinkedHashMap<>();
+        date.put(GameManager.getInstance().getDateString(), Game.getGameManager().getSeason());
+        bottom.put("0", "Priorities Phase");
+        megaBottom.put("End", "Skip to End Phase");
+        megaBottom.put("Quit", "Finish Game");
+        megaBottom.put("Save", "Save & Continue");
+        megaBottom.put("Exit", "Save & Quit");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(date);
+        list.add(getTurns());
+        list.add(getTurnCommands());
+        list.add(bottom);
+        list.add(megaBottom);
+        turnMenu = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static void loadPriorityMenu() {
@@ -398,25 +425,20 @@ public class GameStrings {
         rsrcMap.put("Average Intellect", "" + v.getIntelligenceAvg());
         rsrcMap.put("Average Magic", "" + v.getMagicAvg());
         rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
-        rsrcMap.put("Art", "" + v.getArt());
-        rsrcMap.put("Brick", "" + v.getBrick());
-        rsrcMap.put("Clay", "" + v.getClay());
         rsrcMap.put("Coins", "" + v.getCoins());
-        rsrcMap.put("Copper Ore", "" + v.getCopperOre());
-        rsrcMap.put("Faith", "" + v.getFaith());
-        rsrcMap.put("Flowers", "" + v.getFlowers());
         rsrcMap.put("Food", "" + v.getFood());
-        rsrcMap.put("Glass", "" + v.getGlass());
-        rsrcMap.put("Gold Ore", "" + v.getGoldOre());
-        rsrcMap.put("Iron Ore", "" + v.getIronOre());
-        rsrcMap.put("Jewelery", "" + v.getJewelery());
-        rsrcMap.put("Lumber", "" + v.getLumber());
-        rsrcMap.put("Rock", "" + v.getRock());
-        rsrcMap.put("Sand", "" + v.getSand());
-        rsrcMap.put("Seeds", "" + v.getSeeds());
-        rsrcMap.put("Spacegoo", "" + v.getSpacegoo());
-        rsrcMap.put("Stone", "" + v.getStone());
-        rsrcMap.put("Wood", "" + v.getWood());
+        rsrcMap.put("Faith", "" + v.getFaith());
+        Map<String, Integer> occ = new HashMap<>();
+        for (AbstractResource resource : v.getResources()) {
+           if (occ.containsKey(resource.getName())) {
+               occ.put(resource.getName(), occ.get(resource.getName()) + 1);
+           } else {
+               occ.put(resource.getName(), 1);
+           }
+        }
+        for (Map.Entry<String, Integer> entry : occ.entrySet()) {
+            rsrcMap.put(entry.getKey(), ""+entry.getValue());
+        }
         return rsrcMap;
     }
 
@@ -435,15 +457,36 @@ public class GameStrings {
         }
         return a;
     }
-
-    public static LinkedHashMap<String, String> getVillagers() {
-        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+    public static LinkedHashMap<String, ArrayList<String>> getVillagers() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
         for (Survivor s : v.getSurvivors()) {
-            a.put(s.getName(), GameStrings.capFirstLetter(s.getRace().toString().toLowerCase()));
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("" + s.getAge());
+            tempCols.add("" + s.getHealthPoints());
+            tempCols.add("" + s.getStrength());
+            tempCols.add("" + s.getDexterity());
+            tempCols.add("" + s.getIntelligence());
+            tempCols.add("" + s.getAgility());
+            tempCols.add("" + s.getMagic());
+            tempCols.add("" + s.getEngineering());
+            tempCols.add(GameStrings.capFirstLetter(s.getRace().toString().toLowerCase()));
+            tempCols.add(GameStrings.capFirstLetter(s.getGender().toString().toLowerCase()));
+            a.put(s.getName(), tempCols);
         }
         if (a.size() < 1) {
-            a.put(" ", " ");
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
         }
         return a;
     }
@@ -479,19 +522,31 @@ public class GameStrings {
     }
 
     public static void loadVillagers() {
-        String leftAlignFormat = "| %-25s | %-25s |\n";
-        String headerFormat = "| %-53s |\n";
-        String breakLine = "+---------------------------+---------------------------+\n";
+        String leftAlignFormat = "| %-52s | %-8s | %-8s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
+        String headerFormat = "| %-142s |\n";
+        String breakLine = "+------------------------------------------------------+----------+----------+------+------+------+------+------+------+------------+------------+\n";
         String header = "Population";
-        Map<String, String> top = new HashMap<>();
-        Map<String, String> bottom = new HashMap<>();
-        top.put("Villager Name", "Race");
-        bottom.put("0", "Return to Standby Menu");
-        ArrayList<Map<String, String>> list = new ArrayList<>();
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("AGE"); botCols.add("Return");
+        topCols.add("HP"); botCols.add("");
+        topCols.add("STR"); botCols.add("");
+        topCols.add("DEX"); botCols.add("");
+        topCols.add("INT"); botCols.add("");
+        topCols.add("AGI"); botCols.add("");
+        topCols.add("MAG"); botCols.add("");
+        topCols.add("ENG"); botCols.add("");
+        topCols.add("RACE"); botCols.add("");
+        topCols.add("GENDER"); botCols.add("");
+        top.put("NAME", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
         list.add(top);
         list.add(getVillagers());
         list.add(bottom);
-        vil = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+        vil = newNewMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static String getStringFromPromptType(main.enums.PromptMessage msg) {
@@ -894,8 +949,6 @@ public class GameStrings {
         names.add("King of the First Men");
         names.add("King of the Andals");
         names.add("COVID-19 Carrier");
-        names.add("Guy Who Sneezes A Lot (too much)");
-        names.add("Guy Who Sneezes A Lot (just enough)");
         names.add("Greasy Guy");
         names.add("Guy Who Says Moist");
         names.add("Racist Guy");
@@ -948,8 +1001,6 @@ public class GameStrings {
         names.add("Olivia Wilde");
         names.add("Ashton Kutcher");
         names.add("Shia LaBeouf");
-        names.add("Adam Codeborn of the House Bennett, First of His Name, the Unbroken, King of the Sandals and the First Coders, Hacker of the Great Concrete Sea, Breaker of Conventions, and Master of Terminals");
-        names.add("Daenerys Stormborn of the House Targaryen, First of Her Name, the Unburnt, Queen of the Andals and the First Men, Khaleesi of the Great Grass Sea, Breaker of Chains, and Mother of Dragons");
         if (includePokemon) {
             names.add("Bulbasaur");
             names.add("Ivysaur");

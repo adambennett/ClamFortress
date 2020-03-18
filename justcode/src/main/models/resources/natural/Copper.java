@@ -8,6 +8,7 @@ public class Copper extends NaturalResource implements ResourceCost {
 
 
     public Copper(){
+        super("Copper");
         this.refined = new CopperIngot();
     }
 

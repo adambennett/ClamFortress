@@ -4,4 +4,7 @@ import main.interfaces.*;
 import main.models.resources.*;
 
 public class Art extends RefinedResource implements ResourceCost {
+    public Art() {
+        super("Art");
+    }
 }

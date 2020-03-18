@@ -9,6 +9,7 @@ public class Clay extends NaturalResource implements ResourceCost {
 
 
     public Clay(){
+        super("Clay");
         this.refined = new Brick();
     }
 

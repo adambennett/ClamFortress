@@ -1,18 +1,19 @@
 package main.models.resources.natural;
 
 import main.models.resources.NaturalResource;
-import main.models.resources.refined.Jewelry;
+import main.models.resources.refined.Jewelery;
 
 public class Gems extends NaturalResource {
 
 
     public Gems(){
-        this.refined = new Jewelry();
+        super("Gems");
+        this.refined = new Jewelery();
     }
 
     @Override
-    public Jewelry getRefined() {
-        return (Jewelry) this.refined;
+    public Jewelery getRefined() {
+        return (Jewelery) this.refined;
     }
 }
 

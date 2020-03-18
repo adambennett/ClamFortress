@@ -9,6 +9,7 @@ public class Sand extends NaturalResource implements ResourceCost {
 
 
     public Sand(){
+        super("Sand");
         this.refined = new Glass();
     }
 

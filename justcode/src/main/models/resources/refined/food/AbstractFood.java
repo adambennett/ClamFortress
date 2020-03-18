@@ -1,10 +1,13 @@
 package main.models.resources.refined.food;
 
-public abstract class AbstractFood {
+import main.models.resources.*;
+
+public abstract class AbstractFood extends AbstractResource {
 
     private Integer healing;
 
-    public AbstractFood(Integer healing) {
+    public AbstractFood(Integer healing, String name) {
+        super(name);
         this.healing = healing;
     }
 

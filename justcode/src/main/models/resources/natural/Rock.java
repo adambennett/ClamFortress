@@ -7,6 +7,7 @@ import main.models.resources.refined.Stone;
 public class Rock extends NaturalResource implements ResourceCost {
 
     public Rock(){
+        super("Rock");
         this.refined = new Stone();
     }
 

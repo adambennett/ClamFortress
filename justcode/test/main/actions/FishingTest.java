@@ -10,20 +10,22 @@ import org.junit.Test;
 
 public class FishingTest {
 
-    Fishing fishing;
+    private static Fishing fishing;
+
     @Before
     public void setup() {
         fishing = new Fishing();
+
     }
 
     @Test
     public void fishingTestWithoutRod(){
         Game.startGame();
-
+        Game.getVillage().setFoodLimit(999);
         Game.getGameBoard().addAnimals( new Penguin(),11);
 
         Game.getVillage().setFood(0);
-
+        Game.getVillage().setFoodLimit(999);
 
 
         fishing.update();
@@ -39,6 +41,7 @@ public class FishingTest {
 
         PodsRod rod = new PodsRod();
         Game.startGame();
+        Game.getVillage().setFoodLimit(999);
         Game.getVillage().getInventory().addItem(rod);
         Game.getGameBoard().addAnimals( new Penguin(),11);
 

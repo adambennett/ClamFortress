@@ -8,6 +8,7 @@ import main.models.resources.refined.Lumber;
 public class Wood extends NaturalResource implements ResourceCost {
 
     public Wood(){
+        super("Wood");
         this.refined = new Lumber();
     }
 

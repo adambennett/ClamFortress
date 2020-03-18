@@ -8,6 +8,7 @@ public class Iron extends NaturalResource implements ResourceCost {
 
 
     public Iron(){
+        super("Iron");
         this.refined = new IronIngot();
     }
 

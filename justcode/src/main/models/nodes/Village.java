@@ -3,10 +3,13 @@ package main.models.nodes;
 import main.encounters.*;
 import main.encounters.bandits.*;
 import main.encounters.disasters.*;
+import main.encounters.merchant.*;
 import main.encounters.miracles.*;
 import main.encounters.plagues.*;
 import main.encounters.raids.*;
+import main.enums.*;
 import main.models.items.*;
+import main.models.managers.*;
 import main.models.nodes.biomes.*;
 import main.models.*;
 import main.models.items.artifacts.*;
@@ -25,6 +28,8 @@ public class Village extends AbstractNode {
     // Limits
     private Integer popCap =            5;
     private Integer buildingLimit =     5;
+    private Integer foodLimit =         10;
+    private Integer resourceLimit =     250;
 
     // Combat
     private Integer defence =           0;
@@ -53,24 +58,8 @@ public class Village extends AbstractNode {
     private Double engineeringAvg =     0.0;
 
     // Resources
-    private Integer wood =              100;
-    private Integer art =               0;
-    private Integer brick =             0;
-    private Integer clay =              0;
     private Integer coins =             0;
-    private Integer copperOre =         0;
     private Integer faith =             0;
-    private Integer flowers =           0;
-    private Integer glass =             0;
-    private Integer goldOre =           0;
-    private Integer ironOre =           0;
-    private Integer jewelery =          0;
-    private Integer lumber =            0;
-    private Integer rock =              0;
-    private Integer sand =              0;
-    private Integer seeds =             0;
-    private Integer spacegoo =          0;
-    private Integer stone =             0;
 
     // Lists
     private ArrayList<AbstractResource> resources = new ArrayList<>();
@@ -79,6 +68,7 @@ public class Village extends AbstractNode {
     private ArrayList<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
     private ArrayList<AbstractMiracle>  activeMiracles = new ArrayList<>();
     private ArrayList<AbstractDisaster> ongoingDisasters = new ArrayList<>();
+    private ArrayList<AbstractMerchant> vistingMerchants = new ArrayList<>();
     private ArrayList<AbstractPlague>   ongoingPlagues = new ArrayList<>();
     private ArrayList<AbstractRaid>     ongoingOpponentRaids = new ArrayList<>();
     private ArrayList<AbstractRaid>     ongoingFriendlyRaids = new ArrayList<>();
@@ -86,7 +76,7 @@ public class Village extends AbstractNode {
 
     public Village(AbstractBiome biome) {
         super(0, 0, biome);
-        this.inventory = new Inventory();
+        this.inventory = new Inventory(3);
     }
 
     public Boolean canRunEncounter(AbstractEncounter encounter) {
@@ -130,58 +120,6 @@ public class Village extends AbstractNode {
             }
         }
         return sum >= amt;
-    }
-
-    public void updateResources() {
-        this.resources.clear();
-        for (int i = 0; i < wood; i++) {
-            this.resources.add(new Wood());
-        }
-        for (int i = 0; i < art; i++) {
-            this.resources.add(new Art());
-        }
-        for (int i = 0; i < brick; i++) {
-            this.resources.add(new Brick());
-        }
-        for (int i = 0; i < clay; i++) {
-            this.resources.add(new Clay());
-        }
-        for (int i = 0; i < copperOre; i++) {
-            this.resources.add(new Copper());
-        }
-        for (int i = 0; i < flowers; i++) {
-            this.resources.add(new Flowers());
-        }
-        for (int i = 0; i < glass; i++) {
-            this.resources.add(new Glass());
-        }
-        for (int i = 0; i < goldOre; i++) {
-            this.resources.add(new Gold());
-        }
-        for (int i = 0; i < ironOre; i++) {
-            this.resources.add(new Iron());
-        }
-        for (int i = 0; i < jewelery; i++) {
-            this.resources.add(new Jewelry());
-        }
-        for (int i = 0; i < lumber; i++) {
-            this.resources.add(new Lumber());
-        }
-        for (int i = 0; i < rock; i++) {
-            this.resources.add(new Rock());
-        }
-        for (int i = 0; i < sand; i++) {
-            this.resources.add(new Sand());
-        }
-        for (int i = 0; i < seeds; i++) {
-            this.resources.add(new Seeds());
-        }
-        for (int i = 0; i < spacegoo; i++) {
-            this.resources.add(new Spacegoo());
-        }
-        for (int i = 0; i < stone; i++) {
-            this.resources.add(new Stone());
-        }
     }
 
     public void updateAverageStats() {
@@ -257,6 +195,25 @@ public class Village extends AbstractNode {
         return false;
     }
 
+    public void addResource(AbstractResource resource, int amt) {
+        for (int i = 0; i < amt; i++) {
+            if (this.resources.size() < this.resourceLimit) {
+                this.resources.add(resource);
+            } else {
+                OutputManager.addToBot("Not enough room to accumulate more resources! Build some storehouses.", OutputFlag.RESOURCES_FULL);
+            }
+        }
+    }
+
+
+    public void addResource(AbstractResource resource) {
+        addResource(resource, 1);
+    }
+
+    public void addMerchant(AbstractMerchant merchant) {
+        this.vistingMerchants.add(merchant);
+    }
+
     public void addMiracle(AbstractMiracle m) {
         if (this.canRunEncounter(m)) {
             this.activeMiracles.add(m);
@@ -296,60 +253,14 @@ public class Village extends AbstractNode {
     public void setBuildingLimit(Integer buildingLimit) {
         this.buildingLimit = buildingLimit;
     }
-    public void setClay(Integer clay) {
-        this.clay = clay;
-    }
-    public void setRock(Integer rock) { this.rock = rock; }
-    public void setSpacegoo(Integer spacegoo) {
-        this.spacegoo = spacegoo;
-    }
-    public void setIronOre(Integer iron) {
-        this.ironOre = iron;
-    }
-    public void setCopperOre(Integer copperOre) {
-        this.copperOre = copperOre;
-    }
-    public void setGoldOre(Integer goldOre) {
-        this.goldOre = goldOre;
-    }
     public void setCoins(Integer coins){
      this.coins=coins;
-    }
-    public void setSand(Integer sand) {
-        this.sand = sand;
-    }
-    public void setFlowers(Integer flowers) {
-        this.flowers = flowers;
-    }
-    public void setSeeds(Integer seeds) {
-        this.seeds = seeds;
-    }
-    public void setBrick(Integer brick) {
-        this.brick = brick;
-    }
-    public void setLumber(Integer lumber) {
-        this.lumber = lumber;
-    }
-    public void setGlass(Integer glass) {
-        this.glass = glass;
-    }
-    public void setArt(Integer art) {
-        this.art = art;
-    }
-    public void setJewelery(Integer jewelery) {
-        this.jewelery = jewelery;
     }
     public void setDefence(Integer defence){
         this.defence = defence;
     }
     public void setAttackPower(Integer attackPower){
         this.attackPower = attackPower;
-    }
-    public void setStone(Integer stone) {
-        this.stone = stone;
-    }
-    public void setWood(Integer wood) {
-        this.wood = wood;
     }
     public void setFaith(Integer faith){
         this.faith = faith;
@@ -395,48 +306,6 @@ public class Village extends AbstractNode {
     public Integer getHealth() {
         return health;
     }
-    public Integer getClay() {
-        return clay;
-    }
-    public Integer getRock() {
-        return rock;
-    }
-    public Integer getSpacegoo() {
-        return spacegoo;
-    }
-    public Integer getIronOre() {
-        return ironOre;
-    }
-    public Integer getCopperOre() {
-        return copperOre;
-    }
-    public Integer getGoldOre() {
-        return goldOre;
-    }
-    public Integer getSand() {
-        return sand;
-    }
-    public Integer getFlowers() {
-        return flowers;
-    }
-    public Integer getSeeds() {
-        return seeds;
-    }
-    public Integer getBrick() {
-        return brick;
-    }
-    public Integer getLumber() {
-        return lumber;
-    }
-    public Integer getGlass() {
-        return glass;
-    }
-    public Integer getArt() {
-        return art;
-    }
-    public Integer getJewelery() {
-        return jewelery;
-    }
     public Integer getFood() {
         return food;
     }
@@ -459,6 +328,14 @@ public class Village extends AbstractNode {
         return engineeringAvg;
     }
 
+    public Integer getFoodLimit() {
+        return foodLimit;
+    }
+
+    public Integer getResourceLimit() {
+        return resourceLimit;
+    }
+
     public Integer getDefense(){
         int atk = this.defence;
         for (AbstractItem a : inventory.getItems()) {
@@ -472,12 +349,6 @@ public class Village extends AbstractNode {
             atk += a.modifyAtk();
         }
         return atk;
-    }
-    public Integer getWood() {
-        return this.wood;
-    }
-    public Integer getStone() {
-        return this.stone;
     }
     public Integer getCoins() {
         return this.coins;
@@ -501,7 +372,6 @@ public class Village extends AbstractNode {
         return inventory;
     }
     public ArrayList<AbstractResource> getResources() {
-        updateResources();
         return resources;
     }
     public ArrayList<Survivor> getSurvivors() {
@@ -522,67 +392,84 @@ public class Village extends AbstractNode {
     public ArrayList<AbstractPlague> getOngoingPlagues() {
         return ongoingPlagues;
     }
+    public ArrayList<AbstractMerchant> getVistingMerchants() {
+        return vistingMerchants;
+    }
 
-    // Increment Variables
+
+    public void setFoodLimit(Integer foodLimit) {
+        this.foodLimit = foodLimit;
+    }
+
+    public void setResourceLimit(Integer resourceLimit) {
+        this.resourceLimit = resourceLimit;
+    }
+
     public void incDefense(Integer incAmount){
         this.defence += incAmount;
     }
+
     public void incAttack(Integer incAmount){
         this.attackPower+=incAmount;
     }
-    public void incWood() {
-        incWood(1);
+
+    public void incFood(int amt){
+        this.food += amt;
+        if (this.food > this.foodLimit) {
+            this.food = this.foodLimit;
+        }
     }
-    public void incWood(int amt) {
-        this.wood +=amt;
-    }
-    public void incFood(int amt){this.food += amt;}
-    public void incRock(int amt){this.rock += amt;}
-    public void incStone() {
-        incStone(1);
-    }
-    public void incStone(int amt) {
-        this.stone += amt;
-    }
+
     public void incFaith() {
         incFaith(1);
     }
+
     public void incFaith(int amt) {
         this.faith += amt;
     }
+
     public void incMagic() {
         incMagic(1);
     }
+
     public void incMagic(int amt) {
         this.magic += amt;
     }
-    public void incCoins() { incCoins(1); }
+
+    public void incCoins() {
+        incCoins(1);
+    }
+
     public void incCoins(int amt) {
         this.coins += amt;
     }
+
     public void incPopCap() {
         incPopCap(1);
     }
+
     public void incPopCap(int amt) {
         this.popCap += amt;
     }
 
-    // Decrement Variables
     public void subPopCap(int amt) {
         this.popCap -= amt;
         if(this.popCap <0){
             this.popCap = 0;
         }
     }
+
     public void subCoins(int amt) {
         this.coins -= amt;
         if(this.coins <0){
             this.coins = 0;
         }
     }
+
     public void removeSurvivor(Survivor s) {
         this.population.remove(s);
     }
+
     public void subMagic(int amt) {
         this.magic -= amt;
         if(this.magic < 0){
@@ -595,19 +482,6 @@ public class Village extends AbstractNode {
             this.faith = 0;
         }
     }
-    public void subStone(int amt) {
-        this.stone -= amt;
-        if(this.stone < 0){
-            this.stone = 0;
-        }
-    }
-    public void subWood(int amt) {
-        this.wood -= amt;
-        if(this.wood < 0){
-            this.wood = 0;
-        }
-    }
-
 
     @Override
     public String toString() {

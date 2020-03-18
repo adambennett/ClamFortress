@@ -68,6 +68,7 @@ public class Game {
         gameBoard = new Board(startingBiome, 50, 50);
         int startingSurvivors = ThreadLocalRandom.current().nextInt(0, 5);
         new NewSurvivors().addToVillage(startingSurvivors);
+        getVillage().addResource(new Wood(), 100);
         updateDifficultyBools();
         isLoaded = true;
     }
@@ -83,6 +84,7 @@ public class Game {
         gameBoard = new Board(startingBiome, 50, 50);
         int startingSurvivors = ThreadLocalRandom.current().nextInt(0, 5);
         new NewSurvivors().addToVillage(startingSurvivors);
+        getVillage().addResource(new Wood(), 100);
         toughEnemies = customDifficultyMods.contains(1);
         slowResourceGain = customDifficultyMods.contains(2);
         frequentBadEvents = customDifficultyMods.contains(3);
@@ -99,6 +101,10 @@ public class Game {
         faithEnabled = !customDifficultyMods.contains(14);
         surroundingCheckEnabled = !customDifficultyMods.contains(15);
         isLoaded = true;
+    }
+
+    public static Boolean canRaid() {
+        return false;
     }
 
     public static ArrayList<Flowers> generateRandomFlowers(AbstractBiome biome) {

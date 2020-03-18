@@ -4,4 +4,7 @@ import main.interfaces.*;
 import main.models.resources.*;
 
 public class Spacegoo extends NaturalResource implements ResourceCost {
+    public Spacegoo() {
+        super("Spacegoo");
+    }
 }

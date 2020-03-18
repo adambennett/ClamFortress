@@ -1,5 +1,6 @@
 package main.models;
 
+import main.enums.*;
 import main.interfaces.*;
 import main.models.items.*;
 import main.models.items.artifacts.AbstractArtifact;
@@ -11,23 +12,29 @@ import java.util.*;
 public class Inventory {
 
     private ArrayList<AbstractItem> items;
+    private Integer size;
 
-    public Inventory() {
-        items = new ArrayList<>();
+    public Inventory(int size) {
+        this.items = new ArrayList<>();
+        this.size = size;
     }
 
     public void addItem(AbstractItem item){
-        if (!(item instanceof Unique && items.contains(item))) {
-            items.add(item);
-            if (item instanceof Golden) {
-                Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) item).getGoldAmt());
-                OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden object!");
-            }
+        if (this.items.size() < this.size) {
+            if (!(item instanceof Unique && items.contains(item))) {
+                items.add(item);
+                if (item instanceof Golden) {
+                    Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) item).getGoldAmt());
+                    OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden object!");
+                }
 
-            if (item instanceof Cursed) {
-                ((Cursed) item).runCurse();
-                OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item!");
+                if (item instanceof Cursed) {
+                    ((Cursed) item).runCurse();
+                    OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item!");
+                }
             }
+        } else {
+            OutputManager.addToBot("Your inventory is full!", OutputFlag.INVENTORY_FULL);
         }
     }
 
@@ -71,6 +78,13 @@ public class Inventory {
             }
         }
         return arts;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+        if (this.size < 1) {
+            this.size = 1;
+        }
     }
 
     @Override

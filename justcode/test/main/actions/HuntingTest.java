@@ -12,10 +12,12 @@ public class HuntingTest { ;
     @Before
     public void setup() {
         hunting = new Hunting();
+
     }
     @Test
     public void huntingTest(){
         Game.startGame();
+        Game.getVillage().setFoodLimit(999);
         Game.getGameBoard().addAnimals(new BlackBear(), 10);
         hunting.update();
         Integer actual = Game.getVillage().getFood();

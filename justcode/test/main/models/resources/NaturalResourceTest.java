@@ -41,7 +41,7 @@ public class NaturalResourceTest {
     @Test
     public void getRefinedGem(){
         Gems gems = new Gems();
-        Jewelry actual = gems.getRefined();
+        Jewelery actual = gems.getRefined();
 
         Assert.assertNotNull(actual);
     }

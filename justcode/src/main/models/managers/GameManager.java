@@ -7,13 +7,7 @@ import java.util.concurrent.*;
 public class GameManager {
 
     private BigInteger turnNumber;
-    private Integer wood;
-    private Integer stone;
-    private Integer coins;
-    private Integer faith;
-    private Integer mana;
-    private Integer population;
-    private Integer popCap;
+    private Integer trainingCost;
     private Date date;
     private String season;
     private static final GameManager instance;
@@ -29,8 +23,16 @@ public class GameManager {
 
     private GameManager() {
         this.turnNumber = BigInteger.valueOf(1);
+        this.trainingCost = 200;
         this.date = new Date();
         updateSeason();
+    }
+
+    public void setTrainingCost(int newCost) {
+        this.trainingCost = newCost;
+        if (this.trainingCost < 0) {
+            this.trainingCost = 0;
+        }
     }
 
     public static GameManager getInstance() {
@@ -40,6 +42,7 @@ public class GameManager {
     public static void reset() {
         instance.turnNumber = BigInteger.valueOf(1);
         instance.date = new Date();
+        instance.trainingCost = 200;
         instance.updateSeason();
     }
 
@@ -107,5 +110,9 @@ public class GameManager {
     public String getSeason() {
         updateSeason();
         return season;
+    }
+
+    public Integer getTrainingCost() {
+        return this.trainingCost;
     }
 }

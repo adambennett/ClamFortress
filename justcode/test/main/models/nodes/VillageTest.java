@@ -33,95 +33,31 @@ public class VillageTest {
     public void gettersAndSettersTest() {
         Integer expectedYPos =          1;
         Integer expectedXPos =          1;
-        Integer expectedArt =           10;
         Integer expectedAtkPower =      20;
-        Integer expectedBrick =         25;
-        Integer expectedCopperOre =     30;
         Integer expectedBuildingLim =   15;
         Integer expectedDefence =       60;
-        Integer expectedFlowers =       500;
-        Integer expectedGlass =         120;
-        Integer expectedGoldOre =       505;
         Integer expectedHunger =        50;
-        Integer expectedIron =          67;
-        Integer expectedJewelery =      44;
-        Integer expectedLumber =        32;
-        Integer expectedRock =          97;
-        Integer expectedSand =          85;
-        Integer expectedSeeds =         945;
-        Integer expectedGoo =           444;
-        Integer expectedStone =         345;
-        Integer expectedWood =          233;
-        Integer expectedClay =          9078;
 
         village.setyPos(expectedYPos);
         village.setxPos(expectedXPos);
-        village.setArt(expectedArt);
         village.setAttackPower(expectedAtkPower);
-        village.setBrick(expectedBrick);
-        village.setCopperOre(expectedCopperOre);
         village.setBuildingLimit(expectedBuildingLim);
         village.setDefence(expectedDefence);
-        village.setFlowers(expectedFlowers);
-        village.setGlass(expectedGlass);
-        village.setGoldOre(expectedGoldOre);
         village.setHunger(expectedHunger);
-        village.setIronOre(expectedIron);
-        village.setJewelery(expectedJewelery);
-        village.setLumber(expectedLumber);
-        village.setRock(expectedRock);
-        village.setSand(expectedSand);
-        village.setSeeds(expectedSeeds);
-        village.setSpacegoo(expectedGoo);
-        village.setStone(expectedStone);
-        village.setWood(expectedWood);
-        village.setClay(expectedClay);
 
         Integer actualYPos = village.getyPos();
         Integer actualXPos = village.getxPos();
-        Integer actualArt = village.getArt();
         Integer actualAtk = village.getAttackPower();
-        Integer actualBrick = village.getBrick();
-        Integer actualCopperOre = village.getCopperOre();
         Integer actualBuildLim = village.getBuildingLimit();
         Integer actualDefence = village.getDefense();
-        Integer actualFlowers = village.getFlowers();
-        Integer actualGlass = village.getGlass();
-        Integer actualGoldOre = village.getGoldOre();
         Integer actualHunger = village.getHunger();
-        Integer actualIron = village.getIronOre();
-        Integer actualJewelery = village.getJewelery();
-        Integer actualLumber = village.getLumber();
-        Integer actualRock = village.getRock();
-        Integer actualSand = village.getSand();
-        Integer actualSeeds = village.getSeeds();
-        Integer actualGoo = village.getSpacegoo();
-        Integer actualStone = village.getStone();
-        Integer actualWood = village.getWood();
-        Integer actualClay = village.getClay();
 
         Assert.assertEquals(expectedYPos, actualYPos);
         Assert.assertEquals(expectedXPos, actualXPos);
-        Assert.assertEquals(expectedArt, actualArt);
         Assert.assertEquals(expectedAtkPower, actualAtk);
-        Assert.assertEquals(expectedBrick, actualBrick);
-        Assert.assertEquals(expectedCopperOre, actualCopperOre);
         Assert.assertEquals(expectedBuildingLim, actualBuildLim);
         Assert.assertEquals(expectedDefence, actualDefence);
-        Assert.assertEquals(expectedFlowers, actualFlowers);
-        Assert.assertEquals(expectedGlass, actualGlass);
-        Assert.assertEquals(expectedGoldOre, actualGoldOre);
         Assert.assertEquals(expectedHunger, actualHunger);
-        Assert.assertEquals(expectedIron, actualIron);
-        Assert.assertEquals(expectedJewelery, actualJewelery);
-        Assert.assertEquals(expectedLumber, actualLumber);
-        Assert.assertEquals(expectedRock, actualRock);
-        Assert.assertEquals(expectedSand, actualSand);
-        Assert.assertEquals(expectedSeeds, actualSeeds);
-        Assert.assertEquals(expectedGoo, actualGoo);
-        Assert.assertEquals(expectedStone, actualStone);
-        Assert.assertEquals(expectedWood, actualWood);
-        Assert.assertEquals(expectedClay, actualClay);
     }
 
     @Test
@@ -279,72 +215,6 @@ public class VillageTest {
 
         Integer actual = village.getAttackPower();
         Integer expected = 150;
-
-        Assert.assertEquals(expected,actual);
-    }
-
-    @Test
-    public void incWood() {
-        village.setWood(100);
-        village.incWood();
-
-        Integer actual = village.getWood();
-        Integer expected = 101;
-
-        Assert.assertEquals(expected,actual);
-    }
-
-    @Test
-    public void testIncWood() {
-        village.setWood(100);
-        village.incWood(100);
-
-        Integer actual = village.getWood();
-        Integer expected = 200;
-
-        Assert.assertEquals(expected,actual);
-    }
-
-    @Test
-    public void subWood() {
-        village.setWood(100);
-        village.subWood(150);
-
-        Integer actual = village.getWood();
-        Integer expected = 0;
-
-        Assert.assertEquals(expected,actual);
-    }
-
-    @Test
-    public void incStone() {
-        village.setStone(100);
-        village.incStone();
-
-        Integer actual = village.getStone();
-        Integer expected = 101;
-
-        Assert.assertEquals(expected,actual);
-    }
-
-    @Test
-    public void testIncStone() {
-        village.setStone(100);
-        village.incStone(100);
-
-        Integer actual = village.getStone();
-        Integer expected = 200;
-
-        Assert.assertEquals(expected,actual);
-    }
-
-    @Test
-    public void subStone() {
-        village.setStone(100);
-        village.subStone(50);
-
-        Integer actual = village.getStone();
-        Integer expected = 50;
 
         Assert.assertEquals(expected,actual);
     }

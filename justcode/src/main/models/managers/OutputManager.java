@@ -50,9 +50,24 @@ public class OutputManager {
                 extraTopLine += item.addToEndTurnReportTop();
             }
 
-            String output = "";
+
+            LinkedHashMap<String, Integer> occ = new LinkedHashMap<>();
             for (String s : outputPool) {
-                output += s + "\n";
+                if (occ.containsKey(s)) {
+                    occ.put(s, occ.get(s) + 1);
+                } else {
+                    occ.put(s, 1);
+                }
+            }
+
+            String output = "";
+            for (Map.Entry<String, Integer> entry : occ.entrySet()) {
+                if (entry.getValue() > 1) {
+                    output += entry.getKey() + " (x" + entry.getValue() + ")\n";
+                } else {
+                    output += entry.getKey() + "\n";
+                }
+
             }
             output = output.trim();
 

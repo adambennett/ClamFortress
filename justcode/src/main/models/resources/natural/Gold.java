@@ -7,6 +7,7 @@ import main.models.resources.refined.Coin;
 public class Gold extends NaturalResource implements ResourceCost {
 
     public Gold(){
+        super("Gold");
         this.refined = new Coin();
     }
     @Override

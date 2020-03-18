@@ -9,20 +9,19 @@ public class Woodcutting extends AbstractGameAction {
     @Override
     public void update() {
         Integer amountOfWoodToReturn = 15;
-
-            if(Game.getVillage().getStrengthAvg() > 6){
-                if(Game.getGameBoard().getTrees() >50){
-                    amountOfWoodToReturn+=50;
-                } else{
-                    amountOfWoodToReturn += Game.getGameBoard().getTrees();
-                }
-                Game.getGameBoard().reduceTreesOnBoard(50);
-            } else {
+        if(Game.getVillage().getStrengthAvg() > 6){
+            if(Game.getGameBoard().getTrees() >50){
+                amountOfWoodToReturn+=50;
+            } else{
+                amountOfWoodToReturn += Game.getGameBoard().getTrees();
+            }
+            Game.getGameBoard().reduceTreesOnBoard(50);
+        } else {
             amountOfWoodToReturn += Game.getGameBoard().getTrees();
         }
-
-        Game.getVillage().incWood(amountOfWoodToReturn);
-
+        for (int i = 0; i < amountOfWoodToReturn; i++) {
+            Game.getVillage().addResource(new Wood());
+        }
         this.isDone = true;
     }
 

@@ -1,5 +1,6 @@
 package main.models.nodes;
 
+import main.encounters.merchant.*;
 import main.models.nodes.biomes.*;
 import main.models.items.artifacts.*;
 import main.models.managers.*;

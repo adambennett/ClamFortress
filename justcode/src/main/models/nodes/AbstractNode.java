@@ -40,6 +40,10 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
         return artifact != null;
     }
 
+    public Boolean hasItem() {
+        return item != null;
+    }
+
     public AbstractArtifact getArtifact() {
         return artifact;
     }

@@ -103,6 +103,14 @@ public class Board extends GameObject {
                     OutputManager.addToTop("Found a " + space.getArtifact().getName() + " on a newly discovered space!");
                 }
             }
+            if (space.hasItem()) {
+                village.getInventory().addItem(space.getItem());
+                if (GameStrings.startsWithVowel(space.getItem().getName())) {
+                    OutputManager.addToTop("Found an " + space.getItem().getName() + " on a newly discovered space!");
+                } else {
+                    OutputManager.addToTop("Found a " + space.getItem().getName() + " on a newly discovered space!");
+                }
+            }
             return true;
         }
         return false;

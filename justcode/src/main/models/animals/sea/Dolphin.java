@@ -4,7 +4,7 @@ package main.models.animals.sea;
 public class Dolphin extends AbstractSeaAnimal {
 
     public Dolphin(){
-        super(115);
+        super("Dolphin", 115);
     }
 
     @Override

@@ -14,4 +14,9 @@ public class SmallGoldHome extends AbstractHouse implements Golden {
     public Integer getGoldAmt() {
         return 500;
     }
+
+    @Override
+    public SmallGoldHome clone() {
+        return new SmallGoldHome();
+    }
 }

@@ -1,6 +1,7 @@
 package main.models.buildings.concrete.housing;
 
 import main.interfaces.*;
+import main.models.*;
 import main.models.buildings.abstracts.*;
 import main.models.resources.natural.*;
 
@@ -13,5 +14,10 @@ public class LargeGoldHome extends AbstractHouse implements Golden {
     @Override
     public Integer getGoldAmt() {
         return 1000;
+    }
+
+    @Override
+    public LargeGoldHome clone() {
+        return new LargeGoldHome();
     }
 }

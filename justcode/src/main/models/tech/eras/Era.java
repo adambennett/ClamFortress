@@ -1,19 +1,41 @@
 package main.models.tech.eras;
 
-public abstract class Era {
+import main.models.*;
+import main.models.tech.*;
+
+public abstract class Era extends GameObject {
 
     private Era prev;
     private Era next;
 
-    public Era() {}
-
-    public Era(Era prev) {
-        this(null, prev);
+    public Era(String name) {
+        super(name);
+        Era gen = generate();
+        this.next = gen.getNext();
+        this.prev = gen.getPrev();
     }
 
-    public Era(Era next, Era prev) {
-        this.next = next;
-        this.prev = prev;
+    public Era(String name, boolean initTechTree) {
+        super(name);
+    }
+
+    private Era generate() {
+        return getNodeFromTree(this);
+    }
+
+    private static Era getNodeFromTree(Era newEra) {
+        if (TechTree.getHead().getName().equals(newEra.getName())) {
+            return TechTree.getHead();
+        }
+
+        Era curr = TechTree.getHead();
+        while (curr.hasNext()) {
+            if (curr.getNext().getName().equals(newEra.getName())) {
+                return curr.getNext();
+            }
+            curr = curr.getNext();
+        }
+        return null;
     }
 
     public boolean isAheadOf(Era era) {
@@ -69,4 +91,7 @@ public abstract class Era {
     public void setNext(Era next) {
         this.next = next;
     }
+
+    @Override
+    public abstract Era clone();
 }

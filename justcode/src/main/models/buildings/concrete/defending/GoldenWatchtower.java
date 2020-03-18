@@ -1,6 +1,7 @@
 package main.models.buildings.concrete.defending;
 
 import main.interfaces.*;
+import main.models.*;
 import main.models.buildings.abstracts.*;
 import main.models.resources.natural.*;
 
@@ -13,5 +14,10 @@ public class GoldenWatchtower extends AbstractDefenses implements Golden {
     @Override
     public Integer getGoldAmt() {
         return 400;
+    }
+
+    @Override
+    public GoldenWatchtower clone() {
+        return new GoldenWatchtower();
     }
 }

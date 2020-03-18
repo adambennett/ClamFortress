@@ -9,18 +9,21 @@ import main.models.tech.eras.*;
 
 import java.util.logging.*;
 
-public abstract class AbstractBuilding {
+public abstract class AbstractBuilding extends GameObject {
 
-    private final String name;
     private final Integer resourceCost;
-    private final AbstractResource resouceType;
+    private final AbstractResource resourceType;
     private Era eraRequired;
 
     public AbstractBuilding(String name, int resourceCost, AbstractResource resourceType) {
-        this.name = name;
+        super(name);
         this.eraRequired = TechTree.getHead();
-        this.resouceType = resourceType;
+        this.resourceType = resourceType;
         this.resourceCost = resourceCost;
+    }
+
+    public void onBuild() {
+        OutputManager.addToBot("New Building " + this.getName() + " has been completed!");
     }
 
     public void upgrade() {}
@@ -28,12 +31,12 @@ public abstract class AbstractBuilding {
     public Boolean demolish() {
         if (this instanceof Golden) {
             Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) this).getGoldAmt());
-            OutputManager.addToBot("Received " + ((Golden) this).getGoldAmt() + " Coins upon destruction of " + this.name + "!");
+            OutputManager.addToBot("Received " + ((Golden) this).getGoldAmt() + " Coins upon destruction of " + this.getName() + "!");
         }
 
         if (this instanceof Cursed) {
             ((Cursed) this).runCurse();
-            OutputManager.addToBot("You have been Cursed upon the destruction of " + this.name + "!");
+            OutputManager.addToBot("You have been Cursed upon the destruction of " + this.getName() + "!");
         }
         return Game.getVillage().getBuildings().remove(this);
     }
@@ -47,8 +50,8 @@ public abstract class AbstractBuilding {
             return false;
         }
 
-        if (this.resouceType instanceof ResourceCost) {
-            if (!(Game.getVillage().hasEnoughOfResource(this.resouceType, this.resourceCost))) {
+        if (this.resourceType instanceof ResourceCost) {
+            if (!(Game.getVillage().hasEnoughOfResource(this.resourceType.getName(), this.resourceCost))) {
                 return false;
             }
         } else {
@@ -65,13 +68,14 @@ public abstract class AbstractBuilding {
         return true;
     }
 
-    public String getName() { return name; }
-
     public Integer getResourceCost() {
         return resourceCost;
     }
 
-    public AbstractResource getResouceType() {
-        return resouceType;
+    public AbstractResource getResourceType() {
+        return resourceType;
     }
+
+    @Override
+    public abstract AbstractBuilding clone();
 }

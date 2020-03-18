@@ -7,4 +7,9 @@ public class Art extends RefinedResource implements ResourceCost {
     public Art() {
         super("Art");
     }
+
+    @Override
+    public Art clone() {
+        return new Art();
+    }
 }

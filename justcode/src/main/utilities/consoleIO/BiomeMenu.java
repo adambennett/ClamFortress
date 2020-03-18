@@ -1,6 +1,7 @@
 package main.utilities.consoleIO;
 
 import main.enums.*;
+import main.models.nodes.*;
 import main.models.nodes.biomes.*;
 
 import java.util.*;
@@ -23,22 +24,22 @@ public class BiomeMenu extends AbstractConsole {
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
             case DESERT:
-                builder.setStartBiome(new Desert());
+                builder.setStartBiome(new DesertBiome());
                 break;
             case GRASS:
                 builder.setStartBiome(new Grasslands());
                 break;
             case JUNGLE:
-                builder.setStartBiome(new Jungle());
+                builder.setStartBiome(new Forest());
                 break;
             case MOUNTAIN:
-                builder.setStartBiome(new Mountain());
+                builder.setStartBiome(new Mountainous());
                 break;
             case SEA:
-                builder.setStartBiome(new Sea());
+                builder.setStartBiome(new Ocean());
                 break;
             case TUNDRA:
-                builder.setStartBiome(new Tundra());
+                builder.setStartBiome(new Icelands());
                 break;
         }
         boolean setup = setupGame();

@@ -7,4 +7,9 @@ public class Brick extends RefinedResource implements ResourceCost {
     public Brick() {
         super("Brick");
     }
+
+    @Override
+    public Brick clone() {
+        return new Brick();
+    }
 }

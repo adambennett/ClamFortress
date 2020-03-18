@@ -63,8 +63,8 @@ public class PriorityManager {
         PriorityManager.pointsRemaining = pointsRemaining;
         int fin = PriorityManager.getPointsRemaining();
         int diff = fin - orig;
-        for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
-            item.onSpendPriorityPoints(diff);
+        for (GameObject obj : Game.getModifierObjects()) {
+            obj.onSpendPriorityPoints(diff);
         }
     }
 

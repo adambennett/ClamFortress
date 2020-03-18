@@ -23,8 +23,8 @@ public class Praying extends AbstractGameAction {
             faithBuildingMod = 1;
         }
 
-        for (AbstractItem a : Game.getVillage().getInventory().getItems()) {
-            faithBuildingMod += a.modifyFaithInc();
+        for (GameObject obj : Game.getModifierObjects()) {
+            faithBuildingMod += obj.modifyFaithInc();
         }
 
         int amt = ThreadLocalRandom.current().nextInt(faithBuildingMod+1);

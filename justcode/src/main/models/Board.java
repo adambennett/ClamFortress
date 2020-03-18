@@ -1,6 +1,7 @@
 package main.models;
 
 import main.encounters.alien.AbstractAliens;
+import main.enums.*;
 import main.models.animals.AbstractAnimal;
 import main.models.animals.desert.*;
 import main.models.animals.jungle.*;
@@ -10,12 +11,13 @@ import main.models.animals.mountain.*;
 import main.models.animals.sea.AbstractSeaAnimal;
 import main.models.animals.tundra.*;
 import main.models.items.*;
-import main.models.managers.OutputManager;
+import main.models.managers.*;
 import main.models.nodes.AbstractNode;
 import main.models.nodes.Grass;
 import main.models.nodes.Village;
 import main.models.nodes.biomes.AbstractBiome;
 import main.models.nodes.biomes.Grasslands;
+import main.models.resources.*;
 import main.models.resources.natural.Flowers;
 import main.utilities.*;
 
@@ -24,27 +26,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Board {
+public class Board extends GameObject {
 
-    private Village village;
     private Integer gridXMax;
     private Integer gridYMax;
-    private Integer trees;
-    private Integer stone;
-    private Integer clay;
-    private Integer copperOre;
-    private Integer ironOre;
-    private Integer goldOre;
-    private Integer gems;
-    private Integer rocks;
-    private Integer sand;
-    private Integer spacegoo;
-    private Integer healingItems;
+
+    private final AbstractBiome startBiome;
+    private Village village;
     private ArrayList<AbstractNode> grid;
-    private ArrayList<Flowers> flowers;
     private ArrayList<AbstractAnimal> animals;
+    private Map<AbstractResource, Integer> resources;
 
     public Board(AbstractBiome startingBiome, int xMax, int yMax) {
+        super("Game Board");
         this.village = new Village(startingBiome);
         this.village.setxPos(0);
         this.village.setyPos(0);
@@ -52,19 +46,9 @@ public class Board {
         this.gridYMax = yMax;
         this.grid = new ArrayList<>();
         this.grid.add(this.village);
-        this.trees = 0;
-        this.stone = 0;
-        this.clay = 0;
-        this.copperOre = 0;
-        this.ironOre = 0;
-        this.gems = 0;
-        this.healingItems = 0;
-        this.rocks = 0;
-        this.sand = 0;
-        this.spacegoo = 0;
-        this.goldOre = 0;
-        this.flowers = new ArrayList<>();
         this.animals = new ArrayList<>();
+        this.resources = new HashMap<>();
+        this.startBiome = startingBiome;
     }
 
     public AbstractNode getRandomRegion() {
@@ -88,10 +72,7 @@ public class Board {
     }
 
     public AbstractNode getRandomRegion(int x, int y) {
-        int randTrees = ThreadLocalRandom.current().nextInt(1, 20);
-        int randStones = ThreadLocalRandom.current().nextInt(1, 15);
-        int randRocks = ThreadLocalRandom.current().nextInt(1, 10);
-        return new Grass(x, y, randTrees, randStones, randRocks, new Grasslands());
+        return NodeManager.getRandomNode(x, y);
     }
 
     public Boolean discover(AbstractNode region) {
@@ -111,8 +92,8 @@ public class Board {
         }
         if (canAdd) {
             this.grid.add(space);
-            for (AbstractItem item : village.getInventory().getItems()) {
-                item.onDiscoverNewRegion(space);
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onDiscoverNewRegion(space);
             }
             if (space.hasArtifact()) {
                 village.getInventory().addItem(space.getArtifact());
@@ -120,6 +101,14 @@ public class Board {
                     OutputManager.addToTop("Found an " + space.getArtifact().getName() + " on a newly discovered space!");
                 } else {
                     OutputManager.addToTop("Found a " + space.getArtifact().getName() + " on a newly discovered space!");
+                }
+            }
+            if (space.hasItem()) {
+                village.getInventory().addItem(space.getItem());
+                if (GameStrings.startsWithVowel(space.getItem().getName())) {
+                    OutputManager.addToTop("Found an " + space.getItem().getName() + " on a newly discovered space!");
+                } else {
+                    OutputManager.addToTop("Found a " + space.getItem().getName() + " on a newly discovered space!");
                 }
             }
             return true;
@@ -130,11 +119,95 @@ public class Board {
     public void addAnimals(AbstractAnimal animal, int amt) {
         for (int i = 0; i < amt; i++) {
             animals.add(animal.clone());
-            for (AbstractItem item : village.getInventory().getItems()) {
-                item.onAddAnimalToBoard(animal);
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onAddAnimalToBoard(animal);
             }
         }
     }
+
+    // RESOURCES     /////////////////////////////////////////////////////////////////////////////////////////////
+    public Boolean hasEnoughOfResource(String resource, int amt) {
+        if (Archive.getInstance().getRes(resource) != null) {
+            AbstractResource res = Archive.getInstance().getRes(resource);
+            if ((this.resources.get(res) != null)) {
+                int check = this.resources.get(res);
+                return check >= amt;
+            }
+        }
+        return false;
+    }
+
+    public Integer totalResources() {
+        return getAllResources().size();
+    }
+
+    public void addResources(ArrayList<AbstractResource> resources) {
+            for (AbstractResource r : resources) {
+                addResource(r);
+            }
+    }
+
+    public void addResources(Map<AbstractResource, Integer> resources) {
+            for (Map.Entry<AbstractResource, Integer> entry : resources.entrySet()) {
+                if (this.resources.containsKey(entry.getKey())) {
+                    this.resources.put(entry.getKey(), entry.getValue() + this.resources.get(entry.getKey()));
+                } else {
+                    this.resources.put(entry.getKey(), entry.getValue());
+                }
+            }
+    }
+
+    public void addResource(AbstractResource resource) {
+        addResource(resource, 1);
+    }
+
+    public void addResource(AbstractResource resource, int amt) {
+            if (this.resources.containsKey(resource)) {
+                this.resources.put(resource, this.resources.get(resource) + amt);
+            } else {
+                this.resources.put(resource, amt);
+            }
+    }
+
+    public Integer removeResource(String resource) {
+        return removeResource(resource, 0, true);
+    }
+
+    public Integer removeResource(String resource, int amt) {
+        return removeResource(resource, amt, false);
+    }
+
+    private Integer removeResource(String resource, int amt, boolean all) {
+        if (Archive.getInstance().getRes(resource) != null) {
+            AbstractResource res = Archive.getInstance().getRes(resource);
+            if ((this.resources.get(res) != null)) {
+                if (all || this.resources.get(res) < amt) {
+                    return this.resources.remove(res);
+                }
+                this.resources.put(res, this.resources.get(res) - amt);
+            }
+        }
+        return 0;
+    }
+
+    public Boolean containsResource(String resource) {
+        return Archive.getInstance().getRes(resource) != null && this.resources.containsKey(Archive.getInstance().getRes(resource));
+    }
+
+    public Integer getResource(String resource) {
+        return Archive.getInstance().getRes(resource) != null ? this.resources.get(Archive.getInstance().getRes(resource)) : 0;
+    }
+
+    public ArrayList<AbstractResource> getAllResources() {
+        ArrayList<AbstractResource> output = new ArrayList<>();
+        for (Map.Entry<AbstractResource, Integer> entry : this.resources.entrySet()) {
+            for (int i = 0; i < entry.getValue(); i++) {
+                output.add(entry.getKey().clone());
+            }
+        }
+        return output;
+    }
+    // END RESOURCES /////////////////////////////////////////////////////////////////////////////////////////////
 
     public Village getVillage() {
         return village;
@@ -214,27 +287,8 @@ public class Board {
         return toRet;
     }
 
-
-    public Integer getTrees() {
-        return trees;
-    }
-
-    public Integer getRocks() {
-        return rocks;
-    }
-
-    public void setTrees(Integer trees) {
-        this.trees = trees;
-    }
-
-    public void setRocks(Integer rocks) {
-        this.rocks = rocks;
-    }
-
-    public void reduceTreesOnBoard(int amt) {
-        this.trees -= amt;
-        if (this.trees < 0) {
-            this.trees = 0;
-        }
+    @Override
+    public Board clone() {
+        return new Board(this.startBiome, this.gridXMax, this.gridYMax);
     }
 }

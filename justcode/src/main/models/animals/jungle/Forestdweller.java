@@ -3,7 +3,7 @@ package main.models.animals.jungle;
 public class Forestdweller extends AbstractJungleAnimal {
 
     public Forestdweller() {
-        super(275);
+        super("Forestdweller", 275);
     }
 
     @Override

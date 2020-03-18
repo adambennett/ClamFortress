@@ -3,7 +3,7 @@ package main.models.animals.land.bears;
 public class Pizzly extends AbstractBear {
 
     public Pizzly() {
-        super(250);
+        super("Pizzly", 250);
     }
 
     @Override

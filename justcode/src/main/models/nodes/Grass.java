@@ -1,42 +1,30 @@
 package main.models.nodes;
 
 import main.models.*;
+import main.models.animals.*;
+import main.models.animals.land.*;
 import main.models.nodes.biomes.*;
+import main.models.resources.*;
 import main.models.resources.natural.*;
+import main.models.resources.refined.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Grass extends AbstractNode {
 
-    private Integer trees;
-    private Integer stones;
-    private Integer rocks;
-    private ArrayList<Flowers> flowers;
-
-    public Grass(int xPos, int yPos, int trees, int stones, int rocks, AbstractBiome biome) {
-        super(xPos, yPos, biome);
-        this.trees = trees;
-        this.stones = stones;
-        this.rocks = rocks;
-        this.flowers = Game.generateRandomFlowers(biome);
+    public Grass(int xPos, int yPos) {
+        super(xPos, yPos, new Grasslands());
+        ArrayList<AbstractLandAnimal> ar = Archive.getInstance().landAnimals();
+        AbstractLandAnimal rand = ar.get(ThreadLocalRandom.current().nextInt(ar.size()));
+        this.resources.put(new Wood(), ThreadLocalRandom.current().nextInt(1, 101));
+        this.resources.put(new Lumber(), ThreadLocalRandom.current().nextInt(0, 11));
+        this.resources.put(new Flowers(), ThreadLocalRandom.current().nextInt(0, 11));
+        this.resources.put(new Seeds(), ThreadLocalRandom.current().nextInt(0, 6));
+        this.resources.put(new Rock(), ThreadLocalRandom.current().nextInt(0, 6));
+        this.resources.put(new Gems(), ThreadLocalRandom.current().nextInt(0, 2));
+        this.animals.put(rand, ThreadLocalRandom.current().nextInt(1, 10));
     }
-
-    public Integer getRocks() {
-        return rocks;
-    }
-
-    public Integer getTrees() {
-        return trees;
-    }
-
-    public Integer getStones() {
-        return stones;
-    }
-
-    public ArrayList<Flowers> getFlowers() {
-        return flowers;
-    }
-
 
     @Override
     public String toString() {

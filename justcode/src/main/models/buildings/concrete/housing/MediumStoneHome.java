@@ -9,4 +9,9 @@ public class MediumStoneHome extends AbstractHouse {
     public MediumStoneHome() {
         super("Medium Stone Home", 24, 400, new Stone());
     }
+
+    @Override
+    public MediumStoneHome clone() {
+        return new MediumStoneHome();
+    }
 }

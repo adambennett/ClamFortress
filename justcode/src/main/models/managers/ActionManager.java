@@ -52,8 +52,8 @@ public class ActionManager {
 
                 else {
                     this.previous = this.current;
-                    for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
-                        item.afterRunAction(this.current);
+                    for (GameObject obj : Game.getModifierObjects()) {
+                        obj.afterRunAction(this.current);
                     }
                     this.current = null;
                     this.getNextAction();

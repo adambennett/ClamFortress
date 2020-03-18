@@ -16,4 +16,9 @@ public class Iron extends NaturalResource implements ResourceCost {
     public IronIngot getRefined() {
         return (IronIngot) this.refined;
     }
+
+    @Override
+    public Iron clone() {
+        return new Iron();
+    }
 }

@@ -46,8 +46,8 @@ public class OutputManager {
             String reportString = "REPORT\n------\n";
 
             String extraTopLine = "";
-            for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
-                extraTopLine += item.addToEndTurnReportTop();
+            for (GameObject obj : Game.getModifierObjects()) {
+                extraTopLine += obj.addToEndTurnReportTop();
             }
 
 
@@ -72,8 +72,8 @@ public class OutputManager {
             output = output.trim();
 
             String extraBotLine = "";
-            for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
-                extraBotLine += item.addToEndTurnReportBot();
+            for (GameObject obj : Game.getModifierObjects()) {
+                extraBotLine += obj.addToEndTurnReportBot();
             }
 
             ConsoleServices.print(reportString);

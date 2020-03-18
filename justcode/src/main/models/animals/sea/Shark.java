@@ -3,7 +3,7 @@ package main.models.animals.sea;
 public class Shark extends AbstractSeaAnimal {
 
     public Shark(){
-        super(175);
+        super("Shark", 175);
     }
 
     @Override

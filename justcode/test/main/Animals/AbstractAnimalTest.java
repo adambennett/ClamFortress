@@ -15,6 +15,7 @@ import main.models.animals.mountain.AbstractMountainAnimal;
 import main.models.animals.mountain.MountainGoat;
 import main.models.animals.mountain.MountainHare;
 import main.models.animals.sea.*;
+import main.models.animals.tundra.*;
 import org.junit.Assert;
 import org.junit.Test;
 

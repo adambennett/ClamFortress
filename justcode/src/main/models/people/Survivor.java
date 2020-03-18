@@ -3,6 +3,8 @@ package main.models.people;
 import main.enums.*;
 import main.models.resources.refined.food.*;
 
+import java.util.*;
+
 
 public  class Survivor {
     protected Integer agility;
@@ -105,4 +107,27 @@ public  class Survivor {
     public Race getRace() { return race; }
 
     public void setRace(Race race) { this.race = race; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Survivor)) return false;
+        Survivor survivor = (Survivor) o;
+        return Objects.equals(getAgility(), survivor.getAgility()) &&
+                Objects.equals(getStrength(), survivor.getStrength()) &&
+                Objects.equals(getDexterity(), survivor.getDexterity()) &&
+                Objects.equals(getIntelligence(), survivor.getIntelligence()) &&
+                Objects.equals(getMagic(), survivor.getMagic()) &&
+                Objects.equals(getEngineering(), survivor.getEngineering()) &&
+                Objects.equals(getHealthPoints(), survivor.getHealthPoints()) &&
+                Objects.equals(getAge(), survivor.getAge()) &&
+                Objects.equals(getName(), survivor.getName()) &&
+                getGender() == survivor.getGender() &&
+                getRace() == survivor.getRace();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAgility(), getStrength(), getDexterity(), getIntelligence(), getMagic(), getEngineering(), getHealthPoints(), getAge(), getName(), getGender(), getRace());
+    }
 }

@@ -8,4 +8,9 @@ public class Flowers extends NaturalResource implements ResourceCost {
     public Flowers() {
         super("Flowers");
     }
+
+    @Override
+    public Flowers clone() {
+        return new Flowers();
+    }
 }

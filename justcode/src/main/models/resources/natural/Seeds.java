@@ -7,4 +7,9 @@ public class Seeds extends NaturalResource implements ResourceCost {
     public Seeds() {
         super("Seeds");
     }
+
+    @Override
+    public Seeds clone() {
+        return new Seeds();
+    }
 }

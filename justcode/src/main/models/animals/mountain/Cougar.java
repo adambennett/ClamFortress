@@ -3,7 +3,7 @@ package main.models.animals.mountain;
 public class Cougar extends AbstractMountainAnimal {
 
     public Cougar(){
-        super(145);
+        super("Cougar", 145);
     }
 
     @Override

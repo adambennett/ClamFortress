@@ -18,8 +18,10 @@ import main.models.buildings.abstracts.*;
 import main.models.resources.*;
 import main.models.resources.natural.*;
 import main.models.resources.refined.*;
+import main.models.resources.refined.food.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Village extends AbstractNode {
 
@@ -64,7 +66,6 @@ public class Village extends AbstractNode {
     private Integer faith =             0;
 
     // Lists
-    private ArrayList<AbstractResource> resources = new ArrayList<>();
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
     private ArrayList<AbstractBuilding> buildings = new ArrayList<>();
     private ArrayList<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
@@ -75,10 +76,289 @@ public class Village extends AbstractNode {
     private ArrayList<AbstractRaid>     ongoingOpponentRaids = new ArrayList<>();
     private ArrayList<AbstractRaid>     ongoingFriendlyRaids = new ArrayList<>();
     private ArrayList<Survivor>         population = new ArrayList<>();
+    private Map<AbstractResource, Integer> resources;
+
+    @Override public String toString() { return "Village"; }
 
     public Village(AbstractBiome biome) {
         super(0, 0, biome);
         this.inventory = new Inventory(3);
+        this.resources = new HashMap<>();
+    }
+
+    // INVENTORY /////////////////////////////////////////////////////////////////////////////////////////////////
+    public Boolean addToInventory(String key) {
+        if (Archive.getInstance().getItem(key) != null) {
+            AbstractItem item = Archive.getInstance().getItem(key);
+            return inventory.addItem(item);
+        }
+        return false;
+    }
+    // END INVENTORY /////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    // VILLAGERS /////////////////////////////////////////////////////////////////////////////////////////////////
+    public void addToPopulation(Survivor s) {
+        if (population.size() < popCap) {
+            this.population.add(s);
+            this.strength += s.getStrength();
+            this.agility += s.getAgility();
+            this.intelligence += s.getIntelligence();
+            this.dexterity += s.getDexterity();
+            this.magic += s.getMagic();
+            this.engineering += s.getEngineering();
+            this.health += s.getHealthPoints();
+            this.totalAge += s.getAge();
+            updateAverageStats();
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onNewCitizen(s);
+            }
+        }
+    }
+
+    public void updateAfterRemoving(Survivor s) {
+        this.strength -= s.getStrength();
+        this.agility -= s.getAgility();
+        this.intelligence -= s.getIntelligence();
+        this.dexterity -= s.getDexterity();
+        this.magic -= s.getMagic();
+        this.engineering -= s.getEngineering();
+        this.health -= s.getHealthPoints();
+        this.totalAge -= s.getAge();
+        updateAverageStats();
+        for (GameObject obj : Game.getModifierObjects()) {
+            obj.onLoseCitizen(s);
+        }
+    }
+
+    private void updateAverageStats() {
+        this.ageAvg =             (double)this.totalAge / (double)this.population.size();
+        this.agilityAvg =         (double)this.agility / (double) this.population.size();
+        this.strengthAvg =        (double)this.strength / (double) this.population.size();
+        this.intelligenceAvg =    (double)this.intelligence / (double) this.population.size();
+        this.dexterityAvg =       (double)this.dexterity / (double) this.population.size();
+        this.magicAvg =           (double)this.magic / (double) this.population.size();
+        this.engineeringAvg =     (double)this.engineering / (double) this.population.size();
+    }
+
+    public Boolean containsVillager(Survivor s){
+        for (Survivor sur: population) {
+            if (sur.equals(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeSurvivor(Survivor s) {
+        Survivor sa = null;
+        for (int i = 0; i < this.population.size(); i++) {
+            if (this.population.get(i).equals(s)) {
+                updateAfterRemoving(this.population.remove(i));
+            }
+        }
+    }
+
+    public Survivor removeRandomSurvivor() {
+        if (this.population.size() > 0) {
+            Survivor output = this.population.remove(ThreadLocalRandom.current().nextInt(this.population.size()));
+            updateAverageStats();
+            return output;
+        }
+        return null;
+    }
+
+    public Integer feedAllVillagers() {
+        int output = 0;
+        for (Survivor s : population) {
+            if (this.food>0) {
+                this.food--;
+                int healAmt = 100;
+                if (Game.getDifficulty().compareTo(Difficulty.IMPOSSIBLE) >= 0) {
+                    healAmt = 10;
+                } else if (Game.getDifficulty().compareTo(Difficulty.NIGHTMARE) >= 0) {
+                    healAmt = 15;
+                } else if (Game.getDifficulty().compareTo(Difficulty.BRUTAL) >= 0) {
+                    healAmt = 25;
+                } else if (Game.getDifficulty().compareTo(Difficulty.HARD) >= 0) {
+                    healAmt = 40;
+                } else if (Game.getDifficulty().compareTo(Difficulty.DEFAULT) >= 0) {
+                    healAmt = 50;
+                }
+                s.feed(new PlaceholderFood(healAmt));
+            } else{
+                output++;
+            }
+        }
+        return output;
+    }
+    // END VILLAGERS /////////////////////////////////////////////////////////////////////////////////////////////
+
+    // BUILDINGS     /////////////////////////////////////////////////////////////////////////////////////////////
+    public Boolean addBuilding(AbstractBuilding b) {
+        if (buildings.size() < buildingLimit) {
+            buildings.add(b);
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onNewBuilding(b);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void addUncompletedBuilding(AbstractBuilding b) {
+        uncompletedBuildings.add(b);
+    }
+
+    public Boolean hasBuilding(String building) {
+        if (Archive.getInstance().getBuilding(building) != null) {
+            AbstractBuilding res = Archive.getInstance().getBuilding(building);
+            return this.buildings.contains(res);
+        }
+        return false;
+    }
+    // END BUILDINGS /////////////////////////////////////////////////////////////////////////////////////////////
+
+    // RESOURCES     /////////////////////////////////////////////////////////////////////////////////////////////
+    public Boolean hasEnoughOfResource(String resource, int amt) {
+        if (Archive.getInstance().getRes(resource) != null) {
+            AbstractResource res = Archive.getInstance().getRes(resource);
+            if ((this.resources.get(res) != null)) {
+                int check = this.resources.get(res);
+                return check >= amt;
+            }
+        }
+        return false;
+    }
+
+    public Integer totalResources() {
+        return getAllResources().size();
+    }
+
+    public Boolean addResources(ArrayList<AbstractResource> resources) {
+        if (resources.size() + totalResources() <= this.resourceLimit) {
+            for (AbstractResource r : resources) {
+                addResource(r);
+            }
+            return true;
+        } else {
+            OutputManager.addToBot("Not enough room to accumulate more resources! Build some storehouses.", OutputFlag.RESOURCES_FULL);
+            return false;
+        }
+    }
+
+    public Boolean addResources(Map<AbstractResource, Integer> resources) {
+        int resourcesSize = 0;
+        for (Map.Entry<AbstractResource, Integer> entry : resources.entrySet()) {
+            resourcesSize += entry.getValue();
+        }
+        if (resourcesSize + this.totalResources() <= this.resourceLimit) {
+            for (Map.Entry<AbstractResource, Integer> entry : resources.entrySet()) {
+                if (this.resources.containsKey(entry.getKey())) {
+                    this.resources.put(entry.getKey(), entry.getValue() + this.resources.get(entry.getKey()));
+                } else {
+                    this.resources.put(entry.getKey(), entry.getValue());
+                }
+            }
+            return true;
+        } else {
+            OutputManager.addToBot("Not enough room to accumulate more resources! Build some storehouses.", OutputFlag.RESOURCES_FULL);
+            return false;
+        }
+    }
+
+    public Boolean addResource(AbstractResource resource) {
+        return addResource(resource, 1);
+    }
+
+    public Boolean addResource(AbstractResource resource, int amt) {
+        boolean reduced = false;
+        while (totalResources() + amt > this.resourceLimit && amt > 0) {
+            amt--;
+            reduced = true;
+        }
+        if (totalResources() + amt <= this.resourceLimit && amt > 0) {
+            if (this.resources.containsKey(resource)) {
+                this.resources.put(resource, this.resources.get(resource) + amt);
+            } else {
+                this.resources.put(resource, amt);
+            }
+            return true;
+        } else if (reduced) {
+            OutputManager.addToBot("Not enough room to accumulate more resources! Build some storehouses.", OutputFlag.RESOURCES_FULL);
+            return false;
+        }
+        return false;
+    }
+
+    public Integer removeResource(String resource) {
+        return removeResource(resource, 0, true);
+    }
+
+    public Integer removeResource(String resource, int amt) {
+        return removeResource(resource, amt, false);
+    }
+
+    private Integer removeResource(String resource, int amt, boolean all) {
+        if (Archive.getInstance().getRes(resource) != null) {
+            AbstractResource res = Archive.getInstance().getRes(resource);
+            if ((this.resources.get(res) != null)) {
+                if (all || this.resources.get(res) < amt) {
+                    return this.resources.remove(res);
+                }
+                this.resources.put(res, this.resources.get(res) - amt);
+            }
+        }
+        return 0;
+    }
+
+    public Boolean containsResource(String resource) {
+        return Archive.getInstance().getRes(resource) != null && this.resources.containsKey(Archive.getInstance().getRes(resource));
+    }
+
+    public Integer getResource(String resource) {
+        return Archive.getInstance().getRes(resource) != null ? this.resources.get(Archive.getInstance().getRes(resource)) : 0;
+    }
+
+    public ArrayList<AbstractResource> getAllResources() {
+        ArrayList<AbstractResource> output = new ArrayList<>();
+        for (Map.Entry<AbstractResource, Integer> entry : this.resources.entrySet()) {
+            for (int i = 0; i < entry.getValue(); i++) {
+                output.add(entry.getKey().clone());
+            }
+        }
+        return output;
+    }
+    // END RESOURCES /////////////////////////////////////////////////////////////////////////////////////////////
+
+    // ENCOUNTERS    /////////////////////////////////////////////////////////////////////////////////////////////
+    public void addMerchant(AbstractMerchant merchant) {
+        this.vistingMerchants.add(merchant);
+    }
+
+    public void addMiracle(AbstractMiracle m) {
+        if (this.canRunEncounter(m)) {
+            this.activeMiracles.add(m);
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onNewMiracle(m);
+            }
+        }
+    }
+    public void addDisaster(AbstractDisaster d) {
+        if (this.canRunEncounter(d)) {
+            this.ongoingDisasters.add(d);
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onNewDisaster(d);
+            }
+        }
+    }
+    public void addPlague(AbstractPlague p) {
+        if (this.canRunEncounter(p)) {
+            this.ongoingPlagues.add(p);
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onNewPlague(p);
+            }
+        }
     }
 
     public Boolean canRunEncounter(AbstractEncounter encounter) {
@@ -114,170 +394,29 @@ public class Village extends AbstractNode {
         }
     }
 
-    public Boolean hasEnoughOfResource(AbstractResource resource, int amt) {
-        int sum = 0;
-        for (AbstractResource r : resources) {
-            if (r.getClass().equals(resource.getClass())) {
-                sum++;
-            }
-        }
-        return sum >= amt;
-    }
-
-    public void updateAverageStats() {
-        this.ageAvg =             (double)this.totalAge / (double)this.population.size();
-        this.agilityAvg =         (double)this.agility / (double) this.population.size();
-        this.strengthAvg =        (double)this.strength / (double) this.population.size();
-        this.intelligenceAvg =    (double)this.intelligence / (double) this.population.size();
-        this.dexterityAvg =       (double)this.dexterity / (double) this.population.size();
-        this.magicAvg =           (double)this.magic / (double) this.population.size();
-        this.engineeringAvg =     (double)this.engineering / (double) this.population.size();
-    }
-
-    public void addToPopulation(Survivor s) {
-        if (population.size() < popCap) {
-            this.population.add(s);
-            this.strength += s.getStrength();
-            this.agility += s.getAgility();
-            this.intelligence += s.getIntelligence();
-            this.dexterity += s.getDexterity();
-            this.magic += s.getMagic();
-            this.engineering += s.getEngineering();
-            this.health += s.getHealthPoints();
-            this.totalAge += s.getAge();
-            updateAverageStats();
-            for (AbstractItem item : inventory.getItems()) {
-                item.onNewCitizen(s);
-            }
-        }
-    }
-
-    public void updateAfterRemoving(Survivor s) {
-        this.strength -= s.getStrength();
-        this.agility -= s.getAgility();
-        this.intelligence -= s.getIntelligence();
-        this.dexterity -= s.getDexterity();
-        this.magic -= s.getMagic();
-        this.engineering -= s.getEngineering();
-        this.health -= s.getHealthPoints();
-        this.totalAge -= s.getAge();
-        updateAverageStats();
-        for (AbstractItem item : inventory.getItems()) {
-            item.onLoseCitizen(s);
-        }
-    }
-
-    public Boolean addBuilding(AbstractBuilding b) {
-        if (buildings.size() < buildingLimit) {
-            buildings.add(b);
-            for (AbstractItem item : inventory.getItems()) {
-                item.onNewBuilding(b);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean addUncompletedBuilding(AbstractBuilding b) {
-        return uncompletedBuildings.add(b);
-    }
-
     public void reduceBandits(){
         if(occupyingBandits.size() > 0) {
             occupyingBandits.remove(occupyingBandits.size() - 1);
         }
     }
+    // END ENCOUNTERS ////////////////////////////////////////////////////////////////////////////////////////////
 
-    public Boolean containsVillager(Survivor s){
-        for (Survivor sur: population) {
-            if (sur.equals(s)) {
-                return true;
-            }
+    // GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////////
+    public Integer getDefense(){
+        int atk = this.defence;
+        for (GameObject obj : Game.getModifierObjects()) {
+            atk += obj.modifyDef();
         }
-        return false;
+        return atk;
     }
-
-    public void addResource(AbstractResource resource, int amt) {
-        for (int i = 0; i < amt; i++) {
-            if (this.resources.size() < this.resourceLimit) {
-                this.resources.add(resource);
-            } else {
-                OutputManager.addToBot("Not enough room to accumulate more resources! Build some storehouses.", OutputFlag.RESOURCES_FULL);
-            }
+    public Integer getAttackPower(){
+        int atk = this.attackPower;
+        for (GameObject obj : Game.getModifierObjects()) {
+            atk += obj.modifyAtk();
         }
+        return atk;
     }
 
-
-    public void addResource(AbstractResource resource) {
-        addResource(resource, 1);
-    }
-
-    public void addMerchant(AbstractMerchant merchant) {
-        this.vistingMerchants.add(merchant);
-    }
-
-    public void addMiracle(AbstractMiracle m) {
-        if (this.canRunEncounter(m)) {
-            this.activeMiracles.add(m);
-            for (AbstractItem item : inventory.getItems()) {
-                item.onNewMiracle(m);
-            }
-        }
-    }
-    public void addDisaster(AbstractDisaster d) {
-        if (this.canRunEncounter(d)) {
-            this.ongoingDisasters.add(d);
-            for (AbstractItem item : inventory.getItems()) {
-                item.onNewDisaster(d);
-            }
-        }
-    }
-    public void addPlague(AbstractPlague p) {
-        if (this.canRunEncounter(p)) {
-            this.ongoingPlagues.add(p);
-            for (AbstractItem item : inventory.getItems()) {
-                item.onNewPlague(p);
-            }
-        }
-    }
-
-    // Setters
-    public void setPopCap(Integer popCap){this.popCap = popCap;}
-    public void setHunger(Integer hunger) {
-        this.hunger = hunger;
-        if (this.hunger > 100) {
-            this.hunger = 100;
-        }
-        if (this.hunger < 0) {
-            this.hunger = 0;
-        }
-    }
-    public void setBuildingLimit(Integer buildingLimit) {
-        this.buildingLimit = buildingLimit;
-    }
-    public void setCoins(Integer coins){
-     this.coins=coins;
-    }
-    public void setDefence(Integer defence){
-        this.defence = defence;
-    }
-    public void setAttackPower(Integer attackPower){
-        this.attackPower = attackPower;
-    }
-    public void setFaith(Integer faith){
-        this.faith = faith;
-    }
-    public void setFood(Integer food) {
-        this.food = food;
-    }
-    public void setFamine(Integer famine) {
-        this.famine = famine;
-    }
-    public void setMagic(Integer magic) {
-        this.magic = magic;
-    }
-
-    // Getters
     public Integer getHunger() {
         return hunger;
     }
@@ -346,20 +485,6 @@ public class Village extends AbstractNode {
         return resourceLimit;
     }
 
-    public Integer getDefense(){
-        int atk = this.defence;
-        for (AbstractItem a : inventory.getItems()) {
-            atk += a.modifyDef();
-        }
-        return atk;
-    }
-    public Integer getAttackPower(){
-        int atk = this.attackPower;
-        for (AbstractItem a : inventory.getItems()) {
-            atk += a.modifyAtk();
-        }
-        return atk;
-    }
     public Integer getCoins() {
         return this.coins;
     }
@@ -378,11 +503,9 @@ public class Village extends AbstractNode {
     public Integer getFamine() {
         return famine;
     }
+
     public Inventory getInventory() {
         return inventory;
-    }
-    public ArrayList<AbstractResource> getResources() {
-        return resources;
     }
     public ArrayList<Survivor> getSurvivors() {
         return population;
@@ -406,47 +529,16 @@ public class Village extends AbstractNode {
         return vistingMerchants;
     }
 
-
-    public void setFoodLimit(Integer foodLimit) {
-        this.foodLimit = foodLimit;
+    public void incDefense(Integer amt){
+        this.defence += amt;
     }
 
-    public void setResourceLimit(Integer resourceLimit) {
-        this.resourceLimit = resourceLimit;
-    }
-
-    public void setCoinLimit(Integer coinLimit) {
-        this.coinLimit = coinLimit;
-    }
-
-    public void setFaithLimit(Integer faithLimit) {
-        this.faithLimit = faithLimit;
-    }
-
-    public void incDefense(Integer incAmount){
-        this.defence += incAmount;
-    }
-
-    public void incAttack(Integer incAmount){
-        this.attackPower+=incAmount;
-    }
-
-    public void incFood(int amt){
-        this.food += amt;
-        if (this.food > this.foodLimit) {
-            this.food = this.foodLimit;
-        }
+    public void incAttack(Integer amt){
+        this.attackPower += amt;
     }
 
     public void incFaith() {
         incFaith(1);
-    }
-
-    public void incFaith(int amt) {
-        this.faith += amt;
-        if (this.faith > this.faithLimit) {
-            this.faith = this.faithLimit;
-        }
     }
 
     public void incMagic() {
@@ -461,13 +553,6 @@ public class Village extends AbstractNode {
         incCoins(1);
     }
 
-    public void incCoins(int amt) {
-        this.coins += amt;
-        if (this.coins > this.coinLimit) {
-            this.coins = this.coinLimit;
-        }
-    }
-
     public void incPopCap() {
         incPopCap(1);
     }
@@ -476,39 +561,78 @@ public class Village extends AbstractNode {
         this.popCap += amt;
     }
 
-    public void subPopCap(int amt) {
-        this.popCap -= amt;
-        if(this.popCap <0){
-            this.popCap = 0;
-        }
+    public void incFood(int amt){
+        this.food += amt; if (this.food > this.foodLimit) { this.food = this.foodLimit; }
     }
 
-    public void subCoins(int amt) {
-        this.coins -= amt;
-        if(this.coins <0){
-            this.coins = 0;
-        }
+    public void incFaith(int amt) {
+        this.faith += amt; if (this.faith > this.faithLimit) { this.faith = this.faithLimit; }
     }
 
-    public void removeSurvivor(Survivor s) {
-        this.population.remove(s);
+    public void incCoins(int amt) {
+        this.coins += amt; if (this.coins > this.coinLimit) { this.coins = this.coinLimit; }
     }
 
     public void subMagic(int amt) {
-        this.magic -= amt;
-        if(this.magic < 0){
-            this.magic = 0;
-        }
+        this.magic -= amt; if (this.magic < 0) { this.magic = 0; }
     }
     public void subFaith(int amt) {
-        this.faith -= amt;
-        if(this.faith < 0){
-            this.faith = 0;
-        }
+        this.faith -= amt; if (this.faith < 0) { this.faith = 0; }
     }
 
-    @Override
-    public String toString() {
-        return "Village";
+    public void subPopCap(int amt) {
+        this.popCap -= amt; if (this.popCap < 0) { this.popCap = 0; }
     }
+
+    public void subCoins(int amt) {
+        this.coins -= amt; if (this.coins < 0) { this.coins = 0; }
+    }
+
+    public void setHunger(Integer hunger) {
+        this.hunger = hunger;
+        if (this.hunger > 100) { this.hunger = 100; }
+        else if (this.hunger < 0) { this.hunger = 0; }
+    }
+
+    public void setPopCap(Integer popCap){ this.popCap = popCap;}
+
+    public void setBuildingLimit(Integer buildingLimit) {
+        this.buildingLimit = buildingLimit;
+    }
+    public void setCoins(Integer coins){
+        this.coins = coins;
+    }
+    public void setDefence(Integer defence){
+        this.defence = defence;
+    }
+    public void setAttackPower(Integer attackPower){
+        this.attackPower = attackPower;
+    }
+    public void setFaith(Integer faith){
+        this.faith = faith;
+    }
+    public void setFood(Integer food) {
+        this.food = food;
+    }
+    public void setFamine(Integer famine) {
+        this.famine = famine;
+    }
+    public void setMagic(Integer magic) {
+        this.magic = magic;
+    }
+    public void setFoodLimit(Integer foodLimit) {
+        this.foodLimit = foodLimit;
+    }
+    public void setResourceLimit(Integer resourceLimit) {
+        this.resourceLimit = resourceLimit;
+    }
+    public void setCoinLimit(Integer coinLimit) {
+        this.coinLimit = coinLimit;
+    }
+    public void setFaithLimit(Integer faithLimit) {
+        this.faithLimit = faithLimit;
+    }
+    public void setyPos(int y) { this.yPos = y; }
+    public void setxPos(int x) { this.xPos = x; }
+    // END GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////
 }

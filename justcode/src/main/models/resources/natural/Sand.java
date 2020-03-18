@@ -17,4 +17,9 @@ public class Sand extends NaturalResource implements ResourceCost {
     public Glass getRefined() {
         return (Glass) this.refined;
     }
+
+    @Override
+    public Sand clone() {
+        return new Sand();
+    }
 }

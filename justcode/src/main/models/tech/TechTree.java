@@ -1,17 +1,49 @@
 package main.models.tech;
 
+import main.models.*;
 import main.models.tech.eras.*;
 
 import java.util.*;
 
-public class TechTree {
+public class TechTree extends GameObject {
 
     private static Era head;
     private static Era tail;
     private static Era currentEra;
 
-    static {
+    public TechTree() {
+        super("Tech Tree");
         resetTechTree();
+    }
+
+    public static Era getHead() {
+        return head;
+    }
+
+    public static ArrayList<Era> getAscending() {
+        ArrayList<Era> eras = new ArrayList<>();
+        if (head != null) {
+            eras.add(head);
+        }
+        Era curr = head;
+        while (curr.hasNext()) {
+            curr = curr.getNext();
+            eras.add(curr);
+        }
+        return eras;
+    }
+
+    public static ArrayList<Era> getDescending() {
+        ArrayList<Era> eras = new ArrayList<>();
+        if (tail != null) {
+            eras.add(tail);
+        }
+        Era curr = tail;
+        while (curr.hasPrev()) {
+            curr = curr.getPrev();
+            eras.add(curr);
+        }
+        return eras;
     }
 
     public static void resetTechTree() {
@@ -21,15 +53,7 @@ public class TechTree {
     public static void setTree(ArrayList<Era> newEraOrdering) {
         head = generateTreeHead(newEraOrdering);
         tail = head.advanceToEnd();
-    }
-
-    public static Era getHead() {
-        return head;
-    }
-
-    public static void setTree(Era newHead, Era newTail) {
-        head = newHead;
-        tail = newTail;
+        currentEra = head;
     }
 
     public static Boolean moveToEra(Era era, boolean allowBackwards) {
@@ -70,25 +94,25 @@ public class TechTree {
         return currentEra;
     }
 
-    public static void createTree(ArrayList<Era> eras) {
+    private static void createTree(ArrayList<Era> eras) {
         head = generateTreeHead(eras);
         tail = head.advanceToEnd();
         currentEra = head;
     }
 
-    public static ArrayList<Era> standardTechTree() {
+    private static ArrayList<Era> standardTechTree() {
         ArrayList<Era> eras = new ArrayList<>();
-        eras.add(new StoneAge());
-        eras.add(new BronzeAge());
-        eras.add(new IronAge());
-        eras.add(new ExplorationAge());
-        eras.add(new IndustrialAge());
-        eras.add(new InformationAge());
-        eras.add(new FutureAge());
+        eras.add(new StoneAge(true));
+        eras.add(new BronzeAge(true));
+        eras.add(new IronAge(true));
+        eras.add(new ExplorationAge(true));
+        eras.add(new IndustrialAge(true));
+        eras.add(new InformationAge(true));
+        eras.add(new FutureAge(true));
         return eras;
     }
 
-    public static Era generateTreeHead(ArrayList<Era> erasInOrder) {
+    private static Era generateTreeHead(ArrayList<Era> erasInOrder) {
         Era head = null;
         for (int i = erasInOrder.size() - 1; i > -1; i--) {
             Era temp = erasInOrder.get(i);
@@ -105,5 +129,12 @@ public class TechTree {
         return head;
     }
 
+    static {
+        resetTechTree();
+    }
 
+    @Override
+    public TechTree clone() {
+        return new TechTree();
+    }
 }

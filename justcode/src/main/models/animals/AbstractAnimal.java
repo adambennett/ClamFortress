@@ -1,10 +1,13 @@
 package main.models.animals;
 
-public abstract class AbstractAnimal implements Cloneable {
+import main.models.*;
+
+public abstract class AbstractAnimal extends GameObject {
 
     private Integer amountOfFoodOnHunt;
 
-    public AbstractAnimal(int amt) {
+    public AbstractAnimal(String name, int amt) {
+        super(name);
         this.amountOfFoodOnHunt = amt;
     }
 

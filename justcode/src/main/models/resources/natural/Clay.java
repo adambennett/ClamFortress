@@ -17,4 +17,9 @@ public class Clay extends NaturalResource implements ResourceCost {
     public Brick getRefined() {
         return (Brick) this.refined;
     }
+
+    @Override
+    public Clay clone() {
+        return new Clay();
+    }
 }

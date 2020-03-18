@@ -10,4 +10,8 @@ public abstract class AbstractRefining extends AbstractBuilding {
         super(name, resourceCost, resourceType);
         this.toRefine = toRefine;
     }
+
+
+    @Override
+    public abstract AbstractRefining clone();
 }

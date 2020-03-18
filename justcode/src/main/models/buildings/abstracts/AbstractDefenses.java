@@ -1,5 +1,6 @@
 package main.models.buildings.abstracts;
 
+import main.models.*;
 import main.models.resources.*;
 
 public abstract class AbstractDefenses extends AbstractBuilding {
@@ -10,4 +11,7 @@ public abstract class AbstractDefenses extends AbstractBuilding {
         super(name, resourceCost, resourceType);
         this.defense = defend;
     }
+
+    @Override
+    public abstract AbstractDefenses clone();
 }

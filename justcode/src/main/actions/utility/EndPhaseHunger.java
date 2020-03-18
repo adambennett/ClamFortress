@@ -7,52 +7,38 @@ import main.models.managers.*;
 import main.models.people.*;
 import main.models.resources.refined.food.*;
 
+import java.util.*;
 import java.util.concurrent.*;
 
 public class EndPhaseHunger extends AbstractGameAction {
 
     @Override
     public void update() {
-        int numHungry = 0;
-        int foodAmt = Game.getVillage().getFood();
-        for (Survivor s : Game.getVillage().getSurvivors()) {
-            if (foodAmt>0) {
-                foodAmt--;
-                int healAmt = 100;
-                if (Game.getDifficulty().compareTo(Difficulty.IMPOSSIBLE) >= 0) {
-                    healAmt = 10;
-                } else if (Game.getDifficulty().compareTo(Difficulty.NIGHTMARE) >= 0) {
-                    healAmt = 15;
-                } else if (Game.getDifficulty().compareTo(Difficulty.BRUTAL) >= 0) {
-                    healAmt = 25;
-                } else if (Game.getDifficulty().compareTo(Difficulty.HARD) >= 0) {
-                    healAmt = 40;
-                } else if (Game.getDifficulty().compareTo(Difficulty.DEFAULT) >= 0) {
-                    healAmt = 50;
-                }
-                s.feed(new PlaceholderFood(healAmt));
-            } else{
-                numHungry++;
-            }
+        int numHungry = Game.getVillage().feedAllVillagers();
+        if (Game.getVillage().getFood() > 0) {
+            Game.getVillage().setFamine(Game.getVillage().getFamine() - Game.getVillage().getFood());
         }
-        if (foodAmt > 0) {
-            Game.getVillage().setFamine(Game.getVillage().getFamine() - foodAmt);
-        }
+        ArrayList<String> surviorsWhoLeft = new ArrayList<>();
         for (int i = 0; i < Game.getVillage().getFamine(); i++) {
-            if (Game.getVillage().getSurvivors().size() > 0) {
-                int rand = ThreadLocalRandom.current().nextInt(Game.getVillage().getSurvivors().size());
-                Survivor s = Game.getVillage().getSurvivors().remove(rand);
-                Game.getVillage().updateAfterRemoving(s);
-                OutputManager.addToBot(s.getName() + " has left your Village due to ongoing famine concerns!");
+            if (Game.getVillage().getPopulation() > 0) {
+                Survivor s = Game.getVillage().removeRandomSurvivor();
+                surviorsWhoLeft.add(s.getName());
             }
+        }
+        String allSurviorsLeaving = "";
+        for (String s : surviorsWhoLeft) {
+            allSurviorsLeaving += s + ", ";
+        }
+        if (!allSurviorsLeaving.equals("")) {
+            allSurviorsLeaving = allSurviorsLeaving.substring(0, allSurviorsLeaving.length() - 2);
+            OutputManager.addToBot(allSurviorsLeaving + " have all left your Village due to ongoing famine concerns!");
         }
         double newFamine = numHungry / 4.0;
         if (numHungry > 0 && (int)newFamine < 0) {
             newFamine = 1.0;
         }
-        int newHunger = numHungry;
         Game.getVillage().setFamine((int) newFamine);
-        Game.getVillage().setHunger(newHunger);
+        Game.getVillage().setHunger(numHungry);
         this.isDone = true;
     }
 

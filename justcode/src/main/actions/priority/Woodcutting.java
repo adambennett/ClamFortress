@@ -2,25 +2,25 @@ package main.actions.priority;
 
 import main.actions.*;
 import main.models.*;
+import main.models.managers.*;
 import main.models.resources.natural.*;
+import sun.reflect.generics.tree.*;
+
+import java.util.concurrent.*;
 
 public class Woodcutting extends AbstractGameAction {
 
     @Override
     public void update() {
-        Integer amountOfWoodToReturn = 15;
-        if(Game.getVillage().getStrengthAvg() > 6){
-            if(Game.getGameBoard().getTrees() >50){
-                amountOfWoodToReturn+=50;
-            } else{
-                amountOfWoodToReturn += Game.getGameBoard().getTrees();
-            }
-            Game.getGameBoard().reduceTreesOnBoard(50);
-        } else {
-            amountOfWoodToReturn += Game.getGameBoard().getTrees();
+        int wood = 15;
+        int high = Game.getGameBoard().getResource("wood");
+        if (high > 0) {
+            wood += ThreadLocalRandom.current().nextInt(0, high);
         }
-        for (int i = 0; i < amountOfWoodToReturn; i++) {
-            Game.getVillage().addResource(new Wood());
+        wood += Game.getVillage().getStrengthAvg();
+        Game.getGameBoard().removeResource("wood", wood);
+        if (Game.getVillage().addResource(new Wood(), wood)) {
+            OutputManager.addToBot("Chopped " + wood + " wood!");
         }
         this.isDone = true;
     }

@@ -15,8 +15,8 @@ public class RockPicking extends AbstractGameAction {
     public void update() {
         Pickaxe pickaxe = new Pickaxe();
         int rockToReturn = 15;
-        Integer rocksOnBoard = Game.getGameBoard().getRocks();
-        if(rocksOnBoard > 0){
+        Integer rocksOnBoard = Game.getGameBoard().getResource(new Rock().getName());
+        if(rocksOnBoard != null && rocksOnBoard > 0){
             if(Game.getVillage().getInventory().containsItem(pickaxe.getName())){
                 rockToReturn *= 2;
             }

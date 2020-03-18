@@ -10,9 +10,12 @@ public class BoardTest {
 
     private static Board board;
     private static AbstractBiome biome;
+    private static Archive archive;
 
     @Before
     public void setUp() {
+        Game.startGame();
+        archive = Archive.getInstance();
         biome = new Grasslands();
         board = new Board(biome, 50, 50);
     }
@@ -58,24 +61,5 @@ public class BoardTest {
         rand.setArtifact(new AwesomeArtifact());
         Assert.assertTrue(board.addGridSpace(rand));
         Assert.assertTrue(board.addGridSpace(randB));
-    }
-
-    @Test
-    public void gettersTest() {
-        board.setRocks(10);
-        board.setTrees(20);
-        Integer actualRock = board.getRocks();
-        Integer actualTrees = board.getTrees();
-        Assert.assertEquals(new Integer(10), actualRock);
-        Assert.assertEquals(new Integer(20), actualTrees);
-    }
-
-    @Test
-    public void reduceTreesTest() {
-        board.setTrees(500);
-        board.reduceTreesOnBoard(50);
-        Assert.assertEquals(new Integer(450), board.getTrees());
-        board.reduceTreesOnBoard(60000);
-        Assert.assertEquals(new Integer(0), board.getTrees());
     }
 }

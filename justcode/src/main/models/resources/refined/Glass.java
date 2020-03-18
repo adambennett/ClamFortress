@@ -7,4 +7,9 @@ public class Glass extends RefinedResource implements ResourceCost {
     public Glass() {
         super("Glass");
     }
+
+    @Override
+    public Glass clone() {
+        return new Glass();
+    }
 }

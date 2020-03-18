@@ -7,4 +7,9 @@ public class Spacegoo extends NaturalResource implements ResourceCost {
     public Spacegoo() {
         super("Spacegoo");
     }
+
+    @Override
+    public Spacegoo clone() {
+        return new Spacegoo();
+    }
 }

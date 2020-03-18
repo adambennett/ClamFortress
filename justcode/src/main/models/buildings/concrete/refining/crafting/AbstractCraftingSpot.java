@@ -1,6 +1,7 @@
 package main.models.buildings.concrete.refining.crafting;
 
 import main.models.buildings.abstracts.*;
+import main.models.buildings.concrete.housing.*;
 import main.models.items.*;
 import main.models.resources.*;
 import main.models.resources.natural.*;
@@ -25,4 +26,7 @@ public abstract class AbstractCraftingSpot extends AbstractRefining {
     protected AbstractItem craft() {
         return craftable.clone();
     }
+
+    @Override
+    public abstract AbstractCraftingSpot clone();
 }

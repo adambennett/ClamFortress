@@ -16,4 +16,9 @@ public class Copper extends NaturalResource implements ResourceCost {
     public CopperIngot getRefined() {
         return (CopperIngot) this.refined;
     }
+
+    @Override
+    public Copper clone() {
+        return new Copper();
+    }
 }

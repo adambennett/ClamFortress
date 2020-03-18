@@ -15,4 +15,9 @@ public class Rock extends NaturalResource implements ResourceCost {
     public Stone getRefined() {
         return (Stone) this.refined;
     }
+
+    @Override
+    public Rock clone() {
+        return new Rock();
+    }
 }

@@ -9,4 +9,9 @@ public class StoneLeanTo extends AbstractHouse {
     public StoneLeanTo() {
         super("Stone Lean To", 6, 15, new Stone());
     }
+
+    @Override
+    public StoneLeanTo clone() {
+        return new StoneLeanTo();
+    }
 }

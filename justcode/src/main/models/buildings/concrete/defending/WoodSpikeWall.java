@@ -7,7 +7,12 @@ import main.models.resources.natural.*;
 
 public class WoodSpikeWall extends AbstractDefenses {
 
-    public WoodSpikeWall(String name, int resourceCost, AbstractResource resourceType) {
-        super("Wood Spike Wall", 75 + Game.getVillage().getSurvivors().size(), 3, new Wood());
+    public WoodSpikeWall() {
+        super("Wood Spike Wall", 75 + Game.getVillage().getPopulation(), 3, new Wood());
+    }
+
+    @Override
+    public WoodSpikeWall clone() {
+        return new WoodSpikeWall();
     }
 }

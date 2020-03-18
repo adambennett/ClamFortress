@@ -25,8 +25,8 @@ public class EndPhaseMenu extends AbstractConsole {
         switch (cmd) {
             case CONTINUE:
                 OutputManager.reset();
-                for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
-                    item.standbyPhase();
+                for (GameObject obj : Game.getModifierObjects()) {
+                    obj.standbyPhase();
                 }
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;

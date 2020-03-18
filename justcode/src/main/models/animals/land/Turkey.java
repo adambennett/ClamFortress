@@ -5,7 +5,7 @@ import main.models.animals.*;
 public class Turkey extends AbstractLandAnimal {
 
     public Turkey(){
-        super(22);
+        super("Turkey", 22);
     }
 
     @Override

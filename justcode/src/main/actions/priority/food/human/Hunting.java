@@ -1,7 +1,7 @@
 package main.actions.priority.food.human;
 
 import main.actions.*;
-import main.models.Game;
+import main.models.*;
 import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.managers.*;
@@ -27,8 +27,8 @@ public class Hunting extends AbstractGameAction {
         if (animals < 2) {
             animals = 2;
         }
-        for (AbstractItem spear : Game.getVillage().getInventory().getItems()) {
-            animals *= spear.multiplyFoodOnHunting();
+        for (GameObject obj : Game.getModifierObjects()) {
+            animals *= obj.multiplyFoodOnHunting();
         }
         Game.getVillage().incFood(animals);
         OutputManager.addToBot("Hunted " + animals + " new food");

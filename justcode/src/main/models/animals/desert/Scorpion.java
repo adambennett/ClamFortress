@@ -4,7 +4,7 @@ public class Scorpion extends AbstractDesertAnimal {
 
 
     public Scorpion() {
-        super(5);
+        super("Scorpion", 5);
     }
 
     @Override

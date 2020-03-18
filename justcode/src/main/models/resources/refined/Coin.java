@@ -6,4 +6,9 @@ public class Coin extends RefinedResource {
     public Coin() {
         super("Coins");
     }
+
+    @Override
+    public Coin clone() {
+        return new Coin();
+    }
 }

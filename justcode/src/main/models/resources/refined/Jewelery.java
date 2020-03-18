@@ -7,4 +7,9 @@ public class Jewelery extends RefinedResource implements ResourceCost {
     public Jewelery() {
         super("Jewelery");
     }
+
+    @Override
+    public Jewelery clone() {
+        return new Jewelery();
+    }
 }

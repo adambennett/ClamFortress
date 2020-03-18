@@ -9,18 +9,19 @@ import main.models.managers.*;
 
 import java.util.*;
 
-public class Inventory {
+public class Inventory extends GameObject {
 
     private ArrayList<AbstractItem> items;
-    private Integer size;
+    private Integer capacity;
 
-    public Inventory(int size) {
+    public Inventory(int capacity) {
+        super("Inventory");
         this.items = new ArrayList<>();
-        this.size = size;
+        this.capacity = capacity;
     }
 
-    public void addItem(AbstractItem item){
-        if (this.items.size() < this.size) {
+    public Boolean addItem(AbstractItem item){
+        if (this.items.size() < this.capacity) {
             if (!(item instanceof Unique && items.contains(item))) {
                 items.add(item);
                 if (item instanceof Golden) {
@@ -32,19 +33,13 @@ public class Inventory {
                     ((Cursed) item).runCurse();
                     OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item!");
                 }
-            }
-        } else {
-            OutputManager.addToBot("Your inventory is full!", OutputFlag.INVENTORY_FULL);
-        }
-    }
-
-    public Boolean containsItem(AbstractItem t) {
-        for (AbstractItem item : items) {
-            if (item.getName().equals(t.getName())) {
                 return true;
             }
+            return false;
+        } else {
+            OutputManager.addToBot("Your inventory is full!", OutputFlag.INVENTORY_FULL);
+            return false;
         }
-        return false;
     }
 
     public Boolean containsItem(String name){
@@ -80,23 +75,15 @@ public class Inventory {
         return arts;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
-        if (this.size < 1) {
-            this.size = 1;
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+        if (this.capacity < 1) {
+            this.capacity = 1;
         }
     }
 
     @Override
-    public String toString() {
-        String itemString = "";
-        for (AbstractItem i : items) {
-            itemString += i.getName() + ", ";
-        }
-        itemString = itemString.substring(0, itemString.length()-2);
-        return "Inventory{" +
-                "items=" + itemString +
-                '}';
+    public Inventory clone() {
+        return new Inventory(this.capacity);
     }
-
 }

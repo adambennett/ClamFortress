@@ -18,6 +18,7 @@ import main.models.animals.*;
 import main.models.animals.sea.*;
 import main.models.nodes.*;
 import main.models.managers.*;
+import main.models.resources.*;
 import main.models.resources.natural.*;
 import main.models.tech.*;
 import main.utilities.persistence.*;
@@ -103,6 +104,15 @@ public class Game {
         isLoaded = true;
     }
 
+    public static ArrayList<GameObject> getModifierObjects() {
+        ArrayList<GameObject> mods = new ArrayList<>();
+        mods.addAll(getVillage().getAllResources());
+        mods.addAll(getVillage().getInventory().getItems());
+        mods.addAll(getVillage().getBuildings());
+        mods.addAll(getGameBoard().getAnimals());
+        return mods;
+    }
+
     public static Boolean canRaid() {
         return false;
     }
@@ -130,8 +140,8 @@ public class Game {
         if (gameBoard.getVillage().canRunEncounter(enc)) {
             OutputManager.addToBot("SPECIAL ENCOUNTER :: " + enc.toString());
             enc.runEncounter();
-            for (AbstractItem item : getVillage().getInventory().getItems()) {
-                item.onRunSpecialEncounter(enc);
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onRunSpecialEncounter(enc);
             }
         }
     }
@@ -142,8 +152,8 @@ public class Game {
             handleEncounter(enc);
         }
         int highEnd = 45;
-        for (AbstractItem item : getVillage().getInventory().getItems()) {
-            highEnd += item.modifyDateIncrease();
+        for (GameObject obj : Game.getModifierObjects()) {
+            highEnd += obj.modifyDateIncrease();
         }
         if (highEnd < 45) { highEnd = 45; }
         int low = 25 - dateInc;
@@ -161,8 +171,8 @@ public class Game {
             dateInc += encounterLogic(encounters);
         } else {
             int highEnd = 45;
-            for (AbstractItem item : getVillage().getInventory().getItems()) {
-                highEnd += item.modifyDateIncrease();
+            for (GameObject obj : Game.getModifierObjects()) {
+                highEnd += obj.modifyDateIncrease();
             }
             if (highEnd < 45) { highEnd = 45; }
             dateInc += gameManager.advanceDate(25, highEnd);
@@ -171,9 +181,9 @@ public class Game {
     }
 
     public static void advanceTurn() {
-        Integer dateInc = getDateInc();
-        for (AbstractItem item : getVillage().getInventory().getItems()) {
-            item.onDateAdvance(dateInc);
+        int dateInc = getDateInc();
+        for (GameObject obj : Game.getModifierObjects()) {
+            obj.onDateAdvance(dateInc);
         }
         Database.score(dateInc);
         gameManager.incTurns();
@@ -181,8 +191,8 @@ public class Game {
         // complicated actions logic
         runActions();
         PriorityManager.reset(difficulty.compareTo(Difficulty.HARD) > 0);
-        for (AbstractItem item : getVillage().getInventory().getItems()) {
-            item.endPhase();
+        for (GameObject obj : Game.getModifierObjects()) {
+            obj.endPhase();
         }
     }
 
@@ -230,24 +240,24 @@ public class Game {
         ArrayList<AbstractGameAction> foodActions = getFoodActions();
         for (int i = 0; i < PriorityManager.getFood1(); i++) {
             actionManager.addToBottom(foodActions.get(0).clone());
-            for (AbstractItem item : getVillage().getInventory().getItems()) {
-                item.onGatherFood(foodActions.get(0));
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onGatherFood(foodActions.get(0));
             }
             totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getFood2(); i++) {
             actionManager.addToBottom(foodActions.get(1).clone());
-            for (AbstractItem item : getVillage().getInventory().getItems()) {
-                item.onGatherFood(foodActions.get(1));
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onGatherFood(foodActions.get(1));
             }
             totalActions++;
         }
 
         for (int i = 0; i < PriorityManager.getFood3(); i++) {
             actionManager.addToBottom(foodActions.get(2).clone());
-            for (AbstractItem item : getVillage().getInventory().getItems()) {
-                item.onGatherFood(foodActions.get(2));
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onGatherFood(foodActions.get(2));
             }
             totalActions++;
         }

@@ -30,7 +30,7 @@ public class InventoryTest {
 
         inventory.addItem(pickaxe);
 
-        Boolean actual = inventory.containsItem(pickaxe);
+        Boolean actual = inventory.containsItem(pickaxe.getName());
         Boolean expected = true;
 
 

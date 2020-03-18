@@ -1,19 +1,20 @@
 package main.models.resources;
 
-public abstract class AbstractResource {
+import main.models.*;
 
-    private String name;
+import java.util.*;
+
+public abstract class AbstractResource extends GameObject {
 
     public AbstractResource(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        super(name);
     }
 
     @Override
     public String toString() {
-        return this.name;
+        return this.getName();
     }
+
+    @Override
+    public abstract AbstractResource clone();
 }

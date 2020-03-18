@@ -1,5 +1,6 @@
 package main.models.buildings.concrete.refining.crafting;
 
+import main.models.buildings.concrete.housing.*;
 import main.models.items.*;
 import main.models.items.tools.hunting.*;
 import main.models.resources.*;
@@ -9,7 +10,7 @@ import java.util.*;
 
 public class SpearCraftingTable extends AbstractCraftingSpot {
 
-    public SpearCraftingTable(String name, int resourceCost, AbstractResource resourceType, AbstractResource toRefine, AbstractItem itemToCraft) {
+    public SpearCraftingTable() {
         super("Spear Crafting Table", 20, new Wood(), new Wood(), new HuntingSpear());
     }
 
@@ -22,6 +23,11 @@ public class SpearCraftingTable extends AbstractCraftingSpot {
             count -= 3;
         }
         return toRet;
+    }
+
+    @Override
+    public SpearCraftingTable clone() {
+        return new SpearCraftingTable();
     }
 
 }

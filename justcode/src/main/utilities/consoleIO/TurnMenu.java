@@ -61,8 +61,8 @@ public class TurnMenu extends AbstractConsole {
                 printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case CONTINUE:
-                for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
-                    item.priorityPhase();
+                for (GameObject obj : Game.getModifierObjects()) {
+                    obj.priorityPhase();
                 }
                 PriorityMenu priorityMenu = new PriorityMenu();
                 priorityMenu.printPrompt(PromptMessage.PRIORITY_MENU, true, true);

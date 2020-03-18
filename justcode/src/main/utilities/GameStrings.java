@@ -212,7 +212,7 @@ public class GameStrings {
         a.put("Turn Number", "" + Game.getGameManager().getTurnNumber());
         a.put("Population", "" + Game.getVillage().getPopulation() + " / " + Game.getVillage().getPopCap());
         a.put("Village HP", "" + Game.getVillage().getHealth() + " / " + Game.getVillage().getHealth());
-        a.put("Resources", "" + Game.getVillage().getResources().size() + " / " + Game.getVillage().getResourceLimit());
+        a.put("Resources", "" + Game.getVillage().totalResources() + " / " + Game.getVillage().getResourceLimit());
         a.put("Buildings", "" + Game.getVillage().getBuildings().size() + " / " + Game.getVillage().getBuildingLimit());
         a.put("Food", "" + Game.getVillage().getFood() + " / " + Game.getVillage().getFoodLimit());
         a.put("Hunger", "" + Game.getVillage().getHunger() + " / " + 100);
@@ -234,7 +234,7 @@ public class GameStrings {
         } else {
             a.put("4", "[No Buildings]");
         }
-        if (Game.getVillage().getSurvivors().size() > 0) {
+        if (Game.getVillage().getPopulation() > 0) {
             a.put("5", "Population");
         } else {
             a.put("5", "[No Villagers]");
@@ -430,7 +430,7 @@ public class GameStrings {
         rsrcMap.put("Food", "" + v.getFood() + " / " + v.getFoodLimit());
         rsrcMap.put("Faith", "" + v.getFaith() + " / " + v.getFaithLimit());
         Map<String, Integer> occ = new HashMap<>();
-        for (AbstractResource resource : v.getResources()) {
+        for (AbstractResource resource : v.getAllResources()) {
            if (occ.containsKey(resource.getName())) {
                occ.put(resource.getName(), occ.get(resource.getName()) + 1);
            } else {
@@ -448,9 +448,6 @@ public class GameStrings {
         Village v = Game.getVillage();
         for (AbstractItem item : v.getInventory().getItems()){
             String name = item.getName();
-            if (item instanceof AbstractArtifact) {
-                name += " (A)";
-            }
             a.put(name, item.getDesc());
         }
         if (a.size() < 1) {

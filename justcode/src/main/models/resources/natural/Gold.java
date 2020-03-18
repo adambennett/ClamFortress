@@ -14,4 +14,9 @@ public class Gold extends NaturalResource implements ResourceCost {
     public Coin getRefined() {
         return (Coin) this.refined;
     }
+
+    @Override
+    public Gold clone() {
+        return new Gold();
+    }
 }

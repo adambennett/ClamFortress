@@ -5,8 +5,8 @@ import main.models.animals.land.*;
 import main.models.animals.land.bears.*;
 
 public abstract class AbstractJungleAnimal extends AbstractLandAnimal {
-    public AbstractJungleAnimal(int amt) {
-        super(amt);
+    public AbstractJungleAnimal(String name, int amt) {
+        super(name, amt);
     }
 
     @Override

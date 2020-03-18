@@ -3,7 +3,7 @@ package main.models.animals.desert;
 public class Lizard extends AbstractDesertAnimal {
 
     public Lizard() {
-        super(15);
+        super("Lizard", 15);
     }
 
     @Override

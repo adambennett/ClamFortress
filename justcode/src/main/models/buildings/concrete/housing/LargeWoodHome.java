@@ -8,4 +8,10 @@ public class LargeWoodHome extends AbstractHouse {
     public LargeWoodHome() {
         super("Large Wood Home", 20, 800, new Wood());
     }
+
+
+    @Override
+    public LargeWoodHome clone() {
+        return new LargeWoodHome();
+    }
 }

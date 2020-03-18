@@ -1,5 +1,6 @@
 package main.models.buildings.concrete.refining.crafting;
 
+import main.models.buildings.concrete.housing.*;
 import main.models.buildings.concrete.refining.crafting.*;
 import main.models.items.*;
 import main.models.items.tools.hunting.*;
@@ -10,7 +11,7 @@ import java.util.*;
 
 public class RodCraftingTable extends AbstractCraftingSpot {
 
-    public RodCraftingTable(String name, int resourceCost, AbstractResource resourceType, AbstractResource toRefine, AbstractItem itemToCraft) {
+    public RodCraftingTable() {
         super("Rod Crafting Table", 20, new Wood(), new Wood(), new FishingRod());
     }
 
@@ -23,6 +24,11 @@ public class RodCraftingTable extends AbstractCraftingSpot {
             count -= 3;
         }
         return toRet;
+    }
+
+    @Override
+    public RodCraftingTable clone() {
+        return new RodCraftingTable();
     }
 
 }

@@ -5,7 +5,7 @@ import main.models.animals.*;
 public class Chicken extends AbstractLandAnimal {
 
     public Chicken() {
-        super(18);
+        super("Chicken", 18);
     }
 
     @Override

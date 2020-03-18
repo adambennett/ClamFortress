@@ -1,6 +1,6 @@
 package main.models.resources.natural;
 
-import main.models.resources.NaturalResource;
+import main.models.resources.*;
 import main.models.resources.refined.Jewelery;
 
 public class Gems extends NaturalResource {
@@ -14,6 +14,11 @@ public class Gems extends NaturalResource {
     @Override
     public Jewelery getRefined() {
         return (Jewelery) this.refined;
+    }
+
+    @Override
+    public Gems clone() {
+        return new Gems();
     }
 }
 

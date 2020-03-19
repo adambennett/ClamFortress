@@ -261,9 +261,9 @@ public class GameStrings {
         ArrayList<String> colC = new ArrayList<>(); colC.add(elf); raceMenuMap.put("" + index, colC); index++;
         ArrayList<String> colD = new ArrayList<>(); colD.add(dwarf); raceMenuMap.put("" + index, colD); index++;
         ArrayList<String> colE = new ArrayList<>(); colE.add(claman); raceMenuMap.put("" + index, colE); index++;
-        ArrayList<String> colF = new ArrayList<>(); colE.add(alien); raceMenuMap.put("" + index, colE);
-        ArrayList<String> colG = new ArrayList<>(); colE.add("Return to Main Menu"); extraOptions.put("0", colE);
-        ArrayList<String> colH = new ArrayList<>(); colE.add("Start Game"); extraOptions.put("9", colE);
+        ArrayList<String> colF = new ArrayList<>(); colF.add(alien); raceMenuMap.put("" + index, colF);
+        ArrayList<String> colG = new ArrayList<>(); colG.add("Return to Main Menu"); extraOptions.put("0", colG);
+        ArrayList<String> colH = new ArrayList<>(); colH.add("Start Game"); extraOptions.put("9", colH);
         mapps.add(raceMenuMap);
         mapps.add(extraOptions);
         return mapps;
@@ -310,9 +310,9 @@ public class GameStrings {
     }
 
     public static void loadRaceMenu() {
-        String leftAlignFormat = "| %-2s | %-15s |\n";
-        String headerFormat = "| %-20s |\n";
-        String breakLine = "+----+-----------------+\n";
+        String leftAlignFormat = "| %-2s | %-19s |\n";
+        String headerFormat = "| %-24s |\n";
+        String breakLine = "+----+---------------------+\n";
         String header = "Choose Village Race";
         chooseRace = newNewMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
     }

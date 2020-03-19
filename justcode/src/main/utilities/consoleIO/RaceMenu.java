@@ -1,6 +1,8 @@
 package main.utilities.consoleIO;
 
 import main.enums.*;
+import main.models.tech.*;
+import main.models.tech.eras.*;
 import main.utilities.persistence.*;
 
 import java.util.*;
@@ -49,6 +51,7 @@ public class RaceMenu extends AbstractConsole {
                 break;
             case ALIEN:
                 builder.setRace(Race.ALIEN);
+                builder.setStartingEra(TechTree.getTail());
                 new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
             case CLAMAN:

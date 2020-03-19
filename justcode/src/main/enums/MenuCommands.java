@@ -35,6 +35,7 @@ public enum MenuCommands {
     LOAD_GAME,
     LOGIN,
     MASONRY,
+    SMELTING,
     MINING,
     MOUNTAIN,
     NEW_GAME,

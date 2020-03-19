@@ -188,10 +188,10 @@ public class PriorityMenu extends AbstractConsole {
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 actionManager.addToTurnEnd(new Planting(amt));
                 break;
-            case SMITHING:
+            case SMELTING:
                 PriorityManager.setSmith(PriorityManager.getSmith() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                actionManager.addToTurnEnd(new Smithing(amt));
+                actionManager.addToTurnEnd(new Smelting(amt));
                 break;
             case MASONRY:
                 PriorityManager.setMasonry(PriorityManager.getMasonry() + amt);

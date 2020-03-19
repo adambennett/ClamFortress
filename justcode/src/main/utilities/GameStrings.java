@@ -485,7 +485,7 @@ public class GameStrings {
                         "***            12 | Healing              <" + heal +
                         "***            13 | Scouting             <" + scout +
                         "***            14 | Planting             <" + plant +
-                        "***            15 | Smithing             <" + smith +
+                        "***            15 | Smelting             <" + smith +
                         "***            16 | Masonry              <" + smelt +
                         "***            17 | Raiding              <" + raid +
                         "***            18 | Engineering          <" + engineer +

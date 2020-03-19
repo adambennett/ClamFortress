@@ -42,6 +42,7 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public Integer modifyDateIncrease() { return 0; }
     public Integer modifyPopCapIncreases() { return 0; }
     public Integer modifyResourceStorageIncreases() { return 0; }
+    public Integer modifyMaxHPOnPickup() { return 0; }
 
     // Print special messages at the end of turn report
     public String addToEndTurnReportTop() { return ""; }

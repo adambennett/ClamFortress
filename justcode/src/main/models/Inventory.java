@@ -6,12 +6,14 @@ import main.models.items.*;
 import main.models.items.artifacts.AbstractArtifact;
 import main.models.items.tools.*;
 import main.models.managers.*;
+import main.models.people.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public class Inventory extends GameObject {
 
-    private ArrayList<AbstractItem> items;
+    private final ArrayList<AbstractItem> items;
     private Integer capacity;
 
     public Inventory(int capacity) {
@@ -33,13 +35,23 @@ public class Inventory extends GameObject {
                     ((Cursed) item).runCurse();
                     OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item!");
                 }
+
+                int maxHPGain = 0;
+                for (GameObject obj : Game.getModifierObjects()) {
+                    maxHPGain += obj.modifyMaxHPOnPickup();
+                }
+
+                if (maxHPGain > 0 && Game.getVillage().getPopulation() > 0) {
+                    Survivor s = Game.getVillage().getSurvivors().get(ThreadLocalRandom.current().nextInt(Game.getVillage().getSurvivors().size()));
+                    s.setMaxHp(s.getMaxHp() + maxHPGain);
+                    Game.getVillage().setHealth(Game.getVillage().getHealth() + maxHPGain);
+                }
                 return true;
             }
-            return false;
         } else {
             OutputManager.addToBot(OutputFlag.INVENTORY_FULL, "Your inventory is full!");
-            return false;
         }
+        return false;
     }
 
     public Boolean containsItem(String name){

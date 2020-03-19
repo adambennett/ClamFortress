@@ -635,8 +635,8 @@ public class Village extends AbstractNode {
         else if (this.hunger < 0) { this.hunger = 0; }
     }
 
-    public void setPopCap(Integer popCap){ this.popCap = popCap;}
-
+    public void setPopCap(Integer popCap){ this.popCap = popCap; }
+    public void setHealth(Integer health) { this.health = health; }
     public void setBuildingLimit(Integer buildingLimit) {
         this.buildingLimit = buildingLimit;
     }

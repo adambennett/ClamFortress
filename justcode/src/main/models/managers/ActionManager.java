@@ -59,7 +59,7 @@ public class ActionManager {
                         this.current.reset();
                         this.previous = this.current;
                         if (!this.current.isDone) {
-                            requeue(this.current);
+                            addToTop(this.current);
                         }
                         this.getNextAction();
                     } else if (this.current.amountToRun > 0){

@@ -41,7 +41,7 @@ public class Smelting extends AbstractGameAction {
 
 
 
-        while(amountToSmelt > 0){
+        while(amountToSmelt > 0 && smelted.size() > 0){
             Smeltable rand = smelted.get(ThreadLocalRandom.current().nextInt(smelted.size()));
             int amount = smeltables.get(rand);
             AbstractResource someName = (AbstractResource) rand;

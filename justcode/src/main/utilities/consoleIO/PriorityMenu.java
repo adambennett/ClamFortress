@@ -42,13 +42,15 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("12", MenuCommands.HEALING);
         consoleCommands.put("13", MenuCommands.SCOUTING);
         consoleCommands.put("14", MenuCommands.PLANTING);
-        consoleCommands.put("15", MenuCommands.SMITHING);
+        consoleCommands.put("15", MenuCommands.SMELTING);
         consoleCommands.put("16", MenuCommands.MASONRY);
         consoleCommands.put("17", MenuCommands.RAIDING);
         consoleCommands.put("18", MenuCommands.ENGINEERING);
         consoleCommands.put("19", MenuCommands.BUILDING);
         consoleCommands.put("20", MenuCommands.TRADING);
         consoleCommands.put("0", MenuCommands.CONTINUE);
+        consoleCommands.put("smelt", MenuCommands.SMELTING);
+        consoleCommands.put("smelting", MenuCommands.SMELTING);
         consoleCommands.put("continue", MenuCommands.CONTINUE);
         consoleCommands.put("next", MenuCommands.CONTINUE);
         consoleCommands.put("end", MenuCommands.CONTINUE);

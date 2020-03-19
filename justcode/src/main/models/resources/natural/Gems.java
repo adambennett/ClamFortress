@@ -1,10 +1,10 @@
 package main.models.resources.natural;
 
-import main.interfaces.Smithable;
+import main.interfaces.Smeltable;
 import main.models.resources.*;
 import main.models.resources.refined.Jewelery;
 
-public class Gems extends NaturalResource implements Smithable {
+public class Gems extends NaturalResource implements Smeltable {
 //impliments smithable for the time but maybe it should be refined in another way?
 
     public Gems(){

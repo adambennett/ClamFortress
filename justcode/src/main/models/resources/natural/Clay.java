@@ -1,12 +1,12 @@
 package main.models.resources.natural;
 
 import main.interfaces.ResourceCost;
-import main.interfaces.Smithable;
+import main.interfaces.Smeltable;
 import main.models.resources.NaturalResource;
 import main.models.resources.refined.Brick;
 
 
-public class Clay extends NaturalResource implements ResourceCost, Smithable {
+public class Clay extends NaturalResource implements ResourceCost, Smeltable {
 
 
     public Clay(){

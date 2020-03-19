@@ -4,7 +4,7 @@ import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.IronIngot;
 
-public class Iron extends NaturalResource implements ResourceCost,Smithable {
+public class Iron extends NaturalResource implements ResourceCost, Smeltable {
 
 
     public Iron(){

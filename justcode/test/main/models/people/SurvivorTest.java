@@ -1,9 +1,11 @@
 package main.models.people;
 
-import main.enums.*;
-import main.models.people.*;
-import main.utilities.builders.*;
-import org.junit.*;
+import main.enums.Gender;
+import main.enums.Race;
+import main.utilities.builders.SurvivorBuilder;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class SurvivorTest {
 
@@ -20,6 +22,7 @@ public class SurvivorTest {
                 .setEngineering(103)
                 .setGender(Gender.MALE)
                 .setHealthPoints(200)
+                .setMaxHP(250)
                 .setMagic(50)
                 .setName("Adam")
                 .setRace(Race.HUMAN)
@@ -61,6 +64,7 @@ public class SurvivorTest {
         Integer expectedAgi = 102;
         Integer expectedEng = 103;
         Integer expectedHP  = 200;
+        Integer expectedmaxHp = 250;
         Integer expectedMag = 50;
         Integer expectedStr = 250;
         Integer expectedInt = 104;
@@ -72,6 +76,7 @@ public class SurvivorTest {
         Assert.assertEquals(expectedAgi, testSurvivor.getAgility());
         Assert.assertEquals(expectedEng, testSurvivor.getEngineering());
         Assert.assertEquals(expectedHP, testSurvivor.getHealthPoints());
+        Assert.assertEquals(expectedmaxHp,testSurvivor.getMaxHp());
         Assert.assertEquals(expectedMag, testSurvivor.getMagic());
         Assert.assertEquals(expectedStr, testSurvivor.getStrength());
         Assert.assertEquals(expectedInt, testSurvivor.getIntelligence());

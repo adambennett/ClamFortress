@@ -11,6 +11,7 @@ public class SurvivorBuilder {
     private Integer magic = 0;
     private Integer engineering = 0;
     private Integer healthPoints = 10;
+    private Integer maxHp = 0;
     private Integer age = 5;
     private String name = "Villager";
     private Gender gender = Gender.MALE;
@@ -51,6 +52,11 @@ public class SurvivorBuilder {
         return this;
     }
 
+    public SurvivorBuilder setMaxHP(Integer maxHp){
+        this.maxHp = maxHp;
+        return this;
+    }
+
     public SurvivorBuilder setAge(Integer age) {
         this.age = age;
         return this;
@@ -72,6 +78,6 @@ public class SurvivorBuilder {
     }
 
     public Survivor createSurvivor() {
-        return new Survivor(agility, strength, dexterity, intelligence, magic, engineering, healthPoints, age, name, gender, race);
+        return new Survivor(agility, strength, dexterity, intelligence, magic, engineering, healthPoints, maxHp, age, name, gender, race);
     }
 }

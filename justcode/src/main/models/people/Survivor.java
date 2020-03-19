@@ -14,12 +14,13 @@ public  class Survivor {
     protected Integer magic;
     protected Integer engineering;
     protected Integer healthPoints;
+    protected Integer maxHp;
     protected Integer age;
     protected String name;
     protected Gender gender;
     protected Race race;
 
-    public Survivor(Integer agility, Integer strength, Integer dexterity, Integer intelligence, Integer magic, Integer engineering, Integer healthPoints, Integer age, String name, Gender gender, Race race) {
+    public Survivor(Integer agility, Integer strength, Integer dexterity, Integer intelligence, Integer magic, Integer engineering, Integer healthPoints,Integer maxHP, Integer age, String name, Gender gender, Race race) {
         this.agility = agility;
         this.strength = strength;
         this.dexterity = dexterity;
@@ -27,6 +28,7 @@ public  class Survivor {
         this.magic = magic;
         this.engineering = engineering;
         this.healthPoints = healthPoints;
+        this.maxHp = maxHP;
         this.age = age;
         this.name = name;
         this.gender = gender;
@@ -91,6 +93,10 @@ public  class Survivor {
     public Integer getHealthPoints() { return healthPoints; }
 
     public void setHealthPoints(Integer healthPoints) { this.healthPoints = healthPoints; }
+
+    public void setMaxHp(Integer maxHp){this.maxHp = maxHp;}
+
+    public Integer getMaxHp(){return this.maxHp;}
 
     public Integer getAge() { return age; }
 

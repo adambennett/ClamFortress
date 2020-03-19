@@ -3,7 +3,6 @@ package main.actions.priority;
 import main.actions.AbstractGameAction;
 import main.interfaces.Smeltable;
 import main.models.Game;
-import main.models.items.AbstractItem;
 import main.models.managers.GameManager;
 import main.models.managers.OutputManager;
 import main.models.resources.AbstractResource;
@@ -23,12 +22,12 @@ public class Smelting extends AbstractGameAction {
     public void update() {
         HashMap<Smeltable,Integer> smeltables = new HashMap<>();
         ArrayList<Smeltable> smelted= new ArrayList<>();
-
+        ArrayList<AbstractResource> recources = Game.getVillage().getAllResources();
         int amountToSmelt = 2 + random.nextInt(5);
 
 
         // gets all the smeltables out of the inventory
-        for (AbstractItem i: Game.getVillage().getInventory().getItems()) {
+        for ( AbstractResource i: recources) {
             if (i instanceof Smeltable) {
                 smelted.add((Smeltable) i);
                 if (!smeltables.containsKey(i)) {

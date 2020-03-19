@@ -12,6 +12,7 @@ public class GameManager {
     private Integer techLevel;
     private Integer techUp;
     private Integer techMod;
+    private Integer nethermod;
     private BigInteger turnNumber;
     private Integer trainingCost;
     private Date date;
@@ -34,6 +35,7 @@ public class GameManager {
         this.techLevel = 0;
         this.techUp = 1000;
         this.techMod = 2;
+        this.nethermod = 1;
         updateSeason();
     }
 
@@ -42,6 +44,10 @@ public class GameManager {
         if (this.trainingCost < 0) {
             this.trainingCost = 0;
         }
+    }
+
+    public void setNethermod(Integer nethermod) {
+        this.nethermod = nethermod;
     }
 
     public void gainExperience() {
@@ -65,6 +71,10 @@ public class GameManager {
             OutputManager.exp(amt);
             Database.score(amt);
         }
+    }
+
+    public Integer getNethermod() {
+        return nethermod;
     }
 
     public Integer getTechLevel() {
@@ -91,6 +101,7 @@ public class GameManager {
         instance.updateSeason();
         instance.techUp = 500;
         instance.techMod = 2;
+        instance.nethermod = 1;
     }
 
     private void updateSeason() {

@@ -7,7 +7,8 @@ public class Raiding extends AbstractGameAction {
 
     private final City city;
 
-    public Raiding(City cityNode) {
+    public Raiding(City cityNode, int amtToRun) {
+        super(amtToRun);
         this.city = cityNode;
     }
 
@@ -18,6 +19,6 @@ public class Raiding extends AbstractGameAction {
 
     @Override
     public Raiding clone() {
-        return new Raiding(this.city);
+        return new Raiding(this.city, this.amountToRun);
     }
 }

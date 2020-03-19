@@ -14,7 +14,7 @@ public class FishingTest {
 
     @Before
     public void setup() {
-        fishing = new Fishing();
+        fishing = new Fishing(1);
 
     }
 

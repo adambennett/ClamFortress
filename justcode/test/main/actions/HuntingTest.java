@@ -11,7 +11,7 @@ public class HuntingTest { ;
 
     @Before
     public void setup() {
-        hunting = new Hunting();
+        hunting = new Hunting(1);
 
     }
     @Test

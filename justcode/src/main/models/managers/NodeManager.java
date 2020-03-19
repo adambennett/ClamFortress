@@ -9,7 +9,8 @@ import java.util.concurrent.*;
 
 public class NodeManager {
 
-    public static AbstractNode getRandomNode(int x, int y) {
+    public static AbstractNode getRandomNode(int x, int y, int nethermod) {
+        boolean hardMode = nethermod < 0;
         ArrayList<AbstractNode> nodes = new ArrayList<>();
         Netherworld nether = new Netherworld(x, y);
         nodes.add(new Grass(x, y));
@@ -21,8 +22,16 @@ public class NodeManager {
         nodes.add(new Sea(x, y));
         nodes.add(new Tundra(x, y));
         AbstractNode firstPass = nodes.get(ThreadLocalRandom.current().nextInt(nodes.size()));
-        if (firstPass.equals(nether)) {
-            return nodes.get(ThreadLocalRandom.current().nextInt(nodes.size()));
+        if (hardMode) {
+            while (!firstPass.equals(nether) && nethermod < 0) {
+                firstPass = nodes.get(ThreadLocalRandom.current().nextInt(nodes.size()));
+                nethermod++;
+            }
+        } else {
+            while (firstPass.equals(nether) && nethermod > 0) {
+                firstPass = nodes.get(ThreadLocalRandom.current().nextInt(nodes.size()));
+                nethermod--;
+            }
         }
         return firstPass;
     }

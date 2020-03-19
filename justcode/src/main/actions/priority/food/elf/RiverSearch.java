@@ -3,6 +3,10 @@ package main.actions.priority.food.elf;
 import main.actions.*;
 
 public class RiverSearch extends AbstractGameAction {
+    public RiverSearch(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         this.isDone = true;
@@ -10,6 +14,6 @@ public class RiverSearch extends AbstractGameAction {
 
     @Override
     public RiverSearch clone() {
-        return new RiverSearch();
+        return new RiverSearch(this.amountToRun);
     }
 }

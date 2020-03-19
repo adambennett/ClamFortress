@@ -12,7 +12,10 @@ public class Fishing extends AbstractGameAction {
 
     private Random random;
 
-    public Fishing() { this.random = new Random(); }
+    public Fishing(int amtToRun) {
+        super(amtToRun);
+        this.random = new Random();
+    }
 
     @Override
     public void update() {
@@ -36,6 +39,6 @@ public class Fishing extends AbstractGameAction {
 
     @Override
     public AbstractGameAction clone() {
-        return new Fishing();
+        return new Fishing(this.amountToRun);
     }
 }

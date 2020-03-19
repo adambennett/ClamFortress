@@ -9,6 +9,10 @@ import java.util.concurrent.*;
 
 public class Woodcutting extends AbstractGameAction {
 
+    public Woodcutting(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         int wood = 15;
@@ -27,7 +31,7 @@ public class Woodcutting extends AbstractGameAction {
 
     @Override
     public Woodcutting clone() {
-        return new Woodcutting();
+        return new Woodcutting(this.amountToRun);
     }
 }
 

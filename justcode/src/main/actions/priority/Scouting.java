@@ -8,27 +8,28 @@ import main.models.managers.*;
 
 public class Scouting extends AbstractGameAction {
 
-    private AbstractNode region;
+    private final Integer nethermod;
 
-    public Scouting() {
-
+    public Scouting(int amtToRun, int nethermod) {
+        super(amtToRun);
+        this.nethermod = nethermod;
     }
 
     @Override
     public void update() {
-        this.region = Game.getGameBoard().getRandomRegion();
-        if (this.region == null) {
+        if (!Game.getGameBoard().isBoardFull()) {
+            AbstractNode region = Game.getGameBoard().getRandomRegion(this.nethermod);
+            Game.getGameBoard().discover(region);
+            OutputManager.addToBot("Discovered a new " + region.toString() + " region!");
+        } else {
             OutputManager.addToBot(OutputFlag.FULL_BOARD, "The board is full! You cannot discover any additional spaces!");
-            this.isDone = true;
-            return;
+            this.setAmtRemaining(this.amountToRun);
         }
-        Game.getGameBoard().discover(region);
-        OutputManager.addToBot("Discovered a new " + region.toString() + " region!");
         this.isDone = true;
     }
 
     @Override
     public Scouting clone() {
-        return new Scouting();
+        return new Scouting(this.amountToRun, this.nethermod);
     }
 }

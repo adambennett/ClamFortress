@@ -20,15 +20,15 @@ public class BoardTest {
 
     @Test
     public void getRandomRegion() {
-        AbstractNode rand = board.getRandomRegion();
+        AbstractNode rand = board.getRandomRegion(999);
         Assert.assertTrue(rand.getxPos() <= board.getGridXMax());
         Assert.assertTrue(rand.getyPos() <= board.getGridYMax());
     }
 
     @Test
     public void testGetRandomRegion() {
-        AbstractNode rand = board.getRandomRegion(12, 12);
-        AbstractNode bad = board.getRandomRegion(60, 60);
+        AbstractNode rand = board.getRandomRegion(12, 12, 999);
+        AbstractNode bad = board.getRandomRegion(60, 60, 999);
         Assert.assertEquals(12, (int) rand.getxPos());
         Assert.assertEquals(12, (int) rand.getyPos());
         Assert.assertEquals(60, (int) bad.getxPos());

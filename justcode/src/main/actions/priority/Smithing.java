@@ -4,6 +4,10 @@ import main.actions.*;
 
 public class Smithing extends AbstractGameAction {
 
+    public Smithing(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         this.isDone = true;
@@ -11,6 +15,6 @@ public class Smithing extends AbstractGameAction {
 
     @Override
     public Smithing clone() {
-        return new Smithing();
+        return new Smithing(this.amountToRun);
     }
 }

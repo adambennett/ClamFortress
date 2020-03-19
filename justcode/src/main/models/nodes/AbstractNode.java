@@ -94,11 +94,12 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
         if (!(o instanceof AbstractNode)) return false;
         AbstractNode that = (AbstractNode) o;
         return Objects.equals(getxPos(), that.getxPos()) &&
-                Objects.equals(getyPos(), that.getyPos());
+                Objects.equals(getyPos(), that.getyPos()) &&
+                Objects.equals(getClass().getSimpleName(), that.getClass().getSimpleName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getxPos(), getyPos());
+        return Objects.hash(getxPos(), getyPos(), getClass().getSimpleName());
     }
 }

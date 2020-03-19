@@ -4,6 +4,10 @@ import main.actions.*;
 
 public class Harvesting extends AbstractGameAction {
 
+    public Harvesting(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         this.isDone = true;
@@ -12,7 +16,7 @@ public class Harvesting extends AbstractGameAction {
 
     @Override
     public Harvesting clone() {
-        return new Harvesting();
+        return new Harvesting(this.amountToRun);
     }
 
 

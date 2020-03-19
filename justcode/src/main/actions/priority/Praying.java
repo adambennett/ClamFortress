@@ -9,6 +9,10 @@ import java.util.concurrent.*;
 
 public class Praying extends AbstractGameAction {
 
+    public Praying(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         int faithBuildingMod = 0;
@@ -36,7 +40,7 @@ public class Praying extends AbstractGameAction {
 
     @Override
     public Praying clone() {
-        return new Praying();
+        return new Praying(this.amountToRun);
     }
 
 

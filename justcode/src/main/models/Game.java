@@ -68,6 +68,7 @@ public class Game {
         new NewSurvivors(false).addToVillage(startPop);
         getVillage().addResource(new Wood(), 100);
         updateDifficultyBools();
+        gameManager.setNethermod(difficulty.getNethermod());
         isLoaded = true;
     }
 
@@ -103,6 +104,7 @@ public class Game {
         healingEnabled = !customDifficultyMods.contains(13);
         faithEnabled = !customDifficultyMods.contains(14);
         surroundingCheckEnabled = !customDifficultyMods.contains(15);
+        gameManager.setNethermod(difficulty.getNethermod());
         isLoaded = true;
     }
 
@@ -188,17 +190,10 @@ public class Game {
     public static void queueEvergreenActions(int dateInc) {
         actionManager.addToTurnStart(new NewSurvivors(true));
         actionManager.addToTurnEnd(new EndPhaseHunger());
-
         if (getVillage().getUncompletedBuildings().size() > 0) {
-            for (int i = 0; i < PriorityManager.getBuild(); i++) {
-                actionManager.addToBottom(new Building());
-            }
+            actionManager.addToBottom(new Building(PriorityManager.getBuild()));
         }
-
-        for (int i = 0; i < PriorityManager.getEngineer(); i++) {
-            actionManager.addToBottom(new Engineering(BuildingManager.getRandomBuilding()));
-        }
-
+        actionManager.addToBottom(new Engineering(BuildingManager.getRandomBuilding(), PriorityManager.getEngineer()));
         actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc));
     }
 

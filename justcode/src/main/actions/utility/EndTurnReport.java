@@ -11,6 +11,7 @@ public class EndTurnReport extends AbstractGameAction {
     private Integer dateInc;
 
     public EndTurnReport(int dateInc) {
+        super(1);
         this.dateInc = dateInc;
     }
 

@@ -5,6 +5,9 @@ import main.actions.*;
 public class Analyzing extends AbstractGameAction {
 
 
+    public Analyzing(int amountToRun) {
+        super(amountToRun);
+    }
 
     @Override
     public void update() {
@@ -13,6 +16,6 @@ public class Analyzing extends AbstractGameAction {
 
     @Override
     public Analyzing clone() {
-        return new Analyzing();
+        return new Analyzing(this.amountToRun);
     }
 }

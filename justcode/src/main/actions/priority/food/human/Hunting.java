@@ -12,7 +12,8 @@ public class Hunting extends AbstractGameAction {
 
     private Random random;
 
-    public Hunting() {
+    public Hunting(int amtToRun) {
+        super(amtToRun);
         this.random = new Random();
     }
 
@@ -37,7 +38,7 @@ public class Hunting extends AbstractGameAction {
 
     @Override
     public Hunting clone() {
-        return new Hunting();
+        return new Hunting(this.amountToRun);
     }
 
     public void setSeed() {

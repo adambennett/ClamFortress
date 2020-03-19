@@ -63,16 +63,20 @@ public class Board extends GameObject {
         this.addResources(this.village.getResources());
     }
 
-    public AbstractNode getRandomRegion() {
+    public Boolean isBoardFull() {
+        return (grid.size() >= (gridXMax * gridYMax)+1 || nextY > gridYMax);
+    }
+
+    public AbstractNode getRandomRegion(int nethermod) {
         int boardSize = gridXMax * gridYMax;
         if (grid.size() >= boardSize+1 || nextY > gridYMax) {
             return null;
         }
-        return getRandomRegion(nextX, nextY);
+        return getRandomRegion(nextX, nextY, nethermod);
     }
 
-    public AbstractNode getRandomRegion(int x, int y) {
-        return NodeManager.getRandomNode(x, y);
+    public AbstractNode getRandomRegion(int x, int y, int nethermod) {
+        return NodeManager.getRandomNode(x, y, nethermod);
     }
 
     public void discover(AbstractNode region) {

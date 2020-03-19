@@ -25,8 +25,8 @@ public class GameBuilder {
     public GameBuilder(){
         this.startingPop = 0;
         this.startingPopCap = 5;
-        this.xMax = 50;
-        this.yMax = 50;
+        this.xMax = 15;
+        this.yMax = 15;
         this.difficulty = Difficulty.DEFAULT;
         this.race = Race.HUMAN;
         this.customMods = new ArrayList<>();
@@ -36,8 +36,8 @@ public class GameBuilder {
     public void reset() {
         this.startingPop = 0;
         this.startingPopCap = 5;
-        this.xMax = 50;
-        this.yMax = 50;
+        this.xMax = 15;
+        this.yMax = 15;
         this.difficulty = Difficulty.DEFAULT;
         this.race = Race.HUMAN;
         this.customMods = new ArrayList<>();

@@ -14,6 +14,10 @@ import java.util.concurrent.*;
 
 public class Mining extends AbstractGameAction {
 
+    public Mining(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         ArrayList<AbstractResource> mined = new ArrayList<>();
@@ -44,7 +48,7 @@ public class Mining extends AbstractGameAction {
 
     @Override
     public Mining clone() {
-        return new Mining();
+        return new Mining(this.amountToRun);
     }
 
     public ArrayList<AbstractResource> ores() {

@@ -12,6 +12,10 @@ import java.util.concurrent.*;
 
 public class EndPhaseHunger extends AbstractGameAction {
 
+    public EndPhaseHunger() {
+        super(1);
+    }
+
     @Override
     public void update() {
         int numHungry = Game.getVillage().feedAllVillagers();

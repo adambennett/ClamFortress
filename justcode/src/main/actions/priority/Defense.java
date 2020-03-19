@@ -5,6 +5,10 @@ import main.models.*;
 
 public class Defense extends AbstractGameAction {
 
+    public Defense(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         Integer defense = Game.getVillage().getDefense();
@@ -17,6 +21,6 @@ public class Defense extends AbstractGameAction {
 
     @Override
     public Defense clone() {
-        return new Defense();
+        return new Defense(this.amountToRun);
     }
 }

@@ -58,23 +58,34 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("woodcutting", MenuCommands.WOODCUTTING);
         consoleCommands.put("stone", MenuCommands.STONE_PICK);
         consoleCommands.put("mine", MenuCommands.MINING);
+        consoleCommands.put("mining", MenuCommands.MINING);
+        consoleCommands.put("defending", MenuCommands.DEFENDING);
         consoleCommands.put("defend", MenuCommands.DEFENDING);
         consoleCommands.put("def", MenuCommands.DEFENDING);
+        consoleCommands.put("harvesting", MenuCommands.HARVESTING);
         consoleCommands.put("harvest", MenuCommands.HARVESTING);
         consoleCommands.put("forge", MenuCommands.FORGING);
+        consoleCommands.put("healing", MenuCommands.HEALING);
         consoleCommands.put("heal", MenuCommands.HEALING);
+        consoleCommands.put("scouting", MenuCommands.SCOUTING);
         consoleCommands.put("scout", MenuCommands.SCOUTING);
         consoleCommands.put("explore", MenuCommands.SCOUTING);
         consoleCommands.put("discover", MenuCommands.SCOUTING);
+        consoleCommands.put("planting", MenuCommands.PLANTING);
         consoleCommands.put("plant", MenuCommands.PLANTING);
+        consoleCommands.put("smithing", MenuCommands.SMITHING);
         consoleCommands.put("smith", MenuCommands.SMITHING);
         consoleCommands.put("masonry", MenuCommands.MASONRY);
         consoleCommands.put("mason", MenuCommands.MASONRY);
         consoleCommands.put("raid", MenuCommands.RAIDING);
+        consoleCommands.put("raiding", MenuCommands.RAIDING);
+        consoleCommands.put("engineering", MenuCommands.ENGINEERING);
         consoleCommands.put("engineer", MenuCommands.ENGINEERING);
         consoleCommands.put("eng", MenuCommands.ENGINEERING);
         consoleCommands.put("build", MenuCommands.BUILDING);
+        consoleCommands.put("building", MenuCommands.BUILDING);
         consoleCommands.put("trade", MenuCommands.TRADING);
+        consoleCommands.put("trading", MenuCommands.TRADING);
     }
 
     @Override
@@ -86,7 +97,7 @@ public class PriorityMenu extends AbstractConsole {
             amt = PriorityManager.getPointsRemaining();
         }
         ActionManager actionManager = Game.actionManager;
-        ArrayList<AbstractGameAction> foodActions = getFoodActions();
+        ArrayList<AbstractGameAction> foodActions = getFoodActions(amt);
         switch(cmd) {
             case CONTINUE:
                 Game.advanceTurn();
@@ -125,100 +136,72 @@ public class PriorityMenu extends AbstractConsole {
             case PRAY:
                 PriorityManager.setPray(PriorityManager.getPray() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new Praying());
-                }
+                actionManager.addToBottom(new Praying(amt));
                 break;
             case FORAGE:
                 PriorityManager.setForage(PriorityManager.getForage() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new Foraging());
-                }
+                actionManager.addToBottom(new Foraging(amt));
                 break;
             case WOODCUTTING:
                 PriorityManager.setWoodcut(PriorityManager.getWoodcut() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new Woodcutting());
-                }
+                actionManager.addToBottom(new Woodcutting(amt));
                 break;
             case STONE_PICK:
                 PriorityManager.setStone(PriorityManager.getStone() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new RockPicking());
-                }
+                actionManager.addToBottom(new RockPicking(amt));
                 break;
             case MINING:
                 PriorityManager.setMine(PriorityManager.getMine() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new Mining());
-                }
+                actionManager.addToBottom(new Mining(amt));
                 break;
             case DEFENDING:
                 PriorityManager.setDefend(PriorityManager.getDefend() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new Defense());
-                }
+                actionManager.addToBottom(new Defense(amt));
                 break;
             case HARVESTING:
                 PriorityManager.setHarvest(PriorityManager.getHarvest() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new Harvesting());
-                }
+                actionManager.addToBottom(new Harvesting(amt));
                 break;
             case FORGING:
                 PriorityManager.setForge(PriorityManager.getForge() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new Forging());
-                }
+                actionManager.addToBottom(new Forging(amt));
                 break;
             case HEALING:
                 PriorityManager.setHeal(PriorityManager.getHeal() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToBottom(new Healing());
-                }
+                actionManager.addToBottom(new Healing(amt));
                 break;
             case SCOUTING:
                 PriorityManager.setScout(PriorityManager.getScout() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToTurnEnd(new Scouting());
-                }
+                actionManager.addToTurnEnd(new Scouting(amt, GameManager.getInstance().getNethermod()));
                 break;
             case PLANTING:
                 PriorityManager.setPlant(PriorityManager.getPlant() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToTurnEnd(new Planting());
-                }
+                actionManager.addToTurnEnd(new Planting(amt));
                 break;
             case SMITHING:
                 PriorityManager.setSmith(PriorityManager.getSmith() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToTurnEnd(new Smithing());
-                }
+                actionManager.addToTurnEnd(new Smithing(amt));
                 break;
             case MASONRY:
                 PriorityManager.setMasonry(PriorityManager.getMasonry() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToTurnEnd(new Masonry());
-                }
+                actionManager.addToTurnEnd(new Masonry(amt));
                 break;
             case RAIDING:
                 PriorityManager.setRaid(PriorityManager.getRaid() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                /*for (int i = 0; i < amt; i++) {
-                    actionManager.addToTurnEnd(new Raiding());
-                }*/
+                //actionManager.addToTurnEnd(new Raiding(amt));
                 break;
             case ENGINEERING:
                 PriorityManager.setEngineer(PriorityManager.getEngineer() + amt);
@@ -231,39 +214,37 @@ public class PriorityMenu extends AbstractConsole {
             case TRADING:
                 PriorityManager.setTrade(PriorityManager.getTrade() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                for (int i = 0; i < amt; i++) {
-                    actionManager.addToTurnEnd(new Trading());
-                }
+                actionManager.addToTurnEnd(new Trading(amt));
                 break;
         }
     }
 
-    public static ArrayList<AbstractGameAction> getFoodActions() {
+    public static ArrayList<AbstractGameAction> getFoodActions(int amt) {
         ArrayList<AbstractGameAction> foodActions = new ArrayList<>();
         if (Game.getPlayerRace().equals(Race.HUMAN)) {
-            foodActions.add(new Hunting());
-            foodActions.add(new Fishing());
-            foodActions.add(new Cooking());
+            foodActions.add(new Hunting(amt));
+            foodActions.add(new Fishing(amt));
+            foodActions.add(new Cooking(amt));
         } else if (Game.getPlayerRace().equals(Race.ORC)) {
-            foodActions.add(new OrcFoodRaid());
-            foodActions.add(new OrcHunting());
-            foodActions.add(new Sacrifice());
+            foodActions.add(new OrcFoodRaid(amt));
+            foodActions.add(new OrcHunting(amt));
+            foodActions.add(new Sacrifice(amt));
         } else if (Game.getPlayerRace().equals(Race.ELF)) {
-            foodActions.add(new InsectHunt());
-            foodActions.add(new RiverSearch());
-            foodActions.add(new Roasting());
+            foodActions.add(new InsectHunt(amt));
+            foodActions.add(new RiverSearch(amt));
+            foodActions.add(new Roasting(amt));
         } else if (Game.getPlayerRace().equals(Race.DWARF)) {
-            foodActions.add(new Brewing());
-            foodActions.add(new MushroomPicking());
-            foodActions.add(new Scavenging());
+            foodActions.add(new Brewing(amt));
+            foodActions.add(new MushroomPicking(amt));
+            foodActions.add(new Scavenging(amt));
         } else if (Game.getPlayerRace().equals(Race.CLAMAN)) {
-            foodActions.add(new Angling());
-            foodActions.add(new Diving());
-            foodActions.add(new Trawling());
+            foodActions.add(new Angling(amt));
+            foodActions.add(new Diving(amt));
+            foodActions.add(new Trawling(amt));
         } else if (Game.getPlayerRace().equals(Race.ALIEN)) {
-            foodActions.add(new Abducting());
-            foodActions.add(new Analyzing());
-            foodActions.add(new Redacted());
+            foodActions.add(new Abducting(amt));
+            foodActions.add(new Analyzing(amt));
+            foodActions.add(new Redacted(amt));
         }
         return foodActions;
     }

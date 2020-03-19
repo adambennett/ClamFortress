@@ -3,6 +3,10 @@ package main.actions.priority.food.human;
 import main.actions.*;
 
 public class Cooking extends AbstractGameAction {
+    public Cooking(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         this.isDone = true;
@@ -10,6 +14,6 @@ public class Cooking extends AbstractGameAction {
 
     @Override
     public AbstractGameAction clone() {
-        return new Cooking();
+        return new Cooking(this.amountToRun);
     }
 }

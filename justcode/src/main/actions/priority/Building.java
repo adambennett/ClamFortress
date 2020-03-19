@@ -8,6 +8,10 @@ import main.models.managers.*;
 
 public class Building extends AbstractGameAction {
 
+    public Building(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         if (Game.getVillage().getUncompletedBuildings().size() < 1) {
@@ -32,6 +36,6 @@ public class Building extends AbstractGameAction {
 
     @Override
     public Building clone() {
-        return new Building();
+        return new Building(this.amountToRun);
     }
 }

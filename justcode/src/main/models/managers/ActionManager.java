@@ -1,10 +1,10 @@
 package main.models.managers;
 
 import main.actions.*;
-import main.models.*;
-import main.models.items.*;
+import main.enums.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 public class ActionManager {
 
@@ -26,6 +26,14 @@ public class ActionManager {
         this.actions.add(action);
     }
 
+    public void requeue(AbstractGameAction action) {
+        if (this.actions.size() > 1) {
+            this.actions.add(this.actions.size() - 2, action);
+        } else {
+            addToBottom(action);
+        }
+    }
+
     public void addToTop(AbstractGameAction action) {
         this.actions.add(0, action);
     }
@@ -45,22 +53,22 @@ public class ActionManager {
             case WAITING_ON_USER:
                 this.getNextAction();
                 break;
-            case EXECUTING_ACTIONS:
-                if (this.current != null && !this.current.isDone) {
-                    this.current.update();
-                }
-
-                else {
-                    this.previous = this.current;
-                    for (GameObject obj : Game.getModifierObjects()) {
-                        obj.afterRunAction(this.current);
+            case EXECUTING:
+                if (this.current != null) {
+                    if (this.current.isDone) {
+                        this.current.reset();
+                        this.previous = this.current;
+                        if (!this.current.isDone) {
+                            requeue(this.current);
+                        }
+                        this.getNextAction();
+                    } else if (this.current.amountToRun > 0){
+                        this.current.update();
+                    } else {
+                        this.getNextAction();
                     }
-                    this.current = null;
-                    this.getNextAction();
-                    // if (waiting on player input) {
-                    //  this.phase = Phase.WAITING_ON_USER;
-                    //  this.hasControl = false;
-                    // }
+                } else {
+                    Logger.getGlobal().warning("ActionManager got a null for current action!");
                 }
                 break;
         }
@@ -69,33 +77,30 @@ public class ActionManager {
     private void getNextAction() {
         if (!this.preTurnActions.isEmpty()) {
             this.current = this.preTurnActions.remove(0);
-            this.phase = Phase.EXECUTING_ACTIONS;
+            this.phase = Phase.EXECUTING;
             this.hasControl = true;
         }
 
         else if (!this.actions.isEmpty()) {
             this.current = this.actions.remove(0);
-            this.phase = Phase.EXECUTING_ACTIONS;
+            this.phase = Phase.EXECUTING;
             this.hasControl = true;
         }
 
         else if (!this.postTurnActions.isEmpty()) {
             this.current = this.postTurnActions.remove(0);
-            this.phase = Phase.EXECUTING_ACTIONS;
+            this.phase = Phase.EXECUTING;
             this.hasControl = true;
         }
 
         else if (this.finalAction != null && !this.finalAction.isDone) {
-            this.finalAction.update();
+            this.previous = this.current;
+            this.current = this.finalAction;
+            this.phase = Phase.EXECUTING;
+            this.hasControl = true;
         }
     }
 
-    public enum Phase {
-        WAITING_ON_USER,
-        EXECUTING_ACTIONS;
 
-        Phase() {
-        }
-    }
 
 }

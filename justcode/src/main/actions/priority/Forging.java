@@ -4,6 +4,10 @@ import main.actions.*;
 
 public class Forging extends AbstractGameAction {
 
+    public Forging(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         this.isDone = true;
@@ -11,6 +15,6 @@ public class Forging extends AbstractGameAction {
 
     @Override
     public Forging clone() {
-        return new Forging();
+        return new Forging(this.amountToRun);
     }
 }

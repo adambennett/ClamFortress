@@ -12,6 +12,10 @@ import java.util.concurrent.*;
 
 public class Foraging extends AbstractGameAction {
 
+    public Foraging(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         if (ThreadLocalRandom.current().nextInt(0, 10) > 4) {
@@ -28,8 +32,8 @@ public class Foraging extends AbstractGameAction {
     }
 
     @Override
-    public Forging clone() {
-        return new Forging();
+    public Foraging clone() {
+        return new Foraging(this.amountToRun);
     }
 
     public void forage() {

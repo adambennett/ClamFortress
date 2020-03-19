@@ -12,9 +12,10 @@ import java.util.concurrent.*;
 
 public class NewSurvivors extends AbstractGameAction {
 
-    private boolean print = true;
+    private final boolean print;
 
     public NewSurvivors(boolean print) {
+        super(1);
         this.print = print;
     }
 

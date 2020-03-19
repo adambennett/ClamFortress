@@ -3,6 +3,10 @@ package main.actions.priority.food.dwarf;
 import main.actions.*;
 
 public class Brewing extends AbstractGameAction {
+    public Brewing(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         this.isDone = true;
@@ -10,6 +14,6 @@ public class Brewing extends AbstractGameAction {
 
     @Override
     public Brewing clone() {
-        return new Brewing();
+        return new Brewing(this.amountToRun);
     }
 }

@@ -6,6 +6,10 @@ import main.models.managers.*;
 
 public class Masonry extends AbstractGameAction {
 
+    public Masonry(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         Game.getVillage().setBuildingLimit(Game.getVillage().getBuildingLimit() + 1);
@@ -15,6 +19,6 @@ public class Masonry extends AbstractGameAction {
 
     @Override
     public Masonry clone() {
-        return new Masonry();
+        return new Masonry(this.amountToRun);
     }
 }

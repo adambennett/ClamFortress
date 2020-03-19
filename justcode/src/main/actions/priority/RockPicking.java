@@ -11,6 +11,10 @@ import java.util.concurrent.*;
 
 public class RockPicking extends AbstractGameAction {
 
+    public RockPicking(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         Pickaxe pickaxe = new Pickaxe();
@@ -35,6 +39,6 @@ public class RockPicking extends AbstractGameAction {
 
     @Override
     public RockPicking clone() {
-        return new RockPicking();
+        return new RockPicking(this.amountToRun);
     }
 }

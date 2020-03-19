@@ -9,7 +9,8 @@ public class Engineering extends AbstractGameAction {
 
     private AbstractBuilding newBuilding;
 
-    public Engineering(AbstractBuilding building) {
+    public Engineering(AbstractBuilding building, int amtToRun) {
+        super(amtToRun);
         this.newBuilding = building;
     }
 
@@ -23,6 +24,6 @@ public class Engineering extends AbstractGameAction {
 
     @Override
     public Engineering clone() {
-        return new Engineering(newBuilding);
+        return new Engineering(newBuilding, this.amountToRun);
     }
 }

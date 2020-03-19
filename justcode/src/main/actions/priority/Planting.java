@@ -4,6 +4,10 @@ import main.actions.*;
 
 public class Planting extends AbstractGameAction {
 
+    public Planting(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         this.isDone = true;
@@ -11,6 +15,6 @@ public class Planting extends AbstractGameAction {
 
     @Override
     public Planting clone() {
-        return new Planting();
+        return new Planting(this.amountToRun);
     }
 }

@@ -52,7 +52,6 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public void onDiscoverNewRegion(AbstractNode newNode) {}
     public void onAddAnimalToBoard(AbstractAnimal animal) {}
     public void onGatherFood(AbstractGameAction gatheringType) {}
-    public void afterRunAction(AbstractGameAction gatheringType) {}
     public void onNewCitizen(Survivor newCitizen) {}
     public void onLoseCitizen(Survivor newCitizen) {}
     public void onNewBuilding(AbstractBuilding b) {}

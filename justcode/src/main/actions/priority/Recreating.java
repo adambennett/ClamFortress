@@ -4,6 +4,10 @@ import main.actions.*;
 
 public class Recreating extends AbstractGameAction {
 
+    public Recreating(int amountToRun) {
+        super(amountToRun);
+    }
+
     @Override
     public void update() {
         this.isDone = true;
@@ -11,6 +15,6 @@ public class Recreating extends AbstractGameAction {
 
     @Override
     public Recreating clone() {
-        return new Recreating();
+        return new Recreating(this.amountToRun);
     }
 }

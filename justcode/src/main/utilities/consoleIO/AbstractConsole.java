@@ -145,6 +145,14 @@ public abstract class AbstractConsole {
             EndPhaseMenu curr = (EndPhaseMenu) this;
             curr.printPrompt(PromptMessage.END_PHASE, true);
         }
+        else if (currentConsole instanceof PopulationSetupMenu) {
+            PopulationSetupMenu curr = (PopulationSetupMenu) this;
+            curr.printPrompt(PromptMessage.POP_SETUP, true);
+        }
+        else if (currentConsole instanceof BoardSizeMenu) {
+            BoardSizeMenu curr = (BoardSizeMenu) this;
+            curr.printPrompt(PromptMessage.BOARD_SIZE, true);
+        }
     }
 
 

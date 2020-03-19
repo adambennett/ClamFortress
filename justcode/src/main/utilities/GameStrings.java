@@ -1,13 +1,14 @@
 package main.utilities;
 
 
-import main.models.Game;
+import main.models.*;
+import main.models.animals.*;
 import main.models.items.*;
-import main.models.items.artifacts.*;
 import main.models.managers.*;
 import main.models.nodes.*;
 import main.models.people.*;
 import main.models.resources.*;
+import main.models.tech.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -40,6 +41,7 @@ public class GameStrings {
     private static String resources;
     private static String inv;
     private static String vil;
+    private static String board;
 
     private static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
 
@@ -49,6 +51,26 @@ public class GameStrings {
                     "***--------------------------------------------***\n" +
                     "***                1 | New Game                ***\n" +
                     "***                2 | Load Game               ***\n" +
+                    "**************************************************\n";
+
+    private static final String pop =
+                    "**************************************************\n" +
+                    "***              Population Options            ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           1 | Set Population Cap           ***\n" +
+                    "***           2 | Set Starting Population      ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           0 | Start Game                   ***\n" +
+                    "**************************************************\n";
+
+    private static final String boardSize =
+                    "**************************************************\n" +
+                    "***              Board Size Options            ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           1 | Set Board X Max              ***\n" +
+                    "***           2 | Set Board Y Max              ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           0 | Population Options           ***\n" +
                     "**************************************************\n";
 
     private static final String chooseBiome =
@@ -210,6 +232,7 @@ public class GameStrings {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
         a.put("Turn Number", "" + Game.getGameManager().getTurnNumber());
+        a.put("Current Era", "" + TechTree.getCurrentEra().toString());
         a.put("Population", "" + Game.getVillage().getPopulation() + " / " + Game.getVillage().getPopCap());
         a.put("Village HP", "" + Game.getVillage().getHealth() + " / " + Game.getVillage().getHealth());
         a.put("Resources", "" + Game.getVillage().totalResources() + " / " + Game.getVillage().getResourceLimit());
@@ -224,41 +247,42 @@ public class GameStrings {
     public static LinkedHashMap<String, String> getTurnCommands() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         a.put("2", "Stats");
+        a.put("3", "Board");
         if (Game.getVillage().getInventory().getItems().size() > 0) {
-            a.put("3", "Inventory");
+            a.put("4", "Inventory");
         } else {
-            a.put("3", "[No Items]");
+            a.put("4", "[No Items]");
         }
         if (Game.getVillage().getBuildings().size() > 0) {
-            a.put("4", "Buildings");
+            a.put("5", "Buildings");
         } else {
-            a.put("4", "[No Buildings]");
+            a.put("5", "[No Buildings]");
         }
         if (Game.getVillage().getPopulation() > 0) {
-            a.put("5", "Population");
+            a.put("6", "Population");
         } else {
-            a.put("5", "[No Villagers]");
+            a.put("6", "[No Villagers]");
         }
         if (Game.getVillage().getVistingMerchants().size() > 0) {
-            a.put("6", "Merchants");
+            a.put("7", "Merchants");
         } else {
-            a.put("6", "[No Merchants Available]");
+            a.put("7", "[No Merchants Available]");
         }
         if (Game.getVillage().getVistingMerchants().size() > 0) {
-            a.put("6", "Merchants");
+            a.put("8", "Merchants");
         } else {
-            a.put("6", "[No Merchants Available]");
+            a.put("8", "[No Merchants Available]");
         }
         if (Game.canRaid()) {
-            a.put("7", "Raid a City");
+            a.put("9", "Raid a City");
         } else {
-            a.put("7", "[Raids Unavailable]");
+            a.put("9", "[Raids Unavailable]");
         }
         int trainingCost = GameManager.getInstance().getTrainingCost();
         if (Game.getVillage().getCoins() >= trainingCost) {
-            a.put("8", "Train (" +  trainingCost + " Coins)");
+            a.put("10", "Train (" +  trainingCost + " Coins)");
         } else {
-            a.put("8", "[Not Enough Coins]");
+            a.put("10", "[Not Enough Coins]");
         }
         return a;
     }
@@ -327,7 +351,7 @@ public class GameStrings {
         Integer scoutPriority = main.models.managers.PriorityManager.getScout();
         Integer plantPriority = main.models.managers.PriorityManager.getPlant();
         Integer smithPriority = main.models.managers.PriorityManager.getSmith();
-        Integer smeltPriority = main.models.managers.PriorityManager.getSmelt();
+        Integer smeltPriority = main.models.managers.PriorityManager.getMasonry();
         Integer raidPriority = main.models.managers.PriorityManager.getRaid();
         Integer engineerPriority = main.models.managers.PriorityManager.getEngineer();
         Integer buildPriority = main.models.managers.PriorityManager.getBuild();
@@ -378,7 +402,7 @@ public class GameStrings {
                         "***            13 | Scouting             <" + scout +
                         "***            14 | Planting             <" + plant +
                         "***            15 | Smithing             <" + smith +
-                        "***            16 | Smelting             <" + smelt +
+                        "***            16 | Masonry              <" + smelt +
                         "***            17 | Raiding              <" + raid +
                         "***            18 | Engineering          <" + engineer +
                         "***            19 | Building             <" + build +
@@ -455,6 +479,33 @@ public class GameStrings {
         }
         return a;
     }
+
+    public static LinkedHashMap<String, String> getBoard() {
+        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+        Board board = Game.getGameBoard();
+        for (Map.Entry<AbstractResource, Integer> item : board.getResources().entrySet()) {
+            if (item.getValue() > 0) {
+                String name = item.getKey().getName();
+                a.put(name, "" + item.getValue());
+            }
+        }
+        Map<String, Integer> an = new HashMap<>();
+        for (AbstractAnimal item : board.getAnimals()) {
+            if (an.containsKey(item.getName())) {
+                an.put(item.getName(), an.get(item.getName()) + 1);
+            } else {
+                an.put(item.getName(), 1);
+            }
+        }
+        for (Map.Entry<String, Integer> item : an.entrySet()) {
+            a.put(item.getKey(), "" + item.getValue());
+        }
+        if (a.size() < 1) {
+            a.put(" ", " ");
+        }
+        return a;
+    }
+
     public static LinkedHashMap<String, ArrayList<String>> getVillagers() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
@@ -519,6 +570,22 @@ public class GameStrings {
         inv = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
+    public static void loadBoard() {
+        String leftAlignFormat = "| %-25s | %-35s |\n";
+        String headerFormat = "| %-63s |\n";
+        String breakLine = "+---------------------------+-------------------------------------+\n";
+        String header = "Game Board [" + Game.getGameBoard().getGridXMax() + "x" + Game.getGameBoard().getGridYMax() + "]";
+        Map<String, String> top = new HashMap<>();
+        Map<String, String> bottom = new HashMap<>();
+        top.put("Resource / Animal", "Amount");
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getBoard());
+        list.add(bottom);
+        board = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+
     public static void loadVillagers() {
         String leftAlignFormat = "| %-52s | %-8s | %-8s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
         String headerFormat = "| %-142s |\n";
@@ -580,6 +647,13 @@ public class GameStrings {
             case VILLAGERS:
                 loadVillagers();
                 return vil;
+            case POP_SETUP:
+                return pop;
+            case GAME_BOARD:
+                loadBoard();
+                return board;
+            case BOARD_SIZE:
+                return boardSize;
         }
         return "";
     }

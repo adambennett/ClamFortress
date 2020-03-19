@@ -43,7 +43,7 @@ public enum MenuCommands {
     SCOUTING,
     PLANTING,
     SMITHING,
-    SMELTING,
+    MASONRY,
     RAIDING,
     ENGINEERING,
     BUILDING,
@@ -52,5 +52,8 @@ public enum MenuCommands {
     RESOURCES,
     INVENTORY,
     VILLAGERS,
+    POPCAP,
+    POPULATION,
+    GAME_BOARD,
     SCORE_REALLY_BIG_HACKS
 }

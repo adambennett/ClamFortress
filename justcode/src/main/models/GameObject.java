@@ -1,6 +1,7 @@
 package main.models;
 
 import main.actions.*;
+import main.actions.priority.food.human.*;
 import main.encounters.*;
 import main.encounters.disasters.*;
 import main.encounters.miracles.*;
@@ -60,6 +61,7 @@ public abstract class GameObject implements Cloneable {
     public void onNewPlague(AbstractPlague p) {}
     public void onRunSpecialEncounter(AbstractEncounter enc) {}
     public void onDateAdvance(int daysAdvanced) {}
+    public void onDemolish() {}
 
     @Override
     public boolean equals(Object o) {

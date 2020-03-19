@@ -38,14 +38,26 @@ import java.util.concurrent.*;
 
 public class Archive {
 
-    private ArrayList<GameObject> archive;
-    private Map<String, GameObject> nameMapping;
+    private final ArrayList<GameObject> archive;
+    private final Map<String, GameObject> nameMapping;
     private static Archive instance;
-
+    
     private Archive() {
         archive = new ArrayList<>();
         nameMapping = new HashMap<>();
         fillArchive();
+    }
+    
+    public static Archive getInstance() {
+        return instance;
+    }
+    
+    static {
+        try {
+            instance = new Archive();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error in Archive creation!");
+        }
     }
 
     public GameObject get(String key) {
@@ -53,12 +65,12 @@ public class Archive {
     }
 
     public AbstractResource getRes(String key) {
-        return (nameMapping.get(key) instanceof AbstractResource) ? (AbstractResource)nameMapping.get(key.toLowerCase()).clone() : null;
+        return (nameMapping.get(key.toLowerCase()) instanceof AbstractResource) ? (AbstractResource)nameMapping.get(key.toLowerCase()).clone() : null;
     }
 
     public ArrayList<AbstractResource> generateNewResources(String resourceName, int amt) {
         ArrayList<AbstractResource> output = new ArrayList<>();
-        AbstractResource res = getRes(resourceName);
+        AbstractResource res = getRes(resourceName.toLowerCase());
         if (res != null) {
             for (int i = 0; i < amt; i++) {
                 output.add(res.clone());
@@ -68,12 +80,12 @@ public class Archive {
     }
 
     public AbstractItem getItem(String key) {
-        return (nameMapping.get(key) instanceof AbstractItem) ? (AbstractItem)nameMapping.get(key.toLowerCase()).clone() : null;
+        return (nameMapping.get(key.toLowerCase()) instanceof AbstractItem) ? (AbstractItem)nameMapping.get(key.toLowerCase()).clone() : null;
     }
 
     public ArrayList<AbstractItem> generateNewItems(String resourceName, int amt) {
         ArrayList<AbstractItem> output = new ArrayList<>();
-        AbstractItem res = getItem(resourceName);
+        AbstractItem res = getItem(resourceName.toLowerCase());
         if (res != null) {
             for (int i = 0; i < amt; i++) {
                 output.add(res.clone());
@@ -83,12 +95,12 @@ public class Archive {
     }
 
     public AbstractBuilding getBuilding(String key) {
-        return (nameMapping.get(key) instanceof AbstractBuilding) ? (AbstractBuilding)nameMapping.get(key.toLowerCase()).clone() : null;
+        return (nameMapping.get(key.toLowerCase()) instanceof AbstractBuilding) ? (AbstractBuilding)nameMapping.get(key.toLowerCase()).clone() : null;
     }
 
     public ArrayList<AbstractBuilding> generateNewBuildings(String resourceName, int amt) {
         ArrayList<AbstractBuilding> output = new ArrayList<>();
-        AbstractBuilding res = getBuilding(resourceName);
+        AbstractBuilding res = getBuilding(resourceName.toLowerCase());
         if (res != null) {
             for (int i = 0; i < amt; i++) {
                 output.add(res.clone());
@@ -103,7 +115,7 @@ public class Archive {
 
     public ArrayList<AbstractAnimal> generateNewAnimals(String resourceName, int amt) {
         ArrayList<AbstractAnimal> output = new ArrayList<>();
-        AbstractAnimal res = getAnimal(resourceName);
+        AbstractAnimal res = getAnimal(resourceName.toLowerCase());
         if (res != null) {
             for (int i = 0; i < amt; i++) {
                 output.add(res.clone());
@@ -332,9 +344,8 @@ public class Archive {
     }
 
     public ArrayList<GameObject> getArchive() { return archive; }
-    public static Archive getInstance() { return instance; }
 
-    public static Survivor generateRandomSurvivor() {
+    public static Survivor generateRandomSurvivor(boolean player) {
         int randHP = ThreadLocalRandom.current().nextInt(10, 100);
         int randAge = randHP;
         randHP += ThreadLocalRandom.current().nextInt(-5, 5);
@@ -351,29 +362,41 @@ public class Archive {
         } else {
             gender = Gender.FEMALE;
         }
-        return new SurvivorBuilder()
-                .setName(GameStrings.getRandomName(true))
-                .setHealthPoints(randHP)
-                .setStrength(randStrength)
-                .setIntelligence(randIntel)
-                .setAge(randAge)
-                .setAgility(randAgility)
-                .setEngineering(randEngineer)
-                .setGender(gender)
-                .setRace(Game.getPlayerRace())
-                .setMagic(randMagic)
-                .setDexterity(randDex)
-                .createSurvivor();
-    }
+        if (player) {
+            return new SurvivorBuilder()
+                    .setName(GameStrings.getRandomName(true))
+                    .setHealthPoints(randHP)
+                    .setStrength(randStrength)
+                    .setIntelligence(randIntel)
+                    .setAge(randAge)
+                    .setAgility(randAgility)
+                    .setEngineering(randEngineer)
+                    .setGender(gender)
+                    .setRace(Game.getPlayerRace())
+                    .setMagic(randMagic)
+                    .setDexterity(randDex)
+                    .createSurvivor();
+        } else {
+            return new SurvivorBuilder()
+                    .setName(GameStrings.getRandomName(true))
+                    .setHealthPoints(randHP)
+                    .setStrength(randStrength)
+                    .setIntelligence(randIntel)
+                    .setAge(randAge)
+                    .setAgility(randAgility)
+                    .setEngineering(randEngineer)
+                    .setGender(gender)
+                    .setRace(Race.getRandomRace())
+                    .setMagic(randMagic)
+                    .setDexterity(randDex)
+                    .createSurvivor();
+        }
 
-    static {
-        try { instance = new Archive(); }
-        catch (Exception ex) { throw new RuntimeException("Failed to initialize Archive"); }
     }
 
     private void add(GameObject obj) {
-        archive.add(obj);
-        nameMapping.put(obj.getName().toLowerCase(), obj);
+        this.archive.add(obj);
+        this.nameMapping.put(obj.getName().toLowerCase(), obj);
     }
 
     private void fillArchive() {
@@ -502,5 +525,6 @@ public class Archive {
         add(new WoodStoreHouse());
         add(new WoodenChurch());
         add(new WoodenWatchtower());
+        add(new RingOfForaging());
     }
 }

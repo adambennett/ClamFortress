@@ -1,6 +1,7 @@
 package main.models.resources.natural;
 
 import main.interfaces.*;
+import main.models.animals.*;
 import main.models.resources.*;
 import main.models.resources.refined.Brick;
 

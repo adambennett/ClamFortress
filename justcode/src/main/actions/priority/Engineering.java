@@ -4,6 +4,9 @@ import main.actions.*;
 import main.models.*;
 import main.models.buildings.abstracts.*;
 import main.models.managers.*;
+import main.models.tech.*;
+
+import java.util.concurrent.*;
 
 public class Engineering extends AbstractGameAction {
 
@@ -17,6 +20,12 @@ public class Engineering extends AbstractGameAction {
     public void update() {
         Game.getVillage().addUncompletedBuilding(this.newBuilding);
         OutputManager.addToBot("Added new " + this.newBuilding.getName() + " Project to Building Queue");
+        if (!TechTree.getCurrentEra().equals(TechTree.getTail())) {
+            if (ThreadLocalRandom.current().nextInt(0, 500) == 1) {
+                TechTree.incEra();
+                OutputManager.addToBot("Advanced to " + TechTree.getCurrentEra().toString());
+            }
+        }
         this.isDone = true;
     }
 

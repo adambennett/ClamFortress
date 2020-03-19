@@ -12,11 +12,8 @@ import main.models.animals.sea.AbstractSeaAnimal;
 import main.models.animals.tundra.*;
 import main.models.items.*;
 import main.models.managers.*;
-import main.models.nodes.AbstractNode;
-import main.models.nodes.Grass;
-import main.models.nodes.Village;
-import main.models.nodes.biomes.AbstractBiome;
-import main.models.nodes.biomes.Grasslands;
+import main.models.nodes.*;
+import main.models.nodes.biomes.*;
 import main.models.resources.*;
 import main.models.resources.natural.Flowers;
 import main.utilities.*;
@@ -30,16 +27,26 @@ public class Board extends GameObject {
 
     private Integer gridXMax;
     private Integer gridYMax;
+    private Integer nextX;
+    private Integer nextY;
 
+    private final Integer startPopCap;
     private final AbstractBiome startBiome;
     private Village village;
     private ArrayList<AbstractNode> grid;
     private ArrayList<AbstractAnimal> animals;
     private Map<AbstractResource, Integer> resources;
 
-    public Board(AbstractBiome startingBiome, int xMax, int yMax) {
+    public Board() {
+        super("Fake Board");
+        this.village = new Village();
+        this.startPopCap = 0;
+        this.startBiome = new BlankBiome();
+    }
+
+    public Board(AbstractBiome startingBiome, int xMax, int yMax, int popCap) {
         super("Game Board");
-        this.village = new Village(startingBiome);
+        this.village = new Village(startingBiome, popCap);
         this.village.setxPos(0);
         this.village.setyPos(0);
         this.gridXMax = xMax;
@@ -49,88 +56,75 @@ public class Board extends GameObject {
         this.animals = new ArrayList<>();
         this.resources = new HashMap<>();
         this.startBiome = startingBiome;
+        this.startPopCap = popCap;
+        this.nextX = 0;
+        this.nextY = 0;
+        this.addAnimals(this.village.getAnimals());
+        this.addResources(this.village.getResources());
     }
 
     public AbstractNode getRandomRegion() {
-        int x = 0;
-        int y = 0;
-        boolean canAdd = true;
-        do {
-            canAdd = true;
-            for (AbstractNode space : grid) {
-                if (space.getyPos().equals(y) && space.getxPos().equals(x)) {
-                    canAdd = false;
-                    break;
-                }
-            }
-            if (!canAdd) {
-                x = ThreadLocalRandom.current().nextInt(0, gridXMax);
-                y = ThreadLocalRandom.current().nextInt(0, gridYMax);
-            }
-        } while (!canAdd);
-        return getRandomRegion(x, y);
+        int boardSize = gridXMax * gridYMax;
+        if (grid.size() >= boardSize+1 || nextY > gridYMax) {
+            return null;
+        }
+        return getRandomRegion(nextX, nextY);
     }
 
     public AbstractNode getRandomRegion(int x, int y) {
         return NodeManager.getRandomNode(x, y);
     }
 
-    public Boolean discover(AbstractNode region) {
-        return addGridSpace(region);
+    public void discover(AbstractNode region) {
+        addGridSpace(region);
     }
 
-    public Boolean addGridSpace(AbstractNode space) {
-        boolean canAdd = true;
-        for (AbstractNode a : grid) {
-            if (a.getxPos().equals(space.getxPos()) && a.getyPos().equals(space.getyPos())) {
-                canAdd = false;
-                break;
-            } else if (space.getxPos() >= gridXMax || space.getyPos() >= gridYMax) {
-                canAdd = false;
-                break;
+    public void addGridSpace(AbstractNode space) {
+        this.grid.add(space);
+        nextX++;
+        if (nextX > gridXMax) {
+            nextX = 0;
+            nextY++;
+        }
+        for (GameObject obj : Game.getModifierObjects()) {
+            obj.onDiscoverNewRegion(space);
+        }
+        if (space.hasArtifact()) {
+            village.getInventory().addItem(space.getArtifact());
+            if (GameStrings.startsWithVowel(space.getArtifact().getName())) {
+                OutputManager.addToTop("Found an " + space.getArtifact().getName() + " on a newly discovered space!");
+            } else {
+                OutputManager.addToTop("Found a " + space.getArtifact().getName() + " on a newly discovered space!");
             }
         }
-        if (canAdd) {
-            this.grid.add(space);
-            for (GameObject obj : Game.getModifierObjects()) {
-                obj.onDiscoverNewRegion(space);
+        if (space.hasItem()) {
+            village.getInventory().addItem(space.getItem());
+            if (GameStrings.startsWithVowel(space.getItem().getName())) {
+                OutputManager.addToTop("Found an " + space.getItem().getName() + " on a newly discovered space!");
+            } else {
+                OutputManager.addToTop("Found a " + space.getItem().getName() + " on a newly discovered space!");
             }
-            if (space.hasArtifact()) {
-                village.getInventory().addItem(space.getArtifact());
-                if (GameStrings.startsWithVowel(space.getArtifact().getName())) {
-                    OutputManager.addToTop("Found an " + space.getArtifact().getName() + " on a newly discovered space!");
-                } else {
-                    OutputManager.addToTop("Found a " + space.getArtifact().getName() + " on a newly discovered space!");
-                }
-            }
-            if (space.hasItem()) {
-                village.getInventory().addItem(space.getItem());
-                if (GameStrings.startsWithVowel(space.getItem().getName())) {
-                    OutputManager.addToTop("Found an " + space.getItem().getName() + " on a newly discovered space!");
-                } else {
-                    OutputManager.addToTop("Found a " + space.getItem().getName() + " on a newly discovered space!");
-                }
-            }
+        }
+        if (!(space instanceof City)) {
             addResources(space.getResources());
             addAnimals(space.getAnimals());
-            return true;
         }
-        return false;
     }
 
     private void addAnimals(Map<AbstractAnimal, Integer> animals) {
         for (Map.Entry<AbstractAnimal, Integer> entry : animals.entrySet()) {
-            if (animals.containsKey(entry.getKey())) {
-                animals.put(entry.getKey(), entry.getValue() + animals.get(entry.getKey()));
-            } else {
-                animals.put(entry.getKey(), entry.getValue());
+            for (int i = 0; i < entry.getValue(); i++) {
+                this.animals.add(entry.getKey().clone());
+                for (GameObject obj : Game.getModifierObjects()) {
+                    obj.onAddAnimalToBoard(entry.getKey());
+                }
             }
         }
     }
 
     public void addAnimals(AbstractAnimal animal, int amt) {
         for (int i = 0; i < amt; i++) {
-            animals.add(animal.clone());
+            this.animals.add(animal.clone());
             for (GameObject obj : Game.getModifierObjects()) {
                 obj.onAddAnimalToBoard(animal);
             }
@@ -181,6 +175,19 @@ public class Board extends GameObject {
             }
     }
 
+    public AbstractResource removeRandomResource() {
+        if (this.resources.size() > 0) {
+            ArrayList<String> all = new ArrayList<>();
+            for (Map.Entry<AbstractResource, Integer> entry : this.resources.entrySet()) {
+                all.add(entry.getKey().getName());
+            }
+            AbstractResource output = Archive.getInstance().getRes(all.get(ThreadLocalRandom.current().nextInt(all.size())));
+            this.resources.remove(output);
+            return output;
+        }
+        return null;
+    }
+
     public Integer removeResource(String resource) {
         return removeResource(resource, 0, true);
     }
@@ -208,6 +215,10 @@ public class Board extends GameObject {
 
     public Integer getResource(String resource) {
         return Archive.getInstance().getRes(resource) != null ? this.resources.get(Archive.getInstance().getRes(resource)) : 0;
+    }
+
+    public Map<AbstractResource, Integer> getResources() {
+        return resources;
     }
 
     public ArrayList<AbstractResource> getAllResources() {
@@ -299,8 +310,16 @@ public class Board extends GameObject {
         return toRet;
     }
 
+    public Integer getGridXMax() {
+        return gridXMax;
+    }
+
+    public Integer getGridYMax() {
+        return gridYMax;
+    }
+
     @Override
     public Board clone() {
-        return new Board(this.startBiome, this.gridXMax, this.gridYMax);
+        return new Board(this.startBiome, this.gridXMax, this.gridYMax, this.startPopCap);
     }
 }

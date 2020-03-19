@@ -19,7 +19,7 @@ public class Netherworld extends City {
     protected void setupCity() {
         int pop = ThreadLocalRandom.current().nextInt(1000, 10000);
         for (int i = 0; i < pop; i++) {
-            Survivor newCitizen = Archive.generateRandomSurvivor();
+            Survivor newCitizen = Archive.generateRandomSurvivor(false);
             this.cityResidence.add(newCitizen);
             this.cityDefense += newCitizen.getStrength();
         }

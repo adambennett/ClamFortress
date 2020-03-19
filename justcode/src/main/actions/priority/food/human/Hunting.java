@@ -39,4 +39,8 @@ public class Hunting extends AbstractGameAction {
     public Hunting clone() {
         return new Hunting();
     }
+
+    public void setSeed() {
+        this.random.setSeed(10);
+    }
 }

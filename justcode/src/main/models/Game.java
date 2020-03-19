@@ -47,35 +47,39 @@ public class Game {
 
     // Default Settings (for tests)
     public static void startGame() {
-        startGame(Difficulty.DEFAULT, Race.HUMAN, new Grasslands());
+        startGame(Difficulty.DEFAULT, Race.HUMAN, new Grasslands(), 0, 5, 50, 50);
     }
 
-    public static void startGame(Difficulty gameDifficulty, Race chosenRace, AbstractBiome startingBiome) {
+    public static void startGame(Difficulty gameDifficulty, Race chosenRace, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
         TechTree.resetTechTree();
         PriorityManager.reset(true);
         difficulty = gameDifficulty;
         actionManager = new ActionManager();
         playerRace = chosenRace;
         gameManager = GameManager.getInstance();
-        gameBoard = new Board(startingBiome, 50, 50);
-        int startingSurvivors = ThreadLocalRandom.current().nextInt(0, 5);
-        new NewSurvivors().addToVillage(startingSurvivors);
+        gameBoard = new Board();
+        Archive.getInstance().get("wood");
+        gameBoard = new Board(startingBiome, xMax, yMax, startPopCap);
+        gameBoard.discover(getVillage().getBaseNode());
+        new NewSurvivors(false).addToVillage(startPop);
         getVillage().addResource(new Wood(), 100);
         updateDifficultyBools();
         isLoaded = true;
     }
 
     // Custom Difficulty
-    public static void startGame(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractBiome startingBiome) {
+    public static void startGame(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
         TechTree.resetTechTree();
         PriorityManager.reset(true);
         difficulty = Difficulty.CUSTOM;
         actionManager = new ActionManager();
         playerRace = chosenRace;
         gameManager = GameManager.getInstance();
-        gameBoard = new Board(startingBiome, 50, 50);
-        int startingSurvivors = ThreadLocalRandom.current().nextInt(0, 5);
-        new NewSurvivors().addToVillage(startingSurvivors);
+        gameBoard = new Board();
+        Archive.getInstance().get("wood");
+        gameBoard = new Board(startingBiome, xMax, yMax, startPopCap);
+        gameBoard.discover(getVillage().getBaseNode());
+        new NewSurvivors(false).addToVillage(startPop);
         getVillage().addResource(new Wood(), 100);
         toughEnemies = customDifficultyMods.contains(1);
         slowResourceGain = customDifficultyMods.contains(2);
@@ -106,25 +110,6 @@ public class Game {
 
     public static Boolean canRaid() {
         return false;
-    }
-
-    public static ArrayList<Flowers> generateRandomFlowers(AbstractBiome biome) {
-        ArrayList<Flowers> flows = new ArrayList<>();
-        // TODO: Add flowers based on difficulty & biome
-        return flows;
-    }
-
-    public static ArrayList<AbstractAnimal> generateRandomAnimals(AbstractBiome biome) {
-        ArrayList<AbstractAnimal> flows = new ArrayList<>();
-        // TODO: Add animals based on difficulty & biome
-        return flows;
-    }
-
-
-    public static ArrayList<AbstractSeaAnimal> generateRandomAquatic() {
-        ArrayList<AbstractSeaAnimal> flows = new ArrayList<>();
-        // TODO: Add sea life based on difficulty
-        return flows;
     }
 
     public static void handleEncounter(AbstractEncounter enc) {
@@ -194,14 +179,12 @@ public class Game {
     }
 
     public static void queueEvergreenActions(int dateInc) {
-        actionManager.addToTurnStart(new NewSurvivors());
+        actionManager.addToTurnStart(new NewSurvivors(true));
         actionManager.addToTurnEnd(new EndPhaseHunger());
 
         if (getVillage().getUncompletedBuildings().size() > 0) {
             for (int i = 0; i < PriorityManager.getBuild(); i++) {
-                int randIndex = ThreadLocalRandom.current().nextInt(getVillage().getUncompletedBuildings().size());
-                AbstractBuilding rand = getVillage().getUncompletedBuildings().get(randIndex);
-                actionManager.addToBottom(new Building(rand));
+                actionManager.addToBottom(new Building());
             }
         }
 

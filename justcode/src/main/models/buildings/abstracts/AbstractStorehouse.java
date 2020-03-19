@@ -21,6 +21,7 @@ public abstract class AbstractStorehouse extends AbstractBuilding {
             inc += obj.modifyResourceStorageIncreases();
         }
         Game.getVillage().setResourceLimit(Game.getVillage().getResourceLimit() + inc);
+        Game.getVillage().setFoodLimit((int) (Game.getVillage().getFoodLimit() + inc / 4.0));
         OutputManager.addToBot("New Building " + this.getName() + " has been completed! Increased resource cap by " + inc + ".");
     }
 

@@ -25,13 +25,8 @@ public class EndPhaseHunger extends AbstractGameAction {
                 surviorsWhoLeft.add(s.getName());
             }
         }
-        String allSurviorsLeaving = "";
-        for (String s : surviorsWhoLeft) {
-            allSurviorsLeaving += s + ", ";
-        }
-        if (!allSurviorsLeaving.equals("")) {
-            allSurviorsLeaving = allSurviorsLeaving.substring(0, allSurviorsLeaving.length() - 2);
-            OutputManager.addToBot(allSurviorsLeaving + " have all left your Village due to ongoing famine concerns!");
+        if (surviorsWhoLeft.size() > 0) {
+            OutputManager.addToBot(surviorsWhoLeft.size() + " Survivors have left your Village due to ongoing famine concerns!");
         }
         double newFamine = numHungry / 4.0;
         if (numHungry > 0 && (int)newFamine < 0) {

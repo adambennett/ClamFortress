@@ -1,7 +1,6 @@
 package main.models.nodes;
 
 import main.encounters.*;
-import main.encounters.bandits.*;
 import main.encounters.disasters.*;
 import main.encounters.merchant.*;
 import main.encounters.miracles.*;
@@ -12,20 +11,19 @@ import main.models.items.*;
 import main.models.managers.*;
 import main.models.nodes.biomes.*;
 import main.models.*;
-import main.models.items.artifacts.*;
 import main.models.people.*;
 import main.models.buildings.abstracts.*;
 import main.models.resources.*;
-import main.models.resources.natural.*;
-import main.models.resources.refined.*;
 import main.models.resources.refined.food.*;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.logging.*;
 
 public class Village extends AbstractNode {
 
     private final Inventory inventory;
+    private final AbstractNode baseNode;
 
     // Limits
     private Integer popCap =            5;
@@ -80,10 +78,38 @@ public class Village extends AbstractNode {
 
     @Override public String toString() { return "Village"; }
 
-    public Village(AbstractBiome biome) {
+    public Village(AbstractBiome biome, int popCap) {
         super(0, 0, biome);
         this.inventory = new Inventory(3);
         this.resources = new HashMap<>();
+        this.popCap = popCap;
+        this.baseNode = getNodeFromBiome(biome);
+    }
+
+    // Fake Village for proper Archive creation
+    public Village() {
+        super();
+        this.baseNode = null;
+        this.inventory = new Inventory(0);
+    }
+
+    public AbstractNode getNodeFromBiome(AbstractBiome biome) {
+        if (biome instanceof DesertBiome) {
+            return new Desert(0, 0);
+        }else if (biome instanceof Forest) {
+            return new Jungle(0, 0);
+        }else if (biome instanceof Grasslands) {
+            return new Grass(0, 0);
+        }else if (biome instanceof Icelands) {
+            return new Tundra(0, 0);
+        }else if (biome instanceof Mountainous) {
+            return new Mountain(0, 0);
+        }else if (biome instanceof Ocean) {
+            return new Sea(0, 0);
+        } else {
+            Logger.getGlobal().warning("Got a bad biome type for village at creation time!");
+        }
+        return null;
     }
 
     // INVENTORY /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +124,16 @@ public class Village extends AbstractNode {
 
 
     // VILLAGERS /////////////////////////////////////////////////////////////////////////////////////////////////
-    public void addToPopulation(Survivor s) {
+    public Boolean hasSurvivorByThatName(String name) {
+        for (Survivor s : population) {
+            if (s.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean addToPopulation(Survivor s) {
         if (population.size() < popCap) {
             this.population.add(s);
             this.strength += s.getStrength();
@@ -113,7 +148,9 @@ public class Village extends AbstractNode {
             for (GameObject obj : Game.getModifierObjects()) {
                 obj.onNewCitizen(s);
             }
+            return true;
         }
+        return false;
     }
 
     public void updateAfterRemoving(Survivor s) {
@@ -242,7 +279,7 @@ public class Village extends AbstractNode {
             }
             return true;
         } else {
-            OutputManager.addToBot("Not enough room to accumulate more resources! Build some storehouses.", OutputFlag.RESOURCES_FULL);
+            OutputManager.addToBot(OutputFlag.RESOURCES_FULL, "Not enough room to accumulate more resources! Build some storehouses.");
             return false;
         }
     }
@@ -262,7 +299,7 @@ public class Village extends AbstractNode {
             }
             return true;
         } else {
-            OutputManager.addToBot("Not enough room to accumulate more resources! Build some storehouses.", OutputFlag.RESOURCES_FULL);
+            OutputManager.addToBot(OutputFlag.RESOURCES_FULL, "Not enough room to accumulate more resources! Build some storehouses.");
             return false;
         }
     }
@@ -285,7 +322,7 @@ public class Village extends AbstractNode {
             }
             return true;
         } else if (reduced) {
-            OutputManager.addToBot("Not enough room to accumulate more resources! Build some storehouses.", OutputFlag.RESOURCES_FULL);
+            OutputManager.addToBot(OutputFlag.RESOURCES_FULL, "Not enough room to accumulate more resources! Build some storehouses.");
             return false;
         }
         return false;
@@ -415,6 +452,10 @@ public class Village extends AbstractNode {
             atk += obj.modifyAtk();
         }
         return atk;
+    }
+
+    public AbstractNode getBaseNode() {
+        return baseNode;
     }
 
     public Integer getHunger() {

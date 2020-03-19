@@ -37,7 +37,7 @@ public class Inventory extends GameObject {
             }
             return false;
         } else {
-            OutputManager.addToBot("Your inventory is full!", OutputFlag.INVENTORY_FULL);
+            OutputManager.addToBot(OutputFlag.INVENTORY_FULL, "Your inventory is full!");
             return false;
         }
     }

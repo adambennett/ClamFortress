@@ -3,38 +3,34 @@ package main.actions.priority;
 import main.actions.*;
 import main.enums.*;
 import main.models.*;
-import main.models.items.*;
-import main.models.items.artifacts.*;
 import main.models.buildings.abstracts.*;
 import main.models.managers.*;
 
-import java.util.logging.*;
-
 public class Building extends AbstractGameAction {
-
-    private AbstractBuilding newBuilding;
-
-    public Building(AbstractBuilding building) {
-        this.newBuilding = building;
-    }
 
     @Override
     public void update() {
-        if (this.newBuilding.canBuild()) {
-            if (Game.getVillage().addBuilding(this.newBuilding)) {
-                Game.getVillage().getUncompletedBuildings().remove(this.newBuilding);
-                this.newBuilding.onBuild();
+        if (Game.getVillage().getUncompletedBuildings().size() < 1) {
+            this.isDone = true;
+            return;
+        }
+        AbstractBuilding newBuilding = Game.getVillage().getUncompletedBuildings().remove(0);
+        if (newBuilding.canBuild()) {
+            if (Game.getVillage().addBuilding(newBuilding)) {
+                newBuilding.onBuild();
             } else {
-                OutputManager.addToBot("Building Project " + this.newBuilding.getName() + " has been halted because you have reached the current Building Limit", OutputFlag.BUILDING_HALT);
+                Game.getVillage().getUncompletedBuildings().add(newBuilding);
+                OutputManager.addToBot(OutputFlag.BUILDING_HALT, "Building Project " + newBuilding.getName() + " has been halted because you have reached the current Building Limit");
             }
         } else {
-            OutputManager.addToBot("Cannot build " + this.newBuilding.getName());
+            Game.getVillage().getUncompletedBuildings().add(newBuilding);
+            OutputManager.addToBot("Cannot build " + newBuilding.getName());
             this.isDone = true;
         }
     }
 
     @Override
     public Building clone() {
-        return new Building(this.newBuilding);
+        return new Building();
     }
 }

@@ -25,52 +25,28 @@ public class BiomeMenu extends AbstractConsole {
         switch (cmd) {
             case DESERT:
                 builder.setStartBiome(new DesertBiome());
+                new BoardSizeMenu().printPrompt(PromptMessage.BOARD_SIZE, true);
                 break;
             case GRASS:
                 builder.setStartBiome(new Grasslands());
+                new BoardSizeMenu().printPrompt(PromptMessage.BOARD_SIZE, true);
                 break;
             case JUNGLE:
                 builder.setStartBiome(new Forest());
+                new BoardSizeMenu().printPrompt(PromptMessage.BOARD_SIZE, true);
                 break;
             case MOUNTAIN:
                 builder.setStartBiome(new Mountainous());
+                new BoardSizeMenu().printPrompt(PromptMessage.BOARD_SIZE, true);
                 break;
             case SEA:
                 builder.setStartBiome(new Ocean());
+                new BoardSizeMenu().printPrompt(PromptMessage.BOARD_SIZE, true);
                 break;
             case TUNDRA:
                 builder.setStartBiome(new Icelands());
+                new BoardSizeMenu().printPrompt(PromptMessage.BOARD_SIZE, true);
                 break;
         }
-        boolean setup = setupGame();
-        if (setup) {
-            advanceToFirstTurn();
-        } else {
-            Logger.getGlobal().warning("Game was not created properly, returning to Login Screen");
-            new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
-        }
-    }
-
-    public Boolean setupGame() {
-        Boolean toRet = builder.buildGame();
-        String gameInfo = "";
-        gameInfo += "\n\nGame Information:\n  Difficulty: " + builder.getDifficulty().toString();
-        gameInfo += "\n  Race: " + builder.getRace().toString();
-        gameInfo += "\n  Starting Biome: " + builder.getStartBiome().toString();
-        if (builder.getCustomMods().size() > 0) {
-            gameInfo += "\n  All modifiers: ";
-            Collections.sort(builder.getCustomMods());
-            for (Integer i : builder.getCustomMods()) { gameInfo += i + ", "; }
-            gameInfo = gameInfo.substring(0, gameInfo.length() - 2);
-        }
-        gameInfo += "\n";
-        Logger.getGlobal().info(gameInfo);
-        return toRet;
-    }
-
-    public void advanceToFirstTurn() {
-        printPrompt(PromptMessage.BLURB, false);
-        TurnMenu turnMenu = new TurnMenu();
-        turnMenu.printPrompt(PromptMessage.TURN_MENU, true);
     }
 }

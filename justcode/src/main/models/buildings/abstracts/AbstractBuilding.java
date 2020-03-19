@@ -29,6 +29,9 @@ public abstract class AbstractBuilding extends GameObject {
     public void upgrade() {}
 
     public Boolean demolish() {
+        for (GameObject obj : Game.getModifierObjects()) {
+            obj.onDemolish();
+        }
         if (this instanceof Golden) {
             Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) this).getGoldAmt());
             OutputManager.addToBot("Received " + ((Golden) this).getGoldAmt() + " Coins upon destruction of " + this.getName() + "!");

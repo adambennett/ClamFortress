@@ -12,22 +12,16 @@ import static org.junit.Assert.*;
 
 public class ArchiveTest {
 
-    private static Archive archive;
+    
 
     @Before
     public void setup() {
-        Game.startGame();
-        archive = Archive.getInstance();
-    }
-
-    @Test
-    public void getInstance() {
-        Assert.assertNotNull(archive);
+        //Game.startGame();      
     }
 
     @Test
     public void get() {
-        GameObject obj = archive.get("wood");
+        GameObject obj = Archive.getInstance().get("wood");
         String expected = "Wood";
         String actual = obj.getName();
         Assert.assertEquals(expected, actual);
@@ -36,7 +30,7 @@ public class ArchiveTest {
 
     @Test
     public void generateNewResources() {
-        ArrayList<AbstractResource> res = archive.generateNewResources("stone", 15);
+        ArrayList<AbstractResource> res = Archive.getInstance().generateNewResources("stone", 15);
         Integer expected = 15;
         Integer actual = res.size();
         Assert.assertEquals(expected, actual);
@@ -45,7 +39,7 @@ public class ArchiveTest {
 
     @Test
     public void artifacts() {
-        ArrayList<AbstractArtifact> art = archive.artifacts();
+        ArrayList<AbstractArtifact> art = Archive.getInstance().artifacts();
         Assert.assertTrue(art.contains(new HolyCrown()));
     }
 

@@ -7,7 +7,6 @@ public class Forging extends AbstractGameAction {
     @Override
     public void update() {
         this.isDone = true;
-
     }
 
     @Override

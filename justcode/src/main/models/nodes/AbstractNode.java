@@ -36,6 +36,8 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
         }
     }
 
+    public AbstractNode() {}
+
     public Boolean hasArtifact() {
         return artifact != null;
     }

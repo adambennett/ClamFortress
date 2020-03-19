@@ -16,6 +16,10 @@ public class TechTree extends GameObject {
         resetTechTree();
     }
 
+    public static Era getTail() {
+        return tail;
+    }
+
     public static Era getHead() {
         return head;
     }

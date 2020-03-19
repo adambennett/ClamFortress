@@ -49,7 +49,7 @@ public class PriorityManagerTest {
         PriorityManager.setScout(expectedScout);
         PriorityManager.setPlant(expectedPlant);
         PriorityManager.setSmith(expectedSmith);
-        PriorityManager.setSmelt(expectedSmelt);
+        PriorityManager.setMasonry(expectedSmelt);
         PriorityManager.setRaid(expectedRaid);
         PriorityManager.setEngineer(expectedEngineer);
         PriorityManager.setBuild(expectedBuild);
@@ -69,7 +69,7 @@ public class PriorityManagerTest {
         Integer actualScout = PriorityManager.getScout();
         Integer actualPlant = PriorityManager.getPlant();
         Integer actualSmith = PriorityManager.getSmith();
-        Integer actualSmelt = PriorityManager.getSmelt();
+        Integer actualSmelt = PriorityManager.getMasonry();
         Integer actualRaid = PriorityManager.getRaid();
         Integer actualEngineer = PriorityManager.getEngineer();
         Integer actualBuild = PriorityManager.getBuild();

@@ -27,9 +27,9 @@ public class City extends AbstractNode {
     }
 
     protected void setupCity() {
-        int pop = ThreadLocalRandom.current().nextInt(0, 1000);
+        int pop = ThreadLocalRandom.current().nextInt(1, 1000);
         for (int i = 0; i < pop; i++) {
-            Survivor newCitizen = Archive.generateRandomSurvivor();
+            Survivor newCitizen = Archive.generateRandomSurvivor(false);
             this.cityResidence.add(newCitizen);
             this.cityDefense += newCitizen.getStrength();
         }

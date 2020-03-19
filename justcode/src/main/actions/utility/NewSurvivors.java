@@ -12,6 +12,13 @@ import java.util.concurrent.*;
 
 public class NewSurvivors extends AbstractGameAction {
 
+    private boolean print = true;
+
+    public NewSurvivors(boolean print) {
+        this.print = print;
+    }
+
+
     @Override
     public void update() {
         int pop = Game.getVillage().getPopulation();
@@ -32,14 +39,15 @@ public class NewSurvivors extends AbstractGameAction {
 
     @Override
     public NewSurvivors clone() {
-        return new NewSurvivors();
+        return new NewSurvivors(this.print);
     }
 
     public void addToVillage(int amt) {
         for (int i = 0; i < amt; i++) {
-            Survivor newCitizen = Archive.generateRandomSurvivor();
-            Game.getVillage().addToPopulation(newCitizen);
-            OutputManager.addToBot(newCitizen.getName() + " has moved into your village!");
+            Survivor newCitizen = Archive.generateRandomSurvivor(true);
+            if (Game.getVillage().addToPopulation(newCitizen) && this.print) {
+                OutputManager.addToBot(newCitizen.getName() + " has moved into your village!");
+            }
         }
     }
 }

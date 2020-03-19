@@ -38,6 +38,10 @@ public abstract class Era extends GameObject {
         return null;
     }
 
+    public boolean atLeast(Era era) {
+       return this.equals(era) || isAheadOf(era);
+    }
+
     public boolean isAheadOf(Era era) {
         if (this.hasPrev() && this.prev.getClass().equals(era.getClass())) {
             return true;
@@ -94,4 +98,9 @@ public abstract class Era extends GameObject {
 
     @Override
     public abstract Era clone();
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

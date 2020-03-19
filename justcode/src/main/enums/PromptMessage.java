@@ -12,5 +12,8 @@ public enum PromptMessage {
     RESOURCE_VIEW,
     BLURB,
     INVENTORY_VIEW,
-    VILLAGERS
+    VILLAGERS,
+    POP_SETUP,
+    BOARD_SIZE,
+    GAME_BOARD
 }

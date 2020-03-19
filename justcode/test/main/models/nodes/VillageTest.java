@@ -20,7 +20,7 @@ public class VillageTest {
     public void setup() {
 
         startBiome = new Grasslands();
-        village = new Village(startBiome);
+        village = new Village(startBiome, 5);
     }
 
     @Test

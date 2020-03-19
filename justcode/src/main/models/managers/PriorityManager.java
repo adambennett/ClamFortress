@@ -2,7 +2,6 @@ package main.models.managers;
 
 
 import main.models.*;
-import main.models.items.*;
 
 public class PriorityManager {
 
@@ -22,7 +21,7 @@ public class PriorityManager {
     private static Integer  scout = 0;
     private static Integer  plant = 0;
     private static Integer  smith = 0;
-    private static Integer  smelt = 0;
+    private static Integer masonry = 0;
     private static Integer  raid = 0;
     private static Integer  engineer = 0;
     private static Integer  build = 0;
@@ -47,7 +46,7 @@ public class PriorityManager {
         scout = 0;
         plant = 0;
         smith = 0;
-        smelt = 0;
+        masonry = 0;
         raid = 0;
         engineer = 0;
         build = 0;
@@ -188,12 +187,12 @@ public class PriorityManager {
         PriorityManager.smith = smith;
     }
 
-    public static Integer getSmelt() {
-        return smelt;
+    public static Integer getMasonry() {
+        return masonry;
     }
 
-    public static void setSmelt(Integer smelt) {
-        PriorityManager.smelt = smelt;
+    public static void setMasonry(Integer masonry) {
+        PriorityManager.masonry = masonry;
     }
 
     public static Integer getRaid() {

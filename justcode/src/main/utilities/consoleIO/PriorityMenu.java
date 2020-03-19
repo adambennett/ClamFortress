@@ -10,7 +10,6 @@ import main.actions.priority.food.human.*;
 import main.actions.priority.food.orc.*;
 import main.enums.*;
 import main.models.*;
-import main.models.items.*;
 import main.models.managers.*;
 
 import java.util.*;
@@ -29,6 +28,9 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("1", MenuCommands.DYNAMIC_FOOD_A);
         consoleCommands.put("2", MenuCommands.DYNAMIC_FOOD_B);
         consoleCommands.put("3", MenuCommands.DYNAMIC_FOOD_C);
+        consoleCommands.put("hunt", MenuCommands.DYNAMIC_FOOD_A);
+        consoleCommands.put("fish", MenuCommands.DYNAMIC_FOOD_B);
+        consoleCommands.put("cook", MenuCommands.DYNAMIC_FOOD_C);
         consoleCommands.put("4", MenuCommands.PRAY);
         consoleCommands.put("5", MenuCommands.FORAGE);
         consoleCommands.put("6", MenuCommands.WOODCUTTING);
@@ -41,12 +43,38 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("13", MenuCommands.SCOUTING);
         consoleCommands.put("14", MenuCommands.PLANTING);
         consoleCommands.put("15", MenuCommands.SMITHING);
-        consoleCommands.put("16", MenuCommands.SMELTING);
+        consoleCommands.put("16", MenuCommands.MASONRY);
         consoleCommands.put("17", MenuCommands.RAIDING);
         consoleCommands.put("18", MenuCommands.ENGINEERING);
         consoleCommands.put("19", MenuCommands.BUILDING);
         consoleCommands.put("20", MenuCommands.TRADING);
         consoleCommands.put("0", MenuCommands.CONTINUE);
+        consoleCommands.put("continue", MenuCommands.CONTINUE);
+        consoleCommands.put("next", MenuCommands.CONTINUE);
+        consoleCommands.put("end", MenuCommands.CONTINUE);
+        consoleCommands.put("pray", MenuCommands.PRAY);
+        consoleCommands.put("forage", MenuCommands.FORAGE);
+        consoleCommands.put("wood", MenuCommands.WOODCUTTING);
+        consoleCommands.put("woodcutting", MenuCommands.WOODCUTTING);
+        consoleCommands.put("stone", MenuCommands.STONE_PICK);
+        consoleCommands.put("mine", MenuCommands.MINING);
+        consoleCommands.put("defend", MenuCommands.DEFENDING);
+        consoleCommands.put("def", MenuCommands.DEFENDING);
+        consoleCommands.put("harvest", MenuCommands.HARVESTING);
+        consoleCommands.put("forge", MenuCommands.FORGING);
+        consoleCommands.put("heal", MenuCommands.HEALING);
+        consoleCommands.put("scout", MenuCommands.SCOUTING);
+        consoleCommands.put("explore", MenuCommands.SCOUTING);
+        consoleCommands.put("discover", MenuCommands.SCOUTING);
+        consoleCommands.put("plant", MenuCommands.PLANTING);
+        consoleCommands.put("smith", MenuCommands.SMITHING);
+        consoleCommands.put("masonry", MenuCommands.MASONRY);
+        consoleCommands.put("mason", MenuCommands.MASONRY);
+        consoleCommands.put("raid", MenuCommands.RAIDING);
+        consoleCommands.put("engineer", MenuCommands.ENGINEERING);
+        consoleCommands.put("eng", MenuCommands.ENGINEERING);
+        consoleCommands.put("build", MenuCommands.BUILDING);
+        consoleCommands.put("trade", MenuCommands.TRADING);
     }
 
     @Override
@@ -178,11 +206,11 @@ public class PriorityMenu extends AbstractConsole {
                     actionManager.addToTurnEnd(new Smithing());
                 }
                 break;
-            case SMELTING:
-                PriorityManager.setSmelt(PriorityManager.getSmelt() + amt);
+            case MASONRY:
+                PriorityManager.setMasonry(PriorityManager.getMasonry() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 for (int i = 0; i < amt; i++) {
-                    actionManager.addToTurnEnd(new Smelting());
+                    actionManager.addToTurnEnd(new Masonry());
                 }
                 break;
             case RAIDING:

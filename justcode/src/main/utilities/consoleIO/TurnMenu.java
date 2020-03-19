@@ -20,14 +20,18 @@ public class TurnMenu extends AbstractConsole {
         consoleCommands.put("cheat", MenuCommands.SCORE_REALLY_BIG_HACKS);
         consoleCommands.put("0", MenuCommands.CONTINUE);
         consoleCommands.put("2", MenuCommands.RESOURCES);
-        consoleCommands.put("3", MenuCommands.INVENTORY);
-        consoleCommands.put("5", MenuCommands.VILLAGERS);
+        consoleCommands.put("3", MenuCommands.GAME_BOARD);
+        consoleCommands.put("4", MenuCommands.INVENTORY);
+        consoleCommands.put("6", MenuCommands.VILLAGERS);
 
     }
 
     @Override
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
+            case GAME_BOARD:
+                new MidTurnMenu().printPrompt(PromptMessage.GAME_BOARD, true);
+                break;
             case SAVE:
                 Database.saveDatabase();
                 printPrompt(PromptMessage.TURN_MENU, true);

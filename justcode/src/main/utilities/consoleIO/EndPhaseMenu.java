@@ -2,7 +2,6 @@ package main.utilities.consoleIO;
 
 import main.enums.*;
 import main.models.*;
-import main.models.items.*;
 import main.models.managers.*;
 import main.utilities.persistence.*;
 
@@ -48,7 +47,7 @@ public class EndPhaseMenu extends AbstractConsole {
                 System.exit(0);
             case END_GAME:
                 GameManager.reset();
-                new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
+                new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
                 break;
         }
     }

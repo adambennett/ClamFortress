@@ -18,6 +18,7 @@ public class Building extends AbstractGameAction {
         if (newBuilding.canBuild()) {
             if (Game.getVillage().addBuilding(newBuilding)) {
                 newBuilding.onBuild();
+                GameManager.getInstance().gainExperience();
             } else {
                 Game.getVillage().getUncompletedBuildings().add(newBuilding);
                 OutputManager.addToBot(OutputFlag.BUILDING_HALT, "Building Project " + newBuilding.getName() + " has been halted because you have reached the current Building Limit");

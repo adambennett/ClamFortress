@@ -12,6 +12,7 @@ import main.models.nodes.*;
 import main.models.managers.*;
 import main.models.resources.natural.*;
 import main.models.tech.*;
+import main.models.tech.eras.*;
 import main.utilities.persistence.*;
 
 import java.util.*;
@@ -47,11 +48,14 @@ public class Game {
 
     // Default Settings (for tests)
     public static void startGame() {
-        startGame(Difficulty.DEFAULT, Race.HUMAN, new Grasslands(), 0, 5, 50, 50);
+        startGame(new BronzeAge(true), Difficulty.DEFAULT, Race.HUMAN, new Grasslands(), 0, 5, 50, 50);
     }
 
-    public static void startGame(Difficulty gameDifficulty, Race chosenRace, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
+    public static void startGame(Era startEra, Difficulty gameDifficulty, Race chosenRace, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
         TechTree.resetTechTree();
+        if (startEra != null) {
+            TechTree.moveToEra(startEra, true);
+        }
         PriorityManager.reset(true);
         difficulty = gameDifficulty;
         actionManager = new ActionManager();
@@ -68,8 +72,11 @@ public class Game {
     }
 
     // Custom Difficulty
-    public static void startGame(Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
+    public static void startGame(Era startEra, Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
         TechTree.resetTechTree();
+        if (startEra != null) {
+            TechTree.moveToEra(startEra, true);
+        }
         PriorityManager.reset(true);
         difficulty = Difficulty.CUSTOM;
         actionManager = new ActionManager();

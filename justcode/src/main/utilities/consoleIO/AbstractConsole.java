@@ -5,6 +5,7 @@ import main.utilities.*;
 import main.utilities.builders.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 public abstract class AbstractConsole {
 
@@ -121,9 +122,9 @@ public abstract class AbstractConsole {
             DifficultyMenu stat = (DifficultyMenu) this;
             stat.printPrompt(PromptMessage.DIFF_MENU, true);
         }
-        else if (currentConsole instanceof LoginMenu) {
-            LoginMenu curr = (LoginMenu) this;
-            curr.printPrompt(PromptMessage.LOGIN_MENU, true);
+        else if (currentConsole instanceof MainMenu) {
+            MainMenu curr = (MainMenu) this;
+            curr.printPrompt(PromptMessage.MAIN_MENU, true);
         }
         else if (currentConsole instanceof RaceMenu) {
             RaceMenu curr = (RaceMenu) this;
@@ -152,6 +153,35 @@ public abstract class AbstractConsole {
         else if (currentConsole instanceof BoardSizeMenu) {
             BoardSizeMenu curr = (BoardSizeMenu) this;
             curr.printPrompt(PromptMessage.BOARD_SIZE, true);
+        }
+        else if (currentConsole instanceof NewGameHub) {
+            NewGameHub curr = (NewGameHub) this;
+            curr.printPrompt(PromptMessage.NEW_GAME_HUB, true);
+        }
+    }
+
+    private Boolean setupGame() {
+        Boolean toRet = builder.buildGame();
+        Logger.getGlobal().info(builder.toString());
+        return toRet;
+    }
+
+    private void advanceToFirstTurn() {
+        printPrompt(PromptMessage.BLURB, false);
+        TurnMenu turnMenu = new TurnMenu();
+        turnMenu.printPrompt(PromptMessage.TURN_MENU, true);
+    }
+
+    public void beginGame() {
+        if (builder.getStartingPopCap() < 5) {
+            builder.setStartingPopCap(5);
+        }
+        boolean setup = setupGame();
+        if (setup) {
+            advanceToFirstTurn();
+        } else {
+            Logger.getGlobal().warning("Game was not created properly, returning to Main Menu");
+            new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
         }
     }
 

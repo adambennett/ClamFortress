@@ -2,7 +2,6 @@ package main.utilities.consoleIO;
 
 import main.enums.*;
 import main.models.*;
-import main.models.items.*;
 import main.models.managers.*;
 import main.utilities.persistence.*;
 
@@ -22,6 +21,7 @@ public class TurnMenu extends AbstractConsole {
         consoleCommands.put("2", MenuCommands.RESOURCES);
         consoleCommands.put("3", MenuCommands.GAME_BOARD);
         consoleCommands.put("4", MenuCommands.INVENTORY);
+        consoleCommands.put("5", MenuCommands.BUILDING);
         consoleCommands.put("6", MenuCommands.VILLAGERS);
 
     }
@@ -29,6 +29,9 @@ public class TurnMenu extends AbstractConsole {
     @Override
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
+            case BUILDING:
+                new MidTurnMenu().printPrompt(PromptMessage.BUILDINGS, true);
+                break;
             case GAME_BOARD:
                 new MidTurnMenu().printPrompt(PromptMessage.GAME_BOARD, true);
                 break;
@@ -41,7 +44,7 @@ public class TurnMenu extends AbstractConsole {
                 System.exit(0);
             case END_GAME:
                 GameManager.reset();
-                new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
+                new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
                 break;
             case SKIP_TURN:
                 Game.advanceTurn();

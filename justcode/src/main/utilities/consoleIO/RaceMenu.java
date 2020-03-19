@@ -27,6 +27,9 @@ public class RaceMenu extends AbstractConsole {
             consoleCommands.put("6", MenuCommands.ALIEN);
         }
         consoleCommands.put("7", MenuCommands.RANDOM_RACE);
+        consoleCommands.put("0", MenuCommands.CONTINUE);
+        consoleCommands.put("9", MenuCommands.NEW_GAME);
+
     }
 
     @Override
@@ -34,28 +37,41 @@ public class RaceMenu extends AbstractConsole {
         switch (cmd) {
             case HUMAN:
                 builder.setRace(Race.HUMAN);
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
             case ORC:
                 builder.setRace(Race.ORC);
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
             case DWARF:
                 builder.setRace(Race.DWARF);
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
             case ALIEN:
                 builder.setRace(Race.ALIEN);
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
             case CLAMAN:
                 builder.setRace(Race.CLAMAN);
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
             case ELF:
                 builder.setRace(Race.ELF);
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
             case RANDOM_RACE:
                 builder.setRace(Race.getRandomRace());
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
+            case CONTINUE:
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
+                break;
+            case NEW_GAME:
+                beginGame();
+                break;
+
         }
 
-        BiomeMenu biomeMenu = new BiomeMenu();
-        biomeMenu.printPrompt(PromptMessage.BIOME_MENU, true);
+
     }
 }

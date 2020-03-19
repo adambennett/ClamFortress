@@ -13,6 +13,7 @@ public class BoardSizeMenu extends AbstractConsole {
         consoleCommands.put("1", MenuCommands.GAME_BOARD);
         consoleCommands.put("2", MenuCommands.POPULATION);
         consoleCommands.put("0", MenuCommands.CONTINUE);
+        consoleCommands.put("9", MenuCommands.NEW_GAME);
     }
 
     @Override
@@ -28,7 +29,10 @@ public class BoardSizeMenu extends AbstractConsole {
                 printPrompt(PromptMessage.BOARD_SIZE, true);
                 break;
             case CONTINUE:
-                new PopulationSetupMenu().printPrompt(PromptMessage.POP_SETUP, true);
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
+                break;
+            case NEW_GAME:
+                beginGame();
                 break;
         }
     }

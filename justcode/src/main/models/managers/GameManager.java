@@ -1,11 +1,17 @@
 package main.models.managers;
 
+import main.models.tech.*;
+import main.utilities.persistence.*;
+
 import java.math.*;
 import java.util.*;
 import java.util.concurrent.*;
 
 public class GameManager {
 
+    private Integer techLevel;
+    private Integer techUp;
+    private Integer techMod;
     private BigInteger turnNumber;
     private Integer trainingCost;
     private Date date;
@@ -25,6 +31,9 @@ public class GameManager {
         this.turnNumber = BigInteger.valueOf(1);
         this.trainingCost = 200;
         this.date = new Date();
+        this.techLevel = 0;
+        this.techUp = 1000;
+        this.techMod = 2;
         updateSeason();
     }
 
@@ -35,6 +44,41 @@ public class GameManager {
         }
     }
 
+    public void gainExperience() {
+        gainExperience(ThreadLocalRandom.current().nextInt(0, 5));
+    }
+
+    public void gainExperience(int amt) {
+        if (!TechTree.getCurrentEra().equals(TechTree.getTail())) {
+            this.techLevel += amt;
+            if (this.techLevel > this.techUp) {
+                TechTree.incEra();
+                OutputManager.addToBot("Advanced to " + TechTree.getCurrentEra().toString());
+                this.techLevel = 0;
+                this.techUp *= this.techMod;
+                this.techMod += ThreadLocalRandom.current().nextInt(1, 5);
+            } else if (amt > 0) {
+                OutputManager.exp(amt);
+                Database.score(amt);
+            }
+        } else {
+            OutputManager.exp(amt);
+            Database.score(amt);
+        }
+    }
+
+    public Integer getTechLevel() {
+        return techLevel;
+    }
+
+    public Integer getTechUp() {
+        return techUp;
+    }
+
+    public Integer getTechMod() {
+        return techMod;
+    }
+
     public static GameManager getInstance() {
         return instance;
     }
@@ -43,7 +87,10 @@ public class GameManager {
         instance.turnNumber = BigInteger.valueOf(1);
         instance.date = new Date();
         instance.trainingCost = 200;
+        instance.techLevel = 0;
         instance.updateSeason();
+        instance.techUp = 500;
+        instance.techMod = 2;
     }
 
     private void updateSeason() {

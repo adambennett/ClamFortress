@@ -29,12 +29,14 @@ public class Mining extends AbstractGameAction {
             }
             OutputManager.addToBot("Mined " + roll + " " + ore.getName() + "!");
         }
-        if (!(Game.getVillage().addResources(mined))) {
-            for (AbstractResource ore : mined) {
-                Game.getVillage().addResource(ore);
+        if (mined.size() > 0) {
+            GameManager.getInstance().gainExperience();
+            if (!(Game.getVillage().addResources(mined))) {
+                for (AbstractResource ore : mined) {
+                    Game.getVillage().addResource(ore);
+                }
             }
-        }
-        if (mined.size() < 1) {
+        } else {
             OutputManager.addToBot(OutputFlag.NO_ROCKS_MINED, "Couldn't find anything to mine. Try Scouting more of the board.");
         }
         this.isDone = true;
@@ -55,7 +57,9 @@ public class Mining extends AbstractGameAction {
             typesToMine.add(new Copper());
             typesToMine.add(new Rock());
         } else if (curr.atLeast(new ExplorationAge())) {
-            typesToMine.add(new Gold());
+            if (Game.getVillage().getInventory().containsItem("pickaxe")) {
+                typesToMine.add(new Gold());
+            }
             typesToMine.add(new Clay());
             typesToMine.add(new Iron());
             typesToMine.add(new Copper());

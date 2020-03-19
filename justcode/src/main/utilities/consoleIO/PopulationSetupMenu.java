@@ -1,7 +1,6 @@
 package main.utilities.consoleIO;
 
 import main.enums.*;
-import main.models.nodes.biomes.*;
 
 import java.util.*;
 import java.util.logging.*;
@@ -14,6 +13,7 @@ public class PopulationSetupMenu extends AbstractConsole {
         consoleCommands.put("1", MenuCommands.POPCAP);
         consoleCommands.put("2", MenuCommands.POPULATION);
         consoleCommands.put("0", MenuCommands.CONTINUE);
+        consoleCommands.put("9", MenuCommands.NEW_GAME);
     }
 
     @Override
@@ -29,40 +29,13 @@ public class PopulationSetupMenu extends AbstractConsole {
                 printPrompt(PromptMessage.POP_SETUP, true);
                 break;
             case CONTINUE:
-                if (builder.getStartingPopCap() < 5) {
-                    builder.setStartingPopCap(5);
-                }
-                boolean setup = setupGame();
-                if (setup) {
-                    advanceToFirstTurn();
-                } else {
-                    Logger.getGlobal().warning("Game was not created properly, returning to Login Screen");
-                    new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
-                }
+                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
+                break;
+            case NEW_GAME:
+                beginGame();
                 break;
         }
     }
 
-    public Boolean setupGame() {
-        Boolean toRet = builder.buildGame();
-        String gameInfo = "";
-        gameInfo += "\n\nGame Information:\n  Difficulty: " + builder.getDifficulty().toString();
-        gameInfo += "\n  Race: " + builder.getRace().toString();
-        gameInfo += "\n  Starting Biome: " + builder.getStartBiome().toString();
-        if (builder.getCustomMods().size() > 0) {
-            gameInfo += "\n  All modifiers: ";
-            Collections.sort(builder.getCustomMods());
-            for (Integer i : builder.getCustomMods()) { gameInfo += i + ", "; }
-            gameInfo = gameInfo.substring(0, gameInfo.length() - 2);
-        }
-        gameInfo += "\n";
-        Logger.getGlobal().info(gameInfo);
-        return toRet;
-    }
 
-    public void advanceToFirstTurn() {
-        printPrompt(PromptMessage.BLURB, false);
-        TurnMenu turnMenu = new TurnMenu();
-        turnMenu.printPrompt(PromptMessage.TURN_MENU, true);
-    }
 }

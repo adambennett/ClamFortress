@@ -13,7 +13,7 @@ import main.models.people.*;
 
 import java.util.*;
 
-public abstract class GameObject implements Cloneable {
+public abstract class GameObject implements Cloneable, Comparable<GameObject> {
 
     private String name;
 
@@ -78,4 +78,9 @@ public abstract class GameObject implements Cloneable {
 
     @Override
     public abstract GameObject clone();
+
+    @Override
+    public int compareTo(GameObject o) {
+        return this.getName().compareTo(o.getName());
+    }
 }

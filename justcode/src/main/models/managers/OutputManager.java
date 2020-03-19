@@ -5,6 +5,7 @@ import main.models.*;
 import main.models.buildings.abstracts.*;
 import main.models.nodes.*;
 import main.utilities.*;
+import main.utilities.persistence.*;
 
 import java.util.*;
 
@@ -17,6 +18,7 @@ public class OutputManager {
     private static final Map<AbstractNode, Integer> discovered;
     private static final ArrayList<AbstractBuilding> built;
     private static final ArrayList<AbstractBuilding> queued;
+    private static Integer exp;
 
     static {
         outputPool = new ArrayList<>();
@@ -26,14 +28,16 @@ public class OutputManager {
         collected = new HashMap<>();
         consumed = new HashMap<>();
         discovered = new HashMap<>();
+        exp = 0;
     }
 
     public static void reset() {
         outputPool.clear();
         flags.clear();
+        exp = 0;
     }
 
-
+    public static void exp(int amt) { exp += amt; }
 
     public static void addToBot(String message) {
         addToBot(OutputFlag.ALWAYS, message);
@@ -53,6 +57,10 @@ public class OutputManager {
             outputPool.add(0, message);
             flags.add(flag);
         }
+    }
+
+    public static Integer getExp() {
+        return exp;
     }
 
     public static void print() {

@@ -33,7 +33,6 @@ public class CustomDifficultyMenu extends AbstractConsole {
             catch (NumberFormatException ignored) {}
         }
         builder.setCustomMods(ints);
-        RaceMenu raceMenu = new RaceMenu();
-        raceMenu.printPrompt(PromptMessage.RACE_MENU, true);
+        new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
     }
 }

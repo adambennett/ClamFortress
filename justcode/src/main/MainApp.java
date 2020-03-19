@@ -1,5 +1,6 @@
 package main;
 
+import main.utilities.*;
 import main.utilities.consoleIO.*;
 import main.enums.*;
 import main.utilities.persistence.*;
@@ -13,7 +14,8 @@ public class MainApp {
 
     public void initialize() {
         Database.loadDatabase();
-        new LoginMenu().printPrompt(PromptMessage.LOGIN_MENU, true);
+        GameStrings.initModMap();
+        new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
     }
 
 }

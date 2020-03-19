@@ -2,8 +2,6 @@ package main.actions.priority;
 
 import main.actions.*;
 import main.models.*;
-import main.models.items.*;
-import main.models.items.artifacts.*;
 import main.models.buildings.abstracts.*;
 import main.models.managers.*;
 
@@ -30,6 +28,7 @@ public class Praying extends AbstractGameAction {
         int amt = ThreadLocalRandom.current().nextInt(faithBuildingMod+1);
         if (amt > 0) {
             Game.getVillage().incFaith(amt);
+            GameManager.getInstance().gainExperience();
             OutputManager.addToBot("Praying has earned you " + faithBuildingMod + " Faith");
         }
         this.isDone = true;

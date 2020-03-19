@@ -2,12 +2,10 @@ package main.actions.priority;
 
 import main.actions.*;
 import main.models.*;
-import main.models.animals.*;
 import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.managers.*;
 import main.models.resources.*;
-import main.utilities.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -42,6 +40,7 @@ public class Foraging extends AbstractGameAction {
                     AbstractItem item = items.get(ThreadLocalRandom.current().nextInt(items.size()));
                     Game.getVillage().addToInventory(item.getName());
                     OutputManager.addToBot("Found " + item.getName() + " while Foraging");
+                    GameManager.getInstance().gainExperience(10);
                     this.isDone = true;
                     return;
                 }
@@ -50,6 +49,7 @@ public class Foraging extends AbstractGameAction {
         AbstractResource rand = Game.getGameBoard().removeRandomResource();
         if (rand != null) {
             Game.getVillage().addResource(rand);
+            GameManager.getInstance().gainExperience();
             OutputManager.addToBot("Found " + rand.getName() + " while Foraging");
         }
         this.isDone = true;

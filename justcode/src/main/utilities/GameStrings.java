@@ -3,6 +3,7 @@ package main.utilities;
 
 import main.models.*;
 import main.models.animals.*;
+import main.models.buildings.abstracts.*;
 import main.models.items.*;
 import main.models.managers.*;
 import main.models.nodes.*;
@@ -42,15 +43,70 @@ public class GameStrings {
     private static String inv;
     private static String vil;
     private static String board;
+    private static String build;
+    private static String archive;
 
     private static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
 
-    private static final String openGame =
+    private static final String loginScreen =
                     "**************************************************\n" +
-                    "***                Clam Fortress               ***\n" +
+                    "***              Clam Fortress                 ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***                1 | Login                   ***\n" +
+                    "***                2 | Register                ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***                0 | Exit                    ***\n" +
+                    "**************************************************\n";
+
+    private static final String newGameHub =
+                    "**************************************************\n" +
+                    "***               New Game Menu                ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***                1 | Difficulty              ***\n" +
+                    "***                2 | Biome                   ***\n" +
+                    "***                3 | Race                    ***\n" +
+                    "***                4 | Population              ***\n" +
+                    "***                5 | Board Size              ***\n" +
+                    "***                6 | Difficulty Modifiers    ***\n" +
+                    "***                7 | Equipment               ***\n" +
+                    "***                8 | Resources               ***\n" +
+                    "***                9 | Starting Era            ***\n" +
+                    "***               10 | View Current Settings   ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***                0 | Start Game              ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***             Exit | Exit Game               ***\n" +
+                    "***             Quit | Return to Main Menu     ***\n" +
+                    "***            Reset | Reset all to Default    ***\n" +
+                    "**************************************************\n";
+    
+    private static final String mainMenu =
+                    "**************************************************\n" +
+                    "***                 Main Menu                  ***\n" +
                     "***--------------------------------------------***\n" +
                     "***                1 | New Game                ***\n" +
                     "***                2 | Load Game               ***\n" +
+                    "***                3 | Stats                   ***\n" +
+                    "***                4 | Archive                 ***\n" +
+                    "***                5 | Options                 ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***                0 | Logout                  ***\n" +                  
+                    "**************************************************\n";
+
+    private static final String startEra =
+                    "**************************************************\n" +
+                    "***              Starting Era                  ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           1 | Stone Age                    ***\n" +
+                    "***           2 | Bronze Age                   ***\n" +
+                    "***           3 | Iron Age                     ***\n" +
+                    "***           4 | Exploration Age              ***\n" +
+                    "***           5 | Industrial Age               ***\n" +
+                    "***           6 | Information Age              ***\n" +
+                    "***           7 | Future                       ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           0 | Back to New Game Menu        ***\n" +
+                    "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
     private static final String pop =
@@ -60,7 +116,8 @@ public class GameStrings {
                     "***           1 | Set Population Cap           ***\n" +
                     "***           2 | Set Starting Population      ***\n" +
                     "***--------------------------------------------***\n" +
-                    "***           0 | Start Game                   ***\n" +
+                    "***           0 | Back to New Game Menu        ***\n" +
+                    "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
     private static final String boardSize =
@@ -70,37 +127,44 @@ public class GameStrings {
                     "***           1 | Set Board X Max              ***\n" +
                     "***           2 | Set Board Y Max              ***\n" +
                     "***--------------------------------------------***\n" +
-                    "***           0 | Population Options           ***\n" +
+                    "***           0 | Back to New Game Menu        ***\n" +
+                    "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
     private static final String chooseBiome =
                     "**************************************************\n" +
-                    "***             Choose Starting Biome          ***\n" +
+                    "***              Starting Biome                ***\n" +
                     "***--------------------------------------------***\n" +
-                    "***                1 | Grasslands (Default)    ***\n" +
-                    "***                2 | Desert                  ***\n" +
-                    "***                3 | Jungle                  ***\n" +
-                    "***                4 | Mountain                ***\n" +
-                    "***                5 | Sea                     ***\n" +
-                    "***                6 | Tundra                  ***\n" +
+                    "***           1 | Grasslands                   ***\n" +
+                    "***           2 | Desert                       ***\n" +
+                    "***           3 | Jungle                       ***\n" +
+                    "***           4 | Mountain                     ***\n" +
+                    "***           5 | Sea                          ***\n" +
+                    "***           6 | Tundra                       ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           0 | Back to New Game Menu        ***\n" +
+                    "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
     private static final String chooseDifficulty =
                     "**************************************************\n" +
-                    "***               Select Difficulty            ***\n" +
+                    "***              Select Difficulty             ***\n" +
                     "***--------------------------------------------***\n" +
-                    "***                1 | Easy                    ***\n" +
-                    "***                2 | Standard                ***\n" +
-                    "***                3 | Hard                    ***\n" +
-                    "***                4 | Brutal                  ***\n" +
-                    "***                5 | Nightmare               ***\n" +
-                    "***                6 | Impossible              ***\n" +
-                    "***                7 | Custom                  ***\n" +
-                    "***                8 | Random                  ***\n" +
+                    "***           1 | Easy                         ***\n" +
+                    "***           2 | Standard                     ***\n" +
+                    "***           3 | Hard                         ***\n" +
+                    "***           4 | Brutal                       ***\n" +
+                    "***           5 | Nightmare                    ***\n" +
+                    "***           6 | Impossible                   ***\n" +
+                    "***           7 | Custom                       ***\n" +
+                    "***           8 | Random                       ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           0 | Back to New Game Menu        ***\n" +
+                    "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
     private static final String customDifficulty =
-            "***************************************************************\n" +
+                    "***************************************************************\n" +
                     "***                    Difficulty Options                   ***\n" +
                     "***---------------------------------------------------------***\n" +
                     "***             1 | Tougher enemies                         ***\n" +
@@ -117,10 +181,29 @@ public class GameStrings {
                     "***            12 | Disable Aliens                          ***\n" +
                     "***            13 | Disable Healing                         ***\n" +
                     "***            14 | Disable Faith                           ***\n" +
-                    "***            15 | Disable ability to check surroundings   ***\n" +
+                    "***            15 | Disable ability to check surroundings   ***\n" +                  
                     "***---------------------------------------------------------***\n" +
-                    "***   Choose any combination of custom difficulty options   ***\n" +
                     "***************************************************************\n";
+    
+    public static final Map<Integer, String> modifierMap = new HashMap<>();
+    
+    public static void initModMap() {
+        modifierMap.put(1, "Tougher enemies");
+        modifierMap.put(2, "Slow resource gain");
+        modifierMap.put(3, "More bad events");
+        modifierMap.put(4, "Terrible disasters");
+        modifierMap.put(5, "Handicap starting equipment");
+        modifierMap.put(6, "More Netherworlds");
+        modifierMap.put(7, "Tools are less effective");
+        modifierMap.put(8, "Incredibly hostile enemies");
+        modifierMap.put(9, "Limited Blueprint access");
+        modifierMap.put(10, "Disable Trading");
+        modifierMap.put(11, "Disable Magic");
+        modifierMap.put(12, "Disable Aliens");
+        modifierMap.put(13, "Disable Healing");
+        modifierMap.put(14, "Disable Faith");
+        modifierMap.put(15, "Disable ability to check surroundings");
+    }
 
     public static Boolean startsWithVowel(String word) {
         return isVowel(word.charAt(0));
@@ -152,7 +235,7 @@ public class GameStrings {
         return s;
     }
 
-    public static Map<String, String> getRaces() {
+    public static ArrayList<LinkedHashMap<String, ArrayList<String>>> getRaces() {
         String human = "Human";
         String orc = "???";
         String elf = orc;
@@ -169,15 +252,21 @@ public class GameStrings {
         if (isDwarfUnlocked)  { dwarf = "Dwarf";   }
         if (isElfUnlocked)    { elf = "Elf";       }
         if (isOrcUnlocked)    { orc = "Orc";       }
-        Map<String, String> raceMenuMap = new HashMap<>();
+        LinkedHashMap<String, ArrayList<String>> raceMenuMap = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> extraOptions = new LinkedHashMap<>();
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> mapps = new ArrayList<>();
         int index = 1;
-        raceMenuMap.put("" + index, human); index++;
-        raceMenuMap.put("" + index, orc); index++;
-        raceMenuMap.put("" + index, elf); index++;
-        raceMenuMap.put("" + index, dwarf); index++;
-        raceMenuMap.put("" + index, claman); index++;
-        raceMenuMap.put("" + index, alien);
-        return raceMenuMap;
+        ArrayList<String> col = new ArrayList<>(); col.add(human); raceMenuMap.put("" + index, col); index++;
+        ArrayList<String> colB = new ArrayList<>(); colB.add(orc); raceMenuMap.put("" + index, colB); index++;
+        ArrayList<String> colC = new ArrayList<>(); colC.add(elf); raceMenuMap.put("" + index, colC); index++;
+        ArrayList<String> colD = new ArrayList<>(); colD.add(dwarf); raceMenuMap.put("" + index, colD); index++;
+        ArrayList<String> colE = new ArrayList<>(); colE.add(claman); raceMenuMap.put("" + index, colE); index++;
+        ArrayList<String> colF = new ArrayList<>(); colE.add(alien); raceMenuMap.put("" + index, colE);
+        ArrayList<String> colG = new ArrayList<>(); colE.add("Return to Main Menu"); extraOptions.put("0", colE);
+        ArrayList<String> colH = new ArrayList<>(); colE.add("Start Game"); extraOptions.put("9", colE);
+        mapps.add(raceMenuMap);
+        mapps.add(extraOptions);
+        return mapps;
     }
 
     public static String newMenu(String leftAlignFormat, String headerFormat, String breakLine, String header, Map<String, String> commandToLabelMap) {
@@ -225,7 +314,7 @@ public class GameStrings {
         String headerFormat = "| %-20s |\n";
         String breakLine = "+----+-----------------+\n";
         String header = "Choose Village Race";
-        chooseRace = newMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
+        chooseRace = newNewMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
     }
 
     public static LinkedHashMap<String, String> getTurns() {
@@ -268,21 +357,16 @@ public class GameStrings {
         } else {
             a.put("7", "[No Merchants Available]");
         }
-        if (Game.getVillage().getVistingMerchants().size() > 0) {
-            a.put("8", "Merchants");
-        } else {
-            a.put("8", "[No Merchants Available]");
-        }
         if (Game.canRaid()) {
-            a.put("9", "Raid a City");
+            a.put("8", "Raid a City");
         } else {
-            a.put("9", "[Raids Unavailable]");
+            a.put("8", "[Raids Unavailable]");
         }
         int trainingCost = GameManager.getInstance().getTrainingCost();
         if (Game.getVillage().getCoins() >= trainingCost) {
-            a.put("10", "Train (" +  trainingCost + " Coins)");
+            a.put("9", "Train (" +  trainingCost + " Coins)");
         } else {
-            a.put("10", "[Not Enough Coins]");
+            a.put("9", "[Not Enough Coins]");
         }
         return a;
     }
@@ -480,6 +564,33 @@ public class GameStrings {
         return a;
     }
 
+    public static LinkedHashMap<String, String> getBuildings() {
+        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        for (AbstractBuilding item : v.getBuildings()){
+            String name = item.getName();
+            a.put(name, " ");
+        }
+        if (a.size() < 1) {
+            a.put(" ", " ");
+        }
+        return a;
+    }
+
+    public static LinkedHashMap<String, String> getArchive() {
+        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+        ArrayList<GameObject> objs = Archive.getInstance().getArchive();
+        Collections.sort(objs);
+        for (GameObject obj : objs){
+            String name = obj.getName();
+            a.put(name, " ");
+        }
+        if (a.size() < 1) {
+            a.put(" ", " ");
+        }
+        return a;
+    }
+
     public static LinkedHashMap<String, String> getBoard() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Board board = Game.getGameBoard();
@@ -570,6 +681,38 @@ public class GameStrings {
         inv = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
+    public static void loadBuildings() {
+        String leftAlignFormat = "| %-25s | %-85s |\n";
+        String headerFormat = "| %-113s |\n";
+        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
+        String header = "Buildings";
+        Map<String, String> top = new HashMap<>();
+        Map<String, String> bottom = new HashMap<>();
+        top.put("Building", "Description");
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getBuildings());
+        list.add(bottom);
+        build = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+
+    public static void loadArchive() {
+        String leftAlignFormat = "| %-25s | %-85s |\n";
+        String headerFormat = "| %-113s |\n";
+        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
+        String header = "Archive";
+        Map<String, String> top = new HashMap<>();
+        Map<String, String> bottom = new HashMap<>();
+        top.put("Game Object", "Description");
+        bottom.put("0", "Return to Main Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getArchive());
+        list.add(bottom);
+        archive = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+
     public static void loadBoard() {
         String leftAlignFormat = "| %-25s | %-35s |\n";
         String headerFormat = "| %-63s |\n";
@@ -622,8 +765,8 @@ public class GameStrings {
                 return customDifficulty;
             case DIFF_MENU:
                 return chooseDifficulty;
-            case LOGIN_MENU:
-                return openGame;
+            case MAIN_MENU:
+                return mainMenu;
             case BLURB:
                 return openingBlurb;
             case PRIORITY_MENU:
@@ -654,6 +797,18 @@ public class GameStrings {
                 return board;
             case BOARD_SIZE:
                 return boardSize;
+            case NEW_GAME_HUB:
+                return newGameHub;
+            case LOGIN:
+                return loginScreen;
+            case START_ERA:
+                return startEra;
+            case BUILDINGS:
+                loadBuildings();
+                return build;
+            case ARCHIVE:
+                loadArchive();
+                return archive;
         }
         return "";
     }

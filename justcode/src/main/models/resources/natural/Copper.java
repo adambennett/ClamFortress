@@ -4,7 +4,7 @@ import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.CopperIngot;
 
-public class Copper extends NaturalResource implements ResourceCost {
+public class Copper extends NaturalResource implements ResourceCost,Smithable {
 
 
     public Copper(){

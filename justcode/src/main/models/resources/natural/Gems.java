@@ -1,10 +1,11 @@
 package main.models.resources.natural;
 
+import main.interfaces.Smithable;
 import main.models.resources.*;
 import main.models.resources.refined.Jewelery;
 
-public class Gems extends NaturalResource {
-
+public class Gems extends NaturalResource implements Smithable {
+//impliments smithable for the time but maybe it should be refined in another way?
 
     public Gems(){
         super("Gems");

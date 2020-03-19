@@ -4,7 +4,7 @@ import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.Stone;
 
-public class Rock extends NaturalResource implements ResourceCost {
+public class Rock extends NaturalResource implements ResourceCost,Smithable {
 
     public Rock(){
         super("Rock");

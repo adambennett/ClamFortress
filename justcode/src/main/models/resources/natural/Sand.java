@@ -5,7 +5,7 @@ import main.models.resources.*;
 import main.models.resources.refined.Glass;
 
 
-public class Sand extends NaturalResource implements ResourceCost {
+public class Sand extends NaturalResource implements ResourceCost,Smithable {
 
 
     public Sand(){

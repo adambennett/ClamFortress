@@ -1,6 +1,6 @@
 package main.actions.priority;
 
-import main.actions.*;
+import main.actions.AbstractGameAction;
 
 public class Smithing extends AbstractGameAction {
 
@@ -10,6 +10,7 @@ public class Smithing extends AbstractGameAction {
 
     @Override
     public void update() {
+
         this.isDone = true;
     }
 

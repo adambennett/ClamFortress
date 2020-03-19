@@ -4,7 +4,7 @@ import main.interfaces.*;
 import main.models.resources.*;
 import main.models.resources.refined.Coin;
 
-public class Gold extends NaturalResource implements ResourceCost {
+public class Gold extends NaturalResource implements ResourceCost,Smithable {
 
     public Gold(){
         super("Gold");

@@ -3,7 +3,7 @@ package main.models.animals.jungle;
 public class Jungleape extends AbstractJungleAnimal {
 
     public Jungleape() {
-        super("Jungleape", 300);
+        super("Jungleape","Big boy! Damn!", 300);
     }
 
     @Override

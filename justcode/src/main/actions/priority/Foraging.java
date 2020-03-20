@@ -53,7 +53,7 @@ public class Foraging extends AbstractGameAction {
         AbstractResource rand = Game.getGameBoard().removeRandomResource();
         if (rand != null) {
             Game.getVillage().addResource(rand);
-            GameManager.getInstance().gainExperience();
+            GameManager.getInstance().gainExperience(1);
             OutputManager.addToBot("Found " + rand.getName() + " while Foraging");
         }
         this.isDone = true;

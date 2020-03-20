@@ -19,7 +19,12 @@ import main.models.buildings.concrete.storing.*;
 import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.items.medical.*;
-import main.models.items.military.*;
+import main.models.items.military.ammo.*;
+import main.models.items.military.armor.*;
+import main.models.items.military.plating.*;
+import main.models.items.military.weapons.future.*;
+import main.models.items.military.weapons.guns.*;
+import main.models.items.military.weapons.medieval.*;
 import main.models.items.tools.*;
 import main.models.items.tools.crafting.*;
 import main.models.items.tools.engineering.*;
@@ -53,11 +58,11 @@ public class Archive {
     }
     
     static {
-        try {
+        //try {
             instance = new Archive();
-        } catch (Exception ex) {
-            throw new RuntimeException("Error in Archive creation!");
-        }
+       // } //catch (Exception ex) {
+        //    throw new RuntimeException("Error in Archive creation!");
+       // }
     }
 
     public GameObject get(String key) {
@@ -400,32 +405,39 @@ public class Archive {
     }
 
     private void fillArchive() {
-        add(new Ammunition());
         add(new Antibiotic());
         add(new Anvil());
         add(new Armadillo());
-        add(new Armor());
+        add(new Arrows());
         add(new Art());
         add(new AwesomeArtifact());
         add(new Axe());
         add(new Bandage());
         add(new BlackBear());
         add(new Blueprint());
+        add(new Bow());
         add(new Brick());
         add(new BronzeAge());
+        add(new BronzePlating());
         add(new BrownBear());
         add(new Buffalo());
+        add(new BulletproofVest());
+        add(new Bullets());
         add(new Camel());
         add(new Cat());
+        add(new Catapult());
         add(new CaveBear());
+        add(new Chainmail());
         add(new Chicken());
         add(new Clay());
         add(new Coin());
         add(new Copper());
         add(new CopperIngot());
+        add(new CopperPlating());
         add(new Cougar());
         add(new Cow());
         add(new CursedHome());
+        add(new CursedPlating());
         add(new CursedStorehouse());
         add(new Ditch());
         add(new Dog());
@@ -435,27 +447,36 @@ public class Archive {
         add(new Fish());
         add(new FishingRod());
         add(new FishingSpear());
+        add(new FlamingArrows());
+        add(new FlamingSwordOil());
         add(new Flowers());
         add(new Forestdweller());
         add(new FutureAge());
+        add(new GemPlating());
         add(new Gems());
         add(new Glass());
         add(new Gold());
+        add(new GoldPlating());
+        add(new GoldenBullets());
         add(new GoldenChurch());
         add(new GoldenStorehouse());
         add(new GoldenSword());
         add(new GoldenWatchtower());
+        add(new GooSuit());
         add(new GrizzlyBear());
         add(new Hammer());
         add(new Hoe());
         add(new HolyCrown());
+        add(new Hoody());
         add(new Horse());
         add(new HuntingSpear());
+        add(new IceArrows());
         add(new IndustrialAge());
         add(new InformationAge());
         add(new Iron());
         add(new IronAge());
         add(new IronIngot());
+        add(new IronPlating());
         add(new Jewelery());
         add(new Jungleape());
         add(new Kiln());
@@ -464,6 +485,7 @@ public class Archive {
         add(new LargeRockHome());
         add(new LargeStoneHome());
         add(new LargeWoodHome());
+        add(new LightningArrows());
         add(new Lizard());
         add(new Lumber());
         add(new Mansion());
@@ -477,16 +499,23 @@ public class Archive {
         add(new MountainGoat());
         add(new MountainHare());
         add(new Net());
+        add(new Omega());
+        add(new OmegaArrows());
+        add(new OmegaBullets());
         add(new Panda());
         add(new Penguin());
         add(new PestleAndMortar());
         add(new Pickaxe());
         add(new Pig());
         add(new Pizzly());
+        add(new Platemail());
         add(new Platypus());
         add(new PodsRod());
+        add(new PoisonArrows());
         add(new PolarBear());
+        add(new PowerArmor());
         add(new RabbitFoot());
+        add(new RingOfForaging());
         add(new Rock());
         add(new RockChurch());
         add(new RockStorehouse());
@@ -500,12 +529,14 @@ public class Archive {
         add(new Shark());
         add(new ShortStoneWall());
         add(new Sickle());
+        add(new SilverPlating());
         add(new SlothBear());
         add(new SmallGoldHome());
         add(new SmallRockHome());
         add(new SmallStoneHome());
         add(new SmallWoodHome());
         add(new Spacegoo());
+        add(new Spear());
         add(new SpearCraftingTable());
         add(new Stone());
         add(new StoneAge());
@@ -514,9 +545,10 @@ public class Archive {
         add(new StoneStorehouse());
         add(new StoneWatchtower());
         add(new SunSword());
+        add(new Sword());
         add(new Turkey());
         add(new Vaccine());
-        add(new Weapon());
+        add(new Warhammer());
         add(new Whale());
         add(new Wildabeast());
         add(new Wood());
@@ -524,7 +556,50 @@ public class Archive {
         add(new WoodSpikeWall());
         add(new WoodStoreHouse());
         add(new WoodenChurch());
+        add(new WoodenPlating());
         add(new WoodenWatchtower());
-        add(new RingOfForaging());
+        add(new HealingStone());
+        add(new StrengthStone());
+        add(new ProjectileEnhancer());
+        add(new GravityRifle());
+        add(new PlasmaCannon());
+        add(new PlasmaPistol());
+        add(new PlasmaRifle());
+        add(new ShockwaveCannon());
+        add(new AK47());
+        add(new FAL());
+        add(new FAMAS());
+        add(new Flamethrower());
+        add(new GatlingGun());
+        add(new LSAT());
+        add(new M4());
+        add(new M16());
+        add(new M60());
+        add(new MP5());
+        add(new Pistol());
+        add(new RPG());
+        add(new SCAR());
+        add(new Shotgun());
+        add(new SniperRifle());
+        add(new Uzi());
+        add(new Battleaxe());
+        add(new Caltrops());
+        add(new Cannon());
+        add(new Catapult());
+        add(new Dagger());
+        add(new Flail());
+        add(new Halberd());
+        add(new Javelin());
+        add(new Katana());
+        add(new Lance());
+        add(new Longsword());
+        add(new Mace());
+        add(new Pike());
+        add(new Rapier());
+        add(new Scimitar());
+        add(new Shortsword());
+        add(new Slingshot());
+        add(new GooCannon());
+        add(new GooRifle());
     }
 }

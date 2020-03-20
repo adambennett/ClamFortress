@@ -1,9 +1,9 @@
 package main.models.nodes;
 
 import main.models.*;
-import main.models.nodes.biomes.*;
 import main.models.people.*;
 import main.models.resources.*;
+import main.utilities.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -13,15 +13,21 @@ public class Netherworld extends City {
     public Netherworld(int xPos, int yPos) {
         super(xPos, yPos);
         this.cityDefense = 1000;
+        this.hp = 100;
+        this.maxHP = 100;
+        this.uniqueName = GameStrings.getRandomName(true);
+        setupCity();
     }
 
     @Override
     protected void setupCity() {
-        int pop = ThreadLocalRandom.current().nextInt(1000, 10000);
+        int pop = ThreadLocalRandom.current().nextInt(100, 1000);
         for (int i = 0; i < pop; i++) {
             Survivor newCitizen = Archive.generateRandomSurvivor(false);
             this.cityResidence.add(newCitizen);
             this.cityDefense += newCitizen.getStrength();
+            this.hp += newCitizen.getHP();
+            this.maxHP += newCitizen.getMaxHp();
         }
         ArrayList<AbstractResource> res = Archive.getInstance().resources();
         Set<Integer> randIndices = new HashSet<>();
@@ -32,7 +38,7 @@ public class Netherworld extends City {
         while (ints.size() > 0) {
             int index = ints.remove(0);
             AbstractResource rand = res.get(index);
-            this.resources.put(rand, ThreadLocalRandom.current().nextInt(10000, 100000));
+            this.resources.put(rand, ThreadLocalRandom.current().nextInt(100, 1000));
         }
     }
 

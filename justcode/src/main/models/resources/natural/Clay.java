@@ -10,7 +10,7 @@ public class Clay extends NaturalResource implements ResourceCost, Smeltable {
 
 
     public Clay(){
-        super("Clay");
+        super("Clay", "Used to make Brick.");
         this.refined = new Brick();
     }
 

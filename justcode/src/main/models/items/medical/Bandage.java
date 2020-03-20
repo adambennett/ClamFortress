@@ -5,7 +5,7 @@ import main.models.resources.*;
 
 public class Bandage extends AbstractMedicalItem {
     public Bandage() {
-        super("Bandage", "A healing item.");
+        super("Bandage", "Improves Healing.");
     }
 
     @Override

@@ -6,8 +6,8 @@ public abstract class AbstractAnimal extends GameObject {
 
     private Integer amountOfFoodOnHunt;
 
-    public AbstractAnimal(String name, int amt) {
-        super(name);
+    public AbstractAnimal(String name, String desc, int amt) {
+        super(name, desc);
         this.amountOfFoodOnHunt = amt;
     }
 

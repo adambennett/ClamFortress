@@ -5,7 +5,7 @@ import main.models.animals.*;
 public class Cat extends AbstractLandAnimal {
 
     public Cat() {
-        super("Cat", 22);
+        super("Cat", "Cat. The cat is a small carnivorous mammal. It is the only domesticated species in the family Felidae and often referred to as the domestic cat to distinguish it from wild members of the family. The cat is either a house cat, a farm cat or a feral cat; the latter ranges freely and avoids human contact. Cat.",22);
     }
 
     @Override

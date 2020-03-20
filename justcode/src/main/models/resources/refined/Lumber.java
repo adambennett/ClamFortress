@@ -5,7 +5,7 @@ import main.models.resources.*;
 
 public class Lumber extends RefinedResource implements ResourceCost {
     public Lumber() {
-        super("Lumber");
+        super("Lumber", "Created by milling wood. Used to build basic structures.");
     }
 
     @Override

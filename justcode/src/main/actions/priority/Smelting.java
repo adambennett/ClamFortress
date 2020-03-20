@@ -27,7 +27,7 @@ public class Smelting extends AbstractGameAction {
 
 
         // gets all the smeltables out of the inventory
-        for ( AbstractResource i: recources) {
+        for (AbstractResource i: recources) {
             if (i instanceof Smeltable) {
                 smelted.add((Smeltable) i);
                 if (!smeltables.containsKey(i)) {
@@ -44,8 +44,8 @@ public class Smelting extends AbstractGameAction {
             Smeltable rand = smelted.get(ThreadLocalRandom.current().nextInt(smelted.size()));
             int amount = smeltables.get(rand);
             AbstractResource someName = (AbstractResource) rand;
-            Game.getVillage().removeResource( someName.getName());
-            Game.getVillage().addResource( rand.getRefined(),amount);
+            Game.getVillage().removeResource(someName.getName());
+            Game.getVillage().addResource(rand.getRefined(),amount);
             OutputManager.addToBot("Smelted " + amount + " " + ( rand.getRefined()).getName() + "!");
             GameManager.getInstance().gainExperience();
             amountToSmelt--;

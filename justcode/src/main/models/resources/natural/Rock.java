@@ -7,7 +7,7 @@ import main.models.resources.refined.Stone;
 public class Rock extends NaturalResource implements ResourceCost, Smeltable {
 
     public Rock(){
-        super("Rock");
+        super("Rock", "Refine rocks to create stones.");
         this.refined = new Stone();
     }
 

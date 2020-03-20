@@ -17,7 +17,7 @@ public class Inventory extends GameObject {
     private Integer capacity;
 
     public Inventory(int capacity) {
-        super("Inventory");
+        super("Inventory", "A place to store all of your items.");
         this.items = new ArrayList<>();
         this.capacity = capacity;
     }
@@ -26,6 +26,7 @@ public class Inventory extends GameObject {
         if (this.items.size() < this.capacity) {
             if (!(item instanceof Unique && items.contains(item))) {
                 items.add(item);
+                item.onObtain();
                 if (item instanceof Golden) {
                     Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) item).getGoldAmt());
                     OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden object!");
@@ -35,12 +36,7 @@ public class Inventory extends GameObject {
                     ((Cursed) item).runCurse();
                     OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item!");
                 }
-
-                int maxHPGain = 0;
-                for (GameObject obj : Game.getModifierObjects()) {
-                    maxHPGain += obj.modifyMaxHPOnPickup();
-                }
-
+                int maxHPGain = item.modifyMaxHPOnPickup();
                 if (maxHPGain > 0 && Game.getVillage().getPopulation() > 0) {
                     Survivor s = Game.getVillage().getSurvivors().get(ThreadLocalRandom.current().nextInt(Game.getVillage().getSurvivors().size()));
                     s.setMaxHp(s.getMaxHp() + maxHPGain);

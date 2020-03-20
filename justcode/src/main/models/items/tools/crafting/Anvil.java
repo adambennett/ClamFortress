@@ -5,7 +5,7 @@ import main.models.items.tools.*;
 
 public class Anvil extends AbstractCraftingTool {
     public Anvil() {
-        super("Anvil", "");
+        super("Anvil", "Used to improve Smithing.");
     }
 
     @Override

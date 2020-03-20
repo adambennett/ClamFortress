@@ -9,8 +9,14 @@ public abstract class AbstractStorehouse extends AbstractBuilding {
     private final Integer storageCapacityIncrease;
 
     public AbstractStorehouse(String name, int resourceCost, int storageInc, AbstractResource resourceType) {
-        super(name, resourceCost, resourceType);
+        super(name, getDesc(name, resourceCost, storageInc, resourceType), resourceCost, resourceType);
         this.storageCapacityIncrease = storageInc;
+    }
+
+    public static String getDesc(String name, int resourceCost, int storageInc, AbstractResource resourceType) {
+        String output = "";
+        output += name + " [S][RCAP|" + storageInc + "]-[COST|" + resourceCost + "x" + resourceType.getName() + "]";
+        return output;
     }
 
     @Override

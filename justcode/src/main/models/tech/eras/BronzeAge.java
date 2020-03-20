@@ -3,12 +3,13 @@ package main.models.tech.eras;
 public class BronzeAge extends Era {
 
     private static final String localName = "Bronze Age";
+    private static final String localDesc = "Age #2";
 
     public BronzeAge() {
-        super(localName);
+        super(localName, localDesc);
     }
 
-    public BronzeAge(boolean techTreeInit) { super(localName, true); }
+    public BronzeAge(boolean techTreeInit) { super(localName, localDesc, true); }
 
     @Override
     public BronzeAge clone() {

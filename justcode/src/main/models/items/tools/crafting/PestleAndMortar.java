@@ -4,7 +4,7 @@ import main.models.items.tools.*;
 
 public class PestleAndMortar extends AbstractCraftingTool {
     public PestleAndMortar() {
-        super("Pestle and Mortar", "");
+        super("Pestle and Mortar", "Used to improve Planting.");
     }
 
     @Override

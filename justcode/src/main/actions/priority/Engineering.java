@@ -7,23 +7,23 @@ import main.models.managers.*;
 
 public class Engineering extends AbstractGameAction {
 
-    private AbstractBuilding newBuilding;
-
-    public Engineering(AbstractBuilding building, int amtToRun) {
+    public Engineering(int amtToRun) {
         super(amtToRun);
-        this.newBuilding = building;
     }
 
     @Override
     public void update() {
-        Game.getVillage().addUncompletedBuilding(this.newBuilding);
-        OutputManager.addToBot("Added new " + this.newBuilding.getName() + " Project to Building Queue");
-        GameManager.getInstance().gainExperience();
+        AbstractBuilding newBuilding = BuildingManager.getRandomBuilding();
+        Game.getVillage().addUncompletedBuilding(newBuilding);
+        OutputManager.addToBot("Added new " + newBuilding.getName() + " Project to Building Queue");
+        if (Game.getVillage().getInventory().containsItem("hammer")) {
+            GameManager.getInstance().gainExperience(10);
+        }
         this.isDone = true;
     }
 
     @Override
     public Engineering clone() {
-        return new Engineering(newBuilding, this.amountToRun);
+        return new Engineering(this.amountToRun);
     }
 }

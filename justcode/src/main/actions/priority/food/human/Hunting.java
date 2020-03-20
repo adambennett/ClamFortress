@@ -25,14 +25,13 @@ public class Hunting extends AbstractGameAction {
             int rando = random.nextInt(animalsOnBoard);
             animals += Game.getGameBoard().getAnimals().remove(rando).getAmountOfFoodOnHunt();
         }
-        if (animals < 2) {
-            animals = 2;
+        if (animals > 0) {
+            for (GameObject obj : Game.getModifierObjects()) {
+                animals *= obj.multiplyFoodOnHunting();
+            }
+            Game.getVillage().incFood(animals);
+            OutputManager.addToBot("Hunted " + animals + " new food");
         }
-        for (GameObject obj : Game.getModifierObjects()) {
-            animals *= obj.multiplyFoodOnHunting();
-        }
-        Game.getVillage().incFood(animals);
-        OutputManager.addToBot("Hunted " + animals + " new food");
         this.isDone = true;
     }
 

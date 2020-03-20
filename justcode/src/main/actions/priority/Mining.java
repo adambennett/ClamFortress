@@ -22,22 +22,30 @@ public class Mining extends AbstractGameAction {
     public void update() {
         ArrayList<AbstractResource> mined = new ArrayList<>();
         for (AbstractResource ore : ores()) {
-            int amtOnBoard = Game.getGameBoard().getResource(ore.getName());
-            if (amtOnBoard < 1) {
-                break;
+            Integer amtOnBoard = Game.getGameBoard().getResource(ore.getName());
+            if (amtOnBoard != null && amtOnBoard > 0) {
+                int roll = ThreadLocalRandom.current().nextInt(0, amtOnBoard);
+                if (Game.getVillage().getInventory().containsItem("pickaxe")) {
+                    roll += ThreadLocalRandom.current().nextInt(0, amtOnBoard);
+                }
+                if (roll > amtOnBoard) { roll = amtOnBoard; }
+                for (int i = 0; i < roll; i++) {
+                    mined.add(ore.clone());
+                }
+                if (roll > 0) {
+                    OutputManager.addToBot("Mined " + roll + " " + ore.getName() + "!");
+                }
             }
-            int roll = ThreadLocalRandom.current().nextInt(0, amtOnBoard);
-            for (int i = 0; i < roll; i++) {
-                mined.add(ore.clone());
-
-            }
-            OutputManager.addToBot("Mined " + roll + " " + ore.getName() + "!");
         }
         if (mined.size() > 0) {
             GameManager.getInstance().gainExperience();
             if (!(Game.getVillage().addResources(mined))) {
                 for (AbstractResource ore : mined) {
-                    Game.getVillage().addResource(ore);
+                    if (!Game.getVillage().addResource(ore)) {
+                        OutputManager.addToBot(OutputFlag.RESOURCES_FULL, "Not enough room to accumulate more resources! Build some storehouses.");
+                        this.isDone = true;
+                        return;
+                    }
                 }
             }
         } else {

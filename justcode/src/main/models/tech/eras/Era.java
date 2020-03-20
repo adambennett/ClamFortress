@@ -8,15 +8,15 @@ public abstract class Era extends GameObject {
     private Era prev;
     private Era next;
 
-    public Era(String name) {
-        super(name);
+    public Era(String name, String desc) {
+        super(name, desc);
         Era gen = generate();
         this.next = gen.getNext();
         this.prev = gen.getPrev();
     }
 
-    public Era(String name, boolean initTechTree) {
-        super(name);
+    public Era(String name, String desc, boolean initTechTree) {
+        super(name, desc);
     }
 
     private Era generate() {

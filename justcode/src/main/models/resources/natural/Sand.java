@@ -9,7 +9,7 @@ public class Sand extends NaturalResource implements ResourceCost, Smeltable {
 
 
     public Sand(){
-        super("Sand");
+        super("Sand", "Used to craft Glass.");
         this.refined = new Glass();
     }
 

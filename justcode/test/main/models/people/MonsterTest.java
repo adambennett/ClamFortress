@@ -1,7 +1,6 @@
 package main.models.people;
 
 import main.enums.*;
-import main.models.people.*;
 import main.utilities.builders.*;
 import org.junit.*;
 
@@ -45,7 +44,7 @@ public class MonsterTest {
         Assert.assertEquals(expectedDex, nullaryMonster.getDexterity());
         Assert.assertEquals(expectedAgi, nullaryMonster.getAgility());
         Assert.assertEquals(expectedEng, nullaryMonster.getEngineering());
-        Assert.assertEquals(expectedHP, nullaryMonster.getHealthPoints());
+        Assert.assertEquals(expectedHP, nullaryMonster.getHP());
         Assert.assertEquals(expectedMag, nullaryMonster.getMagic());
         Assert.assertEquals(expectedStr, nullaryMonster.getStrength());
         Assert.assertEquals(expectedInt, nullaryMonster.getIntelligence());
@@ -71,7 +70,7 @@ public class MonsterTest {
         Assert.assertEquals(expectedDex, testMonster.getDexterity());
         Assert.assertEquals(expectedAgi, testMonster.getAgility());
         Assert.assertEquals(expectedEng, testMonster.getEngineering());
-        Assert.assertEquals(expectedHP, testMonster.getHealthPoints());
+        Assert.assertEquals(expectedHP, testMonster.getHP());
         Assert.assertEquals(expectedMag, testMonster.getMagic());
         Assert.assertEquals(expectedStr, testMonster.getStrength());
         Assert.assertEquals(expectedInt, testMonster.getIntelligence());
@@ -108,7 +107,7 @@ public class MonsterTest {
         Assert.assertEquals(expectedDex, testMonster.getDexterity());
         Assert.assertEquals(expectedAgi, testMonster.getAgility());
         Assert.assertEquals(expectedEng, testMonster.getEngineering());
-        Assert.assertEquals(expectedHP, testMonster.getHealthPoints());
+        Assert.assertEquals(expectedHP, testMonster.getHP());
         Assert.assertEquals(expectedMag, testMonster.getMagic());
         Assert.assertEquals(expectedStr, testMonster.getStrength());
         Assert.assertEquals(expectedInt, testMonster.getIntelligence());

@@ -15,7 +15,7 @@ public class MainApp {
     public void initialize() {
         Database.loadDatabase();
         GameStrings.initModMap();
-        new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
+        new LoginMenu().printPrompt(PromptMessage.LOGIN, true);
     }
 
 }

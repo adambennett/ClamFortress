@@ -6,9 +6,8 @@ import main.models.resources.refined.CopperIngot;
 
 public class Copper extends NaturalResource implements ResourceCost, Smeltable {
 
-
     public Copper(){
-        super("Copper");
+        super("Copper", "Used to make Copper Ingots.");
         this.refined = new CopperIngot();
     }
 

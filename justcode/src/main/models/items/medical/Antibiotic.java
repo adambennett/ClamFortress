@@ -4,7 +4,7 @@ package main.models.items.medical;
 public class Antibiotic extends AbstractMedicalItem {
 
     public Antibiotic() {
-        super("Antibiotic", "A healing item.");
+        super("Antibiotic", "Vastly improves Healing.");
     }
 
     @Override

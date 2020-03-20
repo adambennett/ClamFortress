@@ -8,7 +8,7 @@ import main.models.resources.refined.*;
 public class ShortStoneWall extends AbstractDefenses {
 
     public ShortStoneWall() {
-        super("Short Stone Wall", 150 + Game.getVillage().getPopulation(), 2, new Stone());
+        super("Short Stone Wall", 150, 2, new Stone());
     }
 
     @Override

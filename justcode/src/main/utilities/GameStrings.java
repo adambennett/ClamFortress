@@ -330,6 +330,9 @@ public class GameStrings {
         a.put("Hunger", "" + Game.getVillage().getHunger() + " / " + 100);
         a.put("Coins", "" + Game.getVillage().getCoins() + " / " + Game.getVillage().getCoinLimit());
         a.put("Faith", "" + Game.getVillage().getFaith() + " / " + Game.getVillage().getFaithLimit());
+        if (GameManager.getInstance().getRaidingCity() != null) {
+            a.put("Raiding", "" + GameManager.getInstance().getRaidingCity().cityName());
+        }
         return a;
     }
 
@@ -358,9 +361,9 @@ public class GameStrings {
             a.put("7", "[No Merchants Available]");
         }
         if (Game.canRaid()) {
-            a.put("8", "Raid a City");
+            a.put("8", "Raid a New City");
         } else {
-            a.put("8", "[Raids Unavailable]");
+            a.put("8", "[No Raids Available]");
         }
         int trainingCost = GameManager.getInstance().getTrainingCost();
         if (Game.getVillage().getCoins() >= trainingCost) {
@@ -577,16 +580,25 @@ public class GameStrings {
         return a;
     }
 
-    public static LinkedHashMap<String, String> getArchive() {
-        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+    public static LinkedHashMap<String, ArrayList<String>> getArchive() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         ArrayList<GameObject> objs = Archive.getInstance().getArchive();
         Collections.sort(objs);
-        for (GameObject obj : objs){
-            String name = obj.getName();
-            a.put(name, " ");
+        for (GameObject obj : objs) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("" + obj.getClassName());
+            String desc = obj.getDesc();
+            if (desc.length() > 124) {
+                desc = desc.substring(0, 125);
+            }
+            tempCols.add("" + desc);
+            a.put(obj.getName(), tempCols);
         }
         if (a.size() < 1) {
-            a.put(" ", " ");
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
         }
         return a;
     }
@@ -623,7 +635,7 @@ public class GameStrings {
         for (Survivor s : v.getSurvivors()) {
             ArrayList<String> tempCols = new ArrayList<>();
             tempCols.add("" + s.getAge());
-            tempCols.add("" + s.getHealthPoints());
+            tempCols.add("" + s.getHP());
             tempCols.add("" + s.getStrength());
             tempCols.add("" + s.getDexterity());
             tempCols.add("" + s.getIntelligence());
@@ -698,19 +710,23 @@ public class GameStrings {
     }
 
     public static void loadArchive() {
-        String leftAlignFormat = "| %-25s | %-85s |\n";
-        String headerFormat = "| %-113s |\n";
-        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
+        String leftAlignFormat = "| %-25s | %-21s | %-125s |\n";
+        String headerFormat = "| %-163s |\n";
+        String breakLine = "+---------------------------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------+\n";
         String header = "Archive";
-        Map<String, String> top = new HashMap<>();
-        Map<String, String> bottom = new HashMap<>();
-        top.put("Game Object", "Description");
-        bottom.put("0", "Return to Main Menu");
-        ArrayList<Map<String, String>> list = new ArrayList<>();
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("TYPE"); botCols.add("Return to Main Menu");
+        topCols.add("DESCRIPTION"); botCols.add("Game Objects: " + Archive.getInstance().getArchive().size());
+        top.put("NAME", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
         list.add(top);
         list.add(getArchive());
         list.add(bottom);
-        archive = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+        archive = newNewMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static void loadBoard() {

@@ -5,7 +5,7 @@ import main.models.resources.*;
 
 public class Vaccine extends AbstractMedicalItem {
     public Vaccine() {
-        super("Vaccine", "A healing item.");
+        super("Vaccine", "Helps prevent disease.");
     }
 
     @Override

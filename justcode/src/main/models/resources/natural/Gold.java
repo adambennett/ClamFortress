@@ -7,7 +7,7 @@ import main.models.resources.refined.Coin;
 public class Gold extends NaturalResource implements ResourceCost, Smeltable {
 
     public Gold(){
-        super("Gold");
+        super("Gold", "Used to mint Coins.");
         this.refined = new Coin();
     }
     @Override

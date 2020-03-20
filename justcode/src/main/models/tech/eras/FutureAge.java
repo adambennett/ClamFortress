@@ -3,12 +3,13 @@ package main.models.tech.eras;
 public class FutureAge extends Era {
 
     private static final String localName = "Future";
+    private static final String localDesc = "Age #7";
 
     public FutureAge() {
-        super(localName);
+        super(localName, localDesc);
     }
 
-    public FutureAge(boolean techTreeInit) { super(localName, true); }
+    public FutureAge(boolean techTreeInit) { super(localName, localDesc, true); }
 
     @Override
     public FutureAge clone() {

@@ -8,7 +8,7 @@ import main.models.resources.natural.*;
 public class WoodSpikeWall extends AbstractDefenses {
 
     public WoodSpikeWall() {
-        super("Wood Spike Wall", 75 + Game.getVillage().getPopulation(), 3, new Wood());
+        super("Wood Spike Wall", 75, 3, new Wood());
     }
 
     @Override

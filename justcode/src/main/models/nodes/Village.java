@@ -7,7 +7,10 @@ import main.encounters.miracles.*;
 import main.encounters.plagues.*;
 import main.encounters.raids.*;
 import main.enums.*;
+import main.interfaces.*;
 import main.models.items.*;
+import main.models.items.military.armor.*;
+import main.models.items.military.weapons.*;
 import main.models.managers.*;
 import main.models.nodes.biomes.*;
 import main.models.*;
@@ -45,6 +48,7 @@ public class Village extends AbstractNode {
     private Integer magic =             0;
     private Integer engineering =       0;
     private Integer health =            0;
+    private Integer maxHP =             0;
     private Integer totalAge =          0;
     private Integer hunger =            0;
     private Integer famine =            0;
@@ -122,6 +126,37 @@ public class Village extends AbstractNode {
     }
     // END INVENTORY /////////////////////////////////////////////////////////////////////////////////////////////
 
+    // COMBAT    /////////////////////////////////////////////////////////////////////////////////////////////////
+    public Integer dealDamage() {
+        Integer dmg = this.getAttackPower();
+        for (AbstractItem i : getInventory().getItems()) {
+            if (i instanceof Projectile) {
+                dmg += ((Projectile) i).fire();
+            }
+        }
+        OutputManager.addToBot("Dealt " + dmg + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + ".\nEnemy City HP: " + GameManager.getInstance().getRaidingCity().getHp() + " / " + GameManager.getInstance().getRaidingCity().getMaxHP());
+        if (dmg < 1) { return 0; }
+        return ThreadLocalRandom.current().nextInt(0, dmg);
+    }
+
+    public void takeDamage(int amt) {
+        amt -= this.defence;
+        if (this.population.size() > 0) {
+            takeDamage(this.population.get(ThreadLocalRandom.current().nextInt(this.population.size())), amt);
+        }
+    }
+
+    private void takeDamage(Survivor villager, int amt) {
+        villager.setHealthPoints(villager.getHP() - amt);
+        if (villager.getHP() < 1) {
+            removeSurvivor(villager);
+            OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
+        } else {
+            OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName());
+        }
+        updateHP();
+    }
+    // END COMBAT ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // VILLAGERS /////////////////////////////////////////////////////////////////////////////////////////////////
     public Boolean hasSurvivorByThatName(String name) {
@@ -133,8 +168,20 @@ public class Village extends AbstractNode {
         return false;
     }
 
+    public void updateHP() {
+        this.health = 0;
+        this.maxHP = 0;
+        for (Survivor s : this.population) {
+            this.maxHP += s.getMaxHp();
+            this.health += s.getHP();
+        }
+    }
+
     public Boolean addToPopulation(Survivor s) {
         if (population.size() < popCap) {
+            for (GameObject obj : Game.getModifierObjects()) {
+                s = obj.onNewCitizen(s);
+            }
             this.population.add(s);
             this.strength += s.getStrength();
             this.agility += s.getAgility();
@@ -142,12 +189,10 @@ public class Village extends AbstractNode {
             this.dexterity += s.getDexterity();
             this.magic += s.getMagic();
             this.engineering += s.getEngineering();
-            this.health += s.getHealthPoints();
+            this.health += s.getHP();
+            this.maxHP += s.getMaxHp();
             this.totalAge += s.getAge();
             updateAverageStats();
-            for (GameObject obj : Game.getModifierObjects()) {
-                obj.onNewCitizen(s);
-            }
             return true;
         }
         return false;
@@ -160,7 +205,8 @@ public class Village extends AbstractNode {
         this.dexterity -= s.getDexterity();
         this.magic -= s.getMagic();
         this.engineering -= s.getEngineering();
-        this.health -= s.getHealthPoints();
+        this.health -= s.getHP();
+        this.maxHP -= s.getMaxHp();
         this.totalAge -= s.getAge();
         updateAverageStats();
         for (GameObject obj : Game.getModifierObjects()) {
@@ -188,7 +234,6 @@ public class Village extends AbstractNode {
     }
 
     public void removeSurvivor(Survivor s) {
-        Survivor sa = null;
         for (int i = 0; i < this.population.size(); i++) {
             if (this.population.get(i).equals(s)) {
                 updateAfterRemoving(this.population.remove(i));
@@ -284,6 +329,10 @@ public class Village extends AbstractNode {
         }
     }
 
+    public Boolean addResource(AbstractResource resource) {
+        return addResource(resource, 1);
+    }
+
     public Boolean addResources(Map<AbstractResource, Integer> resources) {
         int resourcesSize = 0;
         for (Map.Entry<AbstractResource, Integer> entry : resources.entrySet()) {
@@ -296,16 +345,13 @@ public class Village extends AbstractNode {
                 } else {
                     this.resources.put(entry.getKey(), entry.getValue());
                 }
+                entry.getKey().onObtain();
             }
             return true;
         } else {
             OutputManager.addToBot(OutputFlag.RESOURCES_FULL, "Not enough room to accumulate more resources! Build some storehouses.");
             return false;
         }
-    }
-
-    public Boolean addResource(AbstractResource resource) {
-        return addResource(resource, 1);
     }
 
     public Boolean addResource(AbstractResource resource, int amt) {
@@ -320,6 +366,7 @@ public class Village extends AbstractNode {
             } else {
                 this.resources.put(resource, amt);
             }
+            resource.onObtain();
             return true;
         } else if (reduced) {
             OutputManager.addToBot(OutputFlag.RESOURCES_FULL, "Not enough room to accumulate more resources! Build some storehouses.");
@@ -440,16 +487,28 @@ public class Village extends AbstractNode {
 
     // GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////////
     public Integer getDefense(){
-        int atk = this.defence;
-        for (GameObject obj : Game.getModifierObjects()) {
-            atk += obj.modifyDef();
+        int def = this.defence;
+        ArrayList<GameObject> objs = Game.getModifierObjects();
+        for (GameObject obj : objs) {
+            def += obj.modifyDef();
+            if (obj instanceof AbstractArmor) {
+                for (GameObject plating : objs) {
+                    def += plating.modifyArmorDef((AbstractArmor) obj);
+                }
+            }
         }
-        return atk;
+        return def;
     }
     public Integer getAttackPower(){
         int atk = this.attackPower;
-        for (GameObject obj : Game.getModifierObjects()) {
+        ArrayList<GameObject> objs = Game.getModifierObjects();
+        for (GameObject obj : objs) {
             atk += obj.modifyAtk();
+            if (obj instanceof AbstractWeapon) {
+                for (GameObject ammo : objs) {
+                    atk += ammo.modifyWeaponDmg((AbstractWeapon) obj);
+                }
+            }
         }
         return atk;
     }
@@ -509,7 +568,9 @@ public class Village extends AbstractNode {
     public Double getEngineeringAvg() {
         return engineeringAvg;
     }
-
+    public Integer getMaxHP() {
+        return maxHP;
+    }
     public Integer getFaithLimit() {
         return faithLimit;
     }
@@ -635,6 +696,7 @@ public class Village extends AbstractNode {
         else if (this.hunger < 0) { this.hunger = 0; }
     }
 
+    public void setMaxHP(Integer maxHP) { this.maxHP = maxHP; }
     public void setPopCap(Integer popCap){ this.popCap = popCap; }
     public void setHealth(Integer health) { this.health = health; }
     public void setBuildingLimit(Integer buildingLimit) {

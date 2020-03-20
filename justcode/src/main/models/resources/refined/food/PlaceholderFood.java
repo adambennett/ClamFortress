@@ -5,7 +5,7 @@ import main.models.resources.*;
 public class PlaceholderFood extends AbstractFood {
 
     public PlaceholderFood(Integer healing) {
-        super(healing, "PlaceholderFood");
+        super(healing, "PlaceholderFood", "Placeholder Description");
     }
 
     @Override

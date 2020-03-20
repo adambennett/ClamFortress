@@ -1,27 +1,35 @@
 package main.models.nodes;
 
-import main.encounters.*;
-import main.encounters.disasters.*;
-import main.encounters.merchant.*;
-import main.encounters.miracles.*;
-import main.encounters.plagues.*;
-import main.encounters.raids.*;
-import main.enums.*;
-import main.interfaces.*;
-import main.models.items.*;
-import main.models.items.military.armor.*;
-import main.models.items.military.weapons.*;
-import main.models.managers.*;
+import main.encounters.AbstractEncounter;
+import main.encounters.disasters.AbstractDisaster;
+import main.encounters.merchant.AbstractMerchant;
+import main.encounters.miracles.AbstractMiracle;
+import main.encounters.plagues.AbstractPlague;
+import main.encounters.raids.AbstractRaid;
+import main.enums.Difficulty;
+import main.enums.OutputFlag;
+import main.interfaces.Projectile;
+import main.models.Archive;
+import main.models.Game;
+import main.models.GameObject;
+import main.models.Inventory;
+import main.models.buildings.abstracts.AbstractBuilding;
+import main.models.items.AbstractItem;
+import main.models.items.military.armor.AbstractArmor;
+import main.models.items.military.weapons.AbstractWeapon;
+import main.models.managers.GameManager;
+import main.models.managers.OutputManager;
 import main.models.nodes.biomes.*;
-import main.models.*;
-import main.models.people.*;
-import main.models.buildings.abstracts.*;
-import main.models.resources.*;
-import main.models.resources.refined.food.*;
+import main.models.people.Bandit;
+import main.models.people.Survivor;
+import main.models.resources.AbstractResource;
+import main.models.resources.refined.food.PlaceholderFood;
 
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.logging.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 public class Village extends AbstractNode {
 

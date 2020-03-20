@@ -183,27 +183,29 @@ public class PriorityMenu extends AbstractConsole {
             case SCOUTING:
                 PriorityManager.setScout(PriorityManager.getScout() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                actionManager.addToTurnEnd(new Scouting(amt, GameManager.getInstance().getNethermod()));
+                actionManager.addToBottom(new Scouting(amt, GameManager.getInstance().getNethermod()));
                 break;
             case PLANTING:
                 PriorityManager.setPlant(PriorityManager.getPlant() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                actionManager.addToTurnEnd(new Planting(amt));
+                actionManager.addToBottom(new Planting(amt));
                 break;
             case SMELTING:
                 PriorityManager.setSmith(PriorityManager.getSmith() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                actionManager.addToTurnEnd(new Smelting(amt));
+                actionManager.addToBottom(new Smelting(amt));
                 break;
             case MASONRY:
                 PriorityManager.setMasonry(PriorityManager.getMasonry() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                actionManager.addToTurnEnd(new Masonry(amt));
+                actionManager.addToBottom(new Masonry(amt));
                 break;
             case RAIDING:
                 PriorityManager.setRaid(PriorityManager.getRaid() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                //actionManager.addToTurnEnd(new Raiding(amt));
+                if (GameManager.getInstance().getRaidingCity() != null) {
+                    actionManager.addToTurnEnd(new Raiding(GameManager.getInstance().getRaidingCity(), amt));
+                }
                 break;
             case ENGINEERING:
                 PriorityManager.setEngineer(PriorityManager.getEngineer() + amt);
@@ -216,8 +218,12 @@ public class PriorityMenu extends AbstractConsole {
             case TRADING:
                 PriorityManager.setTrade(PriorityManager.getTrade() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                actionManager.addToTurnEnd(new Trading(amt));
+                actionManager.addToBottom(new Trading(amt));
                 break;
+            case SMITHING:
+                PriorityManager.setSmith(PriorityManager.getSmith() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
+                actionManager.addToBottom(new Smithing(amt));
         }
     }
 

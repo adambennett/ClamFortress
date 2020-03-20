@@ -3,6 +3,7 @@ package main.utilities.consoleIO;
 import main.enums.*;
 import main.models.*;
 import main.models.managers.*;
+import main.utilities.*;
 import main.utilities.persistence.*;
 
 import java.util.*;
@@ -23,12 +24,16 @@ public class TurnMenu extends AbstractConsole {
         consoleCommands.put("4", MenuCommands.INVENTORY);
         consoleCommands.put("5", MenuCommands.BUILDING);
         consoleCommands.put("6", MenuCommands.VILLAGERS);
-
+        consoleCommands.put("8", MenuCommands.RAIDING);
     }
 
     @Override
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
+            case RAIDING:
+                GameUtils.getNewRaidCity();
+                printPrompt(PromptMessage.TURN_MENU, true);
+                break;
             case BUILDING:
                 new MidTurnMenu().printPrompt(PromptMessage.BUILDINGS, true);
                 break;

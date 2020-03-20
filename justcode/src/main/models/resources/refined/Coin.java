@@ -4,7 +4,7 @@ import main.models.resources.*;
 
 public class Coin extends RefinedResource {
     public Coin() {
-        super("Coins");
+        super("Coins", "The basic currency object of Clam Fortress.");
     }
 
     @Override

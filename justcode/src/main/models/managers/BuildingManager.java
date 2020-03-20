@@ -12,7 +12,13 @@ import java.util.concurrent.*;
 public class BuildingManager {
 
     public static AbstractBuilding getRandomBuilding() {
-        ArrayList<AbstractBuilding> artifacts = new ArrayList<>(Archive.getInstance().buildings());
-        return artifacts.get(ThreadLocalRandom.current().nextInt(artifacts.size()));
+        ArrayList<AbstractBuilding> allBuilds = new ArrayList<>(Archive.getInstance().buildings());
+        ArrayList<AbstractBuilding> buildable = new ArrayList<>();
+        for (AbstractBuilding b : allBuilds) {
+            if (b.canBuild()) {
+                buildable.add(b);
+            }
+        }
+        return buildable.get(ThreadLocalRandom.current().nextInt(buildable.size()));
     }
 }

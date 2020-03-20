@@ -5,7 +5,7 @@ import main.models.items.tools.engineering.*;
 
 public class Axe extends AbstractGatheringTool {
     public Axe() {
-        super("Axe", "");
+        super("Axe", "Used to improve Woodcutting.");
     }
 
     @Override

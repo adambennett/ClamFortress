@@ -4,7 +4,7 @@ import main.models.items.tools.AbstractTool;
 
 public class Pickaxe extends AbstractGatheringTool {
     public Pickaxe() {
-        super("Pickaxe", "");
+        super("Pickaxe", "Used to improve Mining.");
     }
 
 

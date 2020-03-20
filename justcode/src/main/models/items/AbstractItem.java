@@ -8,15 +8,9 @@ import java.util.*;
 
 public abstract class AbstractItem extends GameObject {
 
-    private String desc;
-
     public AbstractItem(String name, String desc) {
-        super(name);
-        this.desc = desc;
+        super(name, desc);
     }
-
-    // Getters
-    public String getDesc() { return desc; }
 
     @Override
     public boolean equals(Object o) {

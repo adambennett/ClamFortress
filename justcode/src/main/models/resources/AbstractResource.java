@@ -6,8 +6,8 @@ import java.util.*;
 
 public abstract class AbstractResource extends GameObject {
 
-    public AbstractResource(String name) {
-        super(name);
+    public AbstractResource(String name, String desc) {
+        super(name, desc);
     }
 
     @Override

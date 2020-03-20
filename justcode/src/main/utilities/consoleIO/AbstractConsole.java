@@ -158,6 +158,10 @@ public abstract class AbstractConsole {
             NewGameHub curr = (NewGameHub) this;
             curr.printPrompt(PromptMessage.NEW_GAME_HUB, true);
         }
+        else if (currentConsole instanceof LoginMenu) {
+            LoginMenu curr = (LoginMenu) this;
+            curr.printPrompt(PromptMessage.LOGIN, true);
+        }
     }
 
     private Boolean setupGame() {

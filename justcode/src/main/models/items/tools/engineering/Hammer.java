@@ -4,7 +4,7 @@ import main.models.items.tools.*;
 
 public class Hammer extends AbstractEngTool {
     public Hammer() {
-        super("Hammer", "");
+        super("Hammer", "Used to improve Engineering.");
     }
 
     @Override

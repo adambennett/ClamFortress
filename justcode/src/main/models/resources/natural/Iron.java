@@ -8,7 +8,7 @@ public class Iron extends NaturalResource implements ResourceCost, Smeltable {
 
 
     public Iron(){
-        super("Iron");
+        super("Iron", "Used to make Iron Ingots.");
         this.refined = new IronIngot();
     }
 

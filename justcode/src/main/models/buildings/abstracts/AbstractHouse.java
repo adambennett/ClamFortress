@@ -10,8 +10,14 @@ public abstract class AbstractHouse extends AbstractBuilding {
     private final Integer popCapInc;
 
     public AbstractHouse(String name, int popCapInc, int resourceCost, AbstractResource resourceType) {
-        super(name, resourceCost, resourceType);
+        super(name, getDesc(name, popCapInc, resourceCost, resourceType), resourceCost, resourceType);
         this.popCapInc = popCapInc;
+    }
+
+    public static String getDesc(String name, int popCapInc, int resourceCost, AbstractResource resourceType) {
+        String output = "";
+        output += name + " [H][PCAP|" + popCapInc + "]-[COST|" + resourceCost + "x" + resourceType.getName() + "]";
+        return output;
     }
 
     @Override

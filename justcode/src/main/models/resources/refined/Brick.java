@@ -5,7 +5,7 @@ import main.models.resources.*;
 
 public class Brick extends RefinedResource implements ResourceCost {
     public Brick() {
-        super("Brick");
+        super("Brick", "Used to craft very sturdy buildings.");
     }
 
     @Override

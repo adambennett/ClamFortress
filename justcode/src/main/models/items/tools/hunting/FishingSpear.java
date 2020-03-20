@@ -4,7 +4,7 @@ import main.models.items.tools.*;
 
 public class FishingSpear extends AbstractFishingTool {
     public FishingSpear() {
-        super("Fishing Spear", "");
+        super("Fishing Spear", "Improves Fishing.");
     }
 
     @Override

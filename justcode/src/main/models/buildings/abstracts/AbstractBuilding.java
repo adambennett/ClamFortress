@@ -15,8 +15,8 @@ public abstract class AbstractBuilding extends GameObject {
     private final AbstractResource resourceType;
     private Era eraRequired;
 
-    public AbstractBuilding(String name, int resourceCost, AbstractResource resourceType) {
-        super(name);
+    public AbstractBuilding(String name, String desc, int resourceCost, AbstractResource resourceType) {
+        super(name, desc);
         this.eraRequired = TechTree.getHead();
         this.resourceType = resourceType;
         this.resourceCost = resourceCost;

@@ -32,6 +32,20 @@ public class Fishing extends AbstractGameAction {
         for (GameObject obj : Game.getModifierObjects()) {
             fish *= obj.multiplyFoodOnFishing();
         }
+
+        int fishMod = 1;
+        if (Game.getVillage().getInventory().containsItem("net")) {
+            fishMod++;
+        }
+
+        if (Game.getVillage().getInventory().containsItem("fishing rod")) {
+            fishMod++;
+        }
+
+        if (Game.getVillage().getInventory().containsItem("fishing spear")) {
+            fishMod++;
+        }
+        fish = fish * fishMod;
         Game.getVillage().incFood(fish);
         OutputManager.addToBot("Fished " + fish + " new food");
         this.isDone = true;

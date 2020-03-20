@@ -1,6 +1,8 @@
 package main.models.managers;
 
+import main.models.nodes.*;
 import main.models.tech.*;
+import main.utilities.*;
 import main.utilities.persistence.*;
 
 import java.math.*;
@@ -17,6 +19,7 @@ public class GameManager {
     private Integer trainingCost;
     private Date date;
     private String season;
+    private City raidingCity;
     private static final GameManager instance;
     private static final String[] seasons = {
             "Winter", "Winter", "Spring", "Spring", "Summer", "Summer",
@@ -46,6 +49,10 @@ public class GameManager {
         }
     }
 
+    public void setRaidingCity(City city) {
+        this.raidingCity = city;
+    }
+
     public void setNethermod(Integer nethermod) {
         this.nethermod = nethermod;
     }
@@ -58,8 +65,7 @@ public class GameManager {
         if (!TechTree.getCurrentEra().equals(TechTree.getTail())) {
             this.techLevel += amt;
             if (this.techLevel > this.techUp) {
-                TechTree.incEra();
-                OutputManager.addToBot("Advanced to " + TechTree.getCurrentEra().toString());
+                GameUtils.advanceEra();
                 this.techLevel = 0;
                 this.techUp *= this.techMod;
                 this.techMod += ThreadLocalRandom.current().nextInt(1, 5);
@@ -71,6 +77,10 @@ public class GameManager {
             OutputManager.exp(amt);
             Database.score(amt);
         }
+    }
+
+    public City getRaidingCity() {
+        return raidingCity;
     }
 
     public Integer getNethermod() {
@@ -87,6 +97,18 @@ public class GameManager {
 
     public Integer getTechMod() {
         return techMod;
+    }
+
+    public void setTechLevel(Integer techLevel) {
+        this.techLevel = techLevel;
+    }
+
+    public void setTechUp(Integer techUp) {
+        this.techUp = techUp;
+    }
+
+    public void setTechMod(Integer techMod) {
+        this.techMod = techMod;
     }
 
     public static GameManager getInstance() {

@@ -12,7 +12,7 @@ public class TechTree extends GameObject {
     private static Era currentEra;
 
     public TechTree() {
-        super("Tech Tree");
+        super("Tech Tree", "The Tech Tree");
         resetTechTree();
     }
 

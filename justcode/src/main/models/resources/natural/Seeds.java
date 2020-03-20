@@ -5,7 +5,7 @@ import main.models.resources.*;
 
 public class Seeds extends NaturalResource implements ResourceCost {
     public Seeds() {
-        super("Seeds");
+        super("Seeds", "Plant them to Harvest a lot of food!");
     }
 
     @Override

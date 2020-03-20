@@ -1,6 +1,7 @@
 package main.actions.priority;
 
 import main.actions.*;
+import main.models.*;
 import main.models.nodes.City;
 
 public class Raiding extends AbstractGameAction {
@@ -14,6 +15,8 @@ public class Raiding extends AbstractGameAction {
 
     @Override
     public void update() {
+        Game.getVillage().takeDamage(city.dealDamage());
+        city.takeDamage(Game.getVillage().dealDamage());
         this.isDone = true;
     }
 

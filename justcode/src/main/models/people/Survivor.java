@@ -50,6 +50,8 @@ public  class Survivor {
         this.gender = Gender.MALE;
     }
 
+    public void die() {}
+
     public void feed(AbstractFood food) {
         this.setHealthPoints(this.healthPoints + food.getHealing());
     }
@@ -90,7 +92,7 @@ public  class Survivor {
 
     public void setEngineering(Integer engineering) { this.engineering = engineering; }
 
-    public Integer getHealthPoints() { return healthPoints; }
+    public Integer getHP() { return healthPoints; }
 
     public void setHealthPoints(Integer healthPoints) { this.healthPoints = healthPoints; }
 
@@ -125,7 +127,7 @@ public  class Survivor {
                 Objects.equals(getIntelligence(), survivor.getIntelligence()) &&
                 Objects.equals(getMagic(), survivor.getMagic()) &&
                 Objects.equals(getEngineering(), survivor.getEngineering()) &&
-                Objects.equals(getHealthPoints(), survivor.getHealthPoints()) &&
+                Objects.equals(getHP(), survivor.getHP()) &&
                 Objects.equals(getAge(), survivor.getAge()) &&
                 Objects.equals(getName(), survivor.getName()) &&
                 getGender() == survivor.getGender() &&
@@ -134,6 +136,6 @@ public  class Survivor {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAgility(), getStrength(), getDexterity(), getIntelligence(), getMagic(), getEngineering(), getHealthPoints(), getAge(), getName(), getGender(), getRace());
+        return Objects.hash(getAgility(), getStrength(), getDexterity(), getIntelligence(), getMagic(), getEngineering(), getHP(), getAge(), getName(), getGender(), getRace());
     }
 }

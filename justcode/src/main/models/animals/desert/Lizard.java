@@ -3,7 +3,7 @@ package main.models.animals.desert;
 public class Lizard extends AbstractDesertAnimal {
 
     public Lizard() {
-        super("Lizard", 15);
+        super("Lizard", "Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica, as well as most oceanic island chains.", 15);
     }
 
     @Override

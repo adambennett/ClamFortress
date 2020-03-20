@@ -48,7 +48,7 @@ public class SurvivorTest {
         Assert.assertEquals(expectedDex, defaultTestSurvivor.getDexterity());
         Assert.assertEquals(expectedAgi, defaultTestSurvivor.getAgility());
         Assert.assertEquals(expectedEng, defaultTestSurvivor.getEngineering());
-        Assert.assertEquals(expectedHP, defaultTestSurvivor.getHealthPoints());
+        Assert.assertEquals(expectedHP, defaultTestSurvivor.getHP());
         Assert.assertEquals(expectedMag, defaultTestSurvivor.getMagic());
         Assert.assertEquals(expectedStr, defaultTestSurvivor.getStrength());
         Assert.assertEquals(expectedInt, defaultTestSurvivor.getIntelligence());
@@ -75,7 +75,7 @@ public class SurvivorTest {
         Assert.assertEquals(expectedDex, testSurvivor.getDexterity());
         Assert.assertEquals(expectedAgi, testSurvivor.getAgility());
         Assert.assertEquals(expectedEng, testSurvivor.getEngineering());
-        Assert.assertEquals(expectedHP, testSurvivor.getHealthPoints());
+        Assert.assertEquals(expectedHP, testSurvivor.getHP());
         Assert.assertEquals(expectedmaxHp,testSurvivor.getMaxHp());
         Assert.assertEquals(expectedMag, testSurvivor.getMagic());
         Assert.assertEquals(expectedStr, testSurvivor.getStrength());
@@ -113,7 +113,7 @@ public class SurvivorTest {
         Assert.assertEquals(expectedDex, testSurvivor.getDexterity());
         Assert.assertEquals(expectedAgi, testSurvivor.getAgility());
         Assert.assertEquals(expectedEng, testSurvivor.getEngineering());
-        Assert.assertEquals(expectedHP, testSurvivor.getHealthPoints());
+        Assert.assertEquals(expectedHP, testSurvivor.getHP());
         Assert.assertEquals(expectedMag, testSurvivor.getMagic());
         Assert.assertEquals(expectedStr, testSurvivor.getStrength());
         Assert.assertEquals(expectedInt, testSurvivor.getIntelligence());

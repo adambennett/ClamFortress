@@ -6,8 +6,8 @@ public abstract class AbstractFood extends AbstractResource {
 
     private Integer healing;
 
-    public AbstractFood(Integer healing, String name) {
-        super(name);
+    public AbstractFood(Integer healing, String name, String desc) {
+        super(name, desc);
         this.healing = healing;
     }
 

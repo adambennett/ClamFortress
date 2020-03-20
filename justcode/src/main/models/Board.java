@@ -32,20 +32,20 @@ public class Board extends GameObject {
 
     private final Integer startPopCap;
     private final AbstractBiome startBiome;
-    private Village village;
+    private final Village village;
     private ArrayList<AbstractNode> grid;
     private ArrayList<AbstractAnimal> animals;
     private Map<AbstractResource, Integer> resources;
 
     public Board() {
-        super("Fake Board");
+        super("Fake Board", "The game board!");
         this.village = new Village();
         this.startPopCap = 0;
         this.startBiome = new BlankBiome();
     }
 
     public Board(AbstractBiome startingBiome, int xMax, int yMax, int popCap) {
-        super("Game Board");
+        super("Game Board", "The game board!");
         this.village = new Village(startingBiome, popCap);
         this.village.setxPos(0);
         this.village.setyPos(0);
@@ -85,37 +85,20 @@ public class Board extends GameObject {
 
     public void addGridSpace(AbstractNode space) {
         this.grid.add(space);
-        nextX++;
-        if (nextX > gridXMax) {
-            nextX = 0;
-            nextY++;
-        }
-        for (GameObject obj : Game.getModifierObjects()) {
-            obj.onDiscoverNewRegion(space);
-        }
+        nextX++; if (nextX > gridXMax) { nextX = 0; nextY++; }
         if (space.hasArtifact()) {
-            village.getInventory().addItem(space.getArtifact());
-            if (GameStrings.startsWithVowel(space.getArtifact().getName())) {
-                OutputManager.addToTop("Found an " + space.getArtifact().getName() + " on a newly discovered space!");
-            } else {
-                OutputManager.addToTop("Found a " + space.getArtifact().getName() + " on a newly discovered space!");
-            }
+            GameUtils.obtainArtifact(space.getArtifact());
         }
         if (space.hasItem()) {
-            village.getInventory().addItem(space.getItem());
-            if (GameStrings.startsWithVowel(space.getItem().getName())) {
-                OutputManager.addToTop("Found an " + space.getItem().getName() + " on a newly discovered space!");
-            } else {
-                OutputManager.addToTop("Found a " + space.getItem().getName() + " on a newly discovered space!");
-            }
+            GameUtils.obtainItem(space.getItem());
         }
         if (!(space instanceof City)) {
-            addResources(space.getResources());
-            addAnimals(space.getAnimals());
+            Game.getGameBoard().addResources(space.getResources());
+            Game.getGameBoard().addAnimals(space.getAnimals());
         }
     }
 
-    private void addAnimals(Map<AbstractAnimal, Integer> animals) {
+    public void addAnimals(Map<AbstractAnimal, Integer> animals) {
         for (Map.Entry<AbstractAnimal, Integer> entry : animals.entrySet()) {
             for (int i = 0; i < entry.getValue(); i++) {
                 this.animals.add(entry.getKey().clone());
@@ -235,6 +218,15 @@ public class Board extends GameObject {
         return output;
     }
     // END RESOURCES /////////////////////////////////////////////////////////////////////////////////////////////
+    public ArrayList<City> getAllCities() {
+        ArrayList<City> output = new ArrayList<>();
+        for (AbstractNode node : this.grid) {
+            if (node instanceof City) {
+                output.add((City) node);
+            }
+        }
+        return output;
+    }
 
     public Village getVillage() {
         return village;
@@ -320,6 +312,10 @@ public class Board extends GameObject {
 
     public Integer getGridYMax() {
         return gridYMax;
+    }
+
+    public  ArrayList<AbstractNode> getGrid() {
+        return grid;
     }
 
     @Override

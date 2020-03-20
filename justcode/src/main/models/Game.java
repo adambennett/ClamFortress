@@ -118,6 +118,13 @@ public class Game {
     }
 
     public static Boolean canRaid() {
+        for (AbstractNode node : gameBoard.getGrid()) {
+            if (node instanceof City && (GameManager.getInstance().getRaidingCity() != null && !node.equals(GameManager.getInstance().getRaidingCity()))) {
+                return true;
+            } else if (node instanceof City && GameManager.getInstance().getRaidingCity() == null) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -193,7 +200,7 @@ public class Game {
         if (getVillage().getUncompletedBuildings().size() > 0) {
             actionManager.addToBottom(new Building(PriorityManager.getBuild()));
         }
-        actionManager.addToBottom(new Engineering(BuildingManager.getRandomBuilding(), PriorityManager.getEngineer()));
+        actionManager.addToBottom(new Engineering(PriorityManager.getEngineer()));
         actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc));
     }
 

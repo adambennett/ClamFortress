@@ -12,11 +12,6 @@ public class CursedHome extends AbstractHouse implements Cursed {
     }
 
     @Override
-    public void runCurse() {
-
-    }
-
-    @Override
     public CursedHome clone() {
         return new CursedHome();
     }

@@ -601,5 +601,7 @@ public class Archive {
         add(new Slingshot());
         add(new GooCannon());
         add(new GooRifle());
+        add(new GoldenAxe());
+        add(new GoldenWood());
     }
 }

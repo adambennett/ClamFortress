@@ -7,6 +7,7 @@ import main.models.items.artifacts.AbstractArtifact;
 import main.models.items.tools.*;
 import main.models.managers.*;
 import main.models.people.*;
+import main.utilities.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -25,24 +26,21 @@ public class Inventory extends GameObject {
     public Boolean addItem(AbstractItem item){
         if (this.items.size() < this.capacity) {
             if (!(item instanceof Unique && items.contains(item))) {
-                items.add(item);
-                item.onObtain();
-                if (item instanceof Golden) {
-                    Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) item).getGoldAmt());
-                    OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden object!");
-                }
+                if (item.canObtain()) {
+                    items.add(item);
+                    item.onObtain();
+                    GameUtils.obtainAnyItem(item);
+                    if (item instanceof Golden) {
+                        Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) item).getGoldAmt());
+                        OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden item!");
+                    }
 
-                if (item instanceof Cursed) {
-                    ((Cursed) item).runCurse();
-                    OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item!");
+                    if (item instanceof Cursed) {
+                        ((Cursed) item).runCurse();
+                        OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item!");
+                    }
+                    return true;
                 }
-                int maxHPGain = item.modifyMaxHPOnPickup();
-                if (maxHPGain > 0 && Game.getVillage().getPopulation() > 0) {
-                    Survivor s = Game.getVillage().getSurvivors().get(ThreadLocalRandom.current().nextInt(Game.getVillage().getSurvivors().size()));
-                    s.setMaxHp(s.getMaxHp() + maxHPGain);
-                    Game.getVillage().setHealth(Game.getVillage().getHealth() + maxHPGain);
-                }
-                return true;
             }
         } else {
             OutputManager.addToBot(OutputFlag.INVENTORY_FULL, "Your inventory is full!");

@@ -18,6 +18,7 @@ import main.models.resources.*;
 import main.models.tech.eras.*;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 public abstract class GameObject implements Cloneable, Comparable<GameObject> {
 
@@ -39,6 +40,18 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public void standbyPhase() {}
     public void priorityPhase() {}
     public void endPhase() {}
+
+    // Prevention hooks
+    public Boolean canObtain() { return true; }
+    public Boolean canAddVillagers() { return true; }
+    public Boolean canGainExp() { return true; }
+    public Boolean canBuildAnything() { return true; }
+    public Boolean canAddResourcesToBoard() { return true; }
+    public Boolean canEncounterEvents() { return true; }
+    public Boolean canGatherFood() { return true; }
+    public Boolean canHeal() { return true; }
+    public Boolean canFight() { return true; }
+    public Boolean canOutputMessages() { return true; }
 
     // Multiply fish/hunt food gain
     public Integer multiplyFoodOnFishing() { return 1; }

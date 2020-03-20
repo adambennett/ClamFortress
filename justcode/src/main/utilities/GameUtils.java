@@ -7,6 +7,7 @@ import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.managers.*;
 import main.models.nodes.*;
+import main.models.people.*;
 import main.models.resources.*;
 import main.models.tech.*;
 
@@ -15,6 +16,15 @@ import java.util.concurrent.*;
 
 public class GameUtils {
 
+
+    public static void obtainAnyItem(GameObject obtained) {
+        int maxHPGain = obtained.modifyMaxHPOnPickup();
+        if (maxHPGain > 0 && Game.getVillage().getPopulation() > 0) {
+            Survivor s = Game.getVillage().getSurvivors().get(ThreadLocalRandom.current().nextInt(Game.getVillage().getSurvivors().size()));
+            s.setMaxHp(s.getMaxHp() + maxHPGain);
+            Game.getVillage().setHealth(Game.getVillage().getHealth() + maxHPGain);
+        }
+    }
 
     public static void getNewRaidCity() {
         ArrayList<City> cities = Game.getGameBoard().getAllCities();
@@ -82,9 +92,10 @@ public class GameUtils {
     }
 
     public static Boolean obtainBuilding(AbstractBuilding building) {
-        if (Game.getVillage().addBuilding(building)) {
+        if (building.canObtain() && Game.getVillage().addBuilding(building)) {
             building.onBuild();
             building.onObtain();
+            obtainAnyItem(building);
             GameManager.getInstance().gainExperience();
             return true;
         }
@@ -96,8 +107,11 @@ public class GameUtils {
     }
 
     public static void advanceEra() {
-        TechTree.incEra();
-        TechTree.getCurrentEra().onObtain();
-        OutputManager.addToBot("Advanced to " + TechTree.getCurrentEra().toString());
+        if (TechTree.getCurrentEra().hasNext() && TechTree.getCurrentEra().getNext().canObtain()) {
+            TechTree.incEra();
+            TechTree.getCurrentEra().onObtain();
+            obtainAnyItem(TechTree.getCurrentEra());
+            OutputManager.addToBot("Advanced to " + TechTree.getCurrentEra().toString());
+        }
     }
 }

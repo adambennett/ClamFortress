@@ -8,7 +8,7 @@ import main.encounters.plagues.AbstractPlague;
 import main.encounters.raids.AbstractRaid;
 import main.enums.Difficulty;
 import main.enums.OutputFlag;
-import main.interfaces.Projectile;
+import main.interfaces.*;
 import main.models.Archive;
 import main.models.Game;
 import main.models.GameObject;
@@ -24,6 +24,7 @@ import main.models.people.Bandit;
 import main.models.people.Survivor;
 import main.models.resources.AbstractResource;
 import main.models.resources.refined.food.PlaceholderFood;
+import main.utilities.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -348,12 +349,15 @@ public class Village extends AbstractNode {
         }
         if (resourcesSize + this.totalResources() <= this.resourceLimit) {
             for (Map.Entry<AbstractResource, Integer> entry : resources.entrySet()) {
-                if (this.resources.containsKey(entry.getKey())) {
-                    this.resources.put(entry.getKey(), entry.getValue() + this.resources.get(entry.getKey()));
-                } else {
-                    this.resources.put(entry.getKey(), entry.getValue());
+                if (entry.getKey().canObtain()) {
+                    if (this.resources.containsKey(entry.getKey())) {
+                        this.resources.put(entry.getKey(), entry.getValue() + this.resources.get(entry.getKey()));
+                    } else {
+                        this.resources.put(entry.getKey(), entry.getValue());
+                    }
+                    entry.getKey().onObtain();
+                    GameUtils.obtainAnyItem(entry.getKey());
                 }
-                entry.getKey().onObtain();
             }
             return true;
         } else {
@@ -368,13 +372,18 @@ public class Village extends AbstractNode {
             amt--;
             reduced = true;
         }
-        if (totalResources() + amt <= this.resourceLimit && amt > 0) {
+        if (totalResources() + amt <= this.resourceLimit && amt > 0 && resource.canObtain()) {
             if (this.resources.containsKey(resource)) {
                 this.resources.put(resource, this.resources.get(resource) + amt);
             } else {
                 this.resources.put(resource, amt);
             }
             resource.onObtain();
+            GameUtils.obtainAnyItem(resource);
+            if (resource instanceof Golden) {
+                Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) resource).getGoldAmt());
+                OutputManager.addToBot("Received " + ((Golden) resource).getGoldAmt() + " Coins upon pickup of Golden resource!");
+            }
             return true;
         } else if (reduced) {
             OutputManager.addToBot(OutputFlag.RESOURCES_FULL, "Not enough room to accumulate more resources! Build some storehouses.");

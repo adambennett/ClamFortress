@@ -13,12 +13,6 @@ public class CursedStorehouse extends AbstractStorehouse implements Cursed {
     }
 
     @Override
-    public void runCurse() {
-
-    }
-
-
-    @Override
     public CursedStorehouse clone() {
         return new CursedStorehouse();
     }

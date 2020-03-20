@@ -1,5 +1,9 @@
 package main.interfaces;
 
+import main.models.managers.*;
+
 public interface Cursed {
-    void runCurse();
+    default void runCurse() {
+        GameManager.getInstance().setNethermod(GameManager.getInstance().getNethermod() - 1);
+    }
 }

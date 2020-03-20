@@ -18,9 +18,4 @@ public class CursedPlating extends AbstractPlating implements Cursed {
     public CursedPlating clone() {
         return new CursedPlating();
     }
-
-    @Override
-    public void runCurse() {
-
-    }
 }

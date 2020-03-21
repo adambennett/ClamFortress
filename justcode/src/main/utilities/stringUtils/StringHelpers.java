@@ -26,14 +26,6 @@ public class StringHelpers {
         return s;
     }
 
-    public static String formatNoNL(String s, String lenCheck) {
-        while (s.length() < lenCheck.length()) {
-            s += " ";
-        }
-        s += "<";
-        return s;
-    }
-
     public static String getStringFromPromptType(main.enums.PromptMessage msg) {
         switch (msg) {
             case DEV_CONSOLE:

@@ -97,6 +97,8 @@ public class Village extends AbstractNode {
         this.resources = new HashMap<>();
         this.popCap = popCap;
         this.baseNode = getNodeFromBiome(biome);
+        this.health = 100;
+        this.maxHP = 100;
     }
 
     // Fake Village for proper Archive creation
@@ -182,12 +184,20 @@ public class Village extends AbstractNode {
         return false;
     }
 
+    public void die() {
+
+    }
+
     public void updateHP() {
         this.health = 0;
         this.maxHP = 0;
         for (Survivor s : this.population) {
             this.maxHP += s.getMaxHp();
             this.health += s.getHP();
+        }
+
+        if (this.health < 1) {
+            die();
         }
     }
 

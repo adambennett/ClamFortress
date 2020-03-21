@@ -14,6 +14,7 @@ import main.models.Game;
 import main.models.GameObject;
 import main.models.Inventory;
 import main.models.buildings.abstracts.AbstractBuilding;
+import main.models.buildings.concrete.foodbuilding.Farmland;
 import main.models.items.AbstractItem;
 import main.models.items.military.armor.AbstractArmor;
 import main.models.items.military.weapons.AbstractWeapon;
@@ -36,6 +37,7 @@ public class Village extends AbstractNode {
 
     private final Inventory inventory;
     private final AbstractNode baseNode;
+    private final Farmland farmland;
 
     // Limits
     private Integer popCap =            5;
@@ -97,6 +99,7 @@ public class Village extends AbstractNode {
         this.resources = new HashMap<>();
         this.popCap = popCap;
         this.baseNode = getNodeFromBiome(biome);
+        this.farmland = new Farmland();
         this.health = 100;
         this.maxHP = 100;
     }
@@ -106,6 +109,7 @@ public class Village extends AbstractNode {
         super();
         this.baseNode = null;
         this.inventory = new Inventory(0);
+        this.farmland = new Farmland();
     }
 
     public AbstractNode getNodeFromBiome(AbstractBiome biome) {
@@ -552,6 +556,7 @@ public class Village extends AbstractNode {
     public AbstractNode getBaseNode() {
         return baseNode;
     }
+    public Farmland getFarmland(){return this.farmland;}
 
     public Integer getHunger() {
         return hunger;

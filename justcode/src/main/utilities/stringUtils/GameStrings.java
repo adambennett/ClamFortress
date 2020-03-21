@@ -1,4 +1,4 @@
-package main.utilities;
+package main.utilities.stringUtils;
 
 
 import main.models.*;
@@ -16,39 +16,27 @@ import java.util.concurrent.*;
 
 public class GameStrings {
 
-    private static ArrayList<Character> vowels;
+    public static ArrayList<Character> vowels;
+    public static final Map<Integer, String> modifierMap = new HashMap<>();
+    public static String chooseRace;
+    public static String turnMenu;
+    public static String priorityMenu;
+    public static String endPhase;
+    public static String stats;
+    public static String inv;
+    public static String vil;
+    public static String board;
+    public static String build;
+    public static String archive;
+    public static String resources;
+    public static String merchant;
+    public static String training;
+    public static String saleMerchant;
+    public static String devConsole;
 
-    static {
-        chooseRace = "";
-        turnMenu = "";
-        priorityMenu = "";
-        vowels = new ArrayList<>();
-        vowels.add('A');
-        vowels.add('E');
-        vowels.add('I');
-        vowels.add('O');
-        vowels.add('U');
-        vowels.add('a');
-        vowels.add('e');
-        vowels.add('i');
-        vowels.add('o');
-        vowels.add('u');
-    }
+    public static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
 
-    private static String chooseRace;
-    private static String turnMenu;
-    private static String priorityMenu;
-    private static String endPhase;
-    private static String resources;
-    private static String inv;
-    private static String vil;
-    private static String board;
-    private static String build;
-    private static String archive;
-
-    private static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
-
-    private static final String loginScreen =
+    public static final String loginScreen =
                     "**************************************************\n" +
                     "***              Clam Fortress                 ***\n" +
                     "***--------------------------------------------***\n" +
@@ -58,7 +46,7 @@ public class GameStrings {
                     "***                0 | Exit                    ***\n" +
                     "**************************************************\n";
 
-    private static final String newGameHub =
+    public static final String newGameHub =
                     "**************************************************\n" +
                     "***               New Game Menu                ***\n" +
                     "***--------------------------------------------***\n" +
@@ -79,8 +67,8 @@ public class GameStrings {
                     "***             Quit | Return to Main Menu     ***\n" +
                     "***            Reset | Reset all to Default    ***\n" +
                     "**************************************************\n";
-    
-    private static final String mainMenu =
+
+    public static final String mainMenu =
                     "**************************************************\n" +
                     "***                 Main Menu                  ***\n" +
                     "***--------------------------------------------***\n" +
@@ -93,7 +81,7 @@ public class GameStrings {
                     "***                0 | Logout                  ***\n" +                  
                     "**************************************************\n";
 
-    private static final String startEra =
+    public static final String startEra =
                     "**************************************************\n" +
                     "***              Starting Era                  ***\n" +
                     "***--------------------------------------------***\n" +
@@ -109,7 +97,7 @@ public class GameStrings {
                     "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
-    private static final String pop =
+    public static final String pop =
                     "**************************************************\n" +
                     "***              Population Options            ***\n" +
                     "***--------------------------------------------***\n" +
@@ -120,7 +108,7 @@ public class GameStrings {
                     "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
-    private static final String boardSize =
+    public static final String boardSize =
                     "**************************************************\n" +
                     "***              Board Size Options            ***\n" +
                     "***--------------------------------------------***\n" +
@@ -131,7 +119,7 @@ public class GameStrings {
                     "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
-    private static final String chooseBiome =
+    public static final String chooseBiome =
                     "**************************************************\n" +
                     "***              Starting Biome                ***\n" +
                     "***--------------------------------------------***\n" +
@@ -146,7 +134,7 @@ public class GameStrings {
                     "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
-    private static final String chooseDifficulty =
+    public static final String chooseDifficulty =
                     "**************************************************\n" +
                     "***              Select Difficulty             ***\n" +
                     "***--------------------------------------------***\n" +
@@ -163,7 +151,22 @@ public class GameStrings {
                     "***           9 | Start Game                   ***\n" +
                     "**************************************************\n";
 
-    private static final String customDifficulty =
+    public static void loadEndPhase() {
+        endPhase =
+                        "****************************************************************************************************\n" +
+                        "***                                          END PHASE                                           ***\n" +
+                        "***----------------------------------------------------------------------------------------------***\n" +
+                        "***                                      0 | Standby Phase                                       ***\n" +
+                        "***                                      1 | Reprint End Turn Report                             ***\n" +
+                        "***----------------------------------------------------------------------------------------------***\n" +
+                        "***                                   Skip | Skip to next End Phase                              ***\n" +
+                        "***                                   Quit | Finish Game                                         ***\n" +
+                        "***                                   Save | Save & Continue                                     ***\n" +
+                        "***                                   Exit | Save & Quit                                         ***\n" +
+                        "****************************************************************************************************\n";
+    }
+
+    public static final String customDifficulty =
                     "***************************************************************\n" +
                     "***                    Difficulty Options                   ***\n" +
                     "***---------------------------------------------------------***\n" +
@@ -183,57 +186,8 @@ public class GameStrings {
                     "***            14 | Disable Faith                           ***\n" +
                     "***            15 | Disable ability to check surroundings   ***\n" +                  
                     "***---------------------------------------------------------***\n" +
+                    "***             0 | Back to New Game Menu                   ***\n" +
                     "***************************************************************\n";
-    
-    public static final Map<Integer, String> modifierMap = new HashMap<>();
-    
-    public static void initModMap() {
-        modifierMap.put(1, "Tougher enemies");
-        modifierMap.put(2, "Slow resource gain");
-        modifierMap.put(3, "More bad events");
-        modifierMap.put(4, "Terrible disasters");
-        modifierMap.put(5, "Handicap starting equipment");
-        modifierMap.put(6, "More Netherworlds");
-        modifierMap.put(7, "Tools are less effective");
-        modifierMap.put(8, "Incredibly hostile enemies");
-        modifierMap.put(9, "Limited Blueprint access");
-        modifierMap.put(10, "Disable Trading");
-        modifierMap.put(11, "Disable Magic");
-        modifierMap.put(12, "Disable Aliens");
-        modifierMap.put(13, "Disable Healing");
-        modifierMap.put(14, "Disable Faith");
-        modifierMap.put(15, "Disable ability to check surroundings");
-    }
-
-    public static Boolean startsWithVowel(String word) {
-        return isVowel(word.charAt(0));
-    }
-
-    public static Boolean isVowel(Character character) {
-        return (character != null) && vowels.contains(character);
-    }
-
-    public static String capFirstLetter(String s) {
-        String color = s.toLowerCase();
-        color = s.toLowerCase().substring(0, 1).toUpperCase() + color.substring(1);
-        return color;
-    }
-
-    private static String format(String s, String lenCheck, String endString) {
-        while (s.length() < lenCheck.length()) {
-            s += " ";
-        }
-        s += endString + "\n";
-        return s;
-    }
-
-    private static String formatNoNL(String s, String lenCheck) {
-        while (s.length() < lenCheck.length()) {
-            s += " ";
-        }
-        s += "<";
-        return s;
-    }
 
     public static ArrayList<LinkedHashMap<String, ArrayList<String>>> getRaces() {
         String human = "Human";
@@ -268,53 +222,12 @@ public class GameStrings {
         mapps.add(extraOptions);
         return mapps;
     }
-
-    public static String newMenu(String leftAlignFormat, String headerFormat, String breakLine, String header, Map<String, String> commandToLabelMap) {
-        ArrayList<Map<String, String>> list = new ArrayList<>();
-        list.add(commandToLabelMap);
-        return newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
-    }
-
-    public static String newMenu(String leftAlignFormat, String headerFormat, String breakLine, String header, ArrayList<Map<String, String>> commandToLabelMapList) {
-        String finalString = "";
-        finalString += breakLine;
-        finalString += String.format(headerFormat, header);
-        finalString += breakLine;
-        for (Map<String, String> map : commandToLabelMapList) {
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                finalString += String.format(leftAlignFormat, entry.getKey(), entry.getValue());
-            }
-            finalString += breakLine;
-        }
-        return finalString;
-    }
-
-    public static String newNewMenu(String leftAlignFormat, String headerFormat, String breakLine, String header, ArrayList<LinkedHashMap<String, ArrayList<String>>> commandToLabelMapList) {
-        String finalString = "";
-        finalString += breakLine;
-        finalString += String.format(headerFormat, header);
-        finalString += breakLine;
-        for (LinkedHashMap<String, ArrayList<String>> map : commandToLabelMapList) {
-            for (Map.Entry<String, ArrayList<String>> entry : map.entrySet()) {
-                int size = entry.getValue().size() + 1;
-                String[] newArr = new String[size];
-                newArr[0] = entry.getKey();
-                for (int i = 0; i < newArr.length - 1; i++) {
-                    newArr[i+1] = entry.getValue().get(i);
-                }
-                finalString += String.format(leftAlignFormat,newArr);
-            }
-            finalString += breakLine;
-        }
-        return finalString;
-    }
-
     public static void loadRaceMenu() {
         String leftAlignFormat = "| %-2s | %-19s |\n";
         String headerFormat = "| %-24s |\n";
         String breakLine = "+----+---------------------+\n";
         String header = "Choose Village Race";
-        chooseRace = newNewMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
+        chooseRace = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, getRaces());
     }
 
     public static LinkedHashMap<String, String> getTurns() {
@@ -323,7 +236,7 @@ public class GameStrings {
         a.put("Turn Number", "" + Game.getGameManager().getTurnNumber());
         a.put("Current Era", "" + TechTree.getCurrentEra().toString());
         a.put("Population", "" + Game.getVillage().getPopulation() + " / " + Game.getVillage().getPopCap());
-        a.put("Village HP", "" + Game.getVillage().getHealth() + " / " + Game.getVillage().getHealth());
+        a.put("Village HP", "" + Game.getVillage().getHealth() + " / " + Game.getVillage().getMaxHP());
         a.put("Resources", "" + Game.getVillage().totalResources() + " / " + Game.getVillage().getResourceLimit());
         a.put("Buildings", "" + Game.getVillage().getBuildings().size() + " / " + Game.getVillage().getBuildingLimit());
         a.put("Food", "" + Game.getVillage().getFood() + " / " + Game.getVillage().getFoodLimit());
@@ -331,53 +244,53 @@ public class GameStrings {
         a.put("Coins", "" + Game.getVillage().getCoins() + " / " + Game.getVillage().getCoinLimit());
         a.put("Faith", "" + Game.getVillage().getFaith() + " / " + Game.getVillage().getFaithLimit());
         if (GameManager.getInstance().getRaidingCity() != null) {
-            a.put("Raiding", "" + GameManager.getInstance().getRaidingCity().cityName());
+            City raid = GameManager.getInstance().getRaidingCity();
+            a.put("Raiding", "" + raid.cityName() + " [" + raid.getHp() + " / " + raid.getMaxHP() + "]");
         }
         return a;
     }
-
     public static LinkedHashMap<String, String> getTurnCommands() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         a.put("2", "Stats");
         a.put("3", "Board");
+        a.put("4", "Resources");
         if (Game.getVillage().getInventory().getItems().size() > 0) {
-            a.put("4", "Inventory");
+            a.put("5", "Inventory");
         } else {
-            a.put("4", "[No Items]");
+            a.put("5", "[No Items]");
         }
         if (Game.getVillage().getBuildings().size() > 0) {
-            a.put("5", "Buildings");
+            a.put("6", "Buildings");
         } else {
-            a.put("5", "[No Buildings]");
+            a.put("6", "[No Buildings]");
         }
         if (Game.getVillage().getPopulation() > 0) {
-            a.put("6", "Population");
+            a.put("7", "Population");
         } else {
-            a.put("6", "[No Villagers]");
+            a.put("7", "[No Villagers]");
         }
         if (Game.getVillage().getVistingMerchants().size() > 0) {
-            a.put("7", "Merchants");
+            a.put("8", "Merchants");
         } else {
-            a.put("7", "[No Merchants Available]");
+            a.put("8", "[No Merchants Available]");
         }
         if (Game.canRaid()) {
-            a.put("8", "Raid a New City");
+            a.put("9", "Raid a New City");
         } else {
-            a.put("8", "[No Raids Available]");
+            a.put("9", "[No Raids Available]");
         }
         int trainingCost = GameManager.getInstance().getTrainingCost();
         if (Game.getVillage().getCoins() >= trainingCost) {
-            a.put("9", "Train (" +  trainingCost + " Coins)");
+            a.put("10", "Train (" +  trainingCost + " Coins)");
         } else {
-            a.put("9", "[Not Enough Coins]");
+            a.put("10", "[Not Enough Coins]");
         }
         return a;
     }
-
     public static void loadTurnMenu() {
-        String leftAlignFormat = "| %28s | %-30s |\n";
-        String headerFormat = "| %-61s |\n";
-        String breakLine = "+------------------------------+--------------------------------+\n";
+        String leftAlignFormat = "| %28s | %-75s |\n";
+        String headerFormat = "| %-106s |\n";
+        String breakLine = "+------------------------------+-----------------------------------------------------------------------------+\n";
         String header = "STANDBY PHASE";
         LinkedHashMap<String, String> date = new LinkedHashMap<>();
         LinkedHashMap<String, String> bottom = new LinkedHashMap<>();
@@ -394,134 +307,119 @@ public class GameStrings {
         list.add(getTurnCommands());
         list.add(bottom);
         list.add(megaBottom);
-        turnMenu = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+        turnMenu = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
-    public static void loadPriorityMenu() {
-        String food1Name = "***             1 | ";
-        String food2Name = "***             2 | ";
-        String food3Name = "***             3 | ";
+    public static LinkedHashMap<String, Integer> getPriorityValues() {
         ArrayList<main.enums.FoodOptions> optionEnums = main.enums.FoodOptions.getOptionsFromRace(Game.getPlayerRace());
-        if (optionEnums.size() > 2) {
-            food1Name += capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
-            food2Name += capFirstLetter(optionEnums.get(1).writeInConsole().toLowerCase());
-            food3Name += capFirstLetter(optionEnums.get(2).writeInConsole().toLowerCase());
-        } else if (optionEnums.size() > 1) {
-            food1Name += capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
-            food2Name += capFirstLetter(optionEnums.get(1).writeInConsole().toLowerCase());
-            food3Name += "[Unavailable]";
-        } else if (optionEnums.size() > 0) {
-            food1Name += capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
-            food2Name += "[Unavailable]";
-            food3Name += "[Unavailable]";
-        } else {
-            food1Name += "[Unavailable]";
-            food2Name += "[Unavailable]";
-            food3Name += "[Unavailable]";
+        String food1Name = StringHelpers.capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
+        String food2Name = StringHelpers.capFirstLetter(optionEnums.get(1).writeInConsole().toLowerCase());
+        String food3Name = StringHelpers.capFirstLetter(optionEnums.get(2).writeInConsole().toLowerCase());
+        Integer foodPriority1 = PriorityManager.getFood1();
+        Integer foodPriority2 = PriorityManager.getFood2();
+        Integer foodPriority3 = PriorityManager.getFood3();
+        Integer prayPriority = PriorityManager.getPray();
+        Integer foragePriority = PriorityManager.getForage();
+        Integer woodcutPriority = PriorityManager.getWoodcut();
+        Integer stonePickPriority = PriorityManager.getStone();
+        Integer miningPriority = PriorityManager.getMine();
+        Integer defendPriority = PriorityManager.getDefend();
+        Integer harvestPriority = PriorityManager.getHarvest();
+        Integer forgePriority = PriorityManager.getForge();
+        Integer healPriority = PriorityManager.getHeal();
+        Integer scoutPriority = PriorityManager.getScout();
+        Integer plantPriority = PriorityManager.getPlant();
+        Integer smithPriority = PriorityManager.getSmith();
+        Integer smeltPriority = PriorityManager.getSmelt();
+        Integer raidPriority = PriorityManager.getRaid();
+        Integer engineerPriority = PriorityManager.getEngineer();
+        Integer buildPriority = PriorityManager.getBuild();
+        Integer tradePriority = PriorityManager.getTrade();
+        Integer masonryPriority = PriorityManager.getMasonry();
+        LinkedHashMap<String, Integer> priorities = new LinkedHashMap<>();
+        priorities.put(food1Name, foodPriority1);
+        priorities.put(food2Name, foodPriority2);
+        priorities.put(food3Name, foodPriority3);
+        priorities.put("Praying", prayPriority);
+        priorities.put("Foraging", foragePriority);
+        priorities.put("Woodcutting", woodcutPriority);
+        priorities.put("Stone Picking", stonePickPriority);
+        priorities.put("Mining", miningPriority);
+        priorities.put("Defending", defendPriority);
+        priorities.put("Harvesting", harvestPriority);
+        priorities.put("Forging", forgePriority);
+        priorities.put("Healing", healPriority);
+        priorities.put("Exploring", scoutPriority);
+        priorities.put("Planting", plantPriority);
+        priorities.put("Smithing", smithPriority);
+        priorities.put("Smelting", smeltPriority);
+        priorities.put("Raiding", raidPriority);
+        priorities.put("Engineering", engineerPriority);
+        priorities.put("Building", buildPriority);
+        priorities.put("Trading", tradePriority);
+        priorities.put("Masonry", masonryPriority);
+        return priorities;
+    }
+    public static LinkedHashMap<String, ArrayList<String>> getPriorities() {
+        LinkedHashMap<String, Integer> priorityVals = getPriorityValues();
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
+        int index = 1;
+        for (Map.Entry<String, Integer> entry : priorityVals.entrySet()) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add(entry.getKey());
+            tempCols.add(""+ entry.getValue());
+            a.put("" + index, tempCols);
+            index++;
         }
-        String lenny = "                                         ";
-        food1Name = formatNoNL(food1Name, lenny);
-        food2Name = formatNoNL(food2Name, lenny);
-        food3Name = formatNoNL(food3Name, lenny);
-        Integer foodPriority1 = main.models.managers.PriorityManager.getFood1();
-        Integer foodPriority2 = main.models.managers.PriorityManager.getFood2();
-        Integer foodPriority3 = main.models.managers.PriorityManager.getFood3();
-        Integer prayPriority = main.models.managers.PriorityManager.getPray();
-        Integer foragePriority = main.models.managers.PriorityManager.getForage();
-        Integer woodcutPriority = main.models.managers.PriorityManager.getWoodcut();
-        Integer stonePickPriority = main.models.managers.PriorityManager.getStone();
-        Integer miningPriority = main.models.managers.PriorityManager.getMine();
-        Integer defendPriority = main.models.managers.PriorityManager.getDefend();
-        Integer harvestPriority = main.models.managers.PriorityManager.getHarvest();
-        Integer forgePriority = main.models.managers.PriorityManager.getForge();
-        Integer healPriority = main.models.managers.PriorityManager.getHeal();
-        Integer scoutPriority = main.models.managers.PriorityManager.getScout();
-        Integer plantPriority = main.models.managers.PriorityManager.getPlant();
-        Integer smithPriority = main.models.managers.PriorityManager.getSmith();
-        Integer smeltPriority = main.models.managers.PriorityManager.getMasonry();
-        Integer raidPriority = main.models.managers.PriorityManager.getRaid();
-        Integer engineerPriority = main.models.managers.PriorityManager.getEngineer();
-        Integer buildPriority = main.models.managers.PriorityManager.getBuild();
-        Integer tradePriority = main.models.managers.PriorityManager.getTrade();
-        String ending = "***";
-        String len = "                  ";
-        String foodLen = "                  ";
-        String lenB = "                          ";
-        String food1 = format( foodPriority1 + ">", foodLen, ending);
-        String food2 = format(foodPriority2 + ">", foodLen, ending);
-        String food3 = format(foodPriority3 + ">", foodLen, ending);
-        String pray = format(prayPriority + ">", len, ending);
-        String forage = format(foragePriority + ">", len, ending);
-        String woody = format(woodcutPriority + ">", len, ending);
-        String stoney = format(stonePickPriority + ">", len, ending);
-        String mine = format(miningPriority + ">", len, ending);
-        String defend = format(defendPriority + ">", len, ending);
-        String harvest = format(harvestPriority + ">", len, ending);
-        String forge = format(forgePriority + ">", len, ending);
-        String heal = format(healPriority + ">", len, ending);
-        String scout = format(scoutPriority + ">", len, ending);
-        String plant = format(plantPriority + ">", len, ending);
-        String smith = format(smithPriority + ">", len, ending);
-        String smelt = format(smeltPriority + ">", len, ending);
-        String raid = format(raidPriority + ">", len, ending);
-        String engineer = format(engineerPriority + ">", len, ending);
-        String build = format(buildPriority + ">", len, ending);
-        String trade = format(tradePriority + ">", len, ending);
-        String points = format("(" + main.models.managers.PriorityManager.getPointsRemaining() + ")" , lenB, ending);
-        priorityMenu =
-                        "***************************************************************\n" +
-                        "***                      PRIORITY PHASE                     ***\n" +
-                        "***************************************************************\n" +
-                        "***                       Points: " + points +
-                        "***---------------------------------------------------------***\n" +
-                        food1Name + food1 +
-                        food2Name + food2 +
-                        food3Name + food3 +
-                        "***             4 | Pray                 <" + pray +
-                        "***             5 | Forage               <" + forage +
-                        "***             6 | Woodcutting          <" + woody +
-                        "***             7 | Stone Picking        <" + stoney +
-                        "***             8 | Mining               <" + mine +
-                        "***             9 | Defending            <" + defend +
-                        "***            10 | Harvesting           <" + harvest +
-                        "***            11 | Forging              <" + forge +
-                        "***            12 | Healing              <" + heal +
-                        "***            13 | Scouting             <" + scout +
-                        "***            14 | Planting             <" + plant +
-                        "***            15 | Smelting             <" + smith +
-                        "***            16 | Masonry              <" + smelt +
-                        "***            17 | Raiding              <" + raid +
-                        "***            18 | Engineering          <" + engineer +
-                        "***            19 | Building             <" + build +
-                        "***            20 | Trading              <" + trade +
-                        "***---------------------------------------------------------***\n" +
-                        "***   Choose any combination of options to put points into  ***\n" +
-                        "***---------------------------------------------------------***\n" +
-                        "***             0 | End Phase                               ***\n " +
-                        "***************************************************************\n";
+        if (a.size() < 1) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
+        }
+        return a;
+    }
+    public static void loadPriorities() {
+        String leftAlignFormat = "| %25s | %-35s | %-35s |\n";
+        String headerFormat = "| %-101s |\n";
+        String breakLine = "+---------------------------+-------------------------------------+-------------------------------------+\n";
+        String header = "PRIORITY PHASE";
+        LinkedHashMap<String, ArrayList<String>> points = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> colHeads = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> msg = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> ret = new LinkedHashMap<>(); 
+        ArrayList<String> pointCols = new ArrayList<>();
+        pointCols.add("" + PriorityManager.getPointsRemaining());
+        pointCols.add("" + PriorityManager.totalSpentPoints());
+        ArrayList<String> colHeaders = new ArrayList<>();
+        colHeaders.add("PRIORITY");
+        colHeaders.add("POINTS");
+        ArrayList<String> msgCols = new ArrayList<>();
+        msgCols.add("options to put points into");
+        msgCols.add("");
+        ArrayList<String> retCols = new ArrayList<>();
+        retCols.add("End Phase");
+        retCols.add("");
+        points.put("Points Remaining", pointCols);
+        colHeads.put("COMMAND", colHeaders);
+        msg.put("Choose any combination of", msgCols);
+        ret.put("0", retCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
+        list.add(colHeads);
+        list.add(getPriorities());
+        list.add(points);
+        //list.add(msg);
+        list.add(ret);
+        priorityMenu = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
-    public static void loadEndPhase() {
-        endPhase =
-                "****************************************************************************************************\n" +
-                "***                                          END PHASE                                           ***\n" +
-                "***----------------------------------------------------------------------------------------------***\n" +
-                "***                                      0 | Standby Phase                                       ***\n" +
-                "***                                      1 | Reprint End Turn Report                             ***\n" +
-                "***----------------------------------------------------------------------------------------------***\n" +
-                "***                                   Skip | Skip to next End Phase                              ***\n" +
-                "***                                   Quit | Finish Game                                         ***\n" +
-                "***                                   Save | Save & Continue                                     ***\n" +
-                "***                                   Exit | Save & Quit                                         ***\n" +
-                "****************************************************************************************************\n";
-    }
-
-    public static LinkedHashMap<String, String> getResources() {
+    public static LinkedHashMap<String, String> getStats() {
         LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
         Village v = Game.getVillage();
+        rsrcMap.put("Cities Defeated", "" + GameManager.getInstance().getDefeatedCities() + " / " + (GameManager.getInstance().getRaidable().size() + GameManager.getInstance().getDefeatedCities()));
         rsrcMap.put("Population", "" + v.getPopulation() + " / " + v.getPopCap());
         rsrcMap.put("Buildings", "" + v.getBuildings().size() + " / " + v.getBuildingLimit());
-        rsrcMap.put("Total Village HP", "" + v.getHealth() + " / " + v.getHealth());
+        rsrcMap.put("Total Village HP", "" + v.getHealth() + " / " + v.getMaxHP());
         rsrcMap.put("Attack", "" + v.getAttackPower());
         rsrcMap.put("Defense", "" + v.getDefense());
         rsrcMap.put("Agility", "" + v.getAgility());
@@ -537,23 +435,55 @@ public class GameStrings {
         rsrcMap.put("Average Intellect", "" + v.getIntelligenceAvg());
         rsrcMap.put("Average Magic", "" + v.getMagicAvg());
         rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
+        rsrcMap.put("Villagers Killed", "" + GameManager.getInstance().getVillagersKilled());
+        rsrcMap.put("Enemies Killed", "" + GameManager.getInstance().getEnemiesKilled());
+        return rsrcMap;
+    }
+    public static void loadStats() {
+        String leftAlignFormat = "| %-25s | %-25s |\n";
+        String headerFormat = "| %-53s |\n";
+        String breakLine = "+---------------------------+---------------------------+\n";
+        String header = "Village Stats";
+        Map<String, String> bottom = new HashMap<>();
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(getStats());
+        list.add(bottom);
+        stats = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+    
+    public static LinkedHashMap<String, String> getResources() {
+        LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
+        Village v = Game.getVillage();
         rsrcMap.put("Coins", "" + v.getCoins() + " / " + v.getCoinLimit());
         rsrcMap.put("Food", "" + v.getFood() + " / " + v.getFoodLimit());
         rsrcMap.put("Faith", "" + v.getFaith() + " / " + v.getFaithLimit());
         Map<String, Integer> occ = new HashMap<>();
         for (AbstractResource resource : v.getAllResources()) {
-           if (occ.containsKey(resource.getName())) {
-               occ.put(resource.getName(), occ.get(resource.getName()) + 1);
-           } else {
-               occ.put(resource.getName(), 1);
-           }
+            if (occ.containsKey(resource.getName())) {
+                occ.put(resource.getName(), occ.get(resource.getName()) + 1);
+            } else {
+                occ.put(resource.getName(), 1);
+            }
         }
         for (Map.Entry<String, Integer> entry : occ.entrySet()) {
             rsrcMap.put(entry.getKey(), ""+entry.getValue());
         }
         return rsrcMap;
     }
-
+    public static void loadResources() {
+        String leftAlignFormat = "| %-25s | %-25s |\n";
+        String headerFormat = "| %-53s |\n";
+        String breakLine = "+---------------------------+---------------------------+\n";
+        String header = "Resources";
+        Map<String, String> bottom = new HashMap<>();
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(getResources());
+        list.add(bottom);
+        resources = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+    
     public static LinkedHashMap<String, String> getInventory() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
@@ -566,7 +496,22 @@ public class GameStrings {
         }
         return a;
     }
-
+    public static void loadInventory() {
+        String leftAlignFormat = "| %-25s | %-85s |\n";
+        String headerFormat = "| %-113s |\n";
+        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
+        String header = "Inventory";
+        Map<String, String> top = new HashMap<>();
+        Map<String, String> bottom = new HashMap<>();
+        top.put("Item Name", "Description");
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getInventory());
+        list.add(bottom);
+        inv = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+    
     public static LinkedHashMap<String, String> getBuildings() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
@@ -578,6 +523,21 @@ public class GameStrings {
             a.put(" ", " ");
         }
         return a;
+    }
+    public static void loadBuildings() {
+        String leftAlignFormat = "| %-25s | %-85s |\n";
+        String headerFormat = "| %-113s |\n";
+        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
+        String header = "Buildings";
+        Map<String, String> top = new HashMap<>();
+        Map<String, String> bottom = new HashMap<>();
+        top.put("Building", "Description");
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getBuildings());
+        list.add(bottom);
+        build = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static LinkedHashMap<String, ArrayList<String>> getArchive() {
@@ -602,7 +562,26 @@ public class GameStrings {
         }
         return a;
     }
-
+    public static void loadArchive() {
+        String leftAlignFormat = "| %-25s | %-21s | %-125s |\n";
+        String headerFormat = "| %-163s |\n";
+        String breakLine = "+---------------------------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------+\n";
+        String header = "Archive";
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("TYPE"); botCols.add("Return to Main Menu");
+        topCols.add("DESCRIPTION"); botCols.add("Game Objects: " + Archive.getInstance().getArchive().size());
+        top.put("NAME", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getArchive());
+        list.add(bottom);
+        archive = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+    
     public static LinkedHashMap<String, String> getBoard() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Board board = Game.getGameBoard();
@@ -628,22 +607,37 @@ public class GameStrings {
         }
         return a;
     }
-
+    public static void loadBoard() {
+        String leftAlignFormat = "| %-25s | %-35s |\n";
+        String headerFormat = "| %-63s |\n";
+        String breakLine = "+---------------------------+-------------------------------------+\n";
+        String header = "Game Board [" + Game.getGameBoard().getGridXMax() + "x" + Game.getGameBoard().getGridYMax() + "]";
+        Map<String, String> top = new HashMap<>();
+        Map<String, String> bottom = new HashMap<>();
+        top.put("Resource / Animal", "Amount");
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getBoard());
+        list.add(bottom);
+        board = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+    
     public static LinkedHashMap<String, ArrayList<String>> getVillagers() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
         for (Survivor s : v.getSurvivors()) {
             ArrayList<String> tempCols = new ArrayList<>();
             tempCols.add("" + s.getAge());
-            tempCols.add("" + s.getHP());
+            tempCols.add("" + s.getHP() + " / " + s.getMaxHp());
             tempCols.add("" + s.getStrength());
             tempCols.add("" + s.getDexterity());
             tempCols.add("" + s.getIntelligence());
             tempCols.add("" + s.getAgility());
             tempCols.add("" + s.getMagic());
             tempCols.add("" + s.getEngineering());
-            tempCols.add(GameStrings.capFirstLetter(s.getRace().toString().toLowerCase()));
-            tempCols.add(GameStrings.capFirstLetter(s.getGender().toString().toLowerCase()));
+            tempCols.add(StringHelpers.capFirstLetter(s.getRace().toString().toLowerCase()));
+            tempCols.add(StringHelpers.capFirstLetter(s.getGender().toString().toLowerCase()));
             a.put(s.getName(), tempCols);
         }
         if (a.size() < 1) {
@@ -662,93 +656,10 @@ public class GameStrings {
         }
         return a;
     }
-
-
-    public static void loadResources() {
-        String leftAlignFormat = "| %-25s | %-25s |\n";
-        String headerFormat = "| %-53s |\n";
-        String breakLine = "+---------------------------+---------------------------+\n";
-        String header = "Village Stats";
-        Map<String, String> bottom = new HashMap<>();
-        bottom.put("0", "Return to Standby Menu");
-        ArrayList<Map<String, String>> list = new ArrayList<>();
-        list.add(getResources());
-        list.add(bottom);
-        resources = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
-    }
-
-    public static void loadInventory() {
-        String leftAlignFormat = "| %-25s | %-85s |\n";
-        String headerFormat = "| %-113s |\n";
-        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
-        String header = "Inventory";
-        Map<String, String> top = new HashMap<>();
-        Map<String, String> bottom = new HashMap<>();
-        top.put("Item Name", "Description");
-        bottom.put("0", "Return to Standby Menu");
-        ArrayList<Map<String, String>> list = new ArrayList<>();
-        list.add(top);
-        list.add(getInventory());
-        list.add(bottom);
-        inv = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
-    }
-
-    public static void loadBuildings() {
-        String leftAlignFormat = "| %-25s | %-85s |\n";
-        String headerFormat = "| %-113s |\n";
-        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
-        String header = "Buildings";
-        Map<String, String> top = new HashMap<>();
-        Map<String, String> bottom = new HashMap<>();
-        top.put("Building", "Description");
-        bottom.put("0", "Return to Standby Menu");
-        ArrayList<Map<String, String>> list = new ArrayList<>();
-        list.add(top);
-        list.add(getBuildings());
-        list.add(bottom);
-        build = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
-    }
-
-    public static void loadArchive() {
-        String leftAlignFormat = "| %-25s | %-21s | %-125s |\n";
-        String headerFormat = "| %-163s |\n";
-        String breakLine = "+---------------------------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------+\n";
-        String header = "Archive";
-        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
-        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
-        ArrayList<String> topCols = new ArrayList<>();
-        ArrayList<String> botCols = new ArrayList<>();
-        topCols.add("TYPE"); botCols.add("Return to Main Menu");
-        topCols.add("DESCRIPTION"); botCols.add("Game Objects: " + Archive.getInstance().getArchive().size());
-        top.put("NAME", topCols);
-        bottom.put("0", botCols);
-        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
-        list.add(top);
-        list.add(getArchive());
-        list.add(bottom);
-        archive = newNewMenu(leftAlignFormat, headerFormat, breakLine, header, list);
-    }
-
-    public static void loadBoard() {
-        String leftAlignFormat = "| %-25s | %-35s |\n";
-        String headerFormat = "| %-63s |\n";
-        String breakLine = "+---------------------------+-------------------------------------+\n";
-        String header = "Game Board [" + Game.getGameBoard().getGridXMax() + "x" + Game.getGameBoard().getGridYMax() + "]";
-        Map<String, String> top = new HashMap<>();
-        Map<String, String> bottom = new HashMap<>();
-        top.put("Resource / Animal", "Amount");
-        bottom.put("0", "Return to Standby Menu");
-        ArrayList<Map<String, String>> list = new ArrayList<>();
-        list.add(top);
-        list.add(getBoard());
-        list.add(bottom);
-        board = newMenu(leftAlignFormat, headerFormat, breakLine, header, list);
-    }
-
     public static void loadVillagers() {
-        String leftAlignFormat = "| %-52s | %-8s | %-8s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
+        String leftAlignFormat = "| %-52s | %-8s | %-18s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
         String headerFormat = "| %-142s |\n";
-        String breakLine = "+------------------------------------------------------+----------+----------+------+------+------+------+------+------+------------+------------+\n";
+        String breakLine = "+------------------------------------------------------+--------------------+----------+------+------+------+------+------+------+------------+------------+\n";
         String header = "Population";
         LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
@@ -770,63 +681,190 @@ public class GameStrings {
         list.add(top);
         list.add(getVillagers());
         list.add(bottom);
-        vil = newNewMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+        vil = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
-
-    public static String getStringFromPromptType(main.enums.PromptMessage msg) {
-        switch (msg) {
-            case BIOME_MENU:
-                return chooseBiome;
-            case CUSTOM_DIFF_MENU:
-                return customDifficulty;
-            case DIFF_MENU:
-                return chooseDifficulty;
-            case MAIN_MENU:
-                return mainMenu;
-            case BLURB:
-                return openingBlurb;
-            case PRIORITY_MENU:
-                loadPriorityMenu();
-                return priorityMenu;
-            case RACE_MENU:
-                loadRaceMenu();
-                return chooseRace;
-            case TURN_MENU:
-                loadTurnMenu();
-                return turnMenu;
-            case END_PHASE:
-                loadEndPhase();
-                return endPhase;
-            case RESOURCE_VIEW:
-                loadResources();
-                return resources;
-            case INVENTORY_VIEW:
-                loadInventory();
-                return inv;
-            case VILLAGERS:
-                loadVillagers();
-                return vil;
-            case POP_SETUP:
-                return pop;
-            case GAME_BOARD:
-                loadBoard();
-                return board;
-            case BOARD_SIZE:
-                return boardSize;
-            case NEW_GAME_HUB:
-                return newGameHub;
-            case LOGIN:
-                return loginScreen;
-            case START_ERA:
-                return startEra;
-            case BUILDINGS:
-                loadBuildings();
-                return build;
-            case ARCHIVE:
-                loadArchive();
-                return archive;
+    
+    public static LinkedHashMap<String, ArrayList<String>> getMerchant() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        for (Survivor s : v.getSurvivors()) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("" + s.getAge());
+            tempCols.add("" + s.getHP() + " / " + s.getMaxHp());
+            tempCols.add("" + s.getStrength());
+            tempCols.add("" + s.getDexterity());
+            tempCols.add("" + s.getIntelligence());
+            tempCols.add("" + s.getAgility());
+            tempCols.add("" + s.getMagic());
+            tempCols.add("" + s.getEngineering());
+            tempCols.add(StringHelpers.capFirstLetter(s.getRace().toString().toLowerCase()));
+            tempCols.add(StringHelpers.capFirstLetter(s.getGender().toString().toLowerCase()));
+            a.put(s.getName(), tempCols);
         }
-        return "";
+        if (a.size() < 1) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
+        }
+        return a;
+    }
+    public static void loadMerchant() {
+        String leftAlignFormat = "| %-52s | %-8s | %-18s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
+        String headerFormat = "| %-142s |\n";
+        String breakLine = "+------------------------------------------------------+--------------------+----------+------+------+------+------+------+------+------------+------------+\n";
+        String header = "Population";
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("AGE"); botCols.add("Return");
+        topCols.add("HP"); botCols.add("");
+        topCols.add("STR"); botCols.add("");
+        topCols.add("DEX"); botCols.add("");
+        topCols.add("INT"); botCols.add("");
+        topCols.add("AGI"); botCols.add("");
+        topCols.add("MAG"); botCols.add("");
+        topCols.add("ENG"); botCols.add("");
+        topCols.add("RACE"); botCols.add("");
+        topCols.add("GENDER"); botCols.add("");
+        top.put("NAME", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getMerchant());
+        list.add(bottom);
+        merchant = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+    
+    public static LinkedHashMap<String, ArrayList<String>> getSaleMerchant() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        for (Survivor s : v.getSurvivors()) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("" + s.getAge());
+            tempCols.add("" + s.getHP() + " / " + s.getMaxHp());
+            tempCols.add("" + s.getStrength());
+            tempCols.add("" + s.getDexterity());
+            tempCols.add("" + s.getIntelligence());
+            tempCols.add("" + s.getAgility());
+            tempCols.add("" + s.getMagic());
+            tempCols.add("" + s.getEngineering());
+            tempCols.add(StringHelpers.capFirstLetter(s.getRace().toString().toLowerCase()));
+            tempCols.add(StringHelpers.capFirstLetter(s.getGender().toString().toLowerCase()));
+            a.put(s.getName(), tempCols);
+        }
+        if (a.size() < 1) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
+        }
+        return a;
+    }
+    public static void loadSaleMerchant() {
+        String leftAlignFormat = "| %-52s | %-8s | %-18s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
+        String headerFormat = "| %-142s |\n";
+        String breakLine = "+------------------------------------------------------+--------------------+----------+------+------+------+------+------+------+------------+------------+\n";
+        String header = "Population";
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("AGE"); botCols.add("Return");
+        topCols.add("HP"); botCols.add("");
+        topCols.add("STR"); botCols.add("");
+        topCols.add("DEX"); botCols.add("");
+        topCols.add("INT"); botCols.add("");
+        topCols.add("AGI"); botCols.add("");
+        topCols.add("MAG"); botCols.add("");
+        topCols.add("ENG"); botCols.add("");
+        topCols.add("RACE"); botCols.add("");
+        topCols.add("GENDER"); botCols.add("");
+        top.put("NAME", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getSaleMerchant());
+        list.add(bottom);
+        saleMerchant = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+    
+    public static LinkedHashMap<String, ArrayList<String>> getTraining() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        for (Survivor s : v.getSurvivors()) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("" + s.getAge());
+            tempCols.add("" + s.getHP() + " / " + s.getMaxHp());
+            tempCols.add("" + s.getStrength());
+            tempCols.add("" + s.getDexterity());
+            tempCols.add("" + s.getIntelligence());
+            tempCols.add("" + s.getAgility());
+            tempCols.add("" + s.getMagic());
+            tempCols.add("" + s.getEngineering());
+            tempCols.add(StringHelpers.capFirstLetter(s.getRace().toString().toLowerCase()));
+            tempCols.add(StringHelpers.capFirstLetter(s.getGender().toString().toLowerCase()));
+            a.put(s.getName(), tempCols);
+        }
+        if (a.size() < 1) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
+        }
+        return a;
+    }
+    public static void loadTraining() {
+        String leftAlignFormat = "| %-52s | %-8s | %-18s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
+        String headerFormat = "| %-142s |\n";
+        String breakLine = "+------------------------------------------------------+--------------------+----------+------+------+------+------+------+------+------------+------------+\n";
+        String header = "Population";
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("AGE"); botCols.add("Return");
+        topCols.add("HP"); botCols.add("");
+        topCols.add("STR"); botCols.add("");
+        topCols.add("DEX"); botCols.add("");
+        topCols.add("INT"); botCols.add("");
+        topCols.add("AGI"); botCols.add("");
+        topCols.add("MAG"); botCols.add("");
+        topCols.add("ENG"); botCols.add("");
+        topCols.add("RACE"); botCols.add("");
+        topCols.add("GENDER"); botCols.add("");
+        top.put("NAME", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getTraining());
+        list.add(bottom);
+        training = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static String getRandomName(boolean includePokemon) {
@@ -1343,6 +1381,38 @@ public class GameStrings {
             names.add("Deoxys");
         }
         return names.get(ThreadLocalRandom.current().nextInt(names.size()));
+    }
+
+    static {
+        chooseRace = "";
+        turnMenu = "";
+        priorityMenu = "";
+        vowels = new ArrayList<>();
+        vowels.add('A');
+        vowels.add('E');
+        vowels.add('I');
+        vowels.add('O');
+        vowels.add('U');
+        vowels.add('a');
+        vowels.add('e');
+        vowels.add('i');
+        vowels.add('o');
+        vowels.add('u');
+        modifierMap.put(1, "Tougher enemies");
+        modifierMap.put(2, "Slow resource gain");
+        modifierMap.put(3, "More bad events");
+        modifierMap.put(4, "Terrible disasters");
+        modifierMap.put(5, "Handicap starting equipment");
+        modifierMap.put(6, "More Netherworlds");
+        modifierMap.put(7, "Tools are less effective");
+        modifierMap.put(8, "Incredibly hostile enemies");
+        modifierMap.put(9, "Limited Blueprint access");
+        modifierMap.put(10, "Disable Trading");
+        modifierMap.put(11, "Disable Magic");
+        modifierMap.put(12, "Disable Aliens");
+        modifierMap.put(13, "Disable Healing");
+        modifierMap.put(14, "Disable Faith");
+        modifierMap.put(15, "Disable ability to check surroundings");
     }
 
 }

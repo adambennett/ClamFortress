@@ -1,7 +1,7 @@
 package main.encounters.disasters;
 
 import main.models.*;
-import main.utilities.*;
+import main.utilities.stringUtils.*;
 
 public class Hurricane extends AbstractDisaster {
 

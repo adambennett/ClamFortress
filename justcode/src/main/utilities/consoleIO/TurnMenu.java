@@ -19,17 +19,53 @@ public class TurnMenu extends AbstractConsole {
         consoleCommands.put("skip", MenuCommands.SKIP_TURN);
         consoleCommands.put("cheat", MenuCommands.SCORE_REALLY_BIG_HACKS);
         consoleCommands.put("0", MenuCommands.CONTINUE);
-        consoleCommands.put("2", MenuCommands.RESOURCES);
+        consoleCommands.put("2", MenuCommands.STATS);
         consoleCommands.put("3", MenuCommands.GAME_BOARD);
-        consoleCommands.put("4", MenuCommands.INVENTORY);
-        consoleCommands.put("5", MenuCommands.BUILDING);
-        consoleCommands.put("6", MenuCommands.VILLAGERS);
-        consoleCommands.put("8", MenuCommands.RAIDING);
+        consoleCommands.put("4", MenuCommands.RESOURCES);
+        if (Game.getVillage().getInventory().getItems().size() > 0) {
+            consoleCommands.put("5", MenuCommands.INVENTORY);
+        } else {
+            consoleCommands.put("5", MenuCommands.OPTION_UNAVAILABLE);
+        }
+        if (Game.getVillage().getBuildings().size() > 0) {
+            consoleCommands.put("6", MenuCommands.BUILDING);
+        } else {
+            consoleCommands.put("6", MenuCommands.OPTION_UNAVAILABLE);
+        }
+        if (Game.getVillage().getPopulation() > 0) {
+            consoleCommands.put("7", MenuCommands.VILLAGERS);
+        } else {
+            consoleCommands.put("7", MenuCommands.OPTION_UNAVAILABLE);
+        }
+        if (Game.getVillage().getVistingMerchants().size() > 0) {
+            consoleCommands.put("8", MenuCommands.MERCHANT);
+        } else {
+            consoleCommands.put("8", MenuCommands.OPTION_UNAVAILABLE);
+        }
+        if (Game.canRaid()) {
+            consoleCommands.put("9", MenuCommands.RAIDING);
+        } else {
+            consoleCommands.put("9", MenuCommands.OPTION_UNAVAILABLE);
+        }
+        int trainingCost = GameManager.getInstance().getTrainingCost();
+        if (Game.getVillage().getCoins() >= trainingCost) {
+            consoleCommands.put("10", MenuCommands.TRAINING);
+        } else {
+            consoleCommands.put("10", MenuCommands.OPTION_UNAVAILABLE);
+        }
     }
 
     @Override
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
+            case TRAINING:
+                break;
+            case MERCHANT:
+                break;
+            case OPTION_UNAVAILABLE:
+                ConsoleServices.println("That option is not currently available. Please choose a different option.");
+                printPrompt(PromptMessage.TURN_MENU, true);
+                break;
             case RAIDING:
                 GameUtils.getNewRaidCity();
                 printPrompt(PromptMessage.TURN_MENU, true);
@@ -54,6 +90,9 @@ public class TurnMenu extends AbstractConsole {
             case SKIP_TURN:
                 Game.advanceTurn();
                 new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
+                break;
+            case STATS:
+                new MidTurnMenu().printPrompt(PromptMessage.STAT_VIEW, true);
                 break;
             case RESOURCES:
                 new MidTurnMenu().printPrompt(PromptMessage.RESOURCE_VIEW, true);

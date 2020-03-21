@@ -1,12 +1,12 @@
 package main.actions.priority;
 
+
 import main.actions.AbstractGameAction;
 import main.models.Game;
 import main.models.managers.GameManager;
 import main.models.managers.OutputManager;
 import main.models.resources.AbstractResource;
 import main.models.resources.natural.Seeds;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 

@@ -24,8 +24,6 @@ import java.util.ArrayList;
 
 public class Game {
 
-    public static boolean isLoaded = false;
-
     // Nested Objects
     public  static ActionManager actionManager;
     private static Board gameBoard;
@@ -73,7 +71,6 @@ public class Game {
         getVillage().addResource(new Wood(), 100);
         updateDifficultyBools();
         gameManager.setNethermod(difficulty.getNethermod());
-        isLoaded = true;
     }
 
     // Custom Difficulty
@@ -109,7 +106,6 @@ public class Game {
         faithEnabled = !customDifficultyMods.contains(14);
         surroundingCheckEnabled = !customDifficultyMods.contains(15);
         gameManager.setNethermod(difficulty.getNethermod());
-        isLoaded = true;
     }
 
     public static ArrayList<GameObject> getModifierObjects() {
@@ -123,14 +119,7 @@ public class Game {
     }
 
     public static Boolean canRaid() {
-        for (AbstractNode node : gameBoard.getGrid()) {
-            if (node instanceof City && (GameManager.getInstance().getRaidingCity() != null && !node.equals(GameManager.getInstance().getRaidingCity()))) {
-                return true;
-            } else if (node instanceof City && GameManager.getInstance().getRaidingCity() == null) {
-                return true;
-            }
-        }
-        return false;
+        return GameManager.getInstance().getRaidable().size() > 0;
     }
 
     public static void handleEncounter(AbstractEncounter enc) {
@@ -187,6 +176,7 @@ public class Game {
         queueEvergreenActions(dateInc);
         // complicated actions logic
         runActions();
+        Game.getVillage().updateHP();
         PriorityManager.reset(difficulty.compareTo(Difficulty.HARD) > 0);
         for (GameObject obj : Game.getModifierObjects()) {
             obj.endPhase();

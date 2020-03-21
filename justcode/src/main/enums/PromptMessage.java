@@ -20,5 +20,10 @@ public enum PromptMessage {
     LOGIN,
     START_ERA,
     BUILDINGS,
-    ARCHIVE
+    ARCHIVE,
+    STAT_VIEW,
+    MERCHANT,
+    TRAINING,
+    SALE_MERCHANT,
+    DEV_CONSOLE
 }

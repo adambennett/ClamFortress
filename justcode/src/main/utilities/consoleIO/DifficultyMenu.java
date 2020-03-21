@@ -50,8 +50,9 @@ public class DifficultyMenu extends AbstractConsole {
                 break;
             case CUSTOM:
                 builder.setDifficulty(Difficulty.CUSTOM);
-                CustomDifficultyMenu cdm = new CustomDifficultyMenu();
-                cdm.printPromptCustomOptions();
+                //CustomDifficultyMenu cdm = new CustomDifficultyMenu();
+                //cdm.printPromptCustomOptions();
+                new CustomDifficultyMenu().printPrompt(PromptMessage.CUSTOM_DIFF_MENU, true);
                 break;
             case RANDOM:
                 builder.setDifficulty(Difficulty.RANDOM);

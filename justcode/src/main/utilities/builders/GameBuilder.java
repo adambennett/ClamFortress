@@ -3,9 +3,8 @@ package main.utilities.builders;
 import main.enums.*;
 import main.models.*;
 import main.models.nodes.biomes.*;
-import main.models.tech.*;
 import main.models.tech.eras.*;
-import main.utilities.*;
+import main.utilities.stringUtils.*;
 
 import java.util.*;
 
@@ -150,7 +149,7 @@ public class GameBuilder {
             Collections.sort(customMods);
             gameInfo += "\n";
             for (Integer i : customMods) { gameInfo += "    " + GameStrings.modifierMap.get(i) + "\n"; }
-            gameInfo = gameInfo.substring(0, gameInfo.length() - 2);
+            gameInfo = gameInfo.substring(0, gameInfo.length() - 1);
         }
         gameInfo += "\n";
         return gameInfo;

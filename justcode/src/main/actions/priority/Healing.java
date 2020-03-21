@@ -1,6 +1,7 @@
 package main.actions.priority;
 
 import main.actions.*;
+import main.enums.*;
 import main.models.*;
 import main.models.managers.*;
 import main.models.people.*;
@@ -40,16 +41,18 @@ public class Healing extends AbstractGameAction {
                     if (diff > 10) {
                         diff = ThreadLocalRandom.current().nextInt(10, diff);
                     }
-                    hurtGuy.setHealthPoints(diff);
+                    hurtGuy.setHealthPoints(hurtGuy.getHP() + diff);
                     OutputManager.addToBot("Healed " + hurtGuy.getName() + " by " + diff + "! [BANDAGE]");
                 } else {
                     int diff = hurtGuy.getMaxHp() - hurtGuy.getHP();
                     if (diff > 1) {
                         diff = ThreadLocalRandom.current().nextInt(1, diff);
                     }
-                    hurtGuy.setHealthPoints(diff);
+                    hurtGuy.setHealthPoints(hurtGuy.getHP() + diff);
                     OutputManager.addToBot("Healed " + hurtGuy.getName() + " by " + diff + "!");
                 }
+            } else {
+                OutputManager.addToBot(OutputFlag.NO_DAMAGE, "Nobody in your village is hurt!");
             }
         }
         this.isDone = true;

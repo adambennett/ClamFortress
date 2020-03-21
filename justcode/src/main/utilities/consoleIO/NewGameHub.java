@@ -62,7 +62,8 @@ public class NewGameHub extends AbstractConsole {
                 new RaceMenu().printPrompt(PromptMessage.RACE_MENU, true);
                 break;
             case DIFFICULTY_MODS:
-                new CustomDifficultyMenu().printPromptCustomOptions();
+                //new CustomDifficultyMenu().printPromptCustomOptions();
+                new CustomDifficultyMenu().printPrompt(PromptMessage.CUSTOM_DIFF_MENU, true);
                 break;
             case VIEW_SETTINGS:
                 ConsoleServices.println(builder.toString());

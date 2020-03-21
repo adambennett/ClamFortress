@@ -3,7 +3,7 @@ package main.models.nodes;
 import main.models.*;
 import main.models.people.*;
 import main.models.resources.*;
-import main.utilities.*;
+import main.utilities.stringUtils.*;
 
 import java.util.*;
 import java.util.concurrent.*;

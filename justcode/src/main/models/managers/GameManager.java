@@ -17,9 +17,14 @@ public class GameManager {
     private Integer nethermod;
     private BigInteger turnNumber;
     private Integer trainingCost;
+    private Integer defeatedCities;
+    private Integer villagersKilled;
+    private Integer enemiesKilled;
     private Date date;
     private String season;
     private City raidingCity;
+    private ArrayList<City> raidable;
+    public static Boolean gameIsLoaded;
     private static final GameManager instance;
     private static final String[] seasons = {
             "Winter", "Winter", "Spring", "Spring", "Summer", "Summer",
@@ -27,7 +32,7 @@ public class GameManager {
     };
 
     static {
-        try { instance = new GameManager(); }
+        try { instance = new GameManager(); gameIsLoaded = false; }
         catch (Exception e) { throw new RuntimeException("Error occured while initializing GameManager"); }
     }
 
@@ -39,6 +44,10 @@ public class GameManager {
         this.techUp = 1000;
         this.techMod = 2;
         this.nethermod = 1;
+        this.defeatedCities = 0;
+        this.villagersKilled = 0;
+        this.enemiesKilled = 0;
+        this.raidable = new ArrayList<>();
         updateSeason();
     }
 
@@ -47,6 +56,10 @@ public class GameManager {
         if (this.trainingCost < 0) {
             this.trainingCost = 0;
         }
+    }
+
+    public void setDefeatedCities(Integer defeatedCities) {
+        this.defeatedCities = defeatedCities;
     }
 
     public void setRaidingCity(City city) {
@@ -124,6 +137,11 @@ public class GameManager {
         instance.techUp = 500;
         instance.techMod = 2;
         instance.nethermod = 1;
+        instance.raidable = new ArrayList<>();
+        instance.defeatedCities = 0;
+        instance.villagersKilled = 0;
+        instance.enemiesKilled = 0;
+        gameIsLoaded = false;
     }
 
     private void updateSeason() {
@@ -177,6 +195,13 @@ public class GameManager {
         this.turnNumber = this.turnNumber.add(BigInteger.valueOf(amt));
     }
 
+    public Integer getDefeatedCities() {
+        return defeatedCities;
+    }
+
+    public ArrayList<City> getRaidable() {
+        return raidable;
+    }
 
     public BigInteger getTurnNumber() {
         return turnNumber;
@@ -194,5 +219,21 @@ public class GameManager {
 
     public Integer getTrainingCost() {
         return this.trainingCost;
+    }
+
+    public Integer getVillagersKilled() {
+        return villagersKilled;
+    }
+
+    public void setVillagersKilled(Integer villagersKilled) {
+        this.villagersKilled = villagersKilled;
+    }
+
+    public Integer getEnemiesKilled() {
+        return enemiesKilled;
+    }
+
+    public void setEnemiesKilled(Integer enemiesKilled) {
+        this.enemiesKilled = enemiesKilled;
     }
 }

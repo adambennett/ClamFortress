@@ -1,29 +1,21 @@
 package main.utilities.consoleIO;
 
 import main.enums.*;
+import main.interfaces.*;
 import main.utilities.*;
 
 import java.util.*;
 
-public class CustomDifficultyMenu extends AbstractConsole {
+public class CustomDifficultyMenu extends AbstractConsole implements DynamicConsole {
 
     // Unused for this menu
-    protected void initializeCommands() {}
-    public void processCommand(MenuCommands cmd, ArrayList<String> args) {}
-
-    public void printPromptCustomOptions() {
-        String promptString = GameStrings.getStringFromPromptType(PromptMessage.CUSTOM_DIFF_MENU);
-        ConsoleServices.println(promptString);
-        getUserInputForCustomOptions();
+    protected void initializeCommands() {
+        consoleCommands.put("0", MenuCommands.CONTINUE);
     }
-
-    protected void getUserInputForCustomOptions() {
-        String input = ConsoleServices.getStringInput("");
-        String[] splited = input.split("\\s+");
-        ArrayList<String> argus = new ArrayList<>();
-        Collections.addAll(argus, splited);
-        while (argus.size() < 1) { argus = generateUserInput(); }
-        findAndProcessCommandCustomOptions(argus);
+    public void processCommand(MenuCommands cmd, ArrayList<String> args) {
+        if (cmd == MenuCommands.CONTINUE) {
+            new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
+        }
     }
 
     public void findAndProcessCommandCustomOptions(ArrayList<String> args) {
@@ -34,5 +26,11 @@ public class CustomDifficultyMenu extends AbstractConsole {
         }
         builder.setCustomMods(ints);
         new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
+    }
+
+    @Override
+    public void runDynamo(String cmd, ArrayList<String> args) {
+        args.add(0, cmd);
+        findAndProcessCommandCustomOptions(args);
     }
 }

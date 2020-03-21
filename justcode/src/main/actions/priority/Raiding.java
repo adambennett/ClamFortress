@@ -15,8 +15,10 @@ public class Raiding extends AbstractGameAction {
 
     @Override
     public void update() {
-        Game.getVillage().takeDamage(city.dealDamage());
-        city.takeDamage(Game.getVillage().dealDamage());
+        if (this.city != null) {
+            Game.getVillage().takeDamage(city.dealDamage());
+            city.takeDamage(Game.getVillage().dealDamage());
+        }
         this.isDone = true;
     }
 

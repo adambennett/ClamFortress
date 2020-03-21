@@ -54,7 +54,6 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public Boolean canGatherFood() { return true; }
     public Boolean canHeal() { return true; }
     public Boolean canFight() { return true; }
-    public Boolean canOutputMessages() { return true; }
 
     // Multiply fish/hunt food gain
     public Integer multiplyFoodOnFishing() { return 1; }
@@ -80,10 +79,10 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public void onObtain() {}
     public void onEnemyDeath() {}
     public void onVillagerDeath() {}
+    public void onPurchaseItem(GameObject purchased, int pricePaid) {}
     public void onSpendPriorityPoints(int diff) {}
     public void onAddAnimalToBoard(AbstractAnimal animal) {}
     public void onGatherFood(AbstractGameAction gatheringType) {}
-    public Survivor onNewCitizen(Survivor newCitizen) { return newCitizen; }
     public void onLoseCitizen(Survivor newCitizen) {}
     public void onNewBuilding(AbstractBuilding b) {}
     public void onNewMiracle(AbstractMiracle m) {}
@@ -94,6 +93,7 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public void onDemolish() {}
     public void onHeal() {}
     public void onAdvanceEra(Era newEra) {}
+    public Survivor onNewCitizen(Survivor newCitizen) { return newCitizen; }
 
     @Override
     public boolean equals(Object o) {
@@ -122,8 +122,6 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
             return "Animal";
         } else if (this instanceof AbstractBuilding) {
             return "Building";
-        } else if (this instanceof AbstractMedicalItem) {
-            return "Healing Item";
         } else if (this instanceof AbstractTool) {
             return "Tool";
         } else if (this instanceof AbstractAmmo) {

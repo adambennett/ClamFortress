@@ -101,6 +101,8 @@ public class GameUtils {
             }
         } else if (obj instanceof AbstractResource) {
             Game.getVillage().addResource((AbstractResource) obj, amt);
+        } else if (obj instanceof Era) {
+            TechTree.moveToEra((Era) obj, true);
         }
     }
 

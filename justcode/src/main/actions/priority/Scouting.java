@@ -23,7 +23,7 @@ public class Scouting extends AbstractGameAction {
     public void update() {
         if (!Game.getGameBoard().isBoardFull()) {
             int roll = ThreadLocalRandom.current().nextInt(0, 100);
-            int merchantRoll = ThreadLocalRandom.current().nextInt(0, 100);
+
             if (Game.getVillage().getInventory().containsItem("telescope")) {
                 roll += 20;
             }
@@ -33,16 +33,23 @@ public class Scouting extends AbstractGameAction {
                 Game.getGameBoard().discover(region);
                 OutputManager.addToBot("Discovered a new " + region.toString() + " region!");
             }
-
-            merchantRoll = 1;
-            if (merchantRoll == 1) {
-                Merchant traveler = new Merchant();
-                Game.getVillage().addMerchant(traveler);
-                OutputManager.addToBot("During your exploring, you came upon a traveling merchant by the name of " + traveler.getName() + ".");
-            }
         } else {
             OutputManager.addToBot(OutputFlag.FULL_BOARD, "The board is full! You cannot discover any additional spaces!");
-            this.setAmtRemaining(this.amountToRun);
+        }
+
+        int merchantRoll = ThreadLocalRandom.current().nextInt(0, 100);
+        if (Game.getVillage().getInventory().containsItem("shop token")) {
+            merchantRoll += 20;
+        }
+
+        if (Game.getGameBoard().isBoardFull()) {
+            merchantRoll += 10;
+        }
+
+        if (merchantRoll > 98) {
+            Merchant traveler = MerchantManager.getRandomMerchant();
+            Game.getVillage().addMerchant(traveler);
+            OutputManager.addToBot("During your exploring, you came upon a " + traveler.getMerchantType() + " by the name of " + traveler.getName() + ".");
         }
         this.isDone = true;
     }

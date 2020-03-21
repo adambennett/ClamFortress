@@ -32,14 +32,14 @@ public class MerchantMenu extends AbstractConsole implements DynamicConsole {
         if (args.size() > 0) {
             if (Game.getVillage().getVistingMerchants().size() > 0) {
                 Merchant m = Game.getVillage().getVistingMerchants().get(0);
-                String key = StringHelpers.capFirstLetter(args.get(0).toLowerCase());
+                String key = args.get(0).toLowerCase();
                 boolean bought = false;
                 if (m.getWares().containsKey(key)) {
                   bought = true;
                 } else {
                     String fullCmd = "";
                     for (String s : args) {
-                        fullCmd += StringHelpers.capFirstLetter(s.toLowerCase()) + " ";
+                        fullCmd += s.toLowerCase() + " ";
                     }
                     fullCmd = fullCmd.trim();
                     if (m.getWares().containsKey(fullCmd)) {
@@ -51,8 +51,10 @@ public class MerchantMenu extends AbstractConsole implements DynamicConsole {
                     if (Game.getVillage().getCoins() >= m.getWares().get(key)) {
                         GameObject obj = Archive.getInstance().getGameObj(key);
                         GameUtils.obtainGameObject(obj, 1);
-                        Game.getVillage().subCoins(m.getWares().get(key));
-                        m.purchase(key);
+                        int amtPaid = m.getWares().get(key);
+                        Game.getVillage().subCoins(amtPaid);
+                        m.purchase(key, amtPaid);
+                        StringHelpers.reloadStrings();
                         printPrompt(PromptMessage.MERCHANT, true);
                     } else {
                         printPrompt(PromptMessage.MERCHANT, false);

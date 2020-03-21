@@ -31,7 +31,6 @@ public class StringHelpers {
         GameStrings.loadBuildings();
         GameStrings.loadResources();
         GameStrings.loadMerchant();
-        GameStrings.loadTraining();
         GameStrings.loadSaleMerchant();
     }
 
@@ -95,8 +94,7 @@ public class StringHelpers {
                 GameStrings.loadMerchant();
                 return GameStrings.merchant;
             case TRAINING:
-                GameStrings.loadTraining();
-                return GameStrings.training;
+                return GameStrings.train;
             case SALE_MERCHANT:
                 GameStrings.loadSaleMerchant();
                 return GameStrings.saleMerchant;

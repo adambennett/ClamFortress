@@ -76,7 +76,7 @@ public class StringHelpersTest {
         String expectedBuild = GameStrings.build;
         String expectedResources = GameStrings.resources;
         String expectedMerchant = GameStrings.merchant;
-        String expectedTraining = GameStrings.training;
+        String expectedTraining = GameStrings.train;
         String expectedSaleMerchant = GameStrings.saleMerchant;
         String actualArchive = StringHelpers.getStringFromPromptType(PromptMessage.ARCHIVE);
         String actualBiome = StringHelpers.getStringFromPromptType(PromptMessage.BIOME_MENU);

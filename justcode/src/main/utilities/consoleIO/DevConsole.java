@@ -83,17 +83,17 @@ public class DevConsole extends AbstractConsole implements DynamicConsole {
                 printPrompt(PromptMessage.DEV_CONSOLE, false);
                 printPrompt("DevConsole :: OBTAINING ALL GameObjects", true);
             } else {
-                if (Archive.getInstance().isItem(cmd) && Archive.getInstance().get(cmd) != null) {
-                    GameObject obj = Archive.getInstance().get(cmd);
-                    GameUtils.devConsoleObtainObject(obj, amt, this.returnTo, true);
-                    printPrompt(PromptMessage.DEV_CONSOLE, false);
-                    printPrompt("GameObject OBTAINED from Archive: " + cmd + " (x" + amt + ")", true);
-                } else if (Archive.getInstance().isItem(fullName) && Archive.getInstance().get(fullName) != null) {
+                if (Archive.getInstance().isItem(fullName) && Archive.getInstance().get(fullName) != null) {
                     GameObject obj = Archive.getInstance().get(fullName);
                     GameUtils.devConsoleObtainObject(obj, amt, this.returnTo, true);
                     printPrompt(PromptMessage.DEV_CONSOLE, false);
                     printPrompt("GameObject OBTAINED from Archive: " + fullName + " (x" + amt + ")", true);
 
+                } else if (Archive.getInstance().isItem(cmd) && Archive.getInstance().get(cmd) != null) {
+                    GameObject obj = Archive.getInstance().get(cmd);
+                    GameUtils.devConsoleObtainObject(obj, amt, this.returnTo, true);
+                    printPrompt(PromptMessage.DEV_CONSOLE, false);
+                    printPrompt("GameObject OBTAINED from Archive: " + cmd + " (x" + amt + ")", true);
                 } else {
                     printPrompt(PromptMessage.DEV_CONSOLE, false);
                     printPrompt("GameObject NOT FOUND in Archive: " + fullName, true);

@@ -1,6 +1,11 @@
 package main.enums;
 
 public enum MenuCommands {
+    AGILITY,
+    STRENGTH,
+    DEXTERITY,
+    INTELLIGENCE,
+    MAXHP,
     SELL,
     OPTION_UNAVAILABLE,
     ALIEN,

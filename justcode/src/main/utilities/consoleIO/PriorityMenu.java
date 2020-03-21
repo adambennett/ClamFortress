@@ -194,7 +194,7 @@ public class PriorityMenu extends AbstractConsole {
                 actionManager.addToBottom(new Planting(amt));
                 break;
             case SMELTING:
-                PriorityManager.setSmith(PriorityManager.getSmith() + amt);
+                PriorityManager.setSmelt(PriorityManager.getSmelt() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 actionManager.addToBottom(new Smelting(amt));
                 break;

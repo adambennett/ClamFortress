@@ -774,5 +774,29 @@ public class Village extends AbstractNode {
     }
     public void setyPos(int y) { this.yPos = y; }
     public void setxPos(int x) { this.xPos = x; }
+
+    public void setAgility(Integer agility) {
+        this.agility = agility;
+    }
+
+    public void setStrength(Integer strength) {
+        this.strength = strength;
+    }
+
+    public void setIntelligence(Integer intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    public void setDexterity(Integer dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public void setEngineering(Integer engineering) {
+        this.engineering = engineering;
+    }
+
+    public void setMaxHP(Integer maxHP) {
+        this.maxHP = maxHP;
+    }
     // END GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////
 }

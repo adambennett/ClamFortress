@@ -19,7 +19,9 @@ public class RockPicking extends AbstractGameAction {
         int rockToReturn = 0;
         Integer rocksOnBoard = Game.getGameBoard().getResource("rock");
         if (rocksOnBoard != null && rocksOnBoard > 0) {
-            rockToReturn = ThreadLocalRandom.current().nextInt(0, (int) (rocksOnBoard / 3.0));
+            int high = (int) (rocksOnBoard / 3.0);
+            if (high < 1) { high = 1; }
+            rockToReturn = ThreadLocalRandom.current().nextInt(0, high);
             Integer amt = Game.getGameBoard().removeResource("rock", rockToReturn);
             if (amt > 0 && Game.getVillage().addResource(new Rock(), amt)) {
                 OutputManager.addToBot("Picked " + rockToReturn + " rocks!");

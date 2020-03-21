@@ -31,7 +31,6 @@ public class GameStrings {
     public static String archive;
     public static String resources;
     public static String merchant;
-    public static String training;
     public static String saleMerchant;
 
     public static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
@@ -96,6 +95,20 @@ public class GameStrings {
                     "***--------------------------------------------***\n" +
                     "***           0 | Back to New Game Menu        ***\n" +
                     "***           9 | Start Game                   ***\n" +
+                    "**************************************************\n";
+
+    public static final String train =
+                    "**************************************************\n" +
+                    "***           Villager Training                ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           1 | Agility                      ***\n" +
+                    "***           2 | Strength                     ***\n" +
+                    "***           3 | Dexterity                    ***\n" +
+                    "***           4 | Intelligence                 ***\n" +
+                    "***           5 | Engineering                  ***\n" +
+                    "***           6 | Max HP                       ***\n" +
+                    "***--------------------------------------------***\n" +
+                    "***           0 | Return to Standby Phase      ***\n" +
                     "**************************************************\n";
 
     public static final String pop =
@@ -285,7 +298,7 @@ public class GameStrings {
         } else {
             a.put("7", "----------");
         }
-        if (Game.getVillage().getVistingMerchants().size() > 0) {
+        if (Game.getVillage().getVistingMerchants().size() > 0  && Game.getVillage().getVistingMerchants().get(0).getWares().size() > 0) {
             a.put("8", "Merchants");
         } else {
             a.put("8", "---------");
@@ -753,7 +766,13 @@ public class GameStrings {
                 tempCols.add(cost);
                 tempCols.add(type);
                 tempCols.add(desc);
-                a.put(o.getKey(), tempCols);
+                String[] spliceName = o.getKey().split(" ");
+                String name = "";
+                for (String s : spliceName) {
+                    name += StringHelpers.capFirstLetter(s.toLowerCase()) + " ";
+                }
+                name = name.trim();
+                a.put(name, tempCols);
             }
         }
         if (a.size() < 1) {
@@ -770,8 +789,10 @@ public class GameStrings {
         String headerFormat = "| %-201s |\n";
         String breakLine = "+---------------------------+-----------------------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------+\n";
         String header = "Merchant";
+        Village v = Game.getVillage();
         if (Game.getVillage().getVistingMerchants().size() > 0) {
-            header = Game.getVillage().getVistingMerchants().get(0).getName() + "'s Shop";
+            Merchant active = v.getVistingMerchants().get(0);
+            header = active.getName() + "'s Shop";
         }
         LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
@@ -895,67 +916,6 @@ public class GameStrings {
         list.add(getSaleMerchant());
         list.add(bottom);
         saleMerchant = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
-    }
-    
-    public static LinkedHashMap<String, ArrayList<String>> getTraining() {
-        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
-        Village v = Game.getVillage();
-        for (Survivor s : v.getSurvivors()) {
-            ArrayList<String> tempCols = new ArrayList<>();
-            tempCols.add("" + s.getAge());
-            tempCols.add("" + s.getHP() + " / " + s.getMaxHp());
-            tempCols.add("" + s.getStrength());
-            tempCols.add("" + s.getDexterity());
-            tempCols.add("" + s.getIntelligence());
-            tempCols.add("" + s.getAgility());
-            tempCols.add("" + s.getMagic());
-            tempCols.add("" + s.getEngineering());
-            tempCols.add(StringHelpers.capFirstLetter(s.getRace().toString().toLowerCase()));
-            tempCols.add(StringHelpers.capFirstLetter(s.getGender().toString().toLowerCase()));
-            a.put(s.getName(), tempCols);
-        }
-        if (a.size() < 1) {
-            ArrayList<String> tempCols = new ArrayList<>();
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            a.put(" ", tempCols);
-        }
-        return a;
-    }
-    public static void loadTraining() {
-        String leftAlignFormat = "| %-52s | %-8s | %-18s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
-        String headerFormat = "| %-142s |\n";
-        String breakLine = "+------------------------------------------------------+--------------------+----------+------+------+------+------+------+------+------------+------------+\n";
-        String header = "Population";
-        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
-        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
-        ArrayList<String> topCols = new ArrayList<>();
-        ArrayList<String> botCols = new ArrayList<>();
-        topCols.add("AGE"); botCols.add("Return");
-        topCols.add("HP"); botCols.add("");
-        topCols.add("STR"); botCols.add("");
-        topCols.add("DEX"); botCols.add("");
-        topCols.add("INT"); botCols.add("");
-        topCols.add("AGI"); botCols.add("");
-        topCols.add("MAG"); botCols.add("");
-        topCols.add("ENG"); botCols.add("");
-        topCols.add("RACE"); botCols.add("");
-        topCols.add("GENDER"); botCols.add("");
-        top.put("NAME", topCols);
-        bottom.put("0", botCols);
-        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
-        list.add(top);
-        list.add(getTraining());
-        list.add(bottom);
-        training = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static String getRandomName(boolean includePokemon) {

@@ -59,7 +59,7 @@ public class TurnMenu extends AbstractConsole {
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
             case TRAINING:
-                printPrompt(PromptMessage.TURN_MENU, true);
+                new TrainingMenu().printPrompt(PromptMessage.TRAINING, true);
                 break;
             case MERCHANT:
                 new MerchantMenu().printPrompt(PromptMessage.MERCHANT, true);

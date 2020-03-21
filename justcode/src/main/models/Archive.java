@@ -22,6 +22,7 @@ import main.models.items.medical.*;
 import main.models.items.military.ammo.*;
 import main.models.items.military.armor.*;
 import main.models.items.military.plating.*;
+import main.models.items.military.weapons.*;
 import main.models.items.military.weapons.future.*;
 import main.models.items.military.weapons.guns.*;
 import main.models.items.military.weapons.medieval.*;
@@ -311,6 +312,16 @@ public class Archive {
         for (GameObject o : archive) {
             if (o instanceof AbstractArtifact) {
                 objects.add((AbstractArtifact) o.clone());
+            }
+        }
+        return objects;
+    }
+
+    public ArrayList<AbstractWeapon> weapons() {
+        ArrayList<AbstractWeapon> objects = new ArrayList<>();
+        for (GameObject o : archive) {
+            if (o instanceof AbstractWeapon) {
+                objects.add((AbstractWeapon) o.clone());
             }
         }
         return objects;

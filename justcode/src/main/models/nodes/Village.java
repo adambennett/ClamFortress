@@ -162,23 +162,25 @@ public class Village extends AbstractNode {
     }
 
     private void takeDamage(Survivor villager, int amt) {
-        villager.setHealthPoints(villager.getHP() - amt);
-        if (villager.getHP() < 1) {
-            removeSurvivor(villager);
-            villager.die();
-            for (GameObject obj : Game.getModifierObjects()) {
-                obj.onVillagerDeath();
+        if (amt > 0) {
+            villager.setHealthPoints(villager.getHP() - amt);
+            if (villager.getHP() < 1) {
+                removeSurvivor(villager);
+                villager.die();
+                for (GameObject obj : Game.getModifierObjects()) {
+                    obj.onVillagerDeath();
+                }
+                GameManager.getInstance().setVillagersKilled(GameManager.getInstance().getVillagersKilled() + 1);
+                if (GameManager.getInstance().getRaidingCity() != null) {
+                    OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
+                }
+            } else {
+                if (GameManager.getInstance().getRaidingCity() != null) {
+                    OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName());
+                }
             }
-            GameManager.getInstance().setVillagersKilled(GameManager.getInstance().getVillagersKilled() + 1);
-            if (GameManager.getInstance().getRaidingCity() != null) {
-                OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
-            }
-        } else {
-            if (GameManager.getInstance().getRaidingCity() != null) {
-                OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName());
-            }
+            updateHP();
         }
-        updateHP();
     }
     // END COMBAT ////////////////////////////////////////////////////////////////////////////////////////////////
 

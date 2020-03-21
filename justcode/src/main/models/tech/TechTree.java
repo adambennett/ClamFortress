@@ -90,6 +90,24 @@ public class TechTree extends GameObject {
         currentEra = node;
     }
 
+    public static Era getEraFromString(String name) {
+        if (head != null) {
+            if (head.getName().equals(name.toLowerCase())) {
+                return head;
+            }
+            else {
+                Era curr = head;
+                while (curr.hasNext()) {
+                    if (curr.getNext().getName().equals(name.toLowerCase())) {
+                        return curr.getNext();
+                    }
+                    curr = curr.getNext();
+                }
+            }
+        }
+        return null;
+    }
+
     public static void incEra() {
         incEra(1);
     }

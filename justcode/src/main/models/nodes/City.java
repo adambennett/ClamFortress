@@ -69,17 +69,20 @@ public class City extends AbstractNode {
 
     private void takeDamage(Survivor villager, int amt) {
         amt -= this.cityDefense;
-        villager.setHealthPoints(villager.getHP() - amt);
-        if (villager.getHP() < 1) {
-            removeSurvivor(villager);
-            GameManager.getInstance().setEnemiesKilled(GameManager.getInstance().getEnemiesKilled() + 1);
-            for (GameObject obj : Game.getModifierObjects()) {
-                obj.onEnemyDeath();
+        if (amt > 0) {
+            villager.setHealthPoints(villager.getHP() - amt);
+            this.setHp(this.hp - amt);
+            if (villager.getHP() < 1) {
+                removeSurvivor(villager);
+                GameManager.getInstance().setEnemiesKilled(GameManager.getInstance().getEnemiesKilled() + 1);
+                for (GameObject obj : Game.getModifierObjects()) {
+                    obj.onEnemyDeath();
+                }
+                OutputManager.addToBot("Enemy " + villager.getName() + " has been killed in a raid!" + "\nEnemy City HP: " + this.getHp() + " / " + this.getMaxHP());
             }
-            OutputManager.addToBot("Enemy " + villager.getName() + " has been killed in a raid!" + "\nEnemy City HP: " + this.getHp() + " / " + this.getMaxHP());
-        }
-        if (this.cityResidence.size() < 1 || this.hp < 1) {
-            defeat();
+            if (this.cityResidence.size() < 1 || this.hp < 1) {
+                defeat();
+            }
         }
     }
 
@@ -93,7 +96,6 @@ public class City extends AbstractNode {
 
     public void updateAfterRemoving(Survivor s) {
         this.maxHP -= s.getMaxHp();
-        this.hp -= s.getHP();
     }
 
     protected void defeat() {
@@ -138,6 +140,12 @@ public class City extends AbstractNode {
 
     public void setHp(Integer hp) {
         this.hp = hp;
+        if (this.hp < 0) {
+            this.hp = 0;
+        }
+        if (this.hp > this.maxHP) {
+            this.hp = this.maxHP;
+        }
     }
 
     public Integer getMaxHP() {

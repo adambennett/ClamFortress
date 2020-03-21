@@ -2,6 +2,8 @@ package main.models.items.military.weapons.guns;
 
 import main.interfaces.*;
 import main.models.items.military.weapons.*;
+import main.models.tech.*;
+import main.models.tech.eras.*;
 
 import java.util.concurrent.*;
 
@@ -11,6 +13,15 @@ public abstract class AbstractGun extends AbstractWeapon implements Projectile {
     private final Integer damage;
     private Integer shots;
     private Integer accuracy;
+
+    @Override
+    public Boolean canObtain() {
+        Era check = TechTree.getEraFromString("Information Age");
+        if (check != null) {
+            return TechTree.getCurrentEra().atLeast(check);
+        }
+        return false;
+    }
 
     public AbstractGun(String name, String desc, int ammoCount, int dmg, int accuracy) {
         super(name, desc);

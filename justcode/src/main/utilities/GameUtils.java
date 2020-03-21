@@ -173,6 +173,8 @@ public class GameUtils {
                 Game.getVillage().setResourceLimit(Game.getVillage().getAllResources().size() + amt);
             }
             Game.getVillage().addResource((AbstractResource) obj, amt);
+        } else if (obj instanceof Era) {
+            TechTree.moveToEra((Era)obj, true);
         }
     }
 }

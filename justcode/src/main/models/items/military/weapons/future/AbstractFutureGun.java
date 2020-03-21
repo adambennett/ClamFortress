@@ -2,6 +2,8 @@ package main.models.items.military.weapons.future;
 
 import main.interfaces.*;
 import main.models.items.military.weapons.*;
+import main.models.tech.*;
+import main.models.tech.eras.*;
 
 import java.util.concurrent.*;
 
@@ -23,6 +25,15 @@ public abstract class AbstractFutureGun extends AbstractWeapon implements Projec
         this.damage = dmg;
         this.plasmaDamage = ThreadLocalRandom.current().nextInt(1, dmg);
         this.accuracy = accuracy;
+    }
+
+    @Override
+    public Boolean canObtain() {
+        Era check = TechTree.getEraFromString("Future");
+        if (check != null) {
+            return TechTree.getCurrentEra().atLeast(check);
+        }
+        return false;
     }
 
     @Override

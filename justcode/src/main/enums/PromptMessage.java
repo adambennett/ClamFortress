@@ -25,5 +25,5 @@ public enum PromptMessage {
     MERCHANT,
     TRAINING,
     SALE_MERCHANT,
-    DEV_CONSOLE
+    DEV_CONSOLE;
 }

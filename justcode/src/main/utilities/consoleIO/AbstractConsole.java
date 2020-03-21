@@ -122,6 +122,13 @@ public abstract class AbstractConsole {
         printPrompt(message, promptForInput, false);
     }
 
+    public void printPrompt(boolean promptForInput, String actualMsg) {
+        ConsoleServices.println(actualMsg);
+        if (promptForInput) {
+            getUserInput(false);
+        }
+    }
+
     public void printPrompt(PromptMessage message, boolean promptForInput, boolean multiline) {
         String promptString = StringHelpers.getStringFromPromptType(message);
         ConsoleServices.println(promptString);

@@ -1,6 +1,7 @@
 package main.models.buildings.concrete.foodbuilding;
 
 import main.models.buildings.abstracts.AbstractFoodBuilding;
+import main.models.managers.GameManager;
 import main.models.resources.natural.Seeds;
 import main.models.resources.natural.Wood;
 
@@ -11,9 +12,12 @@ public class Farmland extends AbstractFoodBuilding {
     private Integer plantDate;
     private Boolean hasCrops;
     private Integer harvestDate;
+    private Boolean readyToHarvest;
 //List added to when you use farm for the first time
     private LinkedList<Seeds> notReadyToHarvestSeeds = new LinkedList<>();
-
+//*So really we dont need both of these right now but im going to leave it for the time being
+// reason being we might make the seeds be actual objects for the different seed types
+// and they could have different growing speeds*//
 //Added to this list after some amount of in game time (maybe 3 turns?)
     private LinkedList<Seeds> readyToHarvestSeeds = new LinkedList<>();
 
@@ -21,7 +25,9 @@ public class Farmland extends AbstractFoodBuilding {
         super("Farmland", "A good place to Plant Seeds", 100, new Wood());
         this.plantDate=0;
         this.hasCrops = false;
-        this.harvestDate=0;
+        //set this way so the harvest date and and plantdate arent the same on initialization it was making weird tests pass.
+        this.harvestDate=-1;
+        this.readyToHarvest=false;
     }
 
     @Override
@@ -30,7 +36,12 @@ public class Farmland extends AbstractFoodBuilding {
     }
 
     @Override
-    public void endPhase() {harvestDate++;}
+    public void endPhase() {
+        harvestDate++;
+        if(GameManager.getInstance().getTurnNumber().intValue() == plantDate +3){
+            readyToHarvest=true;
+        }
+    }
 
     public LinkedList<Seeds> getNotReadyToHarvestSeeds() {
         return notReadyToHarvestSeeds;
@@ -70,5 +81,9 @@ public class Farmland extends AbstractFoodBuilding {
 
     public void setHarvestDate(Integer harvestDate) {
         this.harvestDate = harvestDate;
+    }
+
+    public Boolean getReadyToHarvest(){
+        return this.readyToHarvest;
     }
 }

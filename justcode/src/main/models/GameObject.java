@@ -9,9 +9,15 @@ import main.models.animals.*;
 import main.models.buildings.abstracts.*;
 import main.models.items.*;
 import main.models.items.artifacts.*;
+import main.models.items.medical.*;
 import main.models.items.military.*;
+import main.models.items.military.ammo.*;
 import main.models.items.military.armor.*;
+import main.models.items.military.plating.*;
 import main.models.items.military.weapons.*;
+import main.models.items.military.weapons.guns.*;
+import main.models.items.military.weapons.medieval.*;
+import main.models.items.tools.*;
 import main.models.nodes.*;
 import main.models.people.*;
 import main.models.resources.*;
@@ -118,6 +124,20 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
             return "Animal";
         } else if (this instanceof AbstractBuilding) {
             return "Building";
+        } else if (this instanceof AbstractMedicalItem) {
+            return "Healing Item";
+        } else if (this instanceof AbstractTool) {
+            return "Tool";
+        } else if (this instanceof AbstractAmmo) {
+            return "Ammo";
+        } else if (this instanceof AbstractMedievalWeapon) {
+            return "Medieval Weapon";
+        } else if (this instanceof AbstractGun) {
+            return "Gun";
+        } else if (this instanceof AbstractWeapon) {
+            return "Weapon";
+        } else if (this instanceof AbstractArmor || this instanceof AbstractPlating) {
+            return "Armor";
         } else if (this instanceof AbstractArtifact) {
             return "Artifact";
         } else if (this instanceof AbstractItem) {

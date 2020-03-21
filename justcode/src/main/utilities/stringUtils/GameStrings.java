@@ -32,7 +32,6 @@ public class GameStrings {
     public static String merchant;
     public static String training;
     public static String saleMerchant;
-    public static String devConsole;
 
     public static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
 
@@ -256,34 +255,22 @@ public class GameStrings {
         a.put("4", "Resources");
         if (Game.getVillage().getInventory().getItems().size() > 0) {
             a.put("5", "Inventory");
-        } else {
-            a.put("5", "[No Items]");
         }
         if (Game.getVillage().getBuildings().size() > 0) {
             a.put("6", "Buildings");
-        } else {
-            a.put("6", "[No Buildings]");
         }
         if (Game.getVillage().getPopulation() > 0) {
             a.put("7", "Population");
-        } else {
-            a.put("7", "[No Villagers]");
         }
         if (Game.getVillage().getVistingMerchants().size() > 0) {
             a.put("8", "Merchants");
-        } else {
-            a.put("8", "[No Merchants Available]");
         }
         if (Game.canRaid()) {
             a.put("9", "Raid a New City");
-        } else {
-            a.put("9", "[No Raids Available]");
         }
         int trainingCost = GameManager.getInstance().getTrainingCost();
         if (Game.getVillage().getCoins() >= trainingCost) {
             a.put("10", "Train (" +  trainingCost + " Coins)");
-        } else {
-            a.put("10", "[Not Enough Coins]");
         }
         return a;
     }
@@ -718,24 +705,16 @@ public class GameStrings {
         return a;
     }
     public static void loadMerchant() {
-        String leftAlignFormat = "| %-52s | %-8s | %-18s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
+        String leftAlignFormat = "| %-52s | %-8s |\n";
         String headerFormat = "| %-142s |\n";
-        String breakLine = "+------------------------------------------------------+--------------------+----------+------+------+------+------+------+------+------------+------------+\n";
+        String breakLine = "+-++\n";
         String header = "Population";
         LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
         ArrayList<String> topCols = new ArrayList<>();
         ArrayList<String> botCols = new ArrayList<>();
-        topCols.add("AGE"); botCols.add("Return");
-        topCols.add("HP"); botCols.add("");
-        topCols.add("STR"); botCols.add("");
-        topCols.add("DEX"); botCols.add("");
-        topCols.add("INT"); botCols.add("");
-        topCols.add("AGI"); botCols.add("");
-        topCols.add("MAG"); botCols.add("");
-        topCols.add("ENG"); botCols.add("");
-        topCols.add("RACE"); botCols.add("");
-        topCols.add("GENDER"); botCols.add("");
+        topCols.add("COST (COINS)"); botCols.add("Return");
+        topCols.add("TYPE"); botCols.add("Sell");
         top.put("NAME", topCols);
         bottom.put("0", botCols);
         ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();

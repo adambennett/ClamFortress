@@ -1,6 +1,7 @@
 package main.actions.priority;
 
-import main.actions.*;
+import main.actions.AbstractGameAction;
+import main.models.Game;
 
 public class Harvesting extends AbstractGameAction {
 
@@ -10,6 +11,10 @@ public class Harvesting extends AbstractGameAction {
 
     @Override
     public void update() {
+        if(thereAreCropsToHarvest()){
+
+        }
+
         this.isDone = true;
 
     }
@@ -20,4 +25,7 @@ public class Harvesting extends AbstractGameAction {
     }
 
 
+    public Boolean thereAreCropsToHarvest(){
+        return Game.getVillage().getFarmland().getHasCrops();
+    }
 }

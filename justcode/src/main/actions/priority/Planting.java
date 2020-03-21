@@ -25,7 +25,7 @@ LinkedList<Seeds> seeds = new LinkedList<>();
             Game.getVillage().getFarmland().setPlantDate(GameManager.getInstance().getTurnNumber().intValue());
             //currently takes all of your seeds//
             Game.getVillage().getFarmland().setNotReadyToHarvestSeeds(seeds);
-            OutputManager.addToBot("You planted " + seeds.size() + " this month! They will be ready to harvest in 3 months");
+            OutputManager.addToBot("You planted " + seeds.size() + "seeds this month! They will be ready to harvest in 3 months");
         }else if(!hasCrops() && !hasSeeds()){
             OutputManager.addToBot("No seeds to plant! Try trading or foraging.");
         } else if (hasCrops()){

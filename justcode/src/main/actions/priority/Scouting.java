@@ -5,6 +5,7 @@ import main.enums.*;
 import main.models.*;
 import main.models.nodes.*;
 import main.models.managers.*;
+import main.models.resources.natural.*;
 
 public class Scouting extends AbstractGameAction {
 

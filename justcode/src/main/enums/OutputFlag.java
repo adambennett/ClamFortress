@@ -9,5 +9,7 @@ public enum OutputFlag {
     FULL_BOARD,
     NO_WOOD,
     NO_ROCKS,
+    NO_DAMAGE,
+    NO_RAIDS,
     INVENTORY_FULL;
 }

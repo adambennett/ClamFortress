@@ -6,11 +6,9 @@ import main.models.items.*;
 import main.models.items.artifacts.AbstractArtifact;
 import main.models.items.tools.*;
 import main.models.managers.*;
-import main.models.people.*;
 import main.utilities.*;
 
 import java.util.*;
-import java.util.concurrent.*;
 
 public class Inventory extends GameObject {
 
@@ -29,15 +27,15 @@ public class Inventory extends GameObject {
                 if (item.canObtain()) {
                     items.add(item);
                     item.onObtain();
-                    GameUtils.obtainAnyItem(item);
+                    GameUtils.whenObtainingAnyItem(item);
                     if (item instanceof Golden) {
                         Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) item).getGoldAmt());
-                        OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden item!");
+                        OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden item! (" + item.getName() + ")");
                     }
 
                     if (item instanceof Cursed) {
                         ((Cursed) item).runCurse();
-                        OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item!");
+                        OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item! (" + item.getName() + ")");
                     }
                     return true;
                 }

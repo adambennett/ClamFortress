@@ -1,6 +1,7 @@
 package main.enums;
 
 public enum MenuCommands {
+    OPTION_UNAVAILABLE,
     ALIEN,
     BIOME,
     BRUTAL,
@@ -76,5 +77,7 @@ public enum MenuCommands {
     INDUSTRIAL,
     INFORMATION,
     FUTURE,
-    STARTING_ERA
+    STARTING_ERA,
+    MERCHANT,
+    TRAINING
 }

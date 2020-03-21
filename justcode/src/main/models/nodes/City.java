@@ -1,13 +1,12 @@
 package main.models.nodes;
 
 import main.models.*;
-import main.models.items.*;
-import main.models.items.military.weapons.*;
 import main.models.managers.*;
 import main.models.nodes.biomes.*;
 import main.models.people.Survivor;
 import main.models.resources.*;
 import main.utilities.*;
+import main.utilities.stringUtils.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -73,7 +72,11 @@ public class City extends AbstractNode {
         villager.setHealthPoints(villager.getHP() - amt);
         if (villager.getHP() < 1) {
             removeSurvivor(villager);
-            OutputManager.addToBot("Enemy " + villager.getName() + " has been killed in a raid!" + "\nEnemy City HP: " + GameManager.getInstance().getRaidingCity().getHp() + " / " + GameManager.getInstance().getRaidingCity().getMaxHP());
+            GameManager.getInstance().setEnemiesKilled(GameManager.getInstance().getEnemiesKilled() + 1);
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onEnemyDeath();
+            }
+            OutputManager.addToBot("Enemy " + villager.getName() + " has been killed in a raid!" + "\nEnemy City HP: " + this.getHp() + " / " + this.getMaxHP());
         }
         if (this.cityResidence.size() < 1 || this.hp < 1) {
             defeat();
@@ -111,23 +114,9 @@ public class City extends AbstractNode {
         if (this.animals.size() > 0) {
             Game.getGameBoard().addAnimals(this.animals);
         }
-
-        if (this.equals(GameManager.getInstance().getRaidingCity())) {
-            ArrayList<City> cities = Game.getGameBoard().getAllCities();
-            ArrayList<City> otherCities = new ArrayList<>();
-            if (cities.size() > 1) {
-                for (City c : cities) {
-                    if (!c.equals(this)) {
-                        otherCities.add(c);
-                    }
-                }
-            }
-            if (otherCities.size() > 0) {
-                GameManager.getInstance().setRaidingCity(otherCities.get(ThreadLocalRandom.current().nextInt(otherCities.size())));
-            } else {
-                GameManager.getInstance().setRaidingCity(null);
-            }
-        }
+        GameManager.getInstance().getRaidable().remove(this);
+        GameManager.getInstance().setDefeatedCities(GameManager.getInstance().getDefeatedCities() + 1);
+        GameManager.getInstance().setRaidingCity(null);
     }
 
     public Boolean getDefeated() {

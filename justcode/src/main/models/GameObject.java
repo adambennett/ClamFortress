@@ -75,6 +75,8 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
 
     // On specific triggers, run behavior
     public void onObtain() {}
+    public void onEnemyDeath() {}
+    public void onVillagerDeath() {}
     public void onSpendPriorityPoints(int diff) {}
     public void onAddAnimalToBoard(AbstractAnimal animal) {}
     public void onGatherFood(AbstractGameAction gatheringType) {}

@@ -159,6 +159,11 @@ public class Village extends AbstractNode {
         villager.setHealthPoints(villager.getHP() - amt);
         if (villager.getHP() < 1) {
             removeSurvivor(villager);
+            villager.die();
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onVillagerDeath();
+            }
+            GameManager.getInstance().setVillagersKilled(GameManager.getInstance().getVillagersKilled() + 1);
             OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
         } else {
             OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName());
@@ -356,7 +361,7 @@ public class Village extends AbstractNode {
                         this.resources.put(entry.getKey(), entry.getValue());
                     }
                     entry.getKey().onObtain();
-                    GameUtils.obtainAnyItem(entry.getKey());
+                    GameUtils.whenObtainingAnyItem(entry.getKey());
                 }
             }
             return true;
@@ -379,7 +384,7 @@ public class Village extends AbstractNode {
                 this.resources.put(resource, amt);
             }
             resource.onObtain();
-            GameUtils.obtainAnyItem(resource);
+            GameUtils.whenObtainingAnyItem(resource);
             if (resource instanceof Golden) {
                 Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) resource).getGoldAmt());
                 OutputManager.addToBot("Received " + ((Golden) resource).getGoldAmt() + " Coins upon pickup of Golden resource!");

@@ -95,6 +95,8 @@ public class Board extends GameObject {
         if (!(space instanceof City)) {
             Game.getGameBoard().addResources(space.getResources());
             Game.getGameBoard().addAnimals(space.getAnimals());
+        } else {
+            GameManager.getInstance().getRaidable().add((City) space);
         }
     }
 

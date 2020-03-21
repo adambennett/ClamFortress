@@ -28,9 +28,6 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("1", MenuCommands.DYNAMIC_FOOD_A);
         consoleCommands.put("2", MenuCommands.DYNAMIC_FOOD_B);
         consoleCommands.put("3", MenuCommands.DYNAMIC_FOOD_C);
-        consoleCommands.put("hunt", MenuCommands.DYNAMIC_FOOD_A);
-        consoleCommands.put("fish", MenuCommands.DYNAMIC_FOOD_B);
-        consoleCommands.put("cook", MenuCommands.DYNAMIC_FOOD_C);
         consoleCommands.put("4", MenuCommands.PRAY);
         consoleCommands.put("5", MenuCommands.FORAGE);
         consoleCommands.put("6", MenuCommands.WOODCUTTING);
@@ -42,13 +39,18 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("12", MenuCommands.HEALING);
         consoleCommands.put("13", MenuCommands.SCOUTING);
         consoleCommands.put("14", MenuCommands.PLANTING);
-        consoleCommands.put("15", MenuCommands.SMELTING);
-        consoleCommands.put("16", MenuCommands.MASONRY);
+        consoleCommands.put("15", MenuCommands.SMITHING);
+        consoleCommands.put("16", MenuCommands.SMELTING);
         consoleCommands.put("17", MenuCommands.RAIDING);
         consoleCommands.put("18", MenuCommands.ENGINEERING);
         consoleCommands.put("19", MenuCommands.BUILDING);
         consoleCommands.put("20", MenuCommands.TRADING);
+        consoleCommands.put("21", MenuCommands.MASONRY);
         consoleCommands.put("0", MenuCommands.CONTINUE);
+
+        consoleCommands.put("hunt", MenuCommands.DYNAMIC_FOOD_A);
+        consoleCommands.put("fish", MenuCommands.DYNAMIC_FOOD_B);
+        consoleCommands.put("cook", MenuCommands.DYNAMIC_FOOD_C);
         consoleCommands.put("smelt", MenuCommands.SMELTING);
         consoleCommands.put("smelting", MenuCommands.SMELTING);
         consoleCommands.put("continue", MenuCommands.CONTINUE);
@@ -72,6 +74,7 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("scouting", MenuCommands.SCOUTING);
         consoleCommands.put("scout", MenuCommands.SCOUTING);
         consoleCommands.put("explore", MenuCommands.SCOUTING);
+        consoleCommands.put("exploring", MenuCommands.SCOUTING);
         consoleCommands.put("discover", MenuCommands.SCOUTING);
         consoleCommands.put("planting", MenuCommands.PLANTING);
         consoleCommands.put("plant", MenuCommands.PLANTING);
@@ -205,6 +208,8 @@ public class PriorityMenu extends AbstractConsole {
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 if (GameManager.getInstance().getRaidingCity() != null) {
                     actionManager.addToTurnEnd(new Raiding(GameManager.getInstance().getRaidingCity(), amt));
+                } else {
+                    OutputManager.addToBot(OutputFlag.NO_RAIDS, "No city currently selected for raiding! Choose option 8 from the Standby Phase menu to select a city to raid.");
                 }
                 break;
             case ENGINEERING:

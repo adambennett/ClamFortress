@@ -35,8 +35,8 @@ import main.models.resources.*;
 import main.models.resources.natural.*;
 import main.models.resources.refined.*;
 import main.models.tech.eras.*;
-import main.utilities.*;
 import main.utilities.builders.*;
+import main.utilities.stringUtils.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -52,17 +52,21 @@ public class Archive {
         nameMapping = new HashMap<>();
         fillArchive();
     }
-    
+
     public static Archive getInstance() {
         return instance;
     }
-    
+
     static {
-        //try {
+        try {
             instance = new Archive();
-       // } //catch (Exception ex) {
-        //    throw new RuntimeException("Error in Archive creation!");
-       // }
+        } catch (Exception ex) {
+            throw new RuntimeException("Error in Archive creation!");
+        }
+    }
+
+    public Boolean isItem(String key) {
+        return nameMapping.get(key.toLowerCase()) != null;
     }
 
     public GameObject get(String key) {
@@ -370,7 +374,8 @@ public class Archive {
         if (player) {
             return new SurvivorBuilder()
                     .setName(GameStrings.getRandomName(true))
-                    .setHealthPoints(randHP)
+                    .setHealthPoints(ThreadLocalRandom.current().nextInt(1, randHP))
+                    .setMaxHP(randHP)
                     .setStrength(randStrength)
                     .setIntelligence(randIntel)
                     .setAge(randAge)
@@ -385,6 +390,7 @@ public class Archive {
             return new SurvivorBuilder()
                     .setName(GameStrings.getRandomName(true))
                     .setHealthPoints(randHP)
+                    .setMaxHP(randHP)
                     .setStrength(randStrength)
                     .setIntelligence(randIntel)
                     .setAge(randAge)

@@ -26,6 +26,7 @@ public class PriorityManager {
     private static Integer  engineer = 0;
     private static Integer  build = 0;
     private static Integer  trade = 0;
+    private static Integer smelt = 0;
 
     public static void reset(boolean resetPoints) {
         if (resetPoints) {
@@ -51,6 +52,33 @@ public class PriorityManager {
         engineer = 0;
         build = 0;
         trade = 0;
+        smelt = 0;
+    }
+    
+    public static Integer totalSpentPoints() {
+        int sum = 0;
+        sum += food1;
+        sum += food2;
+        sum += food3;
+        sum += pray;
+        sum += forage;
+        sum += woodcut;
+        sum += stone;
+        sum += mine;
+        sum += defend;
+        sum += harvest;
+        sum += forge;
+        sum += heal;
+        sum += scout;
+        sum += plant;
+        sum += smith;
+        sum += masonry;
+        sum += raid;
+        sum += engineer;
+        sum += build;
+        sum += trade;
+        sum += smelt;
+        return sum;
     }
 
     public static Integer getPointsRemaining() {
@@ -225,5 +253,13 @@ public class PriorityManager {
 
     public static void setTrade(Integer trade) {
         PriorityManager.trade = trade;
+    }
+
+    public static Integer getSmelt() {
+        return smelt;
+    }
+
+    public static void setSmelt(Integer smelt) {
+        PriorityManager.smelt = smelt;
     }
 }

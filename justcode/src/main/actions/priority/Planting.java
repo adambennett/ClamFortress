@@ -1,6 +1,8 @@
 package main.actions.priority;
 
 import main.actions.*;
+import main.models.*;
+import main.models.resources.natural.*;
 
 public class Planting extends AbstractGameAction {
 

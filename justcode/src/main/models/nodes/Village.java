@@ -423,7 +423,7 @@ public class Village extends AbstractNode {
     }
 
     public Integer getResource(String resource) {
-        return Archive.getInstance().getRes(resource) != null ? this.resources.get(Archive.getInstance().getRes(resource)) : 0;
+        return (Archive.getInstance().getRes(resource) != null) ? (this.resources.get(Archive.getInstance().getRes(resource)) != null) ? this.resources.get(Archive.getInstance().getRes(resource)) : 0 : 0;
     }
 
     public ArrayList<AbstractResource> getAllResources() {

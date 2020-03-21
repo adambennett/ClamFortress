@@ -76,7 +76,7 @@ public abstract class AbstractConsole {
     }
 
     public void findAndProcessMultilineCommand(ArrayList<String> args) {
-        String command = args.remove(0).toLowerCase();
+        String command = args.get(0).toLowerCase();
         if (GameManager.gameIsLoaded && !(this instanceof DevConsole) && command.length() > 0 && command.charAt(0) == '~') {
             AbstractConsole toReturnTo = this;
             if (this instanceof MidTurnMenu) {

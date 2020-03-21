@@ -242,7 +242,7 @@ public class GameStrings {
         a.put("Hunger", "" + Game.getVillage().getHunger() + " / " + 100);
         a.put("Coins", "" + Game.getVillage().getCoins() + " / " + Game.getVillage().getCoinLimit());
         a.put("Faith", "" + Game.getVillage().getFaith() + " / " + Game.getVillage().getFaithLimit());
-        if (GameManager.getInstance().getRaidingCity() != null) {
+        if (GameManager.getInstance().getRaidingCity() != null && !GameManager.getInstance().getRaidingCity().getDefeated()) {
             City raid = GameManager.getInstance().getRaidingCity();
             a.put("Raiding", "" + raid.cityName() + " [" + raid.getHp() + " / " + raid.getMaxHP() + "]");
         }
@@ -415,13 +415,15 @@ public class GameStrings {
         rsrcMap.put("Intellect", "" + v.getIntelligence());
         rsrcMap.put("Magic", "" + v.getMagic());
         rsrcMap.put("Strength", "" + v.getStrength());
-        rsrcMap.put("Average Age", "" + v.getAgeAvg());
-        rsrcMap.put("Average Agility", "" + v.getAgilityAvg());
-        rsrcMap.put("Average Dexterity", "" + v.getDexterityAvg());
-        rsrcMap.put("Average Engineering", "" + v.getEngineeringAvg());
-        rsrcMap.put("Average Intellect", "" + v.getIntelligenceAvg());
-        rsrcMap.put("Average Magic", "" + v.getMagicAvg());
-        rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
+        if (v.getPopulation() > 0) {
+            rsrcMap.put("Average Age", "" + v.getAgeAvg());
+            rsrcMap.put("Average Agility", "" + v.getAgilityAvg());
+            rsrcMap.put("Average Dexterity", "" + v.getDexterityAvg());
+            rsrcMap.put("Average Engineering", "" + v.getEngineeringAvg());
+            rsrcMap.put("Average Intellect", "" + v.getIntelligenceAvg());
+            rsrcMap.put("Average Magic", "" + v.getMagicAvg());
+            rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
+        }
         rsrcMap.put("Villagers Killed", "" + GameManager.getInstance().getVillagersKilled());
         rsrcMap.put("Enemies Killed", "" + GameManager.getInstance().getEnemiesKilled());
         return rsrcMap;
@@ -848,6 +850,24 @@ public class GameStrings {
 
     public static String getRandomName(boolean includePokemon) {
         ArrayList<String> names = new ArrayList<>();
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
+        names.add("Raheel");
         names.add("A Monkey");
         names.add("A Platypus");
         names.add("Aaron");

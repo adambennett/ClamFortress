@@ -7,7 +7,7 @@ import main.models.items.military.weapons.guns.*;
 public class GoldenBullets extends AbstractAmmo implements Golden {
 
     public GoldenBullets() {
-        super("Bullets", "Improves the damage of Guns by 1500. Worth 125 Coins upon pickup.");
+        super("Golden Bullets", "Improves the damage of Guns by 1500. Worth 125 Coins upon pickup.");
     }
 
     @Override

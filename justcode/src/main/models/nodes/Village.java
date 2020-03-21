@@ -166,9 +166,13 @@ public class Village extends AbstractNode {
                 obj.onVillagerDeath();
             }
             GameManager.getInstance().setVillagersKilled(GameManager.getInstance().getVillagersKilled() + 1);
-            OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
+            if (GameManager.getInstance().getRaidingCity() != null) {
+                OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
+            }
         } else {
-            OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName());
+            if (GameManager.getInstance().getRaidingCity() != null) {
+                OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName());
+            }
         }
         updateHP();
     }

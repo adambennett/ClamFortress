@@ -99,6 +99,8 @@ public class City extends AbstractNode {
     protected void defeat() {
         OutputManager.addToBot("Defeated " + this.cityName() + " in a raid!");
         this.defeated = true;
+        this.hp = 0;
+        this.maxHP = 0;
         if (this.hasArtifact()) {
             GameUtils.obtainArtifact(this.artifact);
         }
@@ -116,7 +118,6 @@ public class City extends AbstractNode {
         }
         GameManager.getInstance().getRaidable().remove(this);
         GameManager.getInstance().setDefeatedCities(GameManager.getInstance().getDefeatedCities() + 1);
-        GameManager.getInstance().setRaidingCity(null);
     }
 
     public Boolean getDefeated() {

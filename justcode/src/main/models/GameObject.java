@@ -96,6 +96,7 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public void onDateAdvance(int daysAdvanced) {}
     public void onDemolish() {}
     public void onHeal() {}
+    public void onAdvanceEra(Era newEra) {}
 
     @Override
     public boolean equals(Object o) {

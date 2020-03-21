@@ -137,6 +137,9 @@ public class GameUtils {
         if (TechTree.getCurrentEra().hasNext() && TechTree.getCurrentEra().getNext().canObtain()) {
             TechTree.incEra();
             TechTree.getCurrentEra().onObtain();
+            for (GameObject obj : Game.getModifierObjects()) {
+                obj.onAdvanceEra(TechTree.getCurrentEra());
+            }
             whenObtainingAnyItem(TechTree.getCurrentEra());
             OutputManager.addToBot("Advanced to " + TechTree.getCurrentEra().toString());
         }

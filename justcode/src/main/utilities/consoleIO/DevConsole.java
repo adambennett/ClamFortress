@@ -3,7 +3,7 @@ package main.utilities.consoleIO;
 import main.enums.*;
 import main.interfaces.*;
 import main.models.*;
-import main.models.managers.*;
+import main.models.tech.eras.*;
 import main.utilities.*;
 
 import java.util.*;
@@ -18,7 +18,7 @@ public class DevConsole extends AbstractConsole implements DynamicConsole {
     }
 
     // Unused for this menu
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("0", MenuCommands.CONTINUE);
     }
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
@@ -50,40 +50,56 @@ public class DevConsole extends AbstractConsole implements DynamicConsole {
     @Override
     public void runDynamo(String cmd, ArrayList<String> args) {
         if (!cmd.equals("~")) {
-                ArrayList<Integer> ints = new ArrayList<>();
-                ArrayList<String> words = new ArrayList<>();
-                for (String arg : args) {
-                    try { ints.add(Integer.parseInt(arg)); }
-                    catch (NumberFormatException ignored) {
-                        words.add(arg);
+            ArrayList<Integer> ints = new ArrayList<>();
+            ArrayList<String> words = new ArrayList<>();
+            for (String arg : args) {
+                try { ints.add(Integer.parseInt(arg)); }
+                catch (NumberFormatException ignored) {
+                    words.add(arg);
+                }
+            }
+            int amt  = 0;
+            for (Integer i : ints) {
+                amt += i;
+            }
+            if (amt < 1) { amt = 1; }
+            String fullName = "";
+            fullName += cmd + " ";
+            for (String s : words) {
+                fullName += s + " ";
+            }
+            fullName = fullName.trim();
+            if (cmd.toLowerCase().equals("all")) {
+                if (amt > 99) { amt = 99; }
+                ArrayList<GameObject> toAdd = new ArrayList<>();
+                for (GameObject obj : Archive.getInstance().getArchive()) {
+                    if (!(obj instanceof Era)) {
+                        toAdd.add(obj);
                     }
                 }
-                int amt  = 0;
-                for (Integer i : ints) {
-                    amt += i;
+                for (GameObject obj : toAdd){
+                    GameUtils.devConsoleObtainObject(obj, amt, this.returnTo, false);
                 }
-                if (amt < 1) { amt = 1; }
-                String fullName = "";
-                fullName += cmd + " ";
-                for (String s : words) {
-                    fullName += s + " ";
-                }
-                fullName = fullName.trim();
+                printPrompt(PromptMessage.DEV_CONSOLE, false);
+                printPrompt("DevConsole :: OBTAINING ALL GameObjects", true);
+            } else {
                 if (Archive.getInstance().isItem(cmd) && Archive.getInstance().get(cmd) != null) {
                     GameObject obj = Archive.getInstance().get(cmd);
-                    GameUtils.devConsoleObtainObject(obj, amt);
+                    GameUtils.devConsoleObtainObject(obj, amt, this.returnTo, true);
                     printPrompt(PromptMessage.DEV_CONSOLE, false);
-                    printPrompt(true, "GameObject OBTAINED from Archive: " + cmd + " (x" + amt + ")");
+                    printPrompt("GameObject OBTAINED from Archive: " + cmd + " (x" + amt + ")", true);
                 } else if (Archive.getInstance().isItem(fullName) && Archive.getInstance().get(fullName) != null) {
                     GameObject obj = Archive.getInstance().get(fullName);
-                    GameUtils.devConsoleObtainObject(obj, amt);
+                    GameUtils.devConsoleObtainObject(obj, amt, this.returnTo, true);
                     printPrompt(PromptMessage.DEV_CONSOLE, false);
-                    printPrompt(true, "GameObject OBTAINED from Archive: " + fullName + " (x" + amt + ")");
+                    printPrompt("GameObject OBTAINED from Archive: " + fullName + " (x" + amt + ")", true);
 
                 } else {
                     printPrompt(PromptMessage.DEV_CONSOLE, false);
-                    printPrompt(true, "GameObject NOT FOUND in Archive: " + fullName);
+                    printPrompt("GameObject NOT FOUND in Archive: " + fullName, true);
                 }
+            }
         }
     }
+
 }

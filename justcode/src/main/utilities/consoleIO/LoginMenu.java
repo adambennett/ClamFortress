@@ -9,7 +9,7 @@ import java.util.*;
 public class LoginMenu extends AbstractConsole {
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.LOGIN);
         consoleCommands.put("2", MenuCommands.REGISTER);
         consoleCommands.put("3", MenuCommands.CONTINUE);

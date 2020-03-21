@@ -73,6 +73,10 @@ public class Archive {
         return nameMapping.get(key.toLowerCase()).clone();
     }
 
+    public GameObject getGameObj(String key) {
+        return nameMapping.get(key.toLowerCase()).clone();
+    }
+
     public AbstractResource getRes(String key) {
         return (nameMapping.get(key.toLowerCase()) instanceof AbstractResource) ? (AbstractResource)nameMapping.get(key.toLowerCase()).clone() : null;
     }
@@ -431,7 +435,6 @@ public class Archive {
         add(new Bullets());
         add(new Camel());
         add(new Cat());
-        add(new Catapult());
         add(new CaveBear());
         add(new Chainmail());
         add(new Chicken());

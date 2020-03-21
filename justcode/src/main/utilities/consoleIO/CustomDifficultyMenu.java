@@ -9,7 +9,7 @@ import java.util.*;
 public class CustomDifficultyMenu extends AbstractConsole implements DynamicConsole {
 
     // Unused for this menu
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("0", MenuCommands.CONTINUE);
     }
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {

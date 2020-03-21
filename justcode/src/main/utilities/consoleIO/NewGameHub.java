@@ -9,7 +9,7 @@ import java.util.logging.*;
 public class NewGameHub extends AbstractConsole {
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.DIFFICULTY);
         consoleCommands.put("2", MenuCommands.BIOME);
         consoleCommands.put("3", MenuCommands.RACE);

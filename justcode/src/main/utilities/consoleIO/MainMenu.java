@@ -10,7 +10,7 @@ import java.util.logging.*;
 public class MainMenu extends AbstractConsole {
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.NEW_GAME);
         consoleCommands.put("2", MenuCommands.LOAD_GAME);
         consoleCommands.put("3", MenuCommands.STATS);

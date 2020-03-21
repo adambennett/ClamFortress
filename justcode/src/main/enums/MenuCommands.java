@@ -1,6 +1,7 @@
 package main.enums;
 
 public enum MenuCommands {
+    SELL,
     OPTION_UNAVAILABLE,
     ALIEN,
     BIOME,

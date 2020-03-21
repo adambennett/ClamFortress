@@ -12,8 +12,8 @@ import main.models.managers.*;
 import main.models.nodes.AbstractNode;
 import main.models.nodes.City;
 import main.models.nodes.Village;
-import main.models.nodes.biomes.AbstractBiome;
-import main.models.nodes.biomes.Grasslands;
+import main.models.nodes.biomes.*;
+import main.models.people.merchants.*;
 import main.models.resources.natural.Wood;
 import main.models.tech.TechTree;
 import main.models.tech.eras.BronzeAge;
@@ -50,7 +50,7 @@ public class Game {
 
     // Default Settings (for tests)
     public static void startGame() {
-        startGame(new BronzeAge(true), Difficulty.DEFAULT, Race.HUMAN, new Grasslands(), 0, 5, 50, 50);
+        startGame(new BronzeAge(true), Difficulty.DEFAULT, Race.HUMAN, new BlankBiome(), 0, 5, 50, 50);
     }
 
     public static void startGame(Era startEra, Difficulty gameDifficulty, Race chosenRace, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
@@ -66,7 +66,9 @@ public class Game {
         gameBoard = new Board();
         Archive.getInstance().get("wood");
         gameBoard = new Board(startingBiome, xMax, yMax, startPopCap);
-        gameBoard.discover(getVillage().getBaseNode());
+        if (!startingBiome.toString().equals("Debug")) {
+            gameBoard.discover(getVillage().getBaseNode());
+        }
         new NewSurvivors(false).addToVillage(startPop);
         getVillage().addResource(new Wood(), 100);
         updateDifficultyBools();
@@ -87,7 +89,9 @@ public class Game {
         gameBoard = new Board();
         Archive.getInstance().get("wood");
         gameBoard = new Board(startingBiome, xMax, yMax, startPopCap);
-        gameBoard.discover(getVillage().getBaseNode());
+        if (!startingBiome.toString().equals("Debug")) {
+            gameBoard.discover(getVillage().getBaseNode());
+        }
         new NewSurvivors(false).addToVillage(startPop);
         getVillage().addResource(new Wood(), 100);
         toughEnemies = customDifficultyMods.contains(1);
@@ -174,13 +178,16 @@ public class Game {
         Database.score(dateInc);
         gameManager.incTurns();
         queueEvergreenActions(dateInc);
-        // complicated actions logic
+        if (Game.getVillage().getVistingMerchants().size() > 0) {
+            Game.getVillage().getVistingMerchants().get(0).visit();
+        }
         runActions();
         Game.getVillage().updateHP();
         PriorityManager.reset(difficulty.compareTo(Difficulty.HARD) > 0);
         for (GameObject obj : Game.getModifierObjects()) {
             obj.endPhase();
         }
+
     }
 
     public static void runActions() {

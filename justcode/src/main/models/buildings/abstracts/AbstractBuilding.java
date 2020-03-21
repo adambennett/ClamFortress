@@ -33,7 +33,7 @@ public abstract class AbstractBuilding extends GameObject {
             obj.onDemolish();
         }
         if (this instanceof Golden) {
-            Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) this).getGoldAmt());
+            Game.getVillage().incCoins(((Golden) this).getGoldAmt());
             OutputManager.addToBot("Received " + ((Golden) this).getGoldAmt() + " Coins upon destruction of " + this.getName() + "!");
         }
 

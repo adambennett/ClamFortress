@@ -11,7 +11,7 @@ import java.util.*;
 public class TurnMenu extends AbstractConsole {
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("exit", MenuCommands.EXIT);
         consoleCommands.put("quit", MenuCommands.END_GAME);
         consoleCommands.put("save", MenuCommands.SAVE);
@@ -59,16 +59,23 @@ public class TurnMenu extends AbstractConsole {
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
             case TRAINING:
+                printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case MERCHANT:
+                new MerchantMenu().printPrompt(PromptMessage.MERCHANT, true);
                 break;
             case OPTION_UNAVAILABLE:
-                ConsoleServices.println("That option is not currently available. Please choose a different option.");
-                printPrompt(PromptMessage.TURN_MENU, true);
+                printPrompt(PromptMessage.TURN_MENU, false);
+                printPrompt("That option is not currently available. Please choose a different option.", true);
                 break;
             case RAIDING:
-                GameUtils.getNewRaidCity();
-                printPrompt(PromptMessage.TURN_MENU, true);
+                String output = GameUtils.getNewRaidCity();
+                if (!output.equals("")) {
+                    printPrompt(PromptMessage.TURN_MENU, false);
+                    printPrompt(output, true);
+                } else {
+                    printPrompt(PromptMessage.TURN_MENU, true);
+                }
                 break;
             case BUILDING:
                 new MidTurnMenu().printPrompt(PromptMessage.BUILDINGS, true);

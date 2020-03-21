@@ -10,7 +10,7 @@ import java.util.*;
 public class EndPhaseMenu extends AbstractConsole {
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("0", MenuCommands.CONTINUE);
         consoleCommands.put("1", MenuCommands.RESOURCES);
         consoleCommands.put("skip", MenuCommands.SKIP_TURN);

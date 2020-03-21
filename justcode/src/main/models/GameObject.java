@@ -10,7 +10,6 @@ import main.models.buildings.abstracts.*;
 import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.items.medical.*;
-import main.models.items.military.*;
 import main.models.items.military.ammo.*;
 import main.models.items.military.armor.*;
 import main.models.items.military.plating.*;
@@ -18,13 +17,11 @@ import main.models.items.military.weapons.*;
 import main.models.items.military.weapons.guns.*;
 import main.models.items.military.weapons.medieval.*;
 import main.models.items.tools.*;
-import main.models.nodes.*;
 import main.models.people.*;
 import main.models.resources.*;
 import main.models.tech.eras.*;
 
 import java.util.*;
-import java.util.concurrent.*;
 
 public abstract class GameObject implements Cloneable, Comparable<GameObject> {
 
@@ -117,10 +114,10 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
 
     @Override
     public int compareTo(GameObject o) {
-        return this.getClassName().compareTo(o.getClassName()) != 0 ? this.getClassName().compareTo(o.getClassName()) : this.getName().compareTo(o.getName());
+        return this.getType().compareTo(o.getType()) != 0 ? this.getType().compareTo(o.getType()) : this.getName().compareTo(o.getName());
     }
 
-    public String getClassName() {
+    public String getType() {
         if (this instanceof AbstractAnimal) {
             return "Animal";
         } else if (this instanceof AbstractBuilding) {

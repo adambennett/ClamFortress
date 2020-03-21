@@ -7,7 +7,7 @@ import java.util.*;
 public class ArchiveMenu extends AbstractConsole {
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("0", MenuCommands.CONTINUE);
     }
 

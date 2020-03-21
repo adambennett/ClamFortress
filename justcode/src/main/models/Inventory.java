@@ -29,7 +29,7 @@ public class Inventory extends GameObject {
                     item.onObtain();
                     GameUtils.whenObtainingAnyItem(item);
                     if (item instanceof Golden) {
-                        Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) item).getGoldAmt());
+                        Game.getVillage().incCoins(((Golden) item).getGoldAmt());
                         OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden item! (" + item.getName() + ")");
                     }
 

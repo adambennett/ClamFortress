@@ -8,7 +8,7 @@ import java.util.*;
 public class SaleMerchantMenu extends AbstractConsole implements DynamicConsole {
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("0", MenuCommands.CONTINUE);
     }
 

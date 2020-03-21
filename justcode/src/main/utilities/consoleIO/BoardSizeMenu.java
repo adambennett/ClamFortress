@@ -9,7 +9,7 @@ public class BoardSizeMenu extends AbstractConsole {
 
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.GAME_BOARD);
         consoleCommands.put("2", MenuCommands.POPULATION);
         consoleCommands.put("0", MenuCommands.CONTINUE);

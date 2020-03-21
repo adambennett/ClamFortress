@@ -11,6 +11,7 @@ import main.models.people.*;
 import main.models.resources.*;
 import main.models.tech.*;
 import main.models.tech.eras.*;
+import main.utilities.consoleIO.*;
 import main.utilities.stringUtils.*;
 
 import java.util.*;
@@ -28,7 +29,7 @@ public class GameUtils {
         }
     }
 
-    public static void getNewRaidCity() {
+    public static String getNewRaidCity() {
         if (GameManager.getInstance().getRaidable().size() > 0) {
             ArrayList<City> cities = GameManager.getInstance().getRaidable();
             ArrayList<City> otherCities = new ArrayList<>();
@@ -74,10 +75,11 @@ public class GameUtils {
                     } else if (hasItem) {
                         output += "\nItem: " + ref.getItem().getName();
                     }
-                    ConsoleServices.println(output);
+                    return output;
                 }
             }
         }
+        return "";
     }
 
     public static void obtainGameObject(GameObject obj) {
@@ -146,7 +148,7 @@ public class GameUtils {
     }
 
     // ONLY FOR DEV CONSOLE
-    public static void devConsoleObtainObject(GameObject obj, int amt) {
+    public static void devConsoleObtainObject(GameObject obj, int amt, AbstractConsole from, boolean triggerExtras) {
         if (obj instanceof AbstractItem) {
             AbstractItem item = (AbstractItem) obj;
             for (int i = 0; i < amt; i++) {
@@ -154,7 +156,7 @@ public class GameUtils {
                 item.onObtain();
                 GameUtils.whenObtainingAnyItem(item);
                 if (item instanceof Golden) {
-                    Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) item).getGoldAmt());
+                    Game.getVillage().incCoins(((Golden) item).getGoldAmt());
                     OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden item! (" + item.getName() + ")");
                 }
 
@@ -167,8 +169,10 @@ public class GameUtils {
             AbstractBuilding b = (AbstractBuilding) obj;
             for (int i = 0; i < amt; i++) {
                 Game.getVillage().getBuildings().add(b);
-                for (GameObject objB : Game.getModifierObjects()) {
-                    objB.onNewBuilding(b);
+                if (triggerExtras) {
+                    for (GameObject objB : Game.getModifierObjects()) {
+                        objB.onNewBuilding(b);
+                    }
                 }
             }
         } else if (obj instanceof AbstractResource) {
@@ -178,6 +182,11 @@ public class GameUtils {
             Game.getVillage().addResource((AbstractResource) obj, amt);
         } else if (obj instanceof Era) {
             TechTree.moveToEra((Era)obj, true);
+        }
+
+        StringHelpers.reloadStrings();
+        if (from instanceof TurnMenu) {
+            from.initializeCommands();
         }
     }
 }

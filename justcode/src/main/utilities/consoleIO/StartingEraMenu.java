@@ -8,7 +8,7 @@ import java.util.*;
 public class StartingEraMenu extends AbstractConsole {
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
 
         consoleCommands.put("1", MenuCommands.STONE);
         consoleCommands.put("2", MenuCommands.BRONZE);

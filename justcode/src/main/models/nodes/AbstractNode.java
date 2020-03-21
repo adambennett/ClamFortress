@@ -85,6 +85,10 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
         return (a.xPos.compareTo(this.xPos) != 0) ? a.xPos.compareTo(this.xPos) : a.yPos.compareTo(this.yPos);
     }
 
+    public String getIcon() {
+        return "";
+    }
+
     @Override
     public abstract String toString();
 

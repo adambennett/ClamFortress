@@ -8,7 +8,7 @@ public class DifficultyMenu extends AbstractConsole {
 
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.EASY);
         consoleCommands.put("2", MenuCommands.STANDARD);
         consoleCommands.put("3", MenuCommands.HARD);

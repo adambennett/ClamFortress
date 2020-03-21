@@ -18,12 +18,21 @@ public class StringHelpers {
         return color;
     }
 
-    public static String format(String s, String lenCheck, String endString) {
-        while (s.length() < lenCheck.length()) {
-            s += " ";
-        }
-        s += endString + "\n";
-        return s;
+    public static void reloadStrings() {
+        GameStrings.loadArchive();
+        GameStrings.loadPriorities();
+        GameStrings.loadRaceMenu();
+        GameStrings.loadTurnMenu();
+        GameStrings.loadEndPhase();
+        GameStrings.loadStats();
+        GameStrings.loadInventory();
+        GameStrings.loadVillagers();
+        GameStrings.loadBoard();
+        GameStrings.loadBuildings();
+        GameStrings.loadResources();
+        GameStrings.loadMerchant();
+        GameStrings.loadTraining();
+        GameStrings.loadSaleMerchant();
     }
 
     public static String getStringFromPromptType(main.enums.PromptMessage msg) {

@@ -8,6 +8,7 @@ import main.models.items.*;
 import main.models.managers.*;
 import main.models.nodes.*;
 import main.models.people.*;
+import main.models.people.merchants.*;
 import main.models.resources.*;
 import main.models.tech.*;
 
@@ -41,7 +42,7 @@ public class GameStrings {
                     "***--------------------------------------------***\n" +
                     "***                1 | Login                   ***\n" +
                     "***                2 | Register                ***\n" +
-                    "***                3 | Jeremy                  ***\n" +
+                    "***                3 | Quick Start             ***\n" +
                     "***--------------------------------------------***\n" +
                     "***                0 | Exit                    ***\n" +
                     "**************************************************\n";
@@ -132,6 +133,21 @@ public class GameStrings {
                     "***--------------------------------------------***\n" +
                     "***           0 | Back to New Game Menu        ***\n" +
                     "***           9 | Start Game                   ***\n" +
+                    "**************************************************\n";
+
+    public static final String gridTest =
+                    "**************************************************\n" +
+                    "***     _______________________________        ***\n" +
+                    "***     |DESRT|NETHR|OCEAN|MOUNT|MOUNT|        ***\n" +
+                    "***     | MIA | M A | M   |  I  |  I  |        ***\n" +
+                    "***     |_____|_____|_____|_____|_____|        ***\n" +
+                    "***     |CITY |JUNGL|JUNGL|TNDRA|TNDRA|        ***\n" +
+                    "***     |  I  |  IA |     |     |  I  |        ***\n" +
+                    "***     |_____|_____|_____|_____|_____|        ***\n" +
+                    "***     |GRASS|JUNGL|JUNGL| VIL |JUNGL|        ***\n" +
+                    "***     | MI  | M   |   A |     |   A |        ***\n" +
+                    "***     |_____|_____|_____|_____|_____|        ***\n" +
+                    "***                                            ***\n" +
                     "**************************************************\n";
 
     public static final String chooseDifficulty =
@@ -256,22 +272,34 @@ public class GameStrings {
         a.put("4", "Resources");
         if (Game.getVillage().getInventory().getItems().size() > 0) {
             a.put("5", "Inventory");
+        } else {
+            a.put("5", "---------");
         }
         if (Game.getVillage().getBuildings().size() > 0) {
             a.put("6", "Buildings");
+        } else {
+            a.put("6", "---------");
         }
         if (Game.getVillage().getPopulation() > 0) {
             a.put("7", "Population");
+        } else {
+            a.put("7", "----------");
         }
         if (Game.getVillage().getVistingMerchants().size() > 0) {
             a.put("8", "Merchants");
+        } else {
+            a.put("8", "---------");
         }
         if (Game.canRaid()) {
             a.put("9", "Raid a New City");
+        } else {
+            a.put("9", "---------------");
         }
         int trainingCost = GameManager.getInstance().getTrainingCost();
         if (Game.getVillage().getCoins() >= trainingCost) {
             a.put("10", "Train (" +  trainingCost + " Coins)");
+        } else {
+            a.put("10", "------------------");
         }
         return a;
     }
@@ -449,7 +477,9 @@ public class GameStrings {
         rsrcMap.put("Food", "" + v.getFood() + " / " + v.getFoodLimit());
         rsrcMap.put("Faith", "" + v.getFaith() + " / " + v.getFaithLimit());
         Map<String, Integer> occ = new HashMap<>();
-        for (AbstractResource resource : v.getAllResources()) {
+        ArrayList<AbstractResource> resources = v.getAllResources();
+        Collections.sort(resources);
+        for (AbstractResource resource : resources) {
             if (occ.containsKey(resource.getName())) {
                 occ.put(resource.getName(), occ.get(resource.getName()) + 1);
             } else {
@@ -473,41 +503,74 @@ public class GameStrings {
         list.add(bottom);
         resources = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
-    
-    public static LinkedHashMap<String, String> getInventory() {
-        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+
+    public static LinkedHashMap<String, ArrayList<String>> getInventory() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
-        for (AbstractItem item : v.getInventory().getItems()){
-            String name = item.getName();
-            a.put(name, item.getDesc());
+        LinkedHashMap<AbstractItem, Integer> occ = new LinkedHashMap<>();
+        ArrayList<AbstractItem> items = v.getInventory().getItems();
+        Collections.sort(items);
+        for (AbstractItem item : items){
+            if (occ.containsKey(item)) {
+                occ.put(item, occ.get(item) + 1);
+            } else {
+                occ.put(item, 1);
+            }
+        }
+        for (Map.Entry<AbstractItem, Integer> entry : occ.entrySet()) {
+            String name = entry.getKey().getName();
+            String desc = entry.getKey().getDesc();
+            if (desc.length() > 85) {
+                desc = desc.substring(0, 86);
+            }
+            ArrayList<String> cols = new ArrayList<>();
+            cols.add(""+entry.getValue());
+            cols.add(entry.getKey().getType());
+            cols.add(desc);
+            a.put(name, cols);
         }
         if (a.size() < 1) {
-            a.put(" ", " ");
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
         }
         return a;
     }
     public static void loadInventory() {
-        String leftAlignFormat = "| %-25s | %-85s |\n";
-        String headerFormat = "| %-113s |\n";
-        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
+        String leftAlignFormat = "| %-25s | %-21s | %-21s | %-85s |\n";
+        String headerFormat = "| %-161s |\n";
+        String breakLine = "+---------------------------+-----------------------+-----------------------+---------------------------------------------------------------------------------------+\n";
         String header = "Inventory";
-        Map<String, String> top = new HashMap<>();
-        Map<String, String> bottom = new HashMap<>();
-        top.put("Item Name", "Description");
-        bottom.put("0", "Return to Standby Menu");
-        ArrayList<Map<String, String>> list = new ArrayList<>();
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("Amount"); botCols.add("Return");
+        topCols.add("Type"); botCols.add("Total Items: " + Game.getVillage().getInventory().getItems().size());
+        topCols.add("Description"); botCols.add("");
+        top.put("Item Name", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
         list.add(top);
         list.add(getInventory());
         list.add(bottom);
-        inv = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+        inv = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
-    
+
     public static LinkedHashMap<String, String> getBuildings() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
-        for (AbstractBuilding item : v.getBuildings()){
+        ArrayList<AbstractBuilding> buildings = v.getBuildings();
+        Collections.sort(buildings);
+        for (AbstractBuilding item : buildings){
             String name = item.getName();
-            a.put(name, " ");
+            String desc = item.getDesc();
+            if (desc.length() > 85) {
+                desc = desc.substring(0, 86);
+            }
+            a.put(name, desc);
         }
         if (a.size() < 1) {
             a.put(" ", " ");
@@ -536,7 +599,7 @@ public class GameStrings {
         Collections.sort(objs);
         for (GameObject obj : objs) {
             ArrayList<String> tempCols = new ArrayList<>();
-            tempCols.add("" + obj.getClassName());
+            tempCols.add("" + obj.getType());
             String desc = obj.getDesc();
             if (desc.length() > 124) {
                 desc = desc.substring(0, 125);
@@ -677,29 +740,24 @@ public class GameStrings {
     public static LinkedHashMap<String, ArrayList<String>> getMerchant() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
-        for (Survivor s : v.getSurvivors()) {
-            ArrayList<String> tempCols = new ArrayList<>();
-            tempCols.add("" + s.getAge());
-            tempCols.add("" + s.getHP() + " / " + s.getMaxHp());
-            tempCols.add("" + s.getStrength());
-            tempCols.add("" + s.getDexterity());
-            tempCols.add("" + s.getIntelligence());
-            tempCols.add("" + s.getAgility());
-            tempCols.add("" + s.getMagic());
-            tempCols.add("" + s.getEngineering());
-            tempCols.add(StringHelpers.capFirstLetter(s.getRace().toString().toLowerCase()));
-            tempCols.add(StringHelpers.capFirstLetter(s.getGender().toString().toLowerCase()));
-            a.put(s.getName(), tempCols);
+        if (v.getVistingMerchants().size() > 0) {
+            Merchant active = v.getVistingMerchants().get(0);
+            for (Map.Entry<String, Integer> o : active.getWares().entrySet()) {
+                String type = Archive.getInstance().get(o.getKey()).getType();
+                String cost = "" + o.getValue();
+                String desc = Archive.getInstance().get(o.getKey()).getDesc();
+                if (desc.length() > 124) {
+                    desc = desc.substring(0, 125);
+                }
+                ArrayList<String> tempCols = new ArrayList<>();
+                tempCols.add(cost);
+                tempCols.add(type);
+                tempCols.add(desc);
+                a.put(o.getKey(), tempCols);
+            }
         }
         if (a.size() < 1) {
             ArrayList<String> tempCols = new ArrayList<>();
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
             tempCols.add("");
             tempCols.add("");
             tempCols.add("");
@@ -708,6 +766,57 @@ public class GameStrings {
         return a;
     }
     public static void loadMerchant() {
+        String leftAlignFormat = "| %-25s | %-21s | %-21s | %-125s |\n";
+        String headerFormat = "| %-201s |\n";
+        String breakLine = "+---------------------------+-----------------------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------+\n";
+        String header = "Merchant";
+        if (Game.getVillage().getVistingMerchants().size() > 0) {
+            header = Game.getVillage().getVistingMerchants().get(0).getName() + "'s Shop";
+        }
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> sellLine = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        ArrayList<String> sales = new ArrayList<>();
+        topCols.add("Cost (Coins)"); botCols.add("Return"); sales.add("Sell");
+        topCols.add("Type"); botCols.add(""); sales.add("");
+        topCols.add("Description"); botCols.add(""); sales.add("");
+        top.put("Item Name", topCols);
+        bottom.put("0", botCols);
+        sellLine.put("5", sales);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getMerchant());
+        list.add(bottom);
+        list.add(sellLine);
+        merchant = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+
+/*    public static LinkedHashMap<String, ArrayList<String>> getGrid() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
+        for (int i = 0; i < Game.getGameBoard().getGridXMax(); i++) {
+            if (i >= Game.getGameBoard().getNextX()) {
+                String head = "";aaa
+                ArrayList<String> nodes = new ArrayList<>();
+                for (int k = 0; k < Game.getGameBoard().getGridYMax(); k++) {
+                    AbstractNode curr = Game.getGameBoard().getNodeAt(i, k);
+                    nodes.add(curr.getIcon());
+                }
+                a.put(head.getIcon(), nodes);
+            } else {
+                AbstractNode head = Game.getGameBoard().getNodeAt(i, 0);
+                ArrayList<String> nodes = new ArrayList<>();
+                for (int k = 0; k < Game.getGameBoard().getGridYMax(); k++) {
+                    AbstractNode curr = Game.getGameBoard().getNodeAt(i, k);
+                    nodes.add(curr.getIcon());
+                }
+                a.put(head.getIcon(), nodes);
+            }
+        }
+        return a;
+    }*/
+    public static void loadGrid() {
         String leftAlignFormat = "| %-52s | %-8s |\n";
         String headerFormat = "| %-142s |\n";
         String breakLine = "+-++\n";

@@ -89,10 +89,16 @@ public class GameBuilder {
 
     public void setxMax(Integer xMax) {
         this.xMax = xMax;
+        if (this.xMax > 125) {
+            this.xMax = 125;
+        }
     }
 
     public void setyMax(Integer yMax) {
         this.yMax = yMax;
+        if (this.yMax > 125) {
+            this.yMax = 125;
+        }
     }
 
     public Integer getxMax() {

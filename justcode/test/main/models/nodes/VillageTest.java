@@ -18,7 +18,6 @@ public class VillageTest {
 
     @Before
     public void setup() {
-
         startBiome = new Grasslands();
         village = new Village(startBiome, 5);
     }
@@ -33,30 +32,22 @@ public class VillageTest {
     public void gettersAndSettersTest() {
         Integer expectedYPos =          1;
         Integer expectedXPos =          1;
-        Integer expectedAtkPower =      20;
         Integer expectedBuildingLim =   15;
-        Integer expectedDefence =       60;
         Integer expectedHunger =        50;
 
         village.setyPos(expectedYPos);
         village.setxPos(expectedXPos);
-        village.setAttackPower(expectedAtkPower);
         village.setBuildingLimit(expectedBuildingLim);
-        village.setDefence(expectedDefence);
         village.setHunger(expectedHunger);
 
         Integer actualYPos = village.getyPos();
         Integer actualXPos = village.getxPos();
-        Integer actualAtk = village.getAttackPower();
         Integer actualBuildLim = village.getBuildingLimit();
-        Integer actualDefence = village.getDefense();
         Integer actualHunger = village.getHunger();
 
         Assert.assertEquals(expectedYPos, actualYPos);
         Assert.assertEquals(expectedXPos, actualXPos);
-        Assert.assertEquals(expectedAtkPower, actualAtk);
         Assert.assertEquals(expectedBuildingLim, actualBuildLim);
-        Assert.assertEquals(expectedDefence, actualDefence);
         Assert.assertEquals(expectedHunger, actualHunger);
     }
 
@@ -123,11 +114,12 @@ public class VillageTest {
         Double actualAvgAge = village.getAgeAvg();
         Integer expectedSize = 5;
         Integer expected = 100;
+        Integer expectedHP = 200;
         Double expectedDub = 20.0;
         Assert.assertEquals(expected, actualInt);
         Assert.assertEquals(expected, actualDex);
         Assert.assertEquals(expected, actualMagic);
-        Assert.assertEquals(expected, actualHealth);
+        Assert.assertEquals(expectedHP, actualHealth);
         Assert.assertEquals(expected, actualTotalAge);
         Assert.assertEquals(expected, actualTotalStr);
         Assert.assertEquals(expected, actualAgility);
@@ -208,16 +200,6 @@ public class VillageTest {
         Assert.assertEquals(expected,actual);
     }
 
-    @Test
-    public void incAttack() {
-        village.setAttackPower(100);
-        village.incAttack(50);
-
-        Integer actual = village.getAttackPower();
-        Integer expected = 150;
-
-        Assert.assertEquals(expected,actual);
-    }
 
     @Test
     public void incFaith() {
@@ -289,35 +271,35 @@ public class VillageTest {
 
     @Test
     public void incCoins() {
-        village.setCoins(50);
+        Integer firstActual = village.getCoins();
         village.incCoins();
-
         Integer actual = village.getCoins();
-        Integer expected = 51;
-
+        Integer expected = 1;
         Assert.assertEquals(expected,actual);
+        Assert.assertNotEquals(expected, firstActual);
     }
 
     @Test
     public void testIncCoins() {
-        village.setCoins(50);
+        Integer firstActual = village.getCoins();
         village.incCoins(100);
 
         Integer actual = village.getCoins();
-        Integer expected = 150;
+        Integer expected = 100;
 
         Assert.assertEquals(expected,actual);
+        Assert.assertNotEquals(expected, firstActual);
     }
 
     @Test
     public void subCoins() {
-        village.setCoins(50);
+        Integer firstActual = village.getCoins();
+        village.incCoins(50);
         village.subCoins(25);
-
         Integer actual = village.getCoins();
         Integer expected = 25;
-
         Assert.assertEquals(expected,actual);
+        Assert.assertNotEquals(expected, firstActual);
     }
 
     @Test

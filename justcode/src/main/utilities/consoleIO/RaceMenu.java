@@ -11,7 +11,7 @@ public class RaceMenu extends AbstractConsole {
 
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.HUMAN);
         if (Database.getOrcsUnlocked()) {
             consoleCommands.put("2", MenuCommands.ORC);

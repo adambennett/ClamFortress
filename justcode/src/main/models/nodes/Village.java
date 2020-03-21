@@ -23,7 +23,9 @@ import main.models.managers.OutputManager;
 import main.models.nodes.biomes.*;
 import main.models.people.Bandit;
 import main.models.people.Survivor;
+import main.models.people.merchants.*;
 import main.models.resources.AbstractResource;
+import main.models.resources.refined.*;
 import main.models.resources.refined.food.PlaceholderFood;
 import main.utilities.*;
 
@@ -75,7 +77,6 @@ public class Village extends AbstractNode {
     private Double engineeringAvg =     0.0;
 
     // Resources
-    private Integer coins =             0;
     private Integer faith =             0;
 
     // Lists
@@ -84,7 +85,7 @@ public class Village extends AbstractNode {
     private ArrayList<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
     private ArrayList<AbstractMiracle>  activeMiracles = new ArrayList<>();
     private ArrayList<AbstractDisaster> ongoingDisasters = new ArrayList<>();
-    private ArrayList<AbstractMerchant> vistingMerchants = new ArrayList<>();
+    private ArrayList<Merchant>         vistingMerchants = new ArrayList<>();
     private ArrayList<AbstractPlague>   ongoingPlagues = new ArrayList<>();
     private ArrayList<AbstractRaid>     ongoingOpponentRaids = new ArrayList<>();
     private ArrayList<AbstractRaid>     ongoingFriendlyRaids = new ArrayList<>();
@@ -406,7 +407,7 @@ public class Village extends AbstractNode {
             resource.onObtain();
             GameUtils.whenObtainingAnyItem(resource);
             if (resource instanceof Golden) {
-                Game.getVillage().setCoins(Game.getVillage().getCoins() + ((Golden) resource).getGoldAmt());
+                Game.getVillage().incCoins(((Golden) resource).getGoldAmt());
                 OutputManager.addToBot("Received " + ((Golden) resource).getGoldAmt() + " Coins upon pickup of Golden resource!");
             }
             return true;
@@ -439,11 +440,11 @@ public class Village extends AbstractNode {
     }
 
     public Boolean containsResource(String resource) {
-        return Archive.getInstance().getRes(resource) != null && this.resources.containsKey(Archive.getInstance().getRes(resource));
+        return Archive.getInstance().getRes(resource.toLowerCase()) != null && this.resources.containsKey(Archive.getInstance().getRes(resource.toLowerCase()));
     }
 
     public Integer getResource(String resource) {
-        return (Archive.getInstance().getRes(resource) != null) ? (this.resources.get(Archive.getInstance().getRes(resource)) != null) ? this.resources.get(Archive.getInstance().getRes(resource)) : 0 : 0;
+        return (Archive.getInstance().getRes(resource.toLowerCase()) != null) ? (this.resources.get(Archive.getInstance().getRes(resource.toLowerCase())) != null) ? this.resources.get(Archive.getInstance().getRes(resource)) : 0 : 0;
     }
 
     public ArrayList<AbstractResource> getAllResources() {
@@ -458,7 +459,7 @@ public class Village extends AbstractNode {
     // END RESOURCES /////////////////////////////////////////////////////////////////////////////////////////////
 
     // ENCOUNTERS    /////////////////////////////////////////////////////////////////////////////////////////////
-    public void addMerchant(AbstractMerchant merchant) {
+    public void addMerchant(Merchant merchant) {
         this.vistingMerchants.add(merchant);
     }
 
@@ -631,7 +632,7 @@ public class Village extends AbstractNode {
     }
 
     public Integer getCoins() {
-        return this.coins;
+        return this.getResource("coins") != null ? this.getResource("coins") : 0;
     }
     public Integer getFaith() {
         return this.faith;
@@ -670,16 +671,12 @@ public class Village extends AbstractNode {
     public ArrayList<AbstractPlague> getOngoingPlagues() {
         return ongoingPlagues;
     }
-    public ArrayList<AbstractMerchant> getVistingMerchants() {
+    public ArrayList<Merchant> getVistingMerchants() {
         return vistingMerchants;
     }
 
     public void incDefense(Integer amt){
         this.defence += amt;
-    }
-
-    public void incAttack(Integer amt){
-        this.attackPower += amt;
     }
 
     public void incFaith() {
@@ -715,7 +712,11 @@ public class Village extends AbstractNode {
     }
 
     public void incCoins(int amt) {
-        this.coins += amt; if (this.coins > this.coinLimit) { this.coins = this.coinLimit; }
+        this.addResource(Archive.getInstance().getRes("coins"), amt);
+        if (this.getCoins() > this.getCoinLimit()) {
+            int diff = this.getCoinLimit() - this.getCoins();
+            this.removeResource("coins", diff);
+        }
     }
 
     public void subMagic(int amt) {
@@ -730,7 +731,7 @@ public class Village extends AbstractNode {
     }
 
     public void subCoins(int amt) {
-        this.coins -= amt; if (this.coins < 0) { this.coins = 0; }
+       this.removeResource("coins", amt);
     }
 
     public void setHunger(Integer hunger) {
@@ -739,20 +740,13 @@ public class Village extends AbstractNode {
         else if (this.hunger < 0) { this.hunger = 0; }
     }
 
-    public void setMaxHP(Integer maxHP) { this.maxHP = maxHP; }
     public void setPopCap(Integer popCap){ this.popCap = popCap; }
     public void setHealth(Integer health) { this.health = health; }
     public void setBuildingLimit(Integer buildingLimit) {
         this.buildingLimit = buildingLimit;
     }
-    public void setCoins(Integer coins){
-        this.coins = coins;
-    }
     public void setDefence(Integer defence){
         this.defence = defence;
-    }
-    public void setAttackPower(Integer attackPower){
-        this.attackPower = attackPower;
     }
     public void setFaith(Integer faith){
         this.faith = faith;

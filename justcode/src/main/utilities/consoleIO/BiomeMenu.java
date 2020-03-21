@@ -11,7 +11,7 @@ public class BiomeMenu extends AbstractConsole {
 
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.GRASS);
         consoleCommands.put("2", MenuCommands.DESERT);
         consoleCommands.put("3", MenuCommands.JUNGLE);

@@ -79,6 +79,32 @@ public class Board extends GameObject {
         return NodeManager.getRandomNode(x, y, nethermod);
     }
 
+    public Integer getNextX() {
+        return nextX;
+    }
+
+    public Integer getNextY() {
+        return nextY;
+    }
+
+    public AbstractNode getNodeAt(int x) {
+        for (AbstractNode node : grid) {
+            if (node.getxPos().equals(x) && node.getyPos().equals(0)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public AbstractNode getNodeAt(int x, int y) {
+        for (AbstractNode node : grid) {
+            if (node.getxPos().equals(x) && node.getyPos().equals(y)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
     public void discover(AbstractNode region) {
         addGridSpace(region);
     }

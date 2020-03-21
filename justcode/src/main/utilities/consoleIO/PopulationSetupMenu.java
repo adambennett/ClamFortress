@@ -9,7 +9,7 @@ public class PopulationSetupMenu extends AbstractConsole {
 
 
     @Override
-    protected void initializeCommands() {
+    public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.POPCAP);
         consoleCommands.put("2", MenuCommands.POPULATION);
         consoleCommands.put("0", MenuCommands.CONTINUE);

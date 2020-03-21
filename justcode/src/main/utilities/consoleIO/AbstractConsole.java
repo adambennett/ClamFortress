@@ -15,7 +15,7 @@ public abstract class AbstractConsole {
     protected static GameBuilder builder;
     protected Map<String, MenuCommands> consoleCommands;
 
-    protected abstract void initializeCommands();
+    public abstract void initializeCommands();
     public abstract void processCommand(MenuCommands cmd, ArrayList<String> args);
 
     // Implement in multiline command processing consoles
@@ -122,7 +122,7 @@ public abstract class AbstractConsole {
         printPrompt(message, promptForInput, false);
     }
 
-    public void printPrompt(boolean promptForInput, String actualMsg) {
+    public void printPrompt(String actualMsg, boolean promptForInput) {
         ConsoleServices.println(actualMsg);
         if (promptForInput) {
             getUserInput(false);
@@ -138,58 +138,58 @@ public abstract class AbstractConsole {
     }
 
     private void runOnInvalidCommand(AbstractConsole currentConsole) {
-        ConsoleServices.println("Bad command! Please enter a valid command.");
         if (currentConsole instanceof BiomeMenu) {
             BiomeMenu console = (BiomeMenu) this;
-            console.printPrompt(PromptMessage.BIOME_MENU, true);
+            console.printPrompt(PromptMessage.BIOME_MENU, false);
         }
         else if (currentConsole instanceof CustomDifficultyMenu) {
             CustomDifficultyMenu games = (CustomDifficultyMenu) this;
-            games.printPrompt(PromptMessage.CUSTOM_DIFF_MENU, true);
+            games.printPrompt(PromptMessage.CUSTOM_DIFF_MENU, false);
         }
         else if (currentConsole instanceof DifficultyMenu) {
             DifficultyMenu stat = (DifficultyMenu) this;
-            stat.printPrompt(PromptMessage.DIFF_MENU, true);
+            stat.printPrompt(PromptMessage.DIFF_MENU, false);
         }
         else if (currentConsole instanceof MainMenu) {
             MainMenu curr = (MainMenu) this;
-            curr.printPrompt(PromptMessage.MAIN_MENU, true);
+            curr.printPrompt(PromptMessage.MAIN_MENU, false);
         }
         else if (currentConsole instanceof RaceMenu) {
             RaceMenu curr = (RaceMenu) this;
-            curr.printPrompt(PromptMessage.RACE_MENU, true);
+            curr.printPrompt(PromptMessage.RACE_MENU, false);
         }
         else if (currentConsole instanceof TurnMenu) {
             TurnMenu curr = (TurnMenu) this;
-            curr.printPrompt(PromptMessage.TURN_MENU, true);
+            curr.printPrompt(PromptMessage.TURN_MENU, false);
         }
         else if (currentConsole instanceof PriorityMenu) {
             PriorityMenu curr = (PriorityMenu) this;
-            curr.printPrompt(PromptMessage.PRIORITY_MENU, true);
+            curr.printPrompt(PromptMessage.PRIORITY_MENU, false);
         }
         else if (currentConsole instanceof MidTurnMenu) {
-            new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
+            new TurnMenu().printPrompt(PromptMessage.TURN_MENU, false);
         }
         else if (currentConsole instanceof EndPhaseMenu) {
             EndPhaseMenu curr = (EndPhaseMenu) this;
-            curr.printPrompt(PromptMessage.END_PHASE, true);
+            curr.printPrompt(PromptMessage.END_PHASE, false);
         }
         else if (currentConsole instanceof PopulationSetupMenu) {
             PopulationSetupMenu curr = (PopulationSetupMenu) this;
-            curr.printPrompt(PromptMessage.POP_SETUP, true);
+            curr.printPrompt(PromptMessage.POP_SETUP, false);
         }
         else if (currentConsole instanceof BoardSizeMenu) {
             BoardSizeMenu curr = (BoardSizeMenu) this;
-            curr.printPrompt(PromptMessage.BOARD_SIZE, true);
+            curr.printPrompt(PromptMessage.BOARD_SIZE, false);
         }
         else if (currentConsole instanceof NewGameHub) {
             NewGameHub curr = (NewGameHub) this;
-            curr.printPrompt(PromptMessage.NEW_GAME_HUB, true);
+            curr.printPrompt(PromptMessage.NEW_GAME_HUB, false);
         }
         else if (currentConsole instanceof LoginMenu) {
             LoginMenu curr = (LoginMenu) this;
-            curr.printPrompt(PromptMessage.LOGIN, true);
+            curr.printPrompt(PromptMessage.LOGIN, false);
         }
+        printPrompt("Bad command! Please enter a valid command.", true);
     }
 
     public PromptMessage getMessageFromConsole(AbstractConsole con) {

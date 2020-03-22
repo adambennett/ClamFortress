@@ -78,6 +78,7 @@ public class Village extends AbstractNode {
 
     // Resources
     private Integer faith =             0;
+    private Integer coins =             0;
 
     // Lists
     private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
@@ -87,8 +88,6 @@ public class Village extends AbstractNode {
     private ArrayList<AbstractDisaster> ongoingDisasters = new ArrayList<>();
     private ArrayList<Merchant>         vistingMerchants = new ArrayList<>();
     private ArrayList<AbstractPlague>   ongoingPlagues = new ArrayList<>();
-    private ArrayList<AbstractRaid>     ongoingOpponentRaids = new ArrayList<>();
-    private ArrayList<AbstractRaid>     ongoingFriendlyRaids = new ArrayList<>();
     private ArrayList<Survivor>         population = new ArrayList<>();
     private Map<AbstractResource, Integer> resources;
 
@@ -96,7 +95,7 @@ public class Village extends AbstractNode {
 
     public Village(AbstractBiome biome, int popCap) {
         super(0, 0, biome);
-        this.inventory = new Inventory(3);
+        this.inventory = new Inventory(5);
         this.resources = new HashMap<>();
         this.popCap = popCap;
         this.baseNode = getNodeFromBiome(biome);
@@ -126,7 +125,10 @@ public class Village extends AbstractNode {
             return new Mountain(0, 0);
         }else if (biome instanceof Ocean) {
             return new Sea(0, 0);
-        } else {
+        } else if (biome instanceof BlankBiome) {
+            Logger.getGlobal().info("Creating a village with a blank biome, hope this is what you want");
+            return null;
+        } else{
             Logger.getGlobal().warning("Got a bad biome type for village at creation time!");
         }
         return null;
@@ -632,7 +634,7 @@ public class Village extends AbstractNode {
     }
 
     public Integer getCoins() {
-        return this.getResource("coins") != null ? this.getResource("coins") : 0;
+        return coins;
     }
     public Integer getFaith() {
         return this.faith;
@@ -712,10 +714,9 @@ public class Village extends AbstractNode {
     }
 
     public void incCoins(int amt) {
-        this.addResource(Archive.getInstance().getRes("coins"), amt);
+        this.coins+=amt;
         if (this.getCoins() > this.getCoinLimit()) {
-            int diff = this.getCoinLimit() - this.getCoins();
-            this.removeResource("coins", diff);
+            this.coins = this.getCoinLimit();
         }
     }
 
@@ -731,7 +732,10 @@ public class Village extends AbstractNode {
     }
 
     public void subCoins(int amt) {
-       this.removeResource("coins", amt);
+        this.coins--;
+        if (this.coins < 0) {
+            this.coins = 0;
+        }
     }
 
     public void setHunger(Integer hunger) {

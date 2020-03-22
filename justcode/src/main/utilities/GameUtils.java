@@ -154,8 +154,7 @@ public class GameUtils {
         if (obj instanceof AbstractItem) {
             AbstractItem item = (AbstractItem) obj;
             for (int i = 0; i < amt; i++) {
-                Game.getVillage().getInventory().getItems().add(item);
-                item.onObtain();
+                Game.getVillage().getInventory().addItem(item.clone());
                 GameUtils.whenObtainingAnyItem(item);
                 if (item instanceof Golden) {
                     Game.getVillage().incCoins(((Golden) item).getGoldAmt());

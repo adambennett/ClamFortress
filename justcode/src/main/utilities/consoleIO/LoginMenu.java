@@ -2,7 +2,9 @@ package main.utilities.consoleIO;
 
 import main.enums.*;
 import main.models.*;
+import main.utilities.*;
 import main.utilities.builders.*;
+import main.utilities.persistence.*;
 
 import java.util.*;
 
@@ -20,14 +22,34 @@ public class LoginMenu extends AbstractConsole {
     public void processCommand(MenuCommands cmd, ArrayList<String> args) {
         switch (cmd) {
             case LOGIN:
-                new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
+                String user = ConsoleServices.getStringInput("Username: ");
+                String pass = ConsoleServices.getStringInput("Password: ");
+                if (Database.logIn(user, pass)) {
+                    MainMenu main = new MainMenu();
+                    main.printPrompt(PromptMessage.MAIN_MENU, false);
+                    main.printPrompt("Welcome back, " + user + ".", true);
+                } else {
+                    printPrompt(PromptMessage.LOGIN, false);
+                    printPrompt("Invalid credentials.", true);
+                }
                 break;
             case REGISTER:
-                new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
+                String userR = ConsoleServices.getStringInput("New Username: ");
+                String passR = ConsoleServices.getStringInput("Password: ");
+                if (!Database.isUser(userR)) {
+                    Database.register(userR, passR);
+                    MainMenu main = new MainMenu();
+                    main.printPrompt("Registered new user " + userR, false);
+                    main.printPrompt(PromptMessage.MAIN_MENU, true);
+                } else {
+                    printPrompt(PromptMessage.LOGIN, false);
+                    printPrompt("User already exists!", true);
+                }
                 break;
             case EXIT:
                 System.exit(0);
             case CONTINUE:
+                Database.logInQuickplay();
                 builder = new GameBuilder();
                 builder.setStartingPop(2000);
                 builder.setStartingPopCap(2500);

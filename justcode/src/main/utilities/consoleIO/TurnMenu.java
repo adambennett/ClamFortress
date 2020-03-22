@@ -22,7 +22,7 @@ public class TurnMenu extends AbstractConsole {
         consoleCommands.put("2", MenuCommands.STATS);
         consoleCommands.put("3", MenuCommands.GAME_BOARD);
         consoleCommands.put("4", MenuCommands.RESOURCES);
-        if (Game.getVillage().getInventory().getItems().size() > 0) {
+        if (Game.getVillage().getInventory().inventorySize() > 0) {
             consoleCommands.put("5", MenuCommands.INVENTORY);
         } else {
             consoleCommands.put("5", MenuCommands.OPTION_UNAVAILABLE);

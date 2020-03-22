@@ -5,6 +5,7 @@ import main.models.*;
 import main.models.animals.*;
 import main.models.buildings.abstracts.*;
 import main.models.items.*;
+import main.models.items.artifacts.*;
 import main.models.managers.*;
 import main.models.nodes.*;
 import main.models.people.*;
@@ -41,7 +42,7 @@ public class GameStrings {
                     "***--------------------------------------------***\n" +
                     "***                1 | Login                   ***\n" +
                     "***                2 | Register                ***\n" +
-                    "***                3 | Quick Start             ***\n" +
+                    "***                3 | Quickplay               ***\n" +
                     "***--------------------------------------------***\n" +
                     "***                0 | Exit                    ***\n" +
                     "**************************************************\n";
@@ -56,10 +57,8 @@ public class GameStrings {
                     "***                4 | Population              ***\n" +
                     "***                5 | Board Size              ***\n" +
                     "***                6 | Difficulty Modifiers    ***\n" +
-                    "***                7 | Equipment               ***\n" +
-                    "***                8 | Resources               ***\n" +
-                    "***                9 | Starting Era            ***\n" +
-                    "***               10 | View Current Settings   ***\n" +
+                    "***                7 | Starting Era            ***\n" +
+                    "***                8 | View Current Settings   ***\n" +
                     "***--------------------------------------------***\n" +
                     "***                0 | Start Game              ***\n" +
                     "***--------------------------------------------***\n" +
@@ -283,7 +282,7 @@ public class GameStrings {
         a.put("2", "Stats");
         a.put("3", "Board");
         a.put("4", "Resources");
-        if (Game.getVillage().getInventory().getItems().size() > 0) {
+        if (Game.getVillage().getInventory().inventorySize() > 0) {
             a.put("5", "Inventory");
         } else {
             a.put("5", "---------");
@@ -520,17 +519,7 @@ public class GameStrings {
     public static LinkedHashMap<String, ArrayList<String>> getInventory() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
-        LinkedHashMap<AbstractItem, Integer> occ = new LinkedHashMap<>();
-        ArrayList<AbstractItem> items = v.getInventory().getItems();
-        Collections.sort(items);
-        for (AbstractItem item : items){
-            if (occ.containsKey(item)) {
-                occ.put(item, occ.get(item) + 1);
-            } else {
-                occ.put(item, 1);
-            }
-        }
-        for (Map.Entry<AbstractItem, Integer> entry : occ.entrySet()) {
+        for (Map.Entry<AbstractItem, Integer> entry : v.getInventory().getEntrySet()) {
             String name = entry.getKey().getName();
             String desc = entry.getKey().getDesc();
             if (desc.length() > 85) {
@@ -561,8 +550,8 @@ public class GameStrings {
         ArrayList<String> topCols = new ArrayList<>();
         ArrayList<String> botCols = new ArrayList<>();
         topCols.add("Amount"); botCols.add("Return");
-        topCols.add("Type"); botCols.add("Total Items: " + Game.getVillage().getInventory().getItems().size());
-        topCols.add("Description"); botCols.add("");
+        topCols.add("Type"); botCols.add("");
+        topCols.add("Description"); botCols.add("Total Items: " + Game.getVillage().getInventory().inventorySize() + " / " + Game.getVillage().getInventory().getCapacity());
         top.put("Item Name", topCols);
         bottom.put("0", botCols);
         ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
@@ -756,9 +745,18 @@ public class GameStrings {
         if (v.getVistingMerchants().size() > 0) {
             Merchant active = v.getVistingMerchants().get(0);
             for (Map.Entry<String, Integer> o : active.getWares().entrySet()) {
+                GameObject obj = Archive.getInstance().get(o.getKey());
+                boolean canBuy = true;
+                if ((obj instanceof AbstractItem)) {
+                    canBuy = Game.getVillage().getInventory().canAdd((AbstractItem) obj);
+                }
                 String type = Archive.getInstance().get(o.getKey()).getType();
                 String cost = "" + o.getValue();
                 String desc = Archive.getInstance().get(o.getKey()).getDesc();
+                if (!canBuy) {
+                    cost = "???";
+                    desc = "???";
+                }
                 if (desc.length() > 124) {
                     desc = desc.substring(0, 125);
                 }
@@ -766,10 +764,13 @@ public class GameStrings {
                 tempCols.add(cost);
                 tempCols.add(type);
                 tempCols.add(desc);
-                String[] spliceName = o.getKey().split(" ");
-                String name = "";
-                for (String s : spliceName) {
-                    name += StringHelpers.capFirstLetter(s.toLowerCase()) + " ";
+                String name = "Unusable Item";
+                if (canBuy) {
+                    name = "";
+                    String[] spliceName = o.getKey().split(" ");
+                    for (String s : spliceName) {
+                        name += StringHelpers.capFirstLetter(s.toLowerCase()) + " ";
+                    }
                 }
                 name = name.trim();
                 a.put(name, tempCols);
@@ -792,7 +793,7 @@ public class GameStrings {
         Village v = Game.getVillage();
         if (Game.getVillage().getVistingMerchants().size() > 0) {
             Merchant active = v.getVistingMerchants().get(0);
-            header = active.getName() + "'s Shop";
+            header = active.getName() + "'s " + active.getMerchantType() + " Shop";
         }
         LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
@@ -801,7 +802,7 @@ public class GameStrings {
         ArrayList<String> botCols = new ArrayList<>();
         ArrayList<String> sales = new ArrayList<>();
         topCols.add("Cost (Coins)"); botCols.add("Return"); sales.add("Sell");
-        topCols.add("Type"); botCols.add(""); sales.add("");
+        topCols.add("Type"); botCols.add("Coins: " + Game.getVillage().getCoins()); sales.add("");
         topCols.add("Description"); botCols.add(""); sales.add("");
         top.put("Item Name", topCols);
         bottom.put("0", botCols);
@@ -860,29 +861,23 @@ public class GameStrings {
     public static LinkedHashMap<String, ArrayList<String>> getSaleMerchant() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
-        for (Survivor s : v.getSurvivors()) {
-            ArrayList<String> tempCols = new ArrayList<>();
-            tempCols.add("" + s.getAge());
-            tempCols.add("" + s.getHP() + " / " + s.getMaxHp());
-            tempCols.add("" + s.getStrength());
-            tempCols.add("" + s.getDexterity());
-            tempCols.add("" + s.getIntelligence());
-            tempCols.add("" + s.getAgility());
-            tempCols.add("" + s.getMagic());
-            tempCols.add("" + s.getEngineering());
-            tempCols.add(StringHelpers.capFirstLetter(s.getRace().toString().toLowerCase()));
-            tempCols.add(StringHelpers.capFirstLetter(s.getGender().toString().toLowerCase()));
-            a.put(s.getName(), tempCols);
+        if (v.getInventory().inventorySize() > 0) {
+            for (Map.Entry<AbstractItem, Integer> entry : v.getInventory().getEntrySet()) {
+                AbstractItem item = entry.getKey();
+                if (!(item instanceof AbstractArtifact) && entry.getValue() > 0) {
+                    String type = item.getType();
+                    String val = "" + v.getInventory().getItemValue(item);
+                    String amt = "" + entry.getValue();
+                    ArrayList<String> tempCols = new ArrayList<>();
+                    tempCols.add(amt);
+                    tempCols.add(val);
+                    tempCols.add(type);
+                    a.put(item.getName(), tempCols);
+                }
+            }
         }
         if (a.size() < 1) {
             ArrayList<String> tempCols = new ArrayList<>();
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
-            tempCols.add("");
             tempCols.add("");
             tempCols.add("");
             tempCols.add("");
@@ -891,25 +886,23 @@ public class GameStrings {
         return a;
     }
     public static void loadSaleMerchant() {
-        String leftAlignFormat = "| %-52s | %-8s | %-18s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
-        String headerFormat = "| %-142s |\n";
-        String breakLine = "+------------------------------------------------------+--------------------+----------+------+------+------+------+------+------+------------+------------+\n";
-        String header = "Population";
+        String leftAlignFormat = "| %-25s | %-21s | %-21s | %-21s |\n";
+        String headerFormat = "| %-97s |\n";
+        String breakLine = "+---------------------------+-----------------------+-----------------------+-----------------------+\n";
+        String header = "Merchant - Sell Menu";
+        Village v = Game.getVillage();
+        if (Game.getVillage().getVistingMerchants().size() > 0) {
+            Merchant active = v.getVistingMerchants().get(0);
+            header = "Selling Items to " + active.getName() + "'s Shop";
+        }
         LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
         ArrayList<String> topCols = new ArrayList<>();
         ArrayList<String> botCols = new ArrayList<>();
-        topCols.add("AGE"); botCols.add("Return");
-        topCols.add("HP"); botCols.add("");
-        topCols.add("STR"); botCols.add("");
-        topCols.add("DEX"); botCols.add("");
-        topCols.add("INT"); botCols.add("");
-        topCols.add("AGI"); botCols.add("");
-        topCols.add("MAG"); botCols.add("");
-        topCols.add("ENG"); botCols.add("");
-        topCols.add("RACE"); botCols.add("");
-        topCols.add("GENDER"); botCols.add("");
-        top.put("NAME", topCols);
+        topCols.add("Held"); botCols.add("Return");
+        topCols.add("Value"); botCols.add("");
+        topCols.add("Type"); botCols.add("Coins: " + Game.getVillage().getCoins());
+        top.put("Item Name", topCols);
         bottom.put("0", botCols);
         ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
         list.add(top);
@@ -920,24 +913,6 @@ public class GameStrings {
 
     public static String getRandomName(boolean includePokemon) {
         ArrayList<String> names = new ArrayList<>();
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
-        names.add("Raheel");
         names.add("A Monkey");
         names.add("A Platypus");
         names.add("Aaron");
@@ -1205,6 +1180,7 @@ public class GameStrings {
         names.add("Quinlan");
         names.add("Quinn");
         names.add("Rafael");
+        names.add("Raheel");
         names.add("Raja");
         names.add("Rajah");
         names.add("Rebecca");
@@ -1234,6 +1210,7 @@ public class GameStrings {
         names.add("Stacey");
         names.add("Stella");
         names.add("Steve-O");
+        names.add("Raheel");
         names.add("Stuart");
         names.add("Susan");
         names.add("Squidward");
@@ -1285,6 +1262,7 @@ public class GameStrings {
         names.add("Creepo");
         names.add("Radiohead");
         names.add("Nickleback");
+        names.add("Raheel");
         names.add("The Arbiter");
         names.add("343 Guilty Spark");
         names.add("Volcano Worshipper");
@@ -1342,6 +1320,39 @@ public class GameStrings {
         names.add("Pete Davidson");
         names.add("Nicholas Cage");
         names.add("Nicholas Cage (from Con Air)");
+        names.add("Nicholas Cage (from Face Off)");
+        names.add("Nicholas Cage (from National Treasure)");
+        names.add("Nicholas Cage (from Leaving Las Vegas)");
+        names.add("Nicholas Cage (from Mandy)");
+        names.add("Nicholas Cage (from Gone in 60 Seconds)");
+        names.add("Nicholas Cage (from Ghost Rider)");
+        names.add("Nicholas Cage (from Raising Arizona)");
+        names.add("Nicholas Cage (from Knowing)");
+        names.add("Nicholas Cage (from Moonstruck)");
+        names.add("Nicholas Cage (from Kick-Ass)");
+        names.add("Nicholas Cage (from Adaptation)");
+        names.add("Nicholas Cage (from The Family Man)");
+        names.add("Nicholas Cage (from Wild at Heart)");
+        names.add("Nicholas Cage (from Bad Lieutenant)");
+        names.add("Nicholas Cage (from Lord of War)");
+        names.add("Nicholas Cage (from Season of the Witch)");
+        names.add("Nicholas Cage (from Vampire's Kiss)");
+        names.add("Nicholas Cage (from Color Out of Space)");
+        names.add("Nicholas Cage (from The Rock)");
+        names.add("Nicholas Cage (from Drive Angry)");
+        names.add("Nicholas Cage (from Left Behind)");
+        names.add("Nicholas Cage (from The Wicker Man)");
+        names.add("Nicholas Cage (from The Frozen Ground)");
+        names.add("Nicholas Cage (from Next)");
+        names.add("Nicholas Cage (from Matchstick Men)");
+        names.add("Nicholas Cage (from 8mm)");
+        names.add("Nicholas Cage (from Bangkok Dangerous)");
+        names.add("Nicholas Cage (from The Weather Man)");
+        names.add("Nicholas Cage (from Mom and Dad)");
+        names.add("Nicholas Cage (from Snake Eyes)");
+        names.add("Nicholas Cage (from Dying of the Light)");
+        names.add("Nicholas Cage (from Outcast)");
+        names.add("Nicholas Cage (from Birdy)");
         names.add("Paul Rudd");
         names.add("Shaq");
         names.add("Koby Bryant");

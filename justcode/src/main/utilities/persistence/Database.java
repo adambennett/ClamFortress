@@ -1,5 +1,7 @@
 package main.utilities.persistence;
 
+import java.util.*;
+
 public class Database {
 
     private static Integer playerScore = 0;
@@ -8,6 +10,7 @@ public class Database {
     private static Boolean aliensUnlocked = false;
     private static Boolean clamanUnlocked = false;
     private static Boolean orcsUnlocked = false;
+    private static ArrayList<User> users = new ArrayList<>();
 
     public static void updateUnlocks() {
         if (playerScore > 50000) { aliensUnlocked  = true; }
@@ -15,6 +18,32 @@ public class Database {
         if (playerScore > 4000)  { dwarvesUnlocked = true; }
         if (playerScore > 1000)  { elvesUnlocked   = true; }
         if (playerScore > 500)   { orcsUnlocked   = true;  }
+    }
+
+    public static void logInQuickplay() {
+
+    }
+
+    public static Boolean logIn(String user, String pass) {
+        for (User player : users){
+            if (player.getName().equals(user) && player.getPass().equals(pass)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Boolean isUser(String user) {
+        for (User player : users){
+            if (player.getName().equals(user)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void register(String user, String pass) {
+        users.add(new User(user, pass));
     }
 
     public static void loadDatabase() {

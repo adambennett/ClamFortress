@@ -5,7 +5,6 @@ import main.models.items.*;
 
 public class GoldenSword extends AbstractArtifact implements Unique, Golden {
 
-    private static final Integer goldAmt = 50;
     private static final Integer atkBoost = 5;
 
     public GoldenSword() {

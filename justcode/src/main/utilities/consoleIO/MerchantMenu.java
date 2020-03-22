@@ -4,6 +4,7 @@ import javafx.scene.shape.*;
 import main.enums.*;
 import main.interfaces.*;
 import main.models.*;
+import main.models.items.*;
 import main.models.people.merchants.*;
 import main.utilities.*;
 import main.utilities.stringUtils.*;
@@ -23,7 +24,7 @@ public class MerchantMenu extends AbstractConsole implements DynamicConsole {
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case SELL:
-                printPrompt(PromptMessage.MERCHANT, true);
+                new SaleMerchantMenu().printPrompt(PromptMessage.SALE_MERCHANT, true);
                 break;
         }
     }
@@ -48,17 +49,25 @@ public class MerchantMenu extends AbstractConsole implements DynamicConsole {
                     }
                 }
                 if (bought) {
-                    if (Game.getVillage().getCoins() >= m.getWares().get(key)) {
-                        GameObject obj = Archive.getInstance().getGameObj(key);
+                    GameObject obj = Archive.getInstance().getGameObj(key);
+                    boolean canBuy = true;
+                    if (obj instanceof AbstractItem) {
+                        canBuy = Game.getVillage().getInventory().canAdd((AbstractItem) obj);
+                    }
+                    if (canBuy && Game.getVillage().getCoins() >= m.getWares().get(key)) {
                         GameUtils.obtainGameObject(obj, 1);
                         int amtPaid = m.getWares().get(key);
                         Game.getVillage().subCoins(amtPaid);
                         m.purchase(key, amtPaid);
                         StringHelpers.reloadStrings();
-                        printPrompt(PromptMessage.MERCHANT, true);
-                    } else {
+                        printPrompt(PromptMessage.MERCHANT, false);
+                        printPrompt("Purchased " + key + " from " + m.getName() + " for " + amtPaid, true);
+                    } else if (canBuy) {
                         printPrompt(PromptMessage.MERCHANT, false);
                         printPrompt("Not enough Coins!", true);
+                    } else {
+                        printPrompt(PromptMessage.MERCHANT, false);
+                        printPrompt("That item cannot be obtained currently.", true);
                     }
                 }
                 else {

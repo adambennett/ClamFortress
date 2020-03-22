@@ -16,10 +16,8 @@ public class NewGameHub extends AbstractConsole {
         consoleCommands.put("4", MenuCommands.POPULATION);
         consoleCommands.put("5", MenuCommands.GAME_BOARD);
         consoleCommands.put("6", MenuCommands.DIFFICULTY_MODS);
-        consoleCommands.put("7", MenuCommands.INVENTORY);
-        consoleCommands.put("8", MenuCommands.RESOURCES);
-        consoleCommands.put("9", MenuCommands.STARTING_ERA);
-        consoleCommands.put("10", MenuCommands.VIEW_SETTINGS);
+        consoleCommands.put("7", MenuCommands.STARTING_ERA);
+        consoleCommands.put("8", MenuCommands.VIEW_SETTINGS);
         consoleCommands.put("0", MenuCommands.CONTINUE);
         consoleCommands.put("exit", MenuCommands.EXIT);
         consoleCommands.put("quit", MenuCommands.NEW_GAME);
@@ -38,14 +36,6 @@ public class NewGameHub extends AbstractConsole {
                 break;
             case EXIT:
                 System.exit(0);
-            case RESOURCES:
-                // TODO
-                printPrompt(PromptMessage.NEW_GAME_HUB, true);
-                break;
-            case INVENTORY:
-                // TODO
-                printPrompt(PromptMessage.NEW_GAME_HUB, true);
-                break;
             case POPULATION:
                 new PopulationSetupMenu().printPrompt(PromptMessage.POP_SETUP, true);
                 break;

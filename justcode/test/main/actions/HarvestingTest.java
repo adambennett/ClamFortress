@@ -17,15 +17,11 @@ public class HarvestingTest {
 
     @Test
     public void cropsReadyToHarvestTest(){
-
         Harvesting harvesting = new Harvesting(1);
-
         Game.getVillage().getFarmland().setHarvestDate(10);
         Game.getVillage().getFarmland().setPlantDate(10);
-
-        Boolean expected = true;
         Boolean actual = harvesting.cropsReadyToHarvest();
-        Assert.assertEquals(expected,actual);
+        Assert.assertTrue(actual);
     }
 
 
@@ -38,12 +34,8 @@ public class HarvestingTest {
         Game.getVillage().addResource(seeds,10);
         planting.update();
         Game.getVillage().getFarmland().setHarvestDate(Game.getVillage().getFarmland().getPlantDate()+3);
-
         Boolean actual = harvesting.cropsReadyToHarvest();
-        Boolean expected = true;
-
-
-        Assert.assertEquals(expected,actual);
+        Assert.assertTrue(actual);
     }
 
     @Test

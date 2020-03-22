@@ -31,6 +31,7 @@ import main.models.items.tools.crafting.*;
 import main.models.items.tools.engineering.*;
 import main.models.items.tools.gathering.*;
 import main.models.items.tools.hunting.*;
+import main.models.items.tools.other.*;
 import main.models.people.*;
 import main.models.resources.*;
 import main.models.resources.natural.*;
@@ -623,5 +624,13 @@ public class Archive {
         add(new GooRifle());
         add(new GoldenAxe());
         add(new GoldenWood());
+        add(new Telescope());
+        add(new ShopToken());
+        add(new Backpack());
+        add(new LargeBackpack());
+        add(new Wallet());
+        add(new LargeWallet());
+        add(new GooGenerator());
+
     }
 }

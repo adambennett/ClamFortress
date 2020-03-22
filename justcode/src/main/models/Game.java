@@ -8,6 +8,7 @@ import main.actions.utility.NewSurvivors;
 import main.encounters.AbstractEncounter;
 import main.enums.Difficulty;
 import main.enums.Race;
+import main.models.items.*;
 import main.models.managers.*;
 import main.models.nodes.AbstractNode;
 import main.models.nodes.City;
@@ -20,7 +21,7 @@ import main.models.tech.eras.BronzeAge;
 import main.models.tech.eras.Era;
 import main.utilities.persistence.Database;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Game {
 
@@ -113,9 +114,10 @@ public class Game {
     }
 
     public static ArrayList<GameObject> getModifierObjects() {
-        ArrayList<GameObject> mods = new ArrayList<>();
-        mods.addAll(getVillage().getAllResources());
-        mods.addAll(getVillage().getInventory().getItems());
+        ArrayList<GameObject> mods = new ArrayList<>(getVillage().getAllResources());
+        for (Map.Entry<AbstractItem, Integer> entry : getVillage().getInventory().getEntrySet()) {
+            mods.add(entry.getKey());
+        }
         mods.addAll(getVillage().getBuildings());
         mods.addAll(getGameBoard().getAnimals());
         mods.add(getVillage().getFarmland());

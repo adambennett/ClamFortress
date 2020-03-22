@@ -28,6 +28,7 @@ import main.models.resources.AbstractResource;
 import main.models.resources.refined.*;
 import main.models.resources.refined.food.PlaceholderFood;
 import main.utilities.*;
+import main.utilities.persistence.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -173,7 +174,7 @@ public class Village extends AbstractNode {
                 for (GameObject obj : Game.getModifierObjects()) {
                     obj.onVillagerDeath();
                 }
-                GameManager.getInstance().setVillagersKilled(GameManager.getInstance().getVillagersKilled() + 1);
+                StatTracker.incVillagers(1);
                 if (GameManager.getInstance().getRaidingCity() != null) {
                     OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
                 }

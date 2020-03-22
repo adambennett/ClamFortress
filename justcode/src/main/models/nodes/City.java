@@ -6,6 +6,7 @@ import main.models.nodes.biomes.*;
 import main.models.people.Survivor;
 import main.models.resources.*;
 import main.utilities.*;
+import main.utilities.persistence.*;
 import main.utilities.stringUtils.*;
 
 import java.util.*;
@@ -74,7 +75,7 @@ public class City extends AbstractNode {
             this.setHp(this.hp - amt);
             if (villager.getHP() < 1) {
                 removeSurvivor(villager);
-                GameManager.getInstance().setEnemiesKilled(GameManager.getInstance().getEnemiesKilled() + 1);
+                StatTracker.incEnemies(1);
                 for (GameObject obj : Game.getModifierObjects()) {
                     obj.onEnemyDeath();
                 }

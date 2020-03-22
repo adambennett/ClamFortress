@@ -18,8 +18,6 @@ public class GameManager {
     private BigInteger turnNumber;
     private Integer trainingCost;
     private Integer defeatedCities;
-    private Integer villagersKilled;
-    private Integer enemiesKilled;
     private Date date;
     private String season;
     private City raidingCity;
@@ -45,8 +43,6 @@ public class GameManager {
         this.techMod = 2;
         this.nethermod = 1;
         this.defeatedCities = 0;
-        this.villagersKilled = 0;
-        this.enemiesKilled = 0;
         this.raidable = new ArrayList<>();
         updateSeason();
     }
@@ -84,11 +80,11 @@ public class GameManager {
                 this.techMod += ThreadLocalRandom.current().nextInt(1, 5);
             } else if (amt > 0) {
                 OutputManager.exp(amt);
-                Database.score(amt);
+                StatTracker.incScore(amt);
             }
         } else {
             OutputManager.exp(amt);
-            Database.score(amt);
+            StatTracker.incScore(amt);
         }
     }
 
@@ -98,30 +94,6 @@ public class GameManager {
 
     public Integer getNethermod() {
         return nethermod;
-    }
-
-    public Integer getTechLevel() {
-        return techLevel;
-    }
-
-    public Integer getTechUp() {
-        return techUp;
-    }
-
-    public Integer getTechMod() {
-        return techMod;
-    }
-
-    public void setTechLevel(Integer techLevel) {
-        this.techLevel = techLevel;
-    }
-
-    public void setTechUp(Integer techUp) {
-        this.techUp = techUp;
-    }
-
-    public void setTechMod(Integer techMod) {
-        this.techMod = techMod;
     }
 
     public static GameManager getInstance() {
@@ -139,8 +111,6 @@ public class GameManager {
         instance.nethermod = 1;
         instance.raidable = new ArrayList<>();
         instance.defeatedCities = 0;
-        instance.villagersKilled = 0;
-        instance.enemiesKilled = 0;
         gameIsLoaded = false;
     }
 
@@ -184,56 +154,32 @@ public class GameManager {
             diff = TimeUnit.DAYS.convert(diffMilli, TimeUnit.MILLISECONDS);
         }
         this.date = newDate;
+        StatTracker.incDays((int)diff);
         return (int)diff;
     }
 
     public void incTurns() {
         incTurns(1);
     }
-
     public void incTurns(int amt) {
         this.turnNumber = this.turnNumber.add(BigInteger.valueOf(amt));
     }
-
     public Integer getDefeatedCities() {
         return defeatedCities;
     }
-
     public ArrayList<City> getRaidable() {
         return raidable;
     }
-
     public BigInteger getTurnNumber() {
         return turnNumber;
     }
     public Date getDate() {
         return date;
     }
-    public String getDateString() {
-        return date.toString();
-    }
+    public String getDateString() { return date.toString(); }
+    public Integer getTrainingCost() { return this.trainingCost; }
     public String getSeason() {
         updateSeason();
         return season;
-    }
-
-    public Integer getTrainingCost() {
-        return this.trainingCost;
-    }
-
-    public Integer getVillagersKilled() {
-        return villagersKilled;
-    }
-
-    public void setVillagersKilled(Integer villagersKilled) {
-        this.villagersKilled = villagersKilled;
-    }
-
-    public Integer getEnemiesKilled() {
-        return enemiesKilled;
-    }
-
-    public void setEnemiesKilled(Integer enemiesKilled) {
-        this.enemiesKilled = enemiesKilled;
     }
 }

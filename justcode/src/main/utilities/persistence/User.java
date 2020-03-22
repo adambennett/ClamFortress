@@ -22,4 +22,5 @@ public class User {
     // Setters
     public void setPass(String pass) { this.pass = pass; }
     public void setName(String name) { this.name = name; }
+    public void setStats(UserStats stats) { this.stats = stats; }
 }

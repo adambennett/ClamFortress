@@ -115,7 +115,7 @@ public class TurnMenu extends AbstractConsole {
                 if (args.size() > 0) {
                     amt = 10000;
                 }
-                Database.score(amt);
+                StatTracker.incScore(amt);
                 printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case CONTINUE:

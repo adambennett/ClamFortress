@@ -19,7 +19,7 @@ import main.models.resources.natural.Wood;
 import main.models.tech.TechTree;
 import main.models.tech.eras.BronzeAge;
 import main.models.tech.eras.Era;
-import main.utilities.persistence.Database;
+import main.utilities.persistence.*;
 
 import java.util.*;
 
@@ -177,7 +177,7 @@ public class Game {
         for (GameObject obj : Game.getModifierObjects()) {
             obj.onDateAdvance(dateInc);
         }
-        Database.score(dateInc);
+        StatTracker.incScore(dateInc);
         gameManager.incTurns();
         queueEvergreenActions(dateInc);
         if (Game.getVillage().getVistingMerchants().size() > 0) {

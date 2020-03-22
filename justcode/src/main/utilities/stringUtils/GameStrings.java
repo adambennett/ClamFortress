@@ -12,6 +12,7 @@ import main.models.people.*;
 import main.models.people.merchants.*;
 import main.models.resources.*;
 import main.models.tech.*;
+import main.utilities.persistence.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -224,11 +225,11 @@ public class GameStrings {
         String dwarf = orc;
         String claman = orc;
         String alien = orc;
-        boolean isOrcUnlocked = main.utilities.persistence.Database.getOrcsUnlocked();
-        boolean isElfUnlocked = main.utilities.persistence.Database.getElvesUnlocked();
-        boolean isDwarfUnlocked = main.utilities.persistence.Database.getDwarvesUnlocked();
-        boolean isClamanUnlocked = main.utilities.persistence.Database.getClamanUnlocked();
-        boolean isAlienUnlocked = main.utilities.persistence.Database.getAliensUnlocked();
+        boolean isOrcUnlocked = StatTracker.getOrcsUnlocked();
+        boolean isElfUnlocked = StatTracker.getElvesUnlocked();
+        boolean isDwarfUnlocked = StatTracker.getDwarvesUnlocked();
+        boolean isClamanUnlocked = StatTracker.getClamanUnlocked();
+        boolean isAlienUnlocked = StatTracker.getAliensUnlocked();
         if (isAlienUnlocked)  { alien = "Alien";   }
         if (isClamanUnlocked) { claman = "Claman"; }
         if (isDwarfUnlocked)  { dwarf = "Dwarf";   }
@@ -444,6 +445,7 @@ public class GameStrings {
     public static LinkedHashMap<String, String> getStats() {
         LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
         Village v = Game.getVillage();
+        rsrcMap.put("Days Survived", "" + StatTracker.getDaysSurvived());
         rsrcMap.put("Cities Defeated", "" + GameManager.getInstance().getDefeatedCities() + " / " + (GameManager.getInstance().getRaidable().size() + GameManager.getInstance().getDefeatedCities()));
         rsrcMap.put("Population", "" + v.getPopulation() + " / " + v.getPopCap());
         rsrcMap.put("Buildings", "" + v.getBuildings().size() + " / " + v.getBuildingLimit());
@@ -465,8 +467,8 @@ public class GameStrings {
             rsrcMap.put("Average Magic", "" + v.getMagicAvg());
             rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
         }
-        rsrcMap.put("Villagers Killed", "" + GameManager.getInstance().getVillagersKilled());
-        rsrcMap.put("Enemies Killed", "" + GameManager.getInstance().getEnemiesKilled());
+        rsrcMap.put("Villagers Lost", "" + StatTracker.getVillagersLost());
+        rsrcMap.put("Enemies Killed", "" + StatTracker.getEnemiesKilled());
         return rsrcMap;
     }
     public static void loadStats() {

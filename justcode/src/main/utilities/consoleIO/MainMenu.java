@@ -27,10 +27,16 @@ public class MainMenu extends AbstractConsole {
                 new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
                 break;
             case LOAD_GAME:
-                Database.loadDatabase();
-                Logger.getGlobal().info("No saved games found!");
-                setBuilder(new GameBuilder());
-                new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
+                if (Database.getGames().size() < 1) {
+                    Logger.getGlobal().info("No saved games found!");
+                    setBuilder(new GameBuilder());
+                    new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
+                } else {
+                    // TODO: change this to actual loading menu
+                    Logger.getGlobal().info("No saved games found!");
+                    setBuilder(new GameBuilder());
+                    new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);
+                }
                 break;
             case STATS:
                 // TODO

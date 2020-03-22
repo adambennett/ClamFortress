@@ -13,19 +13,19 @@ public class RaceMenu extends AbstractConsole {
     @Override
     public void initializeCommands() {
         consoleCommands.put("1", MenuCommands.HUMAN);
-        if (Database.getOrcsUnlocked()) {
+        if (StatTracker.getOrcsUnlocked()) {
             consoleCommands.put("2", MenuCommands.ORC);
         }
-        if (Database.getElvesUnlocked()) {
+        if (StatTracker.getElvesUnlocked()) {
             consoleCommands.put("3", MenuCommands.ELF);
         }
-        if (Database.getDwarvesUnlocked()) {
+        if (StatTracker.getDwarvesUnlocked()) {
             consoleCommands.put("4", MenuCommands.DWARF);
         }
-        if (Database.getClamanUnlocked()) {
+        if (StatTracker.getClamanUnlocked()) {
             consoleCommands.put("5", MenuCommands.CLAMAN);
         }
-        if (Database.getAliensUnlocked()) {
+        if (StatTracker.getAliensUnlocked()) {
             consoleCommands.put("6", MenuCommands.ALIEN);
         }
         consoleCommands.put("7", MenuCommands.RANDOM_RACE);

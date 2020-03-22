@@ -16,23 +16,23 @@ public enum Race {
     public static Race getRandomRace() {
         ArrayList<Race> rands = new ArrayList<>();
         rands.add(Race.HUMAN);
-        if (Database.getAliensUnlocked()) {
+        if (StatTracker.getAliensUnlocked()) {
             rands.add(Race.ALIEN);
         }
 
-        if (Database.getClamanUnlocked()) {
+        if (StatTracker.getClamanUnlocked()) {
             rands.add(Race.CLAMAN);
         }
 
-        if (Database.getDwarvesUnlocked()) {
+        if (StatTracker.getDwarvesUnlocked()) {
             rands.add(Race.DWARF);
         }
 
-        if (Database.getElvesUnlocked()) {
+        if (StatTracker.getElvesUnlocked()) {
             rands.add(Race.ELF);
         }
 
-        if (Database.getOrcsUnlocked()) {
+        if (StatTracker.getOrcsUnlocked()) {
             rands.add(Race.ORC);
         }
         return rands.get(ThreadLocalRandom.current().nextInt(rands.size()));

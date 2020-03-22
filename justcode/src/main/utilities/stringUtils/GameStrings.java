@@ -1,6 +1,7 @@
 package main.utilities.stringUtils;
 
 
+import main.interfaces.*;
 import main.models.*;
 import main.models.animals.*;
 import main.models.buildings.abstracts.*;
@@ -35,6 +36,7 @@ public class GameStrings {
     public static String merchant;
     public static String saleMerchant;
     public static String leader;
+    public static String playerStats;
 
     public static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
 
@@ -228,6 +230,48 @@ public class GameStrings {
                     "***---------------------------------------------------------***\n" +
                     "***             0 | Back to New Game Menu                   ***\n" +
                     "***************************************************************\n";
+
+    public static LinkedHashMap<String, String> getStats() {
+        LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
+        Village v = Game.getVillage();
+        rsrcMap.put("Days Survived", "" + StatTracker.getDaysSurvived());
+        rsrcMap.put("Cities Defeated", "" + GameManager.getInstance().getDefeatedCities() + " / " + (GameManager.getInstance().getRaidable().size() + GameManager.getInstance().getDefeatedCities()));
+        rsrcMap.put("Population", "" + v.getPopulation() + " / " + v.getPopCap());
+        rsrcMap.put("Buildings", "" + v.getBuildings().size() + " / " + v.getBuildingLimit());
+        rsrcMap.put("Total Village HP", "" + v.getHealth() + " / " + v.getMaxHP());
+        rsrcMap.put("Attack", "" + v.getAttackPower());
+        rsrcMap.put("Defense", "" + v.getDefense());
+        rsrcMap.put("Agility", "" + v.getAgility());
+        rsrcMap.put("Dexterity", "" + v.getDexterity());
+        rsrcMap.put("Engineering", "" + v.getEngineering());
+        rsrcMap.put("Intellect", "" + v.getIntelligence());
+        rsrcMap.put("Magic", "" + v.getMagic());
+        rsrcMap.put("Strength", "" + v.getStrength());
+        if (v.getPopulation() > 0) {
+            rsrcMap.put("Average Age", "" + v.getAgeAvg());
+            rsrcMap.put("Average Agility", "" + v.getAgilityAvg());
+            rsrcMap.put("Average Dexterity", "" + v.getDexterityAvg());
+            rsrcMap.put("Average Engineering", "" + v.getEngineeringAvg());
+            rsrcMap.put("Average Intellect", "" + v.getIntelligenceAvg());
+            rsrcMap.put("Average Magic", "" + v.getMagicAvg());
+            rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
+        }
+        rsrcMap.put("Villagers Lost", "" + StatTracker.getVillagersLost());
+        rsrcMap.put("Enemies Killed", "" + StatTracker.getEnemiesKilled());
+        return rsrcMap;
+    }
+    public static void loadStats() {
+        String leftAlignFormat = "| %-25s | %-25s |\n";
+        String headerFormat = "| %-53s |\n";
+        String breakLine = "+---------------------------+---------------------------+\n";
+        String header = "Village Stats";
+        Map<String, String> bottom = new HashMap<>();
+        bottom.put("0", "Return to Standby Menu");
+        ArrayList<Map<String, String>> list = new ArrayList<>();
+        list.add(getStats());
+        list.add(bottom);
+        stats = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
 
     public static ArrayList<LinkedHashMap<String, ArrayList<String>>> getRaces() {
         String human = "Human";
@@ -493,11 +537,15 @@ public class GameStrings {
         for (Map.Entry<AbstractItem, Integer> entry : v.getInventory().getEntrySet()) {
             String name = entry.getKey().getName();
             String desc = entry.getKey().getDesc();
-            if (desc.length() > 85) {
-                desc = desc.substring(0, 86);
+            if (desc.length() > 84) {
+                desc = desc.substring(0, 85);
             }
             ArrayList<String> cols = new ArrayList<>();
-            cols.add(""+entry.getValue());
+            if (entry.getKey() instanceof Unique) {
+                cols.add("UNIQUE");
+            } else {
+                cols.add(""+entry.getValue());
+            }
             cols.add(entry.getKey().getType());
             cols.add(desc);
             a.put(name, cols);
@@ -710,7 +758,7 @@ public class GameStrings {
         vil = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
     
-    public static LinkedHashMap<String, ArrayList<String>> getStats() {
+    public static LinkedHashMap<String, ArrayList<String>> getPlayerStats() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         User player = Database.getPlayer();
         ArrayList<String> tempCols = new ArrayList<>();
@@ -731,7 +779,7 @@ public class GameStrings {
         a.put("" + StatTracker.getOverallScore(), tempCols);
         return a;
     }
-    public static void loadStats() {
+    public static void loadPlayerStats() {
         String leftAlignFormat = "| %-16s | %-16s | %-16s | %-16s | %-16s | %-16s | %-16s | %-16s | %-16s |\n";
         String headerFormat = "| %-168s |\n";
         String breakLine = "+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+------------------+\n";
@@ -752,9 +800,9 @@ public class GameStrings {
         bottom.put("0", botCols);
         ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
         list.add(top);
-        list.add(getStats());
+        list.add(getPlayerStats());
         list.add(bottom);
-        stats = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+        playerStats = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static LinkedHashMap<String, ArrayList<String>> getLeaderboard() {

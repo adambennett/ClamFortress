@@ -27,5 +27,6 @@ public enum PromptMessage {
     SALE_MERCHANT,
     LEADERBOARD,
     STATS_MENU,
+    PLAYER_STATS,
     DEV_CONSOLE;
 }

@@ -24,7 +24,7 @@ public class StringHelpers {
         GameStrings.loadRaceMenu();
         GameStrings.loadTurnMenu();
         GameStrings.loadEndPhase();
-        GameStrings.loadStats();
+        GameStrings.loadPlayerStats();
         GameStrings.loadInventory();
         GameStrings.loadVillagers();
         GameStrings.loadBoard();
@@ -66,6 +66,9 @@ public class StringHelpers {
             case STAT_VIEW:
                 GameStrings.loadStats();
                 return GameStrings.stats;
+            case PLAYER_STATS:
+                GameStrings.loadPlayerStats();
+                return GameStrings.playerStats;
             case LEADERBOARD:
                 GameStrings.loadLeaderboard();
                 return GameStrings.leader;

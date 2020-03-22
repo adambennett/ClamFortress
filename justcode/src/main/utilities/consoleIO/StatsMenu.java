@@ -1,6 +1,7 @@
 package main.utilities.consoleIO;
 
 import main.enums.*;
+import main.utilities.persistence.*;
 
 import java.util.*;
 
@@ -20,11 +21,15 @@ public class StatsMenu extends AbstractConsole {
         int amt = 0; if (args.size() > 0) { try { amt = Integer.parseInt(args.get(0)); } catch (NumberFormatException ignored) {}}
         switch (cmd) {
             case STATS:
-                new MidConsoleMenu().printPrompt(PromptMessage.STAT_VIEW, true);
+                new MidConsoleMenu().printPrompt(PromptMessage.PLAYER_STATS, true);
                 break;
             case LEADERBOARD:
-                new MidConsoleMenu().printPrompt(PromptMessage.LEADERBOARD, true);
-                printPrompt(PromptMessage.POP_SETUP, true);
+                if (Database.getUsers().size() > 0) {
+                    new MidConsoleMenu().printPrompt(PromptMessage.LEADERBOARD, true);
+                } else {
+                    printPrompt(PromptMessage.STATS_MENU, false);
+                    printPrompt("No users found!", true);
+                }
                 break;
             case CONTINUE:
                 new NewGameHub().printPrompt(PromptMessage.NEW_GAME_HUB, true);

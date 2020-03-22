@@ -9,6 +9,7 @@ import main.models.managers.*;
 import main.models.nodes.*;
 import main.models.people.*;
 import main.models.resources.*;
+import main.models.resources.refined.*;
 import main.models.tech.*;
 import main.models.tech.eras.*;
 import main.utilities.consoleIO.*;
@@ -154,6 +155,9 @@ public class GameUtils {
 
     // ONLY FOR DEV CONSOLE
     public static void devConsoleObtainObject(GameObject obj, int amt, AbstractConsole from, boolean triggerExtras) {
+        if (obj instanceof Coin) {
+            Game.getVillage().incCoins(amt);
+        }
         if (obj instanceof AbstractItem) {
             AbstractItem item = (AbstractItem) obj;
             for (int i = 0; i < amt; i++) {

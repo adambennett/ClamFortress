@@ -736,7 +736,7 @@ public class Village extends AbstractNode {
     }
 
     public void subCoins(int amt) {
-        this.coins--;
+        this.coins-=amt;
         if (this.coins < 0) {
             this.coins = 0;
         }

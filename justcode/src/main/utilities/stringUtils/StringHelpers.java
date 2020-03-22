@@ -32,6 +32,7 @@ public class StringHelpers {
         GameStrings.loadResources();
         GameStrings.loadMerchant();
         GameStrings.loadSaleMerchant();
+        GameStrings.loadLeaderboard();
     }
 
     public static String getStringFromPromptType(main.enums.PromptMessage msg) {
@@ -65,6 +66,11 @@ public class StringHelpers {
             case STAT_VIEW:
                 GameStrings.loadStats();
                 return GameStrings.stats;
+            case LEADERBOARD:
+                GameStrings.loadLeaderboard();
+                return GameStrings.leader;
+            case STATS_MENU:
+                return GameStrings.statsMenu;
             case INVENTORY_VIEW:
                 GameStrings.loadInventory();
                 return GameStrings.inv;

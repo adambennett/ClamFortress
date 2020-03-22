@@ -12,6 +12,7 @@ import main.models.resources.*;
 import main.models.tech.*;
 import main.models.tech.eras.*;
 import main.utilities.consoleIO.*;
+import main.utilities.persistence.*;
 import main.utilities.stringUtils.*;
 
 import java.util.*;
@@ -27,6 +28,8 @@ public class GameUtils {
             s.setMaxHp(s.getMaxHp() + maxHPGain);
             Game.getVillage().setHealth(Game.getVillage().getHealth() + maxHPGain);
         }
+        StatTracker.setHighRes(Game.getVillage().getAllResources().size());
+        StatTracker.setHighBuild(Game.getVillage().getBuildings().size());
     }
 
     public static String getNewRaidCity() {

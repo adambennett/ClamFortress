@@ -73,4 +73,8 @@ public class Database {
     public static Game getCurrentGame() {
         return currentGame;
     }
+
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
 }

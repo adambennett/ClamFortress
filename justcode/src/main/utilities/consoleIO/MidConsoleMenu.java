@@ -4,7 +4,7 @@ import main.enums.*;
 
 import java.util.*;
 
-public class ArchiveMenu extends AbstractConsole {
+public class MidConsoleMenu extends AbstractConsole {
 
     @Override
     public void initializeCommands() {

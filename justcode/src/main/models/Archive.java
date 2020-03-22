@@ -631,6 +631,6 @@ public class Archive {
         add(new Wallet());
         add(new LargeWallet());
         add(new GooGenerator());
-
+        add(new TrainingToken());
     }
 }

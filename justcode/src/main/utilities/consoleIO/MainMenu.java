@@ -15,7 +15,6 @@ public class MainMenu extends AbstractConsole {
         consoleCommands.put("2", MenuCommands.LOAD_GAME);
         consoleCommands.put("3", MenuCommands.STATS);
         consoleCommands.put("4", MenuCommands.ARCHIVE);
-        consoleCommands.put("5", MenuCommands.OPTIONS);
         consoleCommands.put("0", MenuCommands.LOGOUT);
     }
 
@@ -39,15 +38,10 @@ public class MainMenu extends AbstractConsole {
                 }
                 break;
             case STATS:
-                // TODO
-                printPrompt(PromptMessage.MAIN_MENU, true);
+                new StatsMenu().printPrompt(PromptMessage.STATS_MENU, true);
                 break;
             case ARCHIVE:
-                new ArchiveMenu().printPrompt(PromptMessage.ARCHIVE, true);
-                break;
-            case OPTIONS:
-                // TODO
-                printPrompt(PromptMessage.MAIN_MENU, true);
+                new MidConsoleMenu().printPrompt(PromptMessage.ARCHIVE, true);
                 break;
             case LOGOUT:
                 new LoginMenu().printPrompt(PromptMessage.LOGIN, true);

@@ -17,7 +17,6 @@ public class TurnMenu extends AbstractConsole {
         consoleCommands.put("save", MenuCommands.SAVE);
         consoleCommands.put("end", MenuCommands.SKIP_TURN);
         consoleCommands.put("skip", MenuCommands.SKIP_TURN);
-        consoleCommands.put("cheat", MenuCommands.SCORE_REALLY_BIG_HACKS);
         consoleCommands.put("0", MenuCommands.CONTINUE);
         consoleCommands.put("2", MenuCommands.STATS);
         consoleCommands.put("3", MenuCommands.GAME_BOARD);
@@ -91,6 +90,7 @@ public class TurnMenu extends AbstractConsole {
                 Database.saveDatabase();
                 System.exit(0);
             case END_GAME:
+                Database.saveDatabase();
                 GameManager.reset();
                 new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
                 break;
@@ -109,14 +109,6 @@ public class TurnMenu extends AbstractConsole {
                 break;
             case VILLAGERS:
                 new MidTurnMenu().printPrompt(PromptMessage.VILLAGERS, true);
-                break;
-            case SCORE_REALLY_BIG_HACKS:
-                int amt = 1000;
-                if (args.size() > 0) {
-                    amt = 10000;
-                }
-                StatTracker.incScore(amt);
-                printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case CONTINUE:
                 for (GameObject obj : Game.getModifierObjects()) {

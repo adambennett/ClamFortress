@@ -231,8 +231,10 @@ public class Village extends AbstractNode {
             this.maxHP += s.getMaxHp();
             this.totalAge += s.getAge();
             updateAverageStats();
+            StatTracker.setHighPop(this.population.size());
             return true;
         }
+        StatTracker.setHighPop(this.population.size());
         return false;
     }
 
@@ -719,6 +721,7 @@ public class Village extends AbstractNode {
         if (this.getCoins() > this.getCoinLimit()) {
             this.coins = this.getCoinLimit();
         }
+        StatTracker.setHighCoins(this.coins);
     }
 
     public void subMagic(int amt) {

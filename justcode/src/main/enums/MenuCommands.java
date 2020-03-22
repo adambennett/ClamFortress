@@ -61,7 +61,6 @@ public enum MenuCommands {
     RESET,
     RESOURCES,
     SAVE,
-    SCORE_REALLY_BIG_HACKS,
     SCOUTING,
     SEA,
     SKIP_TURN,
@@ -74,7 +73,6 @@ public enum MenuCommands {
     WOODCUTTING,
     STATS,
     ARCHIVE,
-    OPTIONS,
     LOGOUT,
     STONE,
     BRONZE,
@@ -85,5 +83,6 @@ public enum MenuCommands {
     FUTURE,
     STARTING_ERA,
     MERCHANT,
-    TRAINING
+    TRAINING,
+    LEADERBOARD
 }

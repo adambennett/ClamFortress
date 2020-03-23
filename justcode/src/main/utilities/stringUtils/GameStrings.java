@@ -534,19 +534,24 @@ public class GameStrings {
     public static LinkedHashMap<String, ArrayList<String>> getInventory() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
+        ArrayList<AbstractItem> sortable = new ArrayList<>();
         for (Map.Entry<AbstractItem, Integer> entry : v.getInventory().getEntrySet()) {
-            String name = entry.getKey().getName();
-            String desc = entry.getKey().getDesc();
+            sortable.add(entry.getKey());
+        }
+        Collections.sort(sortable);
+        for (AbstractItem item : sortable) {
+            String name = item.getName();
+            String desc = item.getDesc();
             if (desc.length() > 84) {
                 desc = desc.substring(0, 85);
             }
             ArrayList<String> cols = new ArrayList<>();
-            if (entry.getKey() instanceof Unique) {
+            if (item instanceof Unique) {
                 cols.add("UNIQUE");
             } else {
-                cols.add(""+entry.getValue());
+                cols.add(""+v.getInventory().getAmt(item));
             }
-            cols.add(entry.getKey().getType());
+            cols.add(item.getType());
             cols.add(desc);
             a.put(name, cols);
         }

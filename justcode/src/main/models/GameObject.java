@@ -17,6 +17,7 @@ import main.models.items.military.weapons.*;
 import main.models.items.military.weapons.guns.*;
 import main.models.items.military.weapons.medieval.*;
 import main.models.items.tools.*;
+import main.models.items.tools.backpacks.*;
 import main.models.people.*;
 import main.models.resources.*;
 import main.models.tech.eras.*;
@@ -71,6 +72,7 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public Integer modifyResourceStorageIncreases() { return 0; }
     public Integer modifyMaxHPOnPickup() { return 0; }
     public Integer modifyItemSellPrice() { return 0; }
+    public Integer modifyGoldGain(int originalAmt) { return 0; }
 
     // Print special messages at the end of turn report
     public String addToEndTurnReportTop() { return ""; }
@@ -123,6 +125,8 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
             return "Animal";
         } else if (this instanceof AbstractBuilding) {
             return "Building";
+        } else if (this instanceof AbstractBackpack) {
+            return "Bag";
         } else if (this instanceof AbstractTool) {
             return "Tool";
         } else if (this instanceof AbstractAmmo) {

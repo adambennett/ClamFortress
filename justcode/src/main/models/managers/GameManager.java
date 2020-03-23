@@ -18,6 +18,7 @@ public class GameManager {
     private BigInteger turnNumber;
     private Integer trainingCost;
     private Integer defeatedCities;
+    private Integer merchantItems;
     private Date date;
     private String season;
     private City raidingCity;
@@ -37,14 +38,31 @@ public class GameManager {
     private GameManager() {
         this.turnNumber = BigInteger.valueOf(1);
         this.trainingCost = 200;
-        this.date = new Date();
         this.techLevel = 0;
         this.techUp = 1000;
         this.techMod = 2;
         this.nethermod = 1;
         this.defeatedCities = 0;
+        this.merchantItems = 9;
+        this.date = new Date();
         this.raidable = new ArrayList<>();
         updateSeason();
+    }
+
+    public static void reset() {
+        gameIsLoaded = false;
+        instance.raidingCity = null;
+        instance.turnNumber = BigInteger.valueOf(1);
+        instance.trainingCost = 200;
+        instance.techLevel = 0;
+        instance.techUp = 500;
+        instance.techMod = 2;
+        instance.nethermod = 1;
+        instance.defeatedCities = 0;
+        instance.merchantItems = 9;
+        instance.date = new Date();
+        instance.raidable = new ArrayList<>();
+        instance.updateSeason();
     }
 
     public void setTrainingCost(int newCost) {
@@ -52,6 +70,10 @@ public class GameManager {
         if (this.trainingCost < 0) {
             this.trainingCost = 0;
         }
+    }
+
+    public void setMerchantItems(Integer merchantItems) {
+        this.merchantItems = merchantItems;
     }
 
     public void setDefeatedCities(Integer defeatedCities) {
@@ -88,6 +110,10 @@ public class GameManager {
         }
     }
 
+    public Integer getMerchantItems() {
+        return merchantItems;
+    }
+
     public City getRaidingCity() {
         return raidingCity;
     }
@@ -98,20 +124,6 @@ public class GameManager {
 
     public static GameManager getInstance() {
         return instance;
-    }
-
-    public static void reset() {
-        instance.turnNumber = BigInteger.valueOf(1);
-        instance.date = new Date();
-        instance.trainingCost = 200;
-        instance.techLevel = 0;
-        instance.updateSeason();
-        instance.techUp = 500;
-        instance.techMod = 2;
-        instance.nethermod = 1;
-        instance.raidable = new ArrayList<>();
-        instance.defeatedCities = 0;
-        gameIsLoaded = false;
     }
 
     private void updateSeason() {

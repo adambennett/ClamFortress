@@ -6,10 +6,10 @@ import java.util.concurrent.*;
 
 public class Bow extends AbstractMedievalWeapon implements Projectile {
 
-    private final Integer ammoCount;
-    private final Integer damage;
-    private Integer shots;
-    private Integer accuracy;
+    protected Integer ammoCount;
+    protected Integer damage;
+    protected Integer shots;
+    protected Integer accuracy;
 
     public Bow() {
         super("Bow", "A standard drawstring bow. Improves attack by 15.");
@@ -17,6 +17,10 @@ public class Bow extends AbstractMedievalWeapon implements Projectile {
         this.damage = 12;
         this.shots = 0;
         this.accuracy = 85;
+    }
+
+    public Bow(String name, String desc) {
+        super(name, desc);
     }
 
     @Override

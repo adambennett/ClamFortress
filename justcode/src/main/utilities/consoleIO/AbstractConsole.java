@@ -58,6 +58,10 @@ public abstract class AbstractConsole {
 
     public void findAndProcessCommand(ArrayList<String> args) {
         String command = args.remove(0).toLowerCase();
+        if (command.equals("")) {
+            runOnInvalidCommand(this);
+            return;
+        }
         if (GameManager.gameIsLoaded && !(this instanceof DevConsole) && command.length() > 0 && command.charAt(0) == '~') {
             AbstractConsole toReturnTo = this;
             if (this instanceof MidTurnMenu) {
@@ -189,6 +193,21 @@ public abstract class AbstractConsole {
             LoginMenu curr = (LoginMenu) this;
             curr.printPrompt(PromptMessage.LOGIN, false);
         }
+        else if (currentConsole instanceof SaleMerchantMenu) {
+            new SaleMerchantMenu().printPrompt(PromptMessage.SALE_MERCHANT, false);
+        }
+        else if (currentConsole instanceof MerchantMenu) {
+            new MerchantMenu().printPrompt(PromptMessage.MERCHANT, false);
+        }
+        else if (currentConsole instanceof TrainingMenu) {
+           new TrainingMenu().printPrompt(PromptMessage.TRAINING, false);
+        }
+        else if (currentConsole instanceof StatsMenu) {
+           new StatsMenu().printPrompt(PromptMessage.STATS_MENU, false);
+        }
+        else if (currentConsole instanceof StartingEraMenu) {
+            new StartingEraMenu().printPrompt(PromptMessage.START_ERA, false);
+        }
         printPrompt("Bad command! Please enter a valid command.", true);
     }
 
@@ -226,11 +245,26 @@ public abstract class AbstractConsole {
         else if (con instanceof BoardSizeMenu) {
             return PromptMessage.BOARD_SIZE;
         }
-        else if (con instanceof NewGameHub) {
+        else if (con instanceof NewGameHub || con instanceof MidConsoleMenu) {
             return PromptMessage.NEW_GAME_HUB;
         }
         else if (con instanceof LoginMenu) {
             return PromptMessage.LOGIN;
+        }
+        else if (con instanceof SaleMerchantMenu) {
+            return PromptMessage.SALE_MERCHANT;
+        }
+        else if (con instanceof MerchantMenu) {
+            return PromptMessage.MERCHANT;
+        }
+        else if (con instanceof TrainingMenu) {
+            return PromptMessage.TRAINING;
+        }
+        else if (con instanceof StatsMenu) {
+            return PromptMessage.STATS_MENU;
+        }
+        else if (con instanceof StartingEraMenu) {
+            return PromptMessage.START_ERA;
         }
         return PromptMessage.TURN_MENU;
     }

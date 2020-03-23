@@ -79,7 +79,7 @@ public class City extends AbstractNode {
                 for (GameObject obj : Game.getModifierObjects()) {
                     obj.onEnemyDeath();
                 }
-                OutputManager.addToBot("Enemy " + villager.getName() + " has been killed in a raid!" + "\nEnemy City HP: " + this.getHp() + " / " + this.getMaxHP());
+                OutputManager.addToBot("Enemy " + villager.getName() + " has been killed in a raid!");
             }
             if (this.cityResidence.size() < 1 || this.hp < 1) {
                 defeat();

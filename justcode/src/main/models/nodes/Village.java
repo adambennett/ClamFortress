@@ -153,9 +153,11 @@ public class Village extends AbstractNode {
                 dmg += ((Projectile) i).fire();
             }
         }
+        if (dmg < 1) { dmg = 1; }
+        int actualDmg = ThreadLocalRandom.current().nextInt(0, dmg);
         OutputManager.addToBot("Dealt " + dmg + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + ".\nEnemy City HP: " + GameManager.getInstance().getRaidingCity().getHp() + " / " + GameManager.getInstance().getRaidingCity().getMaxHP());
-        if (dmg < 1) { return 0; }
-        return ThreadLocalRandom.current().nextInt(0, dmg);
+        if (actualDmg < 1) { return 0; }
+        return actualDmg;
     }
 
     public void takeDamage(int amt) {
@@ -177,10 +179,14 @@ public class Village extends AbstractNode {
                 StatTracker.incVillagers(1);
                 if (GameManager.getInstance().getRaidingCity() != null) {
                     OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
+                } else {
+                    OutputManager.addToBot(villager.getName() + " has died in a raid.");
                 }
             } else {
                 if (GameManager.getInstance().getRaidingCity() != null) {
                     OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName());
+                } else {
+                    OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid.");
                 }
             }
             updateHP();
@@ -717,6 +723,10 @@ public class Village extends AbstractNode {
     }
 
     public void incCoins(int amt) {
+        int orig = amt;
+        for (GameObject obj : Game.getModifierObjects()) {
+            amt += obj.modifyGoldGain(orig);
+        }
         this.coins+=amt;
         if (this.getCoins() > this.getCoinLimit()) {
             this.coins = this.getCoinLimit();

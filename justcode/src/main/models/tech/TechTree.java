@@ -61,6 +61,9 @@ public class TechTree extends GameObject {
     }
 
     public static Boolean moveToEra(Era era, boolean allowBackwards) {
+        if (currentEra.equals(era)) {
+            return true;
+        }
         Era node = currentEra;
         while (node.hasNext()) {
             if (node.getNext().getClass().equals(era.getClass())) {
@@ -92,13 +95,13 @@ public class TechTree extends GameObject {
 
     public static Era getEraFromString(String name) {
         if (head != null) {
-            if (head.getName().equals(name.toLowerCase())) {
+            if (head.getName().equals(name)) {
                 return head;
             }
             else {
                 Era curr = head;
                 while (curr.hasNext()) {
-                    if (curr.getNext().getName().equals(name.toLowerCase())) {
+                    if (curr.getNext().getName().equals(name)) {
                         return curr.getNext();
                     }
                     curr = curr.getNext();

@@ -1,6 +1,7 @@
 package main.models;
 
 import main.enums.*;
+import main.interfaces.*;
 import main.models.animals.*;
 import main.models.animals.desert.*;
 import main.models.animals.jungle.*;
@@ -27,6 +28,7 @@ import main.models.items.military.weapons.future.*;
 import main.models.items.military.weapons.guns.*;
 import main.models.items.military.weapons.medieval.*;
 import main.models.items.tools.*;
+import main.models.items.tools.backpacks.*;
 import main.models.items.tools.crafting.*;
 import main.models.items.tools.engineering.*;
 import main.models.items.tools.gathering.*;
@@ -632,5 +634,14 @@ public class Archive {
         add(new LargeWallet());
         add(new GooGenerator());
         add(new TrainingToken());
+        add(new GoldenBow());
+        add(new MerchantToken());
+        add(new GoldenBackpack());
+        add(new Battlebag());
+        add(new CorpseBag());
+        add(new CursedBackpack());
+        add(new FoodBag());
+        add(new ClericCloak());
+        add(new GoldenCloak());
     }
 }

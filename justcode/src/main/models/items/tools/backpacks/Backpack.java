@@ -1,9 +1,8 @@
-package main.models.items.tools.other;
+package main.models.items.tools.backpacks;
 
 import main.models.*;
-import main.models.items.*;
 
-public class Backpack extends AbstractItem {
+public class Backpack extends AbstractBackpack {
     public Backpack() {
         super("Backpack", "Increases your inventory capacity by 100.");
     }

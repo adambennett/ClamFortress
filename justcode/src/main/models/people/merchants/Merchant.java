@@ -29,8 +29,8 @@ public class Merchant {
         return ThreadLocalRandom.current().nextInt(1, 4);
     }
 
-    public Integer rollItemCount() {
-        return ThreadLocalRandom.current().nextInt(3, 9);
+    private Integer rollItemCount() {
+        return ThreadLocalRandom.current().nextInt(3, GameManager.getInstance().getMerchantItems());
     }
 
     public void setupWares() {

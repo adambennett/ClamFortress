@@ -43,6 +43,10 @@ public abstract class Era extends GameObject {
     }
 
     public boolean isAheadOf(Era era) {
+        return !isBehind(era);
+    }
+
+    public boolean isBehind(Era era) {
         if (this.hasPrev() && this.prev.getClass().equals(era.getClass())) {
             return true;
         }
@@ -58,10 +62,6 @@ public abstract class Era extends GameObject {
             }
         }
         return true;
-    }
-
-    public boolean isBehind(Era era) {
-        return !isAheadOf(era);
     }
 
     public Era advanceToEnd() {

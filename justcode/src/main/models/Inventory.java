@@ -5,6 +5,7 @@ import main.interfaces.*;
 import main.models.items.*;
 import main.models.items.artifacts.AbstractArtifact;
 import main.models.items.tools.*;
+import main.models.items.tools.backpacks.*;
 import main.models.managers.*;
 import main.utilities.*;
 
@@ -83,7 +84,7 @@ public class Inventory extends GameObject {
     }
 
     public Boolean addItem(AbstractItem item){
-        if (inventorySize() < this.capacity) {
+        if (inventorySize() < this.capacity || item instanceof AbstractBackpack) {
             if (canAdd(item)) {
                 inventory.compute(item, (k,v) -> (v == null) ? 1 : v+1);
                 item.onObtain();

@@ -3,6 +3,7 @@ package main.actions.priority;
 import main.actions.*;
 import main.models.*;
 import main.models.nodes.City;
+import main.utilities.stringUtils.*;
 
 public class Raiding extends AbstractGameAction {
 
@@ -18,6 +19,10 @@ public class Raiding extends AbstractGameAction {
         if (this.city != null && !this.city.getDefeated()) {
             Game.getVillage().takeDamage(city.dealDamage());
             city.takeDamage(Game.getVillage().dealDamage());
+        }
+
+        if (this.getAmount() == this.amountToRun) {
+            StringHelpers.reloadStrings();
         }
         this.isDone = true;
     }

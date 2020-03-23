@@ -1,10 +1,9 @@
-package main.models.items.tools.other;
+package main.models.items.tools.backpacks;
 
 import main.interfaces.*;
 import main.models.*;
-import main.models.items.*;
 
-public class LargeBackpack extends AbstractItem implements Unique {
+public class LargeBackpack extends AbstractBackpack implements Unique {
     public LargeBackpack() {
         super("Large Backpack", "Increases your inventory capacity by 5000.");
     }

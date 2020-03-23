@@ -6,7 +6,7 @@ import main.models.items.military.weapons.medieval.*;
 public class LightningArrows extends AbstractAmmo {
 
     public LightningArrows() {
-        super("Flaming Arrows", "Improves the damage of Bows by 5000.");
+        super("Lightning Arrows", "Improves the damage of Bows by 5000.");
     }
 
     @Override

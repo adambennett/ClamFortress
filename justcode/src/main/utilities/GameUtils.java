@@ -162,16 +162,6 @@ public class GameUtils {
             AbstractItem item = (AbstractItem) obj;
             for (int i = 0; i < amt; i++) {
                 Game.getVillage().getInventory().addItem(item.clone());
-                GameUtils.whenObtainingAnyItem(item);
-                if (item instanceof Golden) {
-                    Game.getVillage().incCoins(((Golden) item).getGoldAmt());
-                    OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden item! (" + item.getName() + ")");
-                }
-
-                if (item instanceof Cursed) {
-                    ((Cursed) item).runCurse();
-                    OutputManager.addToBot("You have been Cursed upon the pickup of a cursed item! (" + item.getName() + ")");
-                }
             }
         } else if (obj instanceof AbstractBuilding) {
             AbstractBuilding b = (AbstractBuilding) obj;

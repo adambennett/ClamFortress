@@ -21,11 +21,6 @@ public class HouseMerchant extends Merchant {
     }
 
     @Override
-    public Integer rollItemCount() {
-        return ThreadLocalRandom.current().nextInt(3, 6);
-    }
-
-    @Override
     public void setupWares() {
         ArrayList<AbstractHouse> allObjs = Archive.getInstance().houses();
         while (getWares().size() < getItems()) {

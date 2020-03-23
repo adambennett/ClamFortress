@@ -19,11 +19,6 @@ public class WeaponMerchant extends Merchant {
     }
 
     @Override
-    public Integer rollItemCount() {
-        return ThreadLocalRandom.current().nextInt(3, 5);
-    }
-
-    @Override
     public void setupWares() {
         ArrayList<AbstractWeapon> allObjs = Archive.getInstance().weapons();
         while (getWares().size() < getItems()) {

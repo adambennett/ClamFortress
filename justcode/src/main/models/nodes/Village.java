@@ -411,7 +411,7 @@ public class Village extends AbstractNode {
         }
         final int finalAmt = amt;
         if (totalResources() + finalAmt <= this.resourceLimit && finalAmt > 0 && resource.canObtain()) {
-            this.resources.compute(resource, (k,v) -> (v==null) ? 1 : v + finalAmt);
+            this.resources.compute(resource, new Mapper<AbstractResource>(finalAmt).mapper);
             resource.onObtain();
             GameUtils.whenObtainingAnyItem(resource);
             if (resource instanceof Golden) {

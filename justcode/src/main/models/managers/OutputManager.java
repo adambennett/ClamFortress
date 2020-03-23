@@ -3,6 +3,7 @@ package main.models.managers;
 import main.enums.*;
 import main.models.*;
 import main.models.buildings.abstracts.*;
+import main.models.items.*;
 import main.models.nodes.*;
 import main.models.resources.natural.*;
 import main.utilities.*;
@@ -53,27 +54,27 @@ public class OutputManager {
     public static void moveOut(int amt) { villagersMovedOut+=amt; }
     public static void famineLoss(int amt) { faminelosses+=amt; }
     public static void consumed(GameObject obj, int amt) {
-        consumed.compute(obj, GameUtils.getMapper(amt));
+        consumed.compute(obj, new Mapper<GameObject>(amt).mapper);
     }
 
     public static void consumed(GameObject obj) {
-        consumed.compute(obj, GameUtils.getMapper());
+        consumed(obj, 1);
     }
 
     public static void collected(GameObject obj, int amt) {
-        collected.compute(obj, GameUtils.getMapper(amt));
+        collected.compute(obj, new Mapper<GameObject>(amt).mapper);
     }
 
     public static void collected(GameObject obj) {
-        collected.compute(obj, GameUtils.getMapper());
+        collected(obj, 1);
     }
 
     public static void discover(AbstractNode node, int amt) {
-        discovered.compute(node, GameUtils.getNodeMapper(amt));
+        discovered.compute(node, new Mapper<AbstractNode>(amt).mapper);
     }
 
     public static void discover(AbstractNode node) {
-        discovered.compute(node, GameUtils.getNodeMapper());
+        discover(node, 1);
     }
 
     public static void addToBot(String message) {
@@ -112,7 +113,7 @@ public class OutputManager {
 
             LinkedHashMap<String, Integer> occ = new LinkedHashMap<>();
 
-            for (String s : outputPool) { occ.compute(s, (k, v) -> (v==null) ? 1 : v+1); }
+            for (String s : outputPool) { occ.compute(s, new Mapper<String>(1).mapper); }
 
             String output = "";
             for (Map.Entry<String, Integer> entry : occ.entrySet()) {

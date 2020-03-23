@@ -156,7 +156,7 @@ public class Board extends GameObject {
     }
 
     public void addResource(AbstractResource resource, int amt) {
-        this.resources.compute(resource, (k, v) -> (v==null) ? 1 : v+amt);
+        this.resources.compute(resource, new Mapper<AbstractResource>(amt).mapper);
     }
 
     public AbstractResource removeRandomResource() {

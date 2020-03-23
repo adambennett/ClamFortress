@@ -2,7 +2,7 @@ package main.actions.priority;
 
 import main.actions.AbstractGameAction;
 import main.interfaces.Smeltable;
-import main.models.Game;
+import main.models.*;
 import main.models.managers.GameManager;
 import main.models.managers.OutputManager;
 import main.models.resources.AbstractResource;
@@ -31,7 +31,7 @@ public class Smelting extends AbstractGameAction {
         for (AbstractResource i: recources) {
             if (i instanceof Smeltable) {
                 smelted.add((Smeltable) i);
-                smeltables.compute((Smeltable)i, (k, v) -> (v == null) ? 1 : v+1);
+                smeltables.compute((Smeltable)i, new Mapper<Smeltable>(1).mapper);
             }
         }
 

@@ -86,7 +86,7 @@ public class Inventory extends GameObject {
     public Boolean addItem(AbstractItem item){
         if (inventorySize() < this.capacity || item instanceof AbstractBackpack) {
             if (canAdd(item)) {
-                inventory.compute(item, (k,v) -> (v == null) ? 1 : v+1);
+                inventory.compute(item, new Mapper<AbstractItem>(1).mapper);
                 item.onObtain();
                 itemsHeld++;
                 GameUtils.whenObtainingAnyItem(item);

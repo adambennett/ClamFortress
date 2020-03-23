@@ -13,10 +13,12 @@ import main.models.people.*;
 import main.models.people.merchants.*;
 import main.models.resources.*;
 import main.models.tech.*;
+import main.utilities.*;
 import main.utilities.persistence.*;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.*;
 
 public class GameStrings {
 
@@ -503,16 +505,13 @@ public class GameStrings {
         rsrcMap.put("Coins", "" + vil.getCoins() + " / " + vil.getCoinLimit());
         rsrcMap.put("Food", "" + vil.getFood() + " / " + vil.getFoodLimit());
         rsrcMap.put("Faith", "" + vil.getFaith() + " / " + vil.getFaithLimit());
-        Map<String, Integer> occ = new HashMap<>();
+        LinkedHashMap<String, Integer> occ = new LinkedHashMap<>();
         ArrayList<AbstractResource> resources = vil.getAllResources();
         Collections.sort(resources);
         for (AbstractResource resource : resources) {
-            occ.compute(resource.getName(), (k, v) -> (v==null) ? 1 : v + 1);
+            occ.compute(resource.getName(), new Mapper<String>(1).mapper);
         }
-        for (Map.Entry<String, Integer> entry : occ.entrySet()) {
-            rsrcMap.put(entry.getKey(), ""+entry.getValue());
-        }
-        return rsrcMap;
+        return new LinkedHashMap<>(occ.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, k->""+k.getValue())));
     }
     public static void loadResources() {
         String leftAlignFormat = "| %-25s | %-25s |\n";
@@ -668,7 +667,7 @@ public class GameStrings {
         }
         Map<String, Integer> an = new HashMap<>();
         for (AbstractAnimal item : board.getAnimals()) {
-            an.compute(item.getName(), (k,v) -> (v==null) ? 1 : v+1);
+            an.compute(item.getName(), new Mapper<String>(1).mapper);
         }
         for (Map.Entry<String, Integer> item : an.entrySet()) {
             a.put(item.getKey(), "" + item.getValue());

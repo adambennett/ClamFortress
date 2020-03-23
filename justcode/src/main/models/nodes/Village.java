@@ -154,8 +154,9 @@ public class Village extends AbstractNode {
             }
         }
         if (dmg < 1) { dmg = 1; }
+        else if (this.population.size() > 0) { dmg = dmg / this.population.size(); }
         int actualDmg = ThreadLocalRandom.current().nextInt(0, dmg);
-        OutputManager.addToBot("Dealt " + dmg + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + ".\nEnemy City HP: " + GameManager.getInstance().getRaidingCity().getHp() + " / " + GameManager.getInstance().getRaidingCity().getMaxHP());
+       // OutputManager.addToBot("Dealt " + actualDmg + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + ".\nEnemy City HP: " + GameManager.getInstance().getRaidingCity().getHp() + " / " + GameManager.getInstance().getRaidingCity().getMaxHP());
         if (actualDmg < 1) { return 0; }
         return actualDmg;
     }
@@ -169,6 +170,7 @@ public class Village extends AbstractNode {
 
     private void takeDamage(Survivor villager, int amt) {
         if (amt > 0) {
+            if (amt > villager.getHP()) { amt = villager.getHP(); }
             villager.setHealthPoints(villager.getHP() - amt);
             if (villager.getHP() < 1) {
                 removeSurvivor(villager);
@@ -177,17 +179,7 @@ public class Village extends AbstractNode {
                     obj.onVillagerDeath();
                 }
                 StatTracker.incVillagers(1);
-                if (GameManager.getInstance().getRaidingCity() != null) {
-                    OutputManager.addToBot(villager.getName() + " has died in a raid against " + GameManager.getInstance().getRaidingCity().cityName() + "!");
-                } else {
-                    OutputManager.addToBot(villager.getName() + " has died in a raid.");
-                }
-            } else {
-                if (GameManager.getInstance().getRaidingCity() != null) {
-                    OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid against " + GameManager.getInstance().getRaidingCity().cityName());
-                } else {
-                    OutputManager.addToBot(villager.getName() + " took " + amt + " damage in a raid.");
-                }
+                OutputManager.killVillager(1);
             }
             updateHP();
         }

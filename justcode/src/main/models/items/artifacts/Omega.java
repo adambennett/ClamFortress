@@ -39,15 +39,6 @@ public class Omega extends AbstractArtifact implements Unique {
         }
         return 0;
     }
-
-    public void onLoseCitizen(Survivor newCitizen) {
-        if (ThreadLocalRandom.current().nextBoolean()) {
-            Survivor cit = Archive.generateRandomSurvivor(true);
-            if (Game.getVillage().addToPopulation(cit)) {
-                OutputManager.addToBot("OMEGA: " + cit.getName() + " has replaced " + newCitizen.getName() + " in your village!");
-            }
-        }
-    }
     public void onNewBuilding(AbstractBuilding b) {
         int amt = b.getDesc().length();
         if (amt > 0) {

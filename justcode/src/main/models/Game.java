@@ -116,7 +116,9 @@ public class Game {
     public static ArrayList<GameObject> getModifierObjects() {
         ArrayList<GameObject> mods = new ArrayList<>(getVillage().getAllResources());
         for (Map.Entry<AbstractItem, Integer> entry : getVillage().getInventory().getEntrySet()) {
-            mods.add(entry.getKey());
+            for (int i = 0; i < entry.getValue(); i++) {
+                mods.add(entry.getKey());
+            }
         }
         mods.addAll(getVillage().getBuildings());
         mods.addAll(getGameBoard().getAnimals());

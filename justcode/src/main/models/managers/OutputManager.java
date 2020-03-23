@@ -24,6 +24,10 @@ public class OutputManager {
     private static Integer villagersMovedIn;
     private static Integer villagersMovedOut;
     private static Integer faminelosses;
+    private static Integer killed;
+    private static Integer villagersKilled;
+    private static Integer merchants;
+    private static Integer damage;
 
     static {
         outputPool = new ArrayList<>();
@@ -36,7 +40,11 @@ public class OutputManager {
         villagersMovedIn = 0;
         villagersMovedOut = 0;
         faminelosses = 0;
+        killed = 0;
+        villagersKilled = 0;
+        merchants = 0;
         exp = 0;
+        damage = 0;
     }
 
     public static void reset() {
@@ -45,11 +53,18 @@ public class OutputManager {
         villagersMovedIn = 0;
         villagersMovedOut = 0;
         faminelosses = 0;
+        killed = 0;
+        villagersKilled = 0;
+        merchants = 0;
         exp = 0;
+        damage = 0;
     }
 
+    public static void dmg(int amt) { damage+=amt; }
+    public static void merch(int amt) { merchants+=amt; }
     public static void exp(int amt) { exp += amt; }
-
+    public static void kill(int amt) { killed+=amt; }
+    public static void killVillager(int amt) { villagersKilled+=amt; }
     public static void moveIn(int amt) { villagersMovedIn+=amt; }
     public static void moveOut(int amt) { villagersMovedOut+=amt; }
     public static void famineLoss(int amt) { faminelosses+=amt; }
@@ -116,6 +131,7 @@ public class OutputManager {
             for (String s : outputPool) { occ.compute(s, new Mapper<String>(1).mapper); }
 
             String output = "";
+
             for (Map.Entry<String, Integer> entry : occ.entrySet()) {
                 if (entry.getValue() > 1) {
                     output += entry.getKey() + " (x" + entry.getValue() + ")\n";
@@ -125,6 +141,24 @@ public class OutputManager {
 
             }
             output = output.trim();
+            if (merchants > 0) { output += "\nNew Merchants: " + merchants; }
+            if (villagersMovedIn > 0) { output += "\nNew Villagers: " + villagersMovedIn; }
+            if (villagersMovedOut > 0) { output += "\nLost Villagers: " + villagersMovedOut; }
+            if (faminelosses > 0) { output += "\nFamine Losses: " + faminelosses; }
+            if (villagersKilled > 0) { output += "\nVillagers Killed: " + villagersKilled; }
+            if (killed > 0) { output += "\nEnemies Killed: " + killed; }
+            if (damage > 0) { output += "\nRaid Damage Dealt: " + damage; }
+            for (Map.Entry<GameObject, Integer> entry : collected.entrySet()) {
+                if (entry.getValue() > 0) {
+                    output += "\nObtained " + entry.getValue() + " " + entry.getKey().getName();
+                }
+            }
+
+            for (Map.Entry<GameObject, Integer> entry : consumed.entrySet()) {
+                if (entry.getValue() > 0) {
+                    output += "\nConsumed " + entry.getValue() + " " + entry.getKey().getName();
+                }
+            }
 
             String extraBotLine = "";
             for (GameObject obj : Game.getModifierObjects()) {

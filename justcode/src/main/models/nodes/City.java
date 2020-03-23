@@ -55,7 +55,7 @@ public class City extends AbstractNode {
     }
 
     public Integer dealDamage() {
-        Integer dmg = this.cityDefense;
+        int dmg = this.cityDefense / this.cityResidence.size();
         if (dmg > 0) {
             return ThreadLocalRandom.current().nextInt(0, dmg);
         }
@@ -71,6 +71,10 @@ public class City extends AbstractNode {
     private void takeDamage(Survivor villager, int amt) {
         amt -= this.cityDefense;
         if (amt > 0) {
+            if (amt > villager.getHP()) {
+                amt = villager.getHP();
+            }
+            OutputManager.dmg(amt);
             villager.setHealthPoints(villager.getHP() - amt);
             this.setHp(this.hp - amt);
             if (villager.getHP() < 1) {
@@ -79,10 +83,12 @@ public class City extends AbstractNode {
                 for (GameObject obj : Game.getModifierObjects()) {
                     obj.onEnemyDeath();
                 }
-                OutputManager.addToBot("Enemy " + villager.getName() + " has been killed in a raid!");
+                OutputManager.kill(1);
             }
             if (this.cityResidence.size() < 1 || this.hp < 1) {
                 defeat();
+            } else {
+                OutputManager.addToBot("Enemy City HP: " + this.hp + " / " + this.maxHP);
             }
         }
     }

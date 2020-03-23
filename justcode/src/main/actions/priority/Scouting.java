@@ -49,7 +49,8 @@ public class Scouting extends AbstractGameAction {
         if (merchantRoll > 98) {
             Merchant traveler = MerchantManager.getRandomMerchant();
             Game.getVillage().addMerchant(traveler);
-            OutputManager.addToBot("During your exploring, you came upon a " + traveler.getMerchantType() + " by the name of " + traveler.getName() + ".");
+            OutputManager.merch(1);
+            //OutputManager.addToBot("During your exploring, you came upon a " + traveler.getMerchantType() + " by the name of " + traveler.getName() + ".");
         }
         this.isDone = true;
     }

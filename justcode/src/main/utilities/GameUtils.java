@@ -18,9 +18,36 @@ import main.utilities.stringUtils.*;
 
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 public class GameUtils {
 
+    private static BiFunction<GameObject, Integer, Integer> mapper;
+
+    static {
+        mapper = (k, v) -> (v == null) ? 1 : v+1;
+    }
+
+    public static BiFunction<GameObject, Integer, Integer> getMapper() {
+        return mapper;
+    }
+
+    public static BiFunction<GameObject, Integer, Integer> getMapper(int amt) {
+        return (k, v) -> (v == null) ? 1 : v+amt;
+    }
+
+    public static BiFunction<AbstractNode, Integer, Integer> getNodeMapper() {
+        return (k, v) -> (v == null) ? 1 : v+1;
+    }
+
+    public static BiFunction<AbstractNode, Integer, Integer> getNodeMapper(int amt) {
+        return (k, v) -> (v == null) ? 1 : v+amt;
+    }
+
+    public static Map<AbstractResource, Integer> mapToMap(final Map<AbstractResource, Integer> map1, final Map<AbstractResource, Integer> map2) {
+        return map2.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, v -> (map1.get(v.getKey())==null) ? v.getValue() : v.getValue() + map1.get(v.getKey())));
+    }
 
     public static void whenObtainingAnyItem(GameObject obtained) {
         int maxHPGain = obtained.modifyMaxHPOnPickup();

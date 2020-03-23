@@ -4,6 +4,7 @@ import main.enums.*;
 import main.models.*;
 import main.models.buildings.abstracts.*;
 import main.models.nodes.*;
+import main.models.resources.natural.*;
 import main.utilities.*;
 import main.utilities.persistence.*;
 
@@ -19,6 +20,9 @@ public class OutputManager {
     private static final ArrayList<AbstractBuilding> built;
     private static final ArrayList<AbstractBuilding> queued;
     private static Integer exp;
+    private static Integer villagersMovedIn;
+    private static Integer villagersMovedOut;
+    private static Integer faminelosses;
 
     static {
         outputPool = new ArrayList<>();
@@ -28,16 +32,49 @@ public class OutputManager {
         collected = new HashMap<>();
         consumed = new HashMap<>();
         discovered = new HashMap<>();
+        villagersMovedIn = 0;
+        villagersMovedOut = 0;
+        faminelosses = 0;
         exp = 0;
     }
 
     public static void reset() {
         outputPool.clear();
         flags.clear();
+        villagersMovedIn = 0;
+        villagersMovedOut = 0;
+        faminelosses = 0;
         exp = 0;
     }
 
     public static void exp(int amt) { exp += amt; }
+
+    public static void moveIn(int amt) { villagersMovedIn+=amt; }
+    public static void moveOut(int amt) { villagersMovedOut+=amt; }
+    public static void famineLoss(int amt) { faminelosses+=amt; }
+    public static void consumed(GameObject obj, int amt) {
+        consumed.compute(obj, GameUtils.getMapper(amt));
+    }
+
+    public static void consumed(GameObject obj) {
+        consumed.compute(obj, GameUtils.getMapper());
+    }
+
+    public static void collected(GameObject obj, int amt) {
+        collected.compute(obj, GameUtils.getMapper(amt));
+    }
+
+    public static void collected(GameObject obj) {
+        collected.compute(obj, GameUtils.getMapper());
+    }
+
+    public static void discover(AbstractNode node, int amt) {
+        discovered.compute(node, GameUtils.getNodeMapper(amt));
+    }
+
+    public static void discover(AbstractNode node) {
+        discovered.compute(node, GameUtils.getNodeMapper());
+    }
 
     public static void addToBot(String message) {
         addToBot(OutputFlag.ALWAYS, message);
@@ -74,13 +111,8 @@ public class OutputManager {
 
 
             LinkedHashMap<String, Integer> occ = new LinkedHashMap<>();
-            for (String s : outputPool) {
-                if (occ.containsKey(s)) {
-                    occ.put(s, occ.get(s) + 1);
-                } else {
-                    occ.put(s, 1);
-                }
-            }
+
+            for (String s : outputPool) { occ.compute(s, (k, v) -> (v==null) ? 1 : v+1); }
 
             String output = "";
             for (Map.Entry<String, Integer> entry : occ.entrySet()) {

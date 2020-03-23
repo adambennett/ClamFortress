@@ -30,7 +30,7 @@ public class EndPhaseHunger extends AbstractGameAction {
             }
         }
         if (surviorsWhoLeft.size() > 0) {
-            OutputManager.addToBot(surviorsWhoLeft.size() + " Survivors have left your Village due to ongoing famine concerns!");
+            OutputManager.famineLoss(surviorsWhoLeft.size());
         }
         double newFamine = numHungry / 4.0;
         if (numHungry > 0 && (int)newFamine < 0) {

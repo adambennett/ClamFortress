@@ -6,6 +6,7 @@ import main.models.Game;
 import main.models.managers.GameManager;
 import main.models.managers.OutputManager;
 import main.models.resources.AbstractResource;
+import main.utilities.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,15 +31,9 @@ public class Smelting extends AbstractGameAction {
         for (AbstractResource i: recources) {
             if (i instanceof Smeltable) {
                 smelted.add((Smeltable) i);
-                if (!smeltables.containsKey(i)) {
-                    smeltables.put((Smeltable) i, 1);
-                } else {
-                    smeltables.put((Smeltable) i, smeltables.get(i) + 1);
-                }
+                smeltables.compute((Smeltable)i, (k, v) -> (v == null) ? 1 : v+1);
             }
         }
-
-
 
         while(amountToSmelt > 0 && smelted.size() > 0){
             Smeltable rand = smelted.get(ThreadLocalRandom.current().nextInt(smelted.size()));

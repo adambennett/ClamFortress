@@ -499,19 +499,15 @@ public class GameStrings {
 
     public static LinkedHashMap<String, String> getResources() {
         LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
-        Village v = Game.getVillage();
-        rsrcMap.put("Coins", "" + v.getCoins() + " / " + v.getCoinLimit());
-        rsrcMap.put("Food", "" + v.getFood() + " / " + v.getFoodLimit());
-        rsrcMap.put("Faith", "" + v.getFaith() + " / " + v.getFaithLimit());
+        Village vil = Game.getVillage();
+        rsrcMap.put("Coins", "" + vil.getCoins() + " / " + vil.getCoinLimit());
+        rsrcMap.put("Food", "" + vil.getFood() + " / " + vil.getFoodLimit());
+        rsrcMap.put("Faith", "" + vil.getFaith() + " / " + vil.getFaithLimit());
         Map<String, Integer> occ = new HashMap<>();
-        ArrayList<AbstractResource> resources = v.getAllResources();
+        ArrayList<AbstractResource> resources = vil.getAllResources();
         Collections.sort(resources);
         for (AbstractResource resource : resources) {
-            if (occ.containsKey(resource.getName())) {
-                occ.put(resource.getName(), occ.get(resource.getName()) + 1);
-            } else {
-                occ.put(resource.getName(), 1);
-            }
+            occ.compute(resource.getName(), (k, v) -> (v==null) ? 1 : v + 1);
         }
         for (Map.Entry<String, Integer> entry : occ.entrySet()) {
             rsrcMap.put(entry.getKey(), ""+entry.getValue());
@@ -672,11 +668,7 @@ public class GameStrings {
         }
         Map<String, Integer> an = new HashMap<>();
         for (AbstractAnimal item : board.getAnimals()) {
-            if (an.containsKey(item.getName())) {
-                an.put(item.getName(), an.get(item.getName()) + 1);
-            } else {
-                an.put(item.getName(), 1);
-            }
+            an.compute(item.getName(), (k,v) -> (v==null) ? 1 : v+1);
         }
         for (Map.Entry<String, Integer> item : an.entrySet()) {
             a.put(item.getKey(), "" + item.getValue());

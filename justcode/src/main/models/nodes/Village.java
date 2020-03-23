@@ -409,12 +409,9 @@ public class Village extends AbstractNode {
             amt--;
             reduced = true;
         }
-        if (totalResources() + amt <= this.resourceLimit && amt > 0 && resource.canObtain()) {
-            if (this.resources.containsKey(resource)) {
-                this.resources.put(resource, this.resources.get(resource) + amt);
-            } else {
-                this.resources.put(resource, amt);
-            }
+        final int finalAmt = amt;
+        if (totalResources() + finalAmt <= this.resourceLimit && finalAmt > 0 && resource.canObtain()) {
+            this.resources.compute(resource, (k,v) -> (v==null) ? 1 : v + finalAmt);
             resource.onObtain();
             GameUtils.whenObtainingAnyItem(resource);
             if (resource instanceof Golden) {

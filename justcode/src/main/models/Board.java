@@ -15,13 +15,13 @@ import main.models.managers.*;
 import main.models.nodes.*;
 import main.models.nodes.biomes.*;
 import main.models.resources.*;
-import main.models.resources.natural.Flowers;
+import main.models.resources.natural.*;
 import main.utilities.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.*;
+import java.util.stream.*;
 
 public class Board extends GameObject {
 
@@ -147,35 +147,8 @@ public class Board extends GameObject {
     }
 
     // RESOURCES     /////////////////////////////////////////////////////////////////////////////////////////////
-    public Boolean hasEnoughOfResource(String resource, int amt) {
-        if (Archive.getInstance().getRes(resource) != null) {
-            AbstractResource res = Archive.getInstance().getRes(resource);
-            if ((this.resources.get(res) != null)) {
-                int check = this.resources.get(res);
-                return check >= amt;
-            }
-        }
-        return false;
-    }
-
-    public Integer totalResources() {
-        return getAllResources().size();
-    }
-
-    public void addResources(ArrayList<AbstractResource> resources) {
-            for (AbstractResource r : resources) {
-                addResource(r);
-            }
-    }
-
     public void addResources(Map<AbstractResource, Integer> resources) {
-            for (Map.Entry<AbstractResource, Integer> entry : resources.entrySet()) {
-                if (this.resources.containsKey(entry.getKey())) {
-                    this.resources.put(entry.getKey(), entry.getValue() + this.resources.get(entry.getKey()));
-                } else {
-                    this.resources.put(entry.getKey(), entry.getValue());
-                }
-            }
+        this.resources = GameUtils.mapToMap(this.resources, resources);
     }
 
     public void addResource(AbstractResource resource) {
@@ -183,11 +156,7 @@ public class Board extends GameObject {
     }
 
     public void addResource(AbstractResource resource, int amt) {
-            if (this.resources.containsKey(resource)) {
-                this.resources.put(resource, this.resources.get(resource) + amt);
-            } else {
-                this.resources.put(resource, amt);
-            }
+        this.resources.compute(resource, (k, v) -> (v==null) ? 1 : v+amt);
     }
 
     public AbstractResource removeRandomResource() {

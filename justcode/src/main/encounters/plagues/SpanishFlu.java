@@ -1,7 +1,6 @@
 package main.encounters.plagues;
 
 import main.models.*;
-import sun.jvm.hotspot.runtime.Thread;
 
 import java.util.concurrent.*;
 

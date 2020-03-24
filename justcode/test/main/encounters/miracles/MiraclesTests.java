@@ -17,24 +17,14 @@ public class MiraclesTests {
 
     @Test
     public void runEncounter() {
-        Blessing blessing = new Blessing();
-        DivineHealing divineHealing = new DivineHealing();
-        DivineIntervention divineIntervention = new DivineIntervention();
-        Wisdom wisdom = new Wisdom();
-        DivineIntervention divineInterventionB = new DivineIntervention();
-        Wisdom wisdomB = new Wisdom();
+        ClericBlessing blessing = new ClericBlessing(10);
+        DivineHealing divineHealing = new DivineHealing(10);
         blessing.runEncounter();
         divineHealing.runEncounter();
-        divineIntervention.runEncounter();
-        wisdom.runEncounter();
-        divineInterventionB.runEncounter();
-        wisdomB.runEncounter();
         Integer expectedSize = 4;
         Integer actualSize = village.getActiveMiracles().size();
         Assert.assertTrue(village.getActiveMiracles().contains(blessing));
         Assert.assertTrue(village.getActiveMiracles().contains(divineHealing));
-        Assert.assertTrue(village.getActiveMiracles().contains(divineIntervention));
-        Assert.assertTrue(village.getActiveMiracles().contains(wisdom));
         Assert.assertEquals(expectedSize, actualSize);
     }
 }

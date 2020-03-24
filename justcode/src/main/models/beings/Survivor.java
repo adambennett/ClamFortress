@@ -1,4 +1,4 @@
-package main.models.people;
+package main.models.beings;
 
 import main.enums.*;
 import main.models.resources.refined.food.*;

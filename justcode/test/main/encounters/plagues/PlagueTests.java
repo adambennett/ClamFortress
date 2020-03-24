@@ -18,15 +18,15 @@ public class PlagueTests {
 
     @Test
     public void runEncounter() {
-        Bubonic bubonic = new Bubonic();
-        Contagion contagion = new Contagion();
-        COVID19 covid19 = new COVID19();
-        H1N1 h1N1 = new H1N1();
-        Pandemic pandemic = new Pandemic();
-        SARS sars = new SARS();
-        SpanishFlu flu = new SpanishFlu();
-        SARS sarsB = new SARS();
-        SpanishFlu fluB = new SpanishFlu();
+        Bubonic bubonic = new Bubonic(10);
+        Contagion contagion = new Contagion(10);
+        COVID19 covid19 = new COVID19(10);
+        H1N1 h1N1 = new H1N1(10);
+        Pandemic pandemic = new Pandemic(10);
+        SARS sars = new SARS(10);
+        SpanishFlu flu = new SpanishFlu(10);
+        SARS sarsB = new SARS(10);
+        SpanishFlu fluB = new SpanishFlu(10);
         bubonic.runEncounter();
         contagion.runEncounter();
         covid19.runEncounter();

@@ -3,8 +3,8 @@ package main.actions.priority;
 import main.actions.*;
 import main.enums.*;
 import main.models.*;
+import main.models.beings.*;
 import main.models.managers.*;
-import main.models.people.*;
 
 import java.util.*;
 import java.util.concurrent.*;

@@ -4,13 +4,13 @@ package main.utilities.stringUtils;
 import main.interfaces.*;
 import main.models.*;
 import main.models.animals.*;
+import main.models.beings.*;
+import main.models.beings.merchants.*;
 import main.models.buildings.abstracts.*;
 import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.managers.*;
 import main.models.nodes.*;
-import main.models.people.*;
-import main.models.people.merchants.*;
 import main.models.resources.*;
 import main.models.tech.*;
 import main.utilities.*;
@@ -422,6 +422,7 @@ public class GameStrings {
         Integer buildPriority = PriorityManager.getBuild();
         Integer tradePriority = PriorityManager.getTrade();
         Integer masonryPriority = PriorityManager.getMasonry();
+        Integer storingPriority = PriorityManager.getStore();
         LinkedHashMap<String, Integer> priorities = new LinkedHashMap<>();
         priorities.put(food1Name, foodPriority1);
         priorities.put(food2Name, foodPriority2);
@@ -444,6 +445,7 @@ public class GameStrings {
         priorities.put("Building", buildPriority);
         priorities.put("Trading", tradePriority);
         priorities.put("Masonry", masonryPriority);
+        priorities.put("Storing", storingPriority);
         return priorities;
     }
     public static LinkedHashMap<String, ArrayList<String>> getPriorities() {

@@ -1,13 +1,12 @@
 package main.utilities;
 
-import main.interfaces.*;
 import main.models.*;
+import main.models.beings.*;
 import main.models.buildings.abstracts.*;
 import main.models.items.*;
 import main.models.items.artifacts.*;
 import main.models.managers.*;
 import main.models.nodes.*;
-import main.models.people.*;
 import main.models.resources.*;
 import main.models.resources.refined.*;
 import main.models.tech.*;

@@ -5,10 +5,8 @@ import main.utilities.stringUtils.*;
 
 public class Hurricane extends AbstractDisaster {
 
-    private final String name;
-
-    public Hurricane() {
-        this.name = GameStrings.getRandomName(false);
+    public Hurricane(int turns) {
+        super("Hurricane " + GameStrings.getRandomName(false), "A huge hurricane that impacts your village with devastation.", turns);
     }
 
     @Override
@@ -18,6 +16,11 @@ public class Hurricane extends AbstractDisaster {
 
     @Override
     public String toString() {
-        return "Hurricane " + name + " has created havoc in your village!";
+        return "Hurricane " + this.getName() + " has created havoc in your village!";
+    }
+
+    @Override
+    public Hurricane clone() {
+        return new Hurricane(this.turnsActive);
     }
 }

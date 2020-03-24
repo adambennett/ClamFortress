@@ -3,8 +3,6 @@ package main.utilities.consoleIO;
 import main.enums.*;
 import main.interfaces.*;
 import main.models.*;
-import main.models.people.merchants.*;
-import main.utilities.*;
 import main.utilities.stringUtils.*;
 
 import java.util.*;

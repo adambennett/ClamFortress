@@ -46,6 +46,7 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("19", MenuCommands.BUILDING);
         consoleCommands.put("20", MenuCommands.TRADING);
         consoleCommands.put("21", MenuCommands.MASONRY);
+        consoleCommands.put("22", MenuCommands.STORING);
         consoleCommands.put("0", MenuCommands.CONTINUE);
 
         consoleCommands.put("hunt", MenuCommands.DYNAMIC_FOOD_A);
@@ -91,6 +92,8 @@ public class PriorityMenu extends AbstractConsole {
         consoleCommands.put("building", MenuCommands.BUILDING);
         consoleCommands.put("trade", MenuCommands.TRADING);
         consoleCommands.put("trading", MenuCommands.TRADING);
+        consoleCommands.put("store", MenuCommands.STORING);
+        consoleCommands.put("storing", MenuCommands.STORING);
     }
 
     @Override
@@ -224,6 +227,11 @@ public class PriorityMenu extends AbstractConsole {
                 PriorityManager.setTrade(PriorityManager.getTrade() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 actionManager.addToBottom(new Trading(amt));
+                break;
+            case STORING:
+                PriorityManager.setStore(PriorityManager.getStore() + amt);
+                PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
+                actionManager.addToBottom(new Storing(amt));
                 break;
             case SMITHING:
                 PriorityManager.setSmith(PriorityManager.getSmith() + amt);

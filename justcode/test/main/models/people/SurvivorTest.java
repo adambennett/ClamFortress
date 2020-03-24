@@ -2,6 +2,7 @@ package main.models.people;
 
 import main.enums.Gender;
 import main.enums.Race;
+import main.models.beings.*;
 import main.utilities.builders.SurvivorBuilder;
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,6 +1,7 @@
 package main.models.people;
 
 import main.enums.*;
+import main.models.beings.*;
 import main.utilities.builders.*;
 import org.junit.*;
 

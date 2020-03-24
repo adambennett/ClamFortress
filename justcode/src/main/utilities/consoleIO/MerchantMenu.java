@@ -1,11 +1,10 @@
 package main.utilities.consoleIO;
 
-import javafx.scene.shape.*;
 import main.enums.*;
 import main.interfaces.*;
 import main.models.*;
+import main.models.beings.merchants.*;
 import main.models.items.*;
-import main.models.people.merchants.*;
 import main.utilities.*;
 import main.utilities.stringUtils.*;
 

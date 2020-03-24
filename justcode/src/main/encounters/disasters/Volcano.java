@@ -5,10 +5,10 @@ import main.utilities.stringUtils.*;
 
 public class Volcano extends AbstractDisaster {
 
-    private final String name;
+
 
     public Volcano() {
-        this.name = GameStrings.getRandomName(true);
+        super("Mt. " + GameStrings.getRandomName(true), "An active volcano that erupts all over your village!", 1);
     }
 
     @Override
@@ -16,6 +16,11 @@ public class Volcano extends AbstractDisaster {
 
     @Override
     public String toString() {
-        return "Mt. " + name + " has erupted!";
+        return "Mt. " + this.getName() + " has erupted!";
+    }
+
+    @Override
+    public Volcano clone() {
+        return new Volcano();
     }
 }

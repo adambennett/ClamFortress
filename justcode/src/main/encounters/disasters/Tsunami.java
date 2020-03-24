@@ -3,6 +3,10 @@ package main.encounters.disasters;
 import main.models.*;
 
 public class Tsunami extends AbstractDisaster {
+    public Tsunami() {
+        super("Tsunami", "A gigantic tsunami has wrecked your shore lines!", 1);
+    }
+
     @Override
     public void runEncounter() {
         Game.getVillage().addDisaster(this);
@@ -11,5 +15,10 @@ public class Tsunami extends AbstractDisaster {
     @Override
     public String toString() {
         return "A Tsunami has devasted your beaches!";
+    }
+
+    @Override
+    public Tsunami clone() {
+        return new Tsunami();
     }
 }

@@ -3,10 +3,9 @@ package main.actions.priority;
 import main.actions.*;
 import main.enums.*;
 import main.models.*;
+import main.models.beings.merchants.*;
 import main.models.nodes.*;
 import main.models.managers.*;
-import main.models.people.merchants.*;
-import main.models.resources.natural.*;
 
 import java.util.concurrent.*;
 

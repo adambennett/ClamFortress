@@ -1,7 +1,7 @@
 package main.utilities.builders;
 
 import main.enums.*;
-import main.models.people.*;
+import main.models.beings.*;
 
 public class SurvivorBuilder {
     private Integer agility = 0;

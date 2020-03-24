@@ -17,14 +17,14 @@ public class DisasterTests {
     @Test
     public void runEncounter() {
         Earthquake eq = new Earthquake();
-        Fire fire = new Fire();
-        Flood flood = new Flood();
-        Hurricane hurricane = new Hurricane();
-        Tornado tornado = new Tornado();
+        Fire fire = new Fire(10);
+        Flood flood = new Flood(10);
+        Hurricane hurricane = new Hurricane(10);
+        Tornado tornado = new Tornado(10);
         Tsunami tsunami = new Tsunami();
-        Typhoon typhoon = new Typhoon();
+        Typhoon typhoon = new Typhoon(10);
         Volcano volcano = new Volcano();
-        Typhoon typhoonB = new Typhoon();
+        Typhoon typhoonB = new Typhoon(10);
         Volcano volcanoB = new Volcano();
         eq.runEncounter();
         fire.runEncounter();

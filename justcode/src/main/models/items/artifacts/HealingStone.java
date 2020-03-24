@@ -1,7 +1,7 @@
 package main.models.items.artifacts;
 
 import main.interfaces.*;
-import main.models.people.*;
+import main.models.beings.*;
 
 public class HealingStone extends AbstractArtifact implements Unique {
 

@@ -1,15 +1,14 @@
-package main.models.people.merchants;
+package main.models.beings.merchants;
 
 import main.models.*;
 import main.models.buildings.abstracts.*;
-import main.models.items.military.weapons.*;
 
 import java.util.*;
 import java.util.concurrent.*;
 
-public class WeaponMerchant extends Merchant {
+public class HouseMerchant extends Merchant {
 
-    public WeaponMerchant() {
+    public HouseMerchant() {
         super();
     }
 
@@ -20,9 +19,9 @@ public class WeaponMerchant extends Merchant {
 
     @Override
     public void setupWares() {
-        ArrayList<AbstractWeapon> allObjs = Archive.getInstance().weapons();
+        ArrayList<AbstractHouse> allObjs = Archive.getInstance().houses();
         while (getWares().size() < getItems()) {
-            AbstractWeapon ref = allObjs.get(ThreadLocalRandom.current().nextInt(allObjs.size()));
+            AbstractHouse ref = allObjs.get(ThreadLocalRandom.current().nextInt(allObjs.size()));
             while (getWares().containsKey(ref.getName().toLowerCase())) {
                 ref = allObjs.get(ThreadLocalRandom.current().nextInt(allObjs.size()));
             }
@@ -32,6 +31,6 @@ public class WeaponMerchant extends Merchant {
 
     @Override
     public String getMerchantType() {
-        return "Weapon Merchant";
+        return "House Merchant";
     }
 }

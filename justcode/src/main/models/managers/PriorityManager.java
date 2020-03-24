@@ -27,6 +27,7 @@ public class PriorityManager {
     private static Integer  build = 0;
     private static Integer  trade = 0;
     private static Integer smelt = 0;
+    private static Integer store = 0;
 
     public static void reset(boolean resetPoints) {
         if (resetPoints) {
@@ -53,6 +54,7 @@ public class PriorityManager {
         build = 0;
         trade = 0;
         smelt = 0;
+        store = 0;
     }
     
     public static Integer totalSpentPoints() {
@@ -78,6 +80,7 @@ public class PriorityManager {
         sum += build;
         sum += trade;
         sum += smelt;
+        sum += store;
         return sum;
     }
 
@@ -261,5 +264,13 @@ public class PriorityManager {
 
     public static void setSmelt(Integer smelt) {
         PriorityManager.smelt = smelt;
+    }
+
+    public static Integer getStore() {
+        return store;
+    }
+
+    public static void setStore(Integer store) {
+        PriorityManager.store = store;
     }
 }

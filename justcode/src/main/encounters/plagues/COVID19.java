@@ -1,15 +1,18 @@
 package main.encounters.plagues;
 
-import main.models.*;
-
 public class COVID19 extends AbstractPlague {
-    @Override
-    public void runEncounter() {
-        Game.getVillage().addPlague(this);
+
+    public COVID19(int turns) {
+        super("COVID19", "A terrible pandemic that everyone secretly hopes Trump catches.", turns);
     }
 
     @Override
     public String toString() {
-        return "COVID-19 has stricken your village!";
+        return "COVID-19 has stricken your village for " + this.turnsActive +" turns!";
+    }
+
+    @Override
+    public COVID19 clone() {
+        return new COVID19(this.turnsActive);
     }
 }

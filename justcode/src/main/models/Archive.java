@@ -1,7 +1,6 @@
 package main.models;
 
 import main.enums.*;
-import main.interfaces.*;
 import main.models.animals.*;
 import main.models.animals.desert.*;
 import main.models.animals.jungle.*;
@@ -10,6 +9,7 @@ import main.models.animals.land.bears.*;
 import main.models.animals.mountain.*;
 import main.models.animals.sea.*;
 import main.models.animals.tundra.*;
+import main.models.beings.*;
 import main.models.buildings.abstracts.*;
 import main.models.buildings.concrete.defending.*;
 import main.models.buildings.concrete.faith.*;
@@ -34,7 +34,6 @@ import main.models.items.tools.engineering.*;
 import main.models.items.tools.gathering.*;
 import main.models.items.tools.hunting.*;
 import main.models.items.tools.other.*;
-import main.models.people.*;
 import main.models.resources.*;
 import main.models.resources.natural.*;
 import main.models.resources.refined.*;

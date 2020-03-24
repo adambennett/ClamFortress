@@ -6,7 +6,6 @@ import main.models.buildings.abstracts.*;
 import main.models.items.military.armor.*;
 import main.models.items.military.weapons.*;
 import main.models.managers.*;
-import main.models.people.*;
 import main.models.resources.*;
 
 import java.util.*;

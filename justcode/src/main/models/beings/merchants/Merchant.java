@@ -1,4 +1,4 @@
-package main.models.people.merchants;
+package main.models.beings.merchants;
 
 import main.models.*;
 import main.models.animals.*;

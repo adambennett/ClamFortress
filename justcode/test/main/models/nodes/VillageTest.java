@@ -4,8 +4,8 @@ import main.encounters.*;
 import main.encounters.disasters.*;
 import main.encounters.miracles.*;
 import main.encounters.plagues.*;
+import main.models.beings.*;
 import main.models.nodes.biomes.*;
-import main.models.people.*;
 import main.utilities.builders.*;
 import org.junit.*;
 
@@ -53,15 +53,16 @@ public class VillageTest {
 
     @Test
     public void canRunEncounter() {
-        AbstractEncounter fire = new Fire();
-        AbstractEncounter bub = new Bubonic();
-        AbstractEncounter bless = new Blessing();
+        Integer tempVal = 10;
+        AbstractEncounter fire = new Fire(tempVal);
+        AbstractEncounter bub = new Bubonic(tempVal);
+        AbstractEncounter bless = new ClericBlessing(tempVal);
         Assert.assertTrue(village.canRunEncounter(fire));
         Assert.assertTrue(village.canRunEncounter(bub));
         Assert.assertTrue(village.canRunEncounter(bless));
-        village.addDisaster(new Fire());
-        village.addPlague(new Bubonic());
-        village.addMiracle(new Blessing());
+        village.addDisaster(new Fire(tempVal));
+        village.addPlague(new Bubonic(tempVal));
+        village.addMiracle(new ClericBlessing(tempVal));
         Assert.assertFalse(village.canRunEncounter(fire));
         Assert.assertFalse(village.canRunEncounter(bub));
         Assert.assertFalse(village.canRunEncounter(bless));
@@ -150,7 +151,8 @@ public class VillageTest {
 
     @Test
     public void addMiracle() {
-        AbstractMiracle testM = new Blessing();
+        Integer tempVal = 10;
+        AbstractMiracle testM = new ClericBlessing(tempVal);
         village.addMiracle(testM);
         ArrayList<AbstractMiracle> ongoingM = village.getActiveMiracles();
         Boolean actual = ongoingM.contains(testM);
@@ -160,7 +162,7 @@ public class VillageTest {
 
     @Test
     public void addDisaster() {
-        AbstractDisaster testD = new Fire();
+        AbstractDisaster testD = new Fire(10);
         village.addDisaster(testD);
         ArrayList<AbstractDisaster> ongoingD = village.getOngoingDisasters();
         Boolean actual = ongoingD.contains(testD);
@@ -171,7 +173,7 @@ public class VillageTest {
 
     @Test
     public void addPlague() {
-        AbstractPlague testP = new Bubonic();
+        AbstractPlague testP = new Bubonic(10);
         village.addPlague(testP);
         ArrayList<AbstractPlague> ongoing = village.getOngoingPlagues();
         Boolean actual = ongoing.contains(testP);

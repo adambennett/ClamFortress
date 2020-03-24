@@ -3,7 +3,7 @@ package main.models.nodes;
 import main.models.*;
 import main.models.managers.*;
 import main.models.nodes.biomes.*;
-import main.models.people.Survivor;
+import main.models.beings.Survivor;
 import main.models.resources.*;
 import main.utilities.*;
 import main.utilities.persistence.*;

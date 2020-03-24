@@ -1,7 +1,5 @@
 package main.models;
 
-import main.encounters.alien.AbstractAliens;
-import main.enums.*;
 import main.models.animals.AbstractAnimal;
 import main.models.animals.desert.*;
 import main.models.animals.jungle.*;
@@ -10,18 +8,14 @@ import main.models.animals.land.bears.*;
 import main.models.animals.mountain.*;
 import main.models.animals.sea.AbstractSeaAnimal;
 import main.models.animals.tundra.*;
-import main.models.items.*;
 import main.models.managers.*;
 import main.models.nodes.*;
 import main.models.nodes.biomes.*;
 import main.models.resources.*;
-import main.models.resources.natural.*;
 import main.utilities.*;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.*;
-import java.util.stream.*;
 
 public class Board extends GameObject {
 

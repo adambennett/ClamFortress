@@ -84,5 +84,6 @@ public enum MenuCommands {
     STARTING_ERA,
     MERCHANT,
     TRAINING,
-    LEADERBOARD
+    LEADERBOARD,
+    STORING
 }

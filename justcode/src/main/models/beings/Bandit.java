@@ -1,4 +1,4 @@
-package main.models.people;
+package main.models.beings;
 
 public class Bandit extends Monster {
 }

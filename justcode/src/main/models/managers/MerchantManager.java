@@ -1,8 +1,6 @@
 package main.models.managers;
 
-import main.models.*;
-import main.models.buildings.abstracts.*;
-import main.models.people.merchants.*;
+import main.models.beings.merchants.*;
 
 import java.util.*;
 import java.util.concurrent.*;

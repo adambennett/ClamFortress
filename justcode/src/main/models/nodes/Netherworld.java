@@ -1,7 +1,7 @@
 package main.models.nodes;
 
 import main.models.*;
-import main.models.people.*;
+import main.models.beings.*;
 import main.models.resources.*;
 import main.utilities.stringUtils.*;
 

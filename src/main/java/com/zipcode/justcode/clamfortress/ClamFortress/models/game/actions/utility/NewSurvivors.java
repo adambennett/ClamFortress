@@ -19,7 +19,7 @@ public class NewSurvivors extends AbstractGameAction {
 
     @Override
     public void update() {
-        int pop = Game.getVillage().getPopulation();
+        int pop = Game.getVillage().getPopulation().size();
         int popCap = Game.getVillage().getPopCap();
         int diff = popCap - pop;
         if (pop < popCap && diff > 0) {

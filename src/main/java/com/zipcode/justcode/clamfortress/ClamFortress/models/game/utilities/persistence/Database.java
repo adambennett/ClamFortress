@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.*;
 import org.springframework.stereotype.*;
 
+import javax.transaction.*;
 import java.util.*;
 
 @Component
@@ -16,9 +17,6 @@ public class Database implements CommandLineRunner {
     private static final ArrayList<Game> games = new ArrayList<>();
     private static User player;
     private static Game currentGame;
-
-    @Autowired
-    private UserService controller;
 
     public static void logInQuickplay() {
         player = new User("Quickplayer", "");
@@ -53,11 +51,16 @@ public class Database implements CommandLineRunner {
     public static void register(String user, String pass) {
         User newUser = new User(user, pass);
         users.add(newUser);
-       // controller.insert(newUser);
+        UserService.insert(newUser);
+    }
+
+    public static void registerGame(Game game) {
+        games.add(game);
+        //GamesService.insert(game);
     }
 
     public static void loadDatabase() {
-        // load DB files
+        users.addAll(UserService.load());
         // add each loaded user to list of users
         // add each loaded game to list of games
         StatTracker.updateUnlocks();
@@ -70,7 +73,6 @@ public class Database implements CommandLineRunner {
                 Database.player.setStats(StatTracker.getUserStatBundle());
             }
         }
-        // write users and games to DB
     }
 
     public static User getPlayer() {
@@ -91,7 +93,8 @@ public class Database implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        /*User admin = new User("Adam", "pass");
-        controller.insert(admin);*/
+        /*User admin = new User("Admin", "root");
+        UserService.insert(admin);*/
+        loadDatabase();
     }
 }

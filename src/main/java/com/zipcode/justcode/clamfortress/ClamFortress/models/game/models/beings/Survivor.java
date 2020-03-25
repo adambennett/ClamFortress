@@ -3,23 +3,55 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.refined.food.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
+import javax.persistence.*;
 import java.util.*;
 
-
+@Entity
 public  class Survivor {
+
+    @Id
+    @ManyToOne(optional = false)
+    @JoinTable(name = "survivors")
+    private Village village;
+
+    @Column(nullable = false, name = "agility")
     protected Integer agility;
+
+    @Column(nullable = false, name = "strength")
     protected Integer strength;
+
+    @Column(nullable = false, name = "dexterity")
     protected Integer dexterity;
+
+    @Column(nullable = false, name = "intelligence")
     protected Integer intelligence;
+
+    @Column(nullable = false, name = "magic")
     protected Integer magic;
+
+    @Column(nullable = false, name = "engineering")
     protected Integer engineering;
+
+    @Column(nullable = false, name = "healthPoints")
     protected Integer healthPoints;
+
+    @Column(nullable = false, name = "maxHp")
     protected Integer maxHp;
+
+    @Column(nullable = false, name = "age")
     protected Integer age;
+
+    @Column(nullable = false, name = "name")
     protected String name;
+
+    @Column(nullable = false, name = "gender")
     protected Gender gender;
+
+    @Column(nullable = false, name = "race")
     protected Race race;
 
     public Survivor(Integer agility, Integer strength, Integer dexterity, Integer intelligence, Integer magic, Integer engineering, Integer healthPoints,Integer maxHP, Integer age, String name, Gender gender, Race race) {
@@ -37,7 +69,6 @@ public  class Survivor {
         this.race = race;
     }
 
-    //This is a nullary constructor because im not sure if we are going to have each one use the constructor from Survivor
     public Survivor(){
         this.agility = 0;
         this.strength = 0;
@@ -117,6 +148,18 @@ public  class Survivor {
     public Race getRace() { return race; }
 
     public void setRace(Race race) { this.race = race; }
+
+    public Integer getHealthPoints() {
+        return healthPoints;
+    }
+
+    public Village getVillage() {
+        return village;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
+    }
 
     @Override
     public boolean equals(Object o) {

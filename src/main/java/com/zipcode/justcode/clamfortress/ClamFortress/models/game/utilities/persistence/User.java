@@ -6,13 +6,12 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.buil
 import javax.persistence.*;
 
 @Entity
-@Table(name = "clam_users")
 public class User implements Comparable<User> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name="id")
-    private long id;
+    @Column(nullable = false, unique = true, name = "id")
+    private Long id;
 
     @Column(nullable = false, unique = true, name = "name")
     private String name;
@@ -29,23 +28,20 @@ public class User implements Comparable<User> {
         this.name = name;
         this.pass = pass;
         this.stats = new StatBuilder().createUserStats();
+        this.stats.setUser(this);
     }
-
-
 
     // Getters
     public String getName() { return name; }
     public String getPass() { return pass; }
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = UserStats.class)
     public UserStats getStats() { return stats; }
-    public long getId() { return id; }
+    public Long getId() { return id; }
 
     // Setters
     public void setPass(String pass) { this.pass = pass; }
     public void setName(String name) { this.name = name; }
     public void setStats(UserStats stats) { this.stats = stats; }
-    public void setId(long id) { this.id = id; }
+    public void setId(Long id) { this.id = id; }
 
     @Override
     public int compareTo(User o) {

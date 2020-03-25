@@ -22,64 +22,121 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resourc
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.*;
 
+@Entity
 public class Village extends AbstractNode {
 
+    @Id
+    @OneToOne(optional = false)
+    private Board board;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "inventory", targetEntity = Inventory.class)
     private final Inventory inventory;
+    
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "baseNode", targetEntity = AbstractNode.class)
     private final AbstractNode baseNode;
-    private final Farmland farmland;
+    
+/*    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "farmland", targetEntity = Farmland.class)
+    private final Farmland farmland;*/
 
-    // Limits
+
+    @Column(nullable = false, name = "popCap")
     private Integer popCap =            5;
+    @Column(nullable = false, name = "buildingLimit")
     private Integer buildingLimit =     5;
+    @Column(nullable = false, name = "foodLimit")
     private Integer foodLimit =         10;
+    @Column(nullable = false, name = "resourceLimit")
     private Integer resourceLimit =     250;
+    @Column(nullable = false, name = "coinLimit")
     private Integer coinLimit =         500;
+    @Column(nullable = false, name = "faithLimit")
     private Integer faithLimit =        100;
-
-    // Combat
+    @Column(nullable = false, name = "defence")
     private Integer defence =           0;
+    @Column(nullable = false, name = "attackPower")
     private Integer attackPower =       0;
-
-    // Total Stats
+    @Column(nullable = false, name = "agility")
     private Integer agility =           0;
+    @Column(nullable = false, name = "strength")
     private Integer strength =          0;
+    @Column(nullable = false, name = "intelligence")
     private Integer intelligence =      0;
+    @Column(nullable = false, name = "dexterity")
     private Integer dexterity =         0;
+    @Column(nullable = false, name = "magic")
     private Integer magic =             0;
+    @Column(nullable = false, name = "engineering")
     private Integer engineering =       0;
+    @Column(nullable = false, name = "health")
     private Integer health =            0;
+    @Column(nullable = false, name = "maxHP")
     private Integer maxHP =             0;
+    @Column(nullable = false, name = "totalAge")
     private Integer totalAge =          0;
+    @Column(nullable = false, name = "hunger")
     private Integer hunger =            0;
+    @Column(nullable = false, name = "famine")
     private Integer famine =            0;
+    @Column(nullable = false, name = "food")
     private Integer food =              0;
-
-    // Average Stats
-    private Double ageAvg =             0.0;
-    private Double agilityAvg =         0.0;
-    private Double strengthAvg =        0.0;
-    private Double intelligenceAvg =    0.0;
-    private Double dexterityAvg =       0.0;
-    private Double magicAvg =           0.0;
-    private Double engineeringAvg =     0.0;
-
-    // Resources
+    @Column(nullable = false, name = "faith")
     private Integer faith =             0;
+    @Column(nullable = false, name = "coins")
     private Integer coins =             0;
 
-    // Lists
-    private ArrayList<Bandit>           occupyingBandits = new ArrayList<>();
-    private ArrayList<AbstractBuilding> buildings = new ArrayList<>();
-    private ArrayList<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
-    private ArrayList<AbstractMiracle>  activeMiracles = new ArrayList<>();
-    private ArrayList<AbstractDisaster> ongoingDisasters = new ArrayList<>();
-    private ArrayList<Merchant>         vistingMerchants = new ArrayList<>();
-    private ArrayList<AbstractPlague>   ongoingPlagues = new ArrayList<>();
-    private ArrayList<Survivor>         population = new ArrayList<>();
+    @Column(nullable = false, name = "ageAvg")
+    private Double ageAvg =             0.0;
+    @Column(nullable = false, name = "agilityAvg")
+    private Double agilityAvg =         0.0;
+    @Column(nullable = false, name = "strengthAvg")
+    private Double strengthAvg =        0.0;
+    @Column(nullable = false, name = "intelligenceAvg")
+    private Double intelligenceAvg =    0.0;
+    @Column(nullable = false, name = "dexterityAvg")
+    private Double dexterityAvg =       0.0;
+    @Column(nullable = false, name = "magicAvg")
+    private Double magicAvg =           0.0;
+    @Column(nullable = false, name = "engineeringAvg")
+    private Double engineeringAvg =     0.0;
+
+    @OneToMany(targetEntity = Bandit.class, mappedBy = "village")
+    @JoinTable(name = "village_bandits")
+    private List<Bandit>  occupyingBandits = new ArrayList<>();
+
+    @OneToMany(targetEntity = AbstractBuilding.class, mappedBy = "village")
+    @JoinTable(name = "village_buildings")
+    private List<AbstractBuilding> buildings = new ArrayList<>();
+
+    @OneToMany(targetEntity = AbstractBuilding.class, mappedBy = "village")
+    @JoinTable(name = "village_building_queue")
+    private List<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
+
+    @OneToMany(targetEntity = AbstractMiracle.class, mappedBy = "village")
+    @JoinTable(name = "village_miracles")
+    private List<AbstractMiracle>  activeMiracles = new ArrayList<>();
+
+    @OneToMany(targetEntity = AbstractDisaster.class, mappedBy = "village")
+    @JoinTable(name = "village_disasters")
+    private List<AbstractDisaster> ongoingDisasters = new ArrayList<>();
+
+    @OneToMany(targetEntity = Merchant.class, mappedBy = "village")
+    @JoinTable(name = "village_merchants")
+    private List<Merchant>         vistingMerchants = new ArrayList<>();
+
+    @OneToMany(targetEntity = AbstractPlague.class, mappedBy = "village")
+    @JoinTable(name = "village_plagues")
+    private List<AbstractPlague>   ongoingPlagues = new ArrayList<>();
+
+    @OneToMany(targetEntity = Survivor.class, mappedBy = "village")
+    @JoinTable(name = "village_population")
+    private List<Survivor>         population = new ArrayList<>();
+
+    @ElementCollection
     private Map<AbstractResource, Integer> resources;
 
     @Override public String toString() { return "Village"; }
@@ -90,7 +147,7 @@ public class Village extends AbstractNode {
         this.resources = new HashMap<>();
         this.popCap = popCap;
         this.baseNode = getNodeFromBiome(biome);
-        this.farmland = new Farmland();
+        //this.farmland = new Farmland();
         this.health = 100;
         this.maxHP = 100;
     }
@@ -100,7 +157,7 @@ public class Village extends AbstractNode {
         super();
         this.baseNode = null;
         this.inventory = new Inventory(0);
-        this.farmland = new Farmland();
+        //this.farmland = new Farmland();
     }
 
     public AbstractNode getNodeFromBiome(AbstractBiome biome) {
@@ -546,125 +603,6 @@ public class Village extends AbstractNode {
         return atk;
     }
 
-    public AbstractNode getBaseNode() {
-        return baseNode;
-    }
-    public Farmland getFarmland(){return this.farmland;}
-
-    public Integer getHunger() {
-        return hunger;
-    }
-    public Integer getBuildingLimit() {
-        return buildingLimit;
-    }
-    public Double getAgeAvg() {
-        return ageAvg;
-    }
-    public Integer getAgility() {
-        return agility;
-    }
-    public Integer getStrength() {
-        return strength;
-    }
-    public Integer getIntelligence() {
-        return intelligence;
-    }
-    public Integer getDexterity() {
-        return dexterity;
-    }
-    public Integer getMagic() {
-        return magic;
-    }
-    public Integer getEngineering() {
-        return engineering;
-    }
-    public Integer getHealth() {
-        return health;
-    }
-    public Integer getFood() {
-        return food;
-    }
-    public Double getAgilityAvg() {
-        return agilityAvg;
-    }
-    public Double getStrengthAvg() {
-        return strengthAvg;
-    }
-    public Double getIntelligenceAvg() {
-        return intelligenceAvg;
-    }
-    public Double getDexterityAvg() {
-        return dexterityAvg;
-    }
-    public Double getMagicAvg() {
-        return magicAvg;
-    }
-    public Double getEngineeringAvg() {
-        return engineeringAvg;
-    }
-    public Integer getMaxHP() {
-        return maxHP;
-    }
-    public Integer getFaithLimit() {
-        return faithLimit;
-    }
-
-    public Integer getCoinLimit() {
-        return coinLimit;
-    }
-
-    public Integer getFoodLimit() {
-        return foodLimit;
-    }
-
-    public Integer getResourceLimit() {
-        return resourceLimit;
-    }
-
-    public Integer getCoins() {
-        return coins;
-    }
-    public Integer getFaith() {
-        return this.faith;
-    }
-    public Integer getPopulation() {
-        return this.population.size();
-    }
-    public Integer getPopCap() {
-        return this.popCap;
-    }
-    public Integer getTotalAge() {
-        return totalAge;
-    }
-    public Integer getFamine() {
-        return famine;
-    }
-
-    public Inventory getInventory() {
-        return inventory;
-    }
-    public ArrayList<Survivor> getSurvivors() {
-        return population;
-    }
-    public ArrayList<AbstractBuilding> getBuildings() {
-        return buildings;
-    }
-    public ArrayList<AbstractBuilding> getUncompletedBuildings() {
-        return uncompletedBuildings;
-    }
-    public ArrayList<AbstractMiracle> getActiveMiracles() {
-        return activeMiracles;
-    }
-    public ArrayList<AbstractDisaster> getOngoingDisasters() {
-        return ongoingDisasters;
-    }
-    public ArrayList<AbstractPlague> getOngoingPlagues() {
-        return ongoingPlagues;
-    }
-    public ArrayList<Merchant> getVistingMerchants() {
-        return vistingMerchants;
-    }
-
     public void incDefense(Integer amt){
         this.defence += amt;
     }
@@ -737,40 +675,197 @@ public class Village extends AbstractNode {
         else if (this.hunger < 0) { this.hunger = 0; }
     }
 
-    public void setPopCap(Integer popCap){ this.popCap = popCap; }
-    public void setHealth(Integer health) { this.health = health; }
+    public Board getBoard() {
+        return board;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public AbstractNode getBaseNode() {
+        return baseNode;
+    }
+
+    public Integer getPopCap() {
+        return popCap;
+    }
+
+    public Integer getBuildingLimit() {
+        return buildingLimit;
+    }
+
+    public Integer getFoodLimit() {
+        return foodLimit;
+    }
+
+    public Integer getResourceLimit() {
+        return resourceLimit;
+    }
+
+    public Integer getCoinLimit() {
+        return coinLimit;
+    }
+
+    public Integer getFaithLimit() {
+        return faithLimit;
+    }
+
+    public Integer getDefence() {
+        return defence;
+    }
+
+    public Integer getAgility() {
+        return agility;
+    }
+
+    public Integer getStrength() {
+        return strength;
+    }
+
+    public Integer getIntelligence() {
+        return intelligence;
+    }
+
+    public Integer getDexterity() {
+        return dexterity;
+    }
+
+    public Integer getMagic() {
+        return magic;
+    }
+
+    public Integer getEngineering() {
+        return engineering;
+    }
+
+    public Integer getHealth() {
+        return health;
+    }
+
+    public Integer getMaxHP() {
+        return maxHP;
+    }
+
+    public Integer getTotalAge() {
+        return totalAge;
+    }
+
+    public Integer getHunger() {
+        return hunger;
+    }
+
+    public Integer getFamine() {
+        return famine;
+    }
+
+    public Integer getFood() {
+        return food;
+    }
+
+    public Integer getFaith() {
+        return faith;
+    }
+
+    public Integer getCoins() {
+        return coins;
+    }
+
+    public Double getAgeAvg() {
+        return ageAvg;
+    }
+
+    public Double getAgilityAvg() {
+        return agilityAvg;
+    }
+
+    public Double getStrengthAvg() {
+        return strengthAvg;
+    }
+
+    public Double getIntelligenceAvg() {
+        return intelligenceAvg;
+    }
+
+    public Double getDexterityAvg() {
+        return dexterityAvg;
+    }
+
+    public Double getMagicAvg() {
+        return magicAvg;
+    }
+
+    public Double getEngineeringAvg() {
+        return engineeringAvg;
+    }
+
+    public List<Bandit> getOccupyingBandits() {
+        return occupyingBandits;
+    }
+
+    public List<AbstractBuilding> getBuildings() {
+        return buildings;
+    }
+
+    public List<AbstractBuilding> getUncompletedBuildings() {
+        return uncompletedBuildings;
+    }
+
+    public List<AbstractMiracle> getActiveMiracles() {
+        return activeMiracles;
+    }
+
+    public List<AbstractDisaster> getOngoingDisasters() {
+        return ongoingDisasters;
+    }
+
+    public List<Merchant> getVistingMerchants() {
+        return vistingMerchants;
+    }
+
+    public List<AbstractPlague> getOngoingPlagues() {
+        return ongoingPlagues;
+    }
+
+    public List<Survivor> getPopulation() {
+        return population;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setPopCap(Integer popCap) {
+        this.popCap = popCap;
+    }
+
     public void setBuildingLimit(Integer buildingLimit) {
         this.buildingLimit = buildingLimit;
     }
-    public void setDefence(Integer defence){
-        this.defence = defence;
-    }
-    public void setFaith(Integer faith){
-        this.faith = faith;
-    }
-    public void setFood(Integer food) {
-        this.food = food;
-    }
-    public void setFamine(Integer famine) {
-        this.famine = famine;
-    }
-    public void setMagic(Integer magic) {
-        this.magic = magic;
-    }
+
     public void setFoodLimit(Integer foodLimit) {
         this.foodLimit = foodLimit;
     }
+
     public void setResourceLimit(Integer resourceLimit) {
         this.resourceLimit = resourceLimit;
     }
+
     public void setCoinLimit(Integer coinLimit) {
         this.coinLimit = coinLimit;
     }
+
     public void setFaithLimit(Integer faithLimit) {
         this.faithLimit = faithLimit;
     }
-    public void setyPos(int y) { this.yPos = y; }
-    public void setxPos(int x) { this.xPos = x; }
+
+    public void setDefence(Integer defence) {
+        this.defence = defence;
+    }
+
+    public void setAttackPower(Integer attackPower) {
+        this.attackPower = attackPower;
+    }
 
     public void setAgility(Integer agility) {
         this.agility = agility;
@@ -788,12 +883,105 @@ public class Village extends AbstractNode {
         this.dexterity = dexterity;
     }
 
+    public void setMagic(Integer magic) {
+        this.magic = magic;
+    }
+
     public void setEngineering(Integer engineering) {
         this.engineering = engineering;
+    }
+
+    public void setHealth(Integer health) {
+        this.health = health;
     }
 
     public void setMaxHP(Integer maxHP) {
         this.maxHP = maxHP;
     }
+
+    public void setTotalAge(Integer totalAge) {
+        this.totalAge = totalAge;
+    }
+
+    public void setFamine(Integer famine) {
+        this.famine = famine;
+    }
+
+    public void setFood(Integer food) {
+        this.food = food;
+    }
+
+    public void setFaith(Integer faith) {
+        this.faith = faith;
+    }
+
+    public void setCoins(Integer coins) {
+        this.coins = coins;
+    }
+
+    public void setAgeAvg(Double ageAvg) {
+        this.ageAvg = ageAvg;
+    }
+
+    public void setAgilityAvg(Double agilityAvg) {
+        this.agilityAvg = agilityAvg;
+    }
+
+    public void setStrengthAvg(Double strengthAvg) {
+        this.strengthAvg = strengthAvg;
+    }
+
+    public void setIntelligenceAvg(Double intelligenceAvg) {
+        this.intelligenceAvg = intelligenceAvg;
+    }
+
+    public void setDexterityAvg(Double dexterityAvg) {
+        this.dexterityAvg = dexterityAvg;
+    }
+
+    public void setMagicAvg(Double magicAvg) {
+        this.magicAvg = magicAvg;
+    }
+
+    public void setEngineeringAvg(Double engineeringAvg) {
+        this.engineeringAvg = engineeringAvg;
+    }
+
+    public void setOccupyingBandits(ArrayList<Bandit> occupyingBandits) {
+        this.occupyingBandits = occupyingBandits;
+    }
+
+    public void setBuildings(ArrayList<AbstractBuilding> buildings) {
+        this.buildings = buildings;
+    }
+
+    public void setUncompletedBuildings(ArrayList<AbstractBuilding> uncompletedBuildings) {
+        this.uncompletedBuildings = uncompletedBuildings;
+    }
+
+    public void setActiveMiracles(ArrayList<AbstractMiracle> activeMiracles) {
+        this.activeMiracles = activeMiracles;
+    }
+
+    public void setOngoingDisasters(ArrayList<AbstractDisaster> ongoingDisasters) {
+        this.ongoingDisasters = ongoingDisasters;
+    }
+
+    public void setVistingMerchants(ArrayList<Merchant> vistingMerchants) {
+        this.vistingMerchants = vistingMerchants;
+    }
+
+    public void setOngoingPlagues(ArrayList<AbstractPlague> ongoingPlagues) {
+        this.ongoingPlagues = ongoingPlagues;
+    }
+
+    public void setPopulation(ArrayList<Survivor> population) {
+        this.population = population;
+    }
+
+    public void setResources(Map<AbstractResource, Integer> resources) {
+        this.resources = resources;
+    }
+
     // END GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////
 }

@@ -4,16 +4,35 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildi
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras.*;
 
+import javax.persistence.*;
 import java.util.logging.*;
 
+@Entity
 public abstract class AbstractBuilding extends GameObject {
 
-    private final Integer resourceCost;
-    private final AbstractResource resourceType;
+
+    @Id
+    @ManyToOne(optional = false)
+    @JoinTable(name = "bandits")
+    private Village village;
+
+    public AbstractBuilding() {
+        super("Building", "Desc");
+    }
+
+
+    @Column(nullable = false, name = "resourceCost")
+    private Integer resourceCost;
+
+    @Transient
+    private AbstractResource resourceType;
+
+    @Transient
     private Era eraRequired;
 
     public AbstractBuilding(String name, String desc, int resourceCost, AbstractResource resourceType) {
@@ -79,6 +98,28 @@ public abstract class AbstractBuilding extends GameObject {
     public AbstractResource getResourceType() {
         return resourceType;
     }
+
+    public Village getVillage() {
+        return village;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
+    }
+
+    public void setResourceCost(Integer resourceCost) {
+        this.resourceCost = resourceCost;
+    }
+
+    public void setResourceType(AbstractResource resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public Era getEraRequired() {
+        return eraRequired;
+    }
+
+
 
     @Override
     public abstract AbstractBuilding clone();

@@ -4,17 +4,34 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+@Entity
 public class Merchant {
 
+    @Id
+    @ManyToOne(optional = false)
+    @JoinTable(name = "merchants")
+    private Village village;
+
+    @ElementCollection
     private final Map<String, Integer> wares;
+
+    @Column(nullable = false, name = "turnsAvailable")
     private final Integer turnsAvailable;
+
+    @Column(nullable = false, name = "items")
     private final Integer items;
+
+    @Column(nullable = false, name = "name")
     private final String name;
+
+    @Column(nullable = false, name = "turnsVisited")
     private Integer turnsVisited;
 
     public Merchant() {
@@ -80,5 +97,25 @@ public class Merchant {
 
     public String getName() {
         return name;
+    }
+
+    public Village getVillage() {
+        return village;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
+    }
+
+    public Integer getTurnsAvailable() {
+        return turnsAvailable;
+    }
+
+    public Integer getTurnsVisited() {
+        return turnsVisited;
+    }
+
+    public void setTurnsVisited(Integer turnsVisited) {
+        this.turnsVisited = turnsVisited;
     }
 }

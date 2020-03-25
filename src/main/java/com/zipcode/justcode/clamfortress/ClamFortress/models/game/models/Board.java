@@ -14,22 +14,49 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+@Entity
 public class Board extends GameObject {
 
+    @Id
+    @OneToOne(optional = false)
+    private Game game;
+
+    @Column(nullable = false, unique = true, name = "gridXMax")
     private Integer gridXMax;
+
+    @Column(nullable = false, unique = true, name = "gridYMax")
     private Integer gridYMax;
+
+    @Column(nullable = false, unique = true, name = "nextX")
     private Integer nextX;
+
+    @Column(nullable = false, unique = true, name = "nextY")
     private Integer nextY;
 
-    private final Integer startPopCap;
-    private final AbstractBiome startBiome;
-    private final Village village;
-    private ArrayList<AbstractNode> grid;
-    private ArrayList<AbstractAnimal> animals;
+    @Column(nullable = false, unique = true, name = "startPopCap")
+    private Integer startPopCap;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = AbstractBiome.class)
+    private AbstractBiome startBiome;
+
+    @Transient
+    private Village village;
+
+    @OneToMany(targetEntity = AbstractNode.class)
+    @JoinTable(name = "grid")
+    private List<AbstractNode> grid;
+
+    @OneToMany(targetEntity = AbstractAnimal.class)
+    @JoinTable(name = "board_animals")
+    private List<AbstractAnimal> animals;
+
+    @ElementCollection
     private Map<AbstractResource, Integer> resources;
 
     public Board() {
@@ -56,6 +83,10 @@ public class Board extends GameObject {
         this.nextY = 0;
         this.addAnimals(this.village.getAnimals());
         this.addResources(this.village.getResources());
+    }
+
+    public void reloadVillage() {
+        this.village = (Village) getNodeAt(0, 0);
     }
 
     public Boolean isBoardFull() {
@@ -224,7 +255,7 @@ public class Board extends GameObject {
         return village;
     }
 
-    public ArrayList<AbstractAnimal> getAnimals() {
+    public List<AbstractAnimal> getAnimals() {
         return animals;
     }
 
@@ -298,6 +329,15 @@ public class Board extends GameObject {
         return toRet;
     }
 
+    @Override
+    public Board clone() {
+        return new Board(this.startBiome, this.gridXMax, this.gridYMax, this.startPopCap);
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
     public Integer getGridXMax() {
         return gridXMax;
     }
@@ -306,12 +346,59 @@ public class Board extends GameObject {
         return gridYMax;
     }
 
-    public  ArrayList<AbstractNode> getGrid() {
+    public Integer getStartPopCap() {
+        return startPopCap;
+    }
+
+    public AbstractBiome getStartBiome() {
+        return startBiome;
+    }
+
+    public List<AbstractNode> getGrid() {
         return grid;
     }
 
-    @Override
-    public Board clone() {
-        return new Board(this.startBiome, this.gridXMax, this.gridYMax, this.startPopCap);
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void setGridXMax(Integer gridXMax) {
+        this.gridXMax = gridXMax;
+    }
+
+    public void setGridYMax(Integer gridYMax) {
+        this.gridYMax = gridYMax;
+    }
+
+    public void setNextX(Integer nextX) {
+        this.nextX = nextX;
+    }
+
+    public void setNextY(Integer nextY) {
+        this.nextY = nextY;
+    }
+
+    public void setStartPopCap(Integer startPopCap) {
+        this.startPopCap = startPopCap;
+    }
+
+    public void setStartBiome(AbstractBiome startBiome) {
+        this.startBiome = startBiome;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
+    }
+
+    public void setGrid(List<AbstractNode> grid) {
+        this.grid = grid;
+    }
+
+    public void setAnimals(List<AbstractAnimal> animals) {
+        this.animals = animals;
+    }
+
+    public void setResources(Map<AbstractResource, Integer> resources) {
+        this.resources = resources;
     }
 }

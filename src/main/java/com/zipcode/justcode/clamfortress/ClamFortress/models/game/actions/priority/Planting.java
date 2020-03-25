@@ -10,13 +10,16 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resourc
 import java.util.*;
 
 public class Planting extends AbstractGameAction {
-LinkedList<Seeds> seeds = new LinkedList<>();
+
+    //LinkedList<Seeds> seeds = new LinkedList<>();
+
     public Planting(int amountToRun) {
         super(amountToRun);
     }
 
     @Override
     public void update() {
+/*
 
         if(hasSeeds() && !hasCrops()) {
            populateSeeds();
@@ -32,6 +35,7 @@ LinkedList<Seeds> seeds = new LinkedList<>();
         } else if (hasCrops()){
             OutputManager.addToBot("Crops were already been planted on turn " + Game.getVillage().getFarmland().getPlantDate());
         }
+*/
 
         this.isDone = true;
     }
@@ -42,7 +46,7 @@ LinkedList<Seeds> seeds = new LinkedList<>();
     }
 
 
-    public Boolean hasSeeds() {
+   /* public Boolean hasSeeds() {
         return Game.getVillage().getResource("seeds") > 0;
     }
 
@@ -62,5 +66,5 @@ LinkedList<Seeds> seeds = new LinkedList<>();
         }
         Game.getVillage().removeResource("seeds",seed.size());
         return counter;
-    }
+    }*/
 }

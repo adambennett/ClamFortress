@@ -15,33 +15,80 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
 public class Game {
 
-    // Nested Objects
-    public  static ActionManager actionManager;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, unique = true, name = "id")
+    private Long id;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "game", targetEntity = Board.class)
     private static Board gameBoard;
+
+    @Transient
+    public  static ActionManager actionManager;
+
+    @Transient
     private static GameManager gameManager;
 
-    // Difficulty Modifiers
+    @Column(nullable = false, name = "toughEnemies")
     private static Boolean toughEnemies;
+
+    @Column(nullable = false, name = "hostileEnemies")
     private static Boolean hostileEnemies;
+
+    @Column(nullable = false, name = "slowResourceGain")
     private static Boolean slowResourceGain;
+
+    @Column(nullable = false, name = "frequentBadEvents")
     private static Boolean frequentBadEvents;
+
+    @Column(nullable = false, name = "terribleDisasters")
     private static Boolean terribleDisasters;
+
+    @Column(nullable = false, name = "handicappedStartEquipment")
     private static Boolean handicappedStartEquipment;
+
+    @Column(nullable = false, name = "moreNetherworlds")
     private static Boolean moreNetherworlds;
+
+    @Column(nullable = false, name = "lessEffectiveTools")
     private static Boolean lessEffectiveTools;
+
+    @Column(nullable = false, name = "limitedBlueprintAccess")
     private static Boolean limitedBlueprintAccess;
+
+    @Column(nullable = false, name = "tradingEnabled")
     private static Boolean tradingEnabled;
+
+    @Column(nullable = false, name = "magicEnabled")
     private static Boolean magicEnabled;
+
+    @Column(nullable = false, name = "aliensEnabled")
     private static Boolean aliensEnabled;
+
+    @Column(nullable = false, name = "healingEnabled")
     private static Boolean healingEnabled;
+
+    @Column(nullable = false, name = "faithEnabled")
     private static Boolean faithEnabled;
+
+    @Column(nullable = false, name = "surroundingCheckEnabled")
     private static Boolean surroundingCheckEnabled;
+
+    @Column(nullable = false, name = "playerRace")
     private static Race playerRace;
+
+    @Column(nullable = false, name = "difficulty")
     private static Difficulty difficulty;
+
+    public Game() {}
+
+
 
     // Default Settings (for tests)
     public static void startGame() {
@@ -116,7 +163,7 @@ public class Game {
         }
         mods.addAll(getVillage().getBuildings());
         mods.addAll(getGameBoard().getAnimals());
-        mods.add(getVillage().getFarmland());
+        //mods.add(getVillage().getFarmland());
         return mods;
     }
 
@@ -349,4 +396,151 @@ public class Game {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public static ActionManager getActionManager() {
+        return actionManager;
+    }
+
+    public static Boolean getToughEnemies() {
+        return toughEnemies;
+    }
+
+    public static Boolean getHostileEnemies() {
+        return hostileEnemies;
+    }
+
+    public static Boolean getSlowResourceGain() {
+        return slowResourceGain;
+    }
+
+    public static Boolean getFrequentBadEvents() {
+        return frequentBadEvents;
+    }
+
+    public static Boolean getTerribleDisasters() {
+        return terribleDisasters;
+    }
+
+    public static Boolean getHandicappedStartEquipment() {
+        return handicappedStartEquipment;
+    }
+
+    public static Boolean getMoreNetherworlds() {
+        return moreNetherworlds;
+    }
+
+    public static Boolean getLessEffectiveTools() {
+        return lessEffectiveTools;
+    }
+
+    public static Boolean getLimitedBlueprintAccess() {
+        return limitedBlueprintAccess;
+    }
+
+    public static Boolean getTradingEnabled() {
+        return tradingEnabled;
+    }
+
+    public static Boolean getMagicEnabled() {
+        return magicEnabled;
+    }
+
+    public static Boolean getAliensEnabled() {
+        return aliensEnabled;
+    }
+
+    public static Boolean getHealingEnabled() {
+        return healingEnabled;
+    }
+
+    public static Boolean getFaithEnabled() {
+        return faithEnabled;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public static void setGameBoard(Board gameBoard) {
+        Game.gameBoard = gameBoard;
+    }
+
+    public static void setActionManager(ActionManager actionManager) {
+        Game.actionManager = actionManager;
+    }
+
+    public static void setGameManager(GameManager gameManager) {
+        Game.gameManager = gameManager;
+    }
+
+    public static void setToughEnemies(Boolean toughEnemies) {
+        Game.toughEnemies = toughEnemies;
+    }
+
+    public static void setHostileEnemies(Boolean hostileEnemies) {
+        Game.hostileEnemies = hostileEnemies;
+    }
+
+    public static void setSlowResourceGain(Boolean slowResourceGain) {
+        Game.slowResourceGain = slowResourceGain;
+    }
+
+    public static void setFrequentBadEvents(Boolean frequentBadEvents) {
+        Game.frequentBadEvents = frequentBadEvents;
+    }
+
+    public static void setTerribleDisasters(Boolean terribleDisasters) {
+        Game.terribleDisasters = terribleDisasters;
+    }
+
+    public static void setHandicappedStartEquipment(Boolean handicappedStartEquipment) {
+        Game.handicappedStartEquipment = handicappedStartEquipment;
+    }
+
+    public static void setMoreNetherworlds(Boolean moreNetherworlds) {
+        Game.moreNetherworlds = moreNetherworlds;
+    }
+
+    public static void setLessEffectiveTools(Boolean lessEffectiveTools) {
+        Game.lessEffectiveTools = lessEffectiveTools;
+    }
+
+    public static void setLimitedBlueprintAccess(Boolean limitedBlueprintAccess) {
+        Game.limitedBlueprintAccess = limitedBlueprintAccess;
+    }
+
+    public static void setTradingEnabled(Boolean tradingEnabled) {
+        Game.tradingEnabled = tradingEnabled;
+    }
+
+    public static void setMagicEnabled(Boolean magicEnabled) {
+        Game.magicEnabled = magicEnabled;
+    }
+
+    public static void setAliensEnabled(Boolean aliensEnabled) {
+        Game.aliensEnabled = aliensEnabled;
+    }
+
+    public static void setHealingEnabled(Boolean healingEnabled) {
+        Game.healingEnabled = healingEnabled;
+    }
+
+    public static void setFaithEnabled(Boolean faithEnabled) {
+        Game.faithEnabled = faithEnabled;
+    }
+
+    public static void setSurroundingCheckEnabled(Boolean surroundingCheckEnabled) {
+        Game.surroundingCheckEnabled = surroundingCheckEnabled;
+    }
+
+    public static void setPlayerRace(Race playerRace) {
+        Game.playerRace = playerRace;
+    }
+
+    public static void setDifficulty(Difficulty difficulty) {
+        Game.difficulty = difficulty;
+    }
 }

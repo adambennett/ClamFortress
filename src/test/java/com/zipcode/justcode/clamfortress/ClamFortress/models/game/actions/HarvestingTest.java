@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 
 public class HarvestingTest {
 
-    @Test
+   /* @Test
     public void cropsReadyToHarvestTest(){
         Game.startGame();
         Harvesting harvesting = new Harvesting(1);
@@ -30,6 +30,6 @@ public class HarvestingTest {
         Game.getVillage().getFarmland().setHarvestDate(Game.getVillage().getFarmland().getPlantDate()+3);
         Boolean actual = harvesting.cropsReadyToHarvest();
         Assertions.assertTrue(!actual);
-    }
+    }*/
 
 }

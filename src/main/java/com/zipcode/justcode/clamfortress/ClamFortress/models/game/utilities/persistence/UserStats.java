@@ -2,14 +2,12 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.per
 
 
 import javax.persistence.*;
+import java.io.*;
 
 @Entity
-public class UserStats {
+public class UserStats implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     @OneToOne(optional = false)
     private User user;
 
@@ -24,7 +22,8 @@ public class UserStats {
 
     public UserStats() {}
 
-    public UserStats(Integer enemiesKilled, Integer villagersLost, Integer daysSurvived, Integer overallScore, Integer highestCoins, Integer highestResources, Integer highestBuildings, Integer highestPopulation) {
+    public UserStats(User user, Integer enemiesKilled, Integer villagersLost, Integer daysSurvived, Integer overallScore, Integer highestCoins, Integer highestResources, Integer highestBuildings, Integer highestPopulation) {
+        this.user = user;
         this.enemiesKilled = enemiesKilled;
         this.villagersLost = villagersLost;
         this.daysSurvived = daysSurvived;
@@ -45,7 +44,6 @@ public class UserStats {
     public Integer getHighestPopulation() { return highestPopulation; }
     public Integer getHighestResources() { return highestResources; }
     public User getUser() { return user; }
-    public long getId() { return id; }
 
     // Setters
     public void setEnemiesKilled(Integer enemiesKilled) { this.enemiesKilled = enemiesKilled; }
@@ -56,6 +54,5 @@ public class UserStats {
     public void setHighestResources(Integer highestResources) { this.highestResources = highestResources; }
     public void setHighestBuildings(Integer highestBuildings) { this.highestBuildings = highestBuildings; }
     public void setHighestPopulation(Integer highestPopulation) { this.highestPopulation = highestPopulation; }
-    public void setId(long id) { this.id = id; }
     public void setUser(User user) { this.user = user; }
 }

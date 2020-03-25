@@ -23,9 +23,9 @@ public class Healing extends AbstractGameAction {
             obj.onHeal();
         }
 
-        if (Game.getVillage().getPopulation() > 0) {
+        if (Game.getVillage().getPopulation().size() > 0) {
             ArrayList<Survivor> dmged = new ArrayList<>();
-            for (Survivor s : Game.getVillage().getSurvivors()) {
+            for (Survivor s : Game.getVillage().getPopulation()) {
                 if (s.getHP() < s.getMaxHp()) {
                     dmged.add(s);
                 }

@@ -1,23 +1,46 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes;
 
 
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.artifacts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+@Entity
 public abstract class AbstractNode implements Comparable<AbstractNode> {
+
+    @Id
+    @ManyToOne(optional = false)
+    @JoinTable(name = "grids")
+    private Board board;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "biome", targetEntity = AbstractBiome.class)
     protected AbstractBiome biome;
+
+    @Column(nullable = false, name = "xPos")
     protected Integer xPos;
+
+    @Column(nullable = false, name = "yPos")
     protected Integer yPos;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "artifact", targetEntity = AbstractArtifact.class)
     protected AbstractArtifact artifact;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "item", targetEntity = AbstractItem.class)
     protected AbstractItem item;
+
+    @ElementCollection
     protected Map<AbstractResource, Integer> resources;
+
+    @ElementCollection
     protected Map<AbstractAnimal, Integer> animals;
 
     public AbstractNode(int x, int y, AbstractBiome biome) {
@@ -87,6 +110,34 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
 
     public String getIcon() {
         return "";
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
+    public void setBiome(AbstractBiome biome) {
+        this.biome = biome;
+    }
+
+    public void setxPos(Integer xPos) {
+        this.xPos = xPos;
+    }
+
+    public void setyPos(Integer yPos) {
+        this.yPos = yPos;
+    }
+
+    public void setResources(Map<AbstractResource, Integer> resources) {
+        this.resources = resources;
+    }
+
+    public void setAnimals(Map<AbstractAnimal, Integer> animals) {
+        this.animals = animals;
     }
 
     @Override

@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.bui
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class StatBuilder {
+    private User user;
     private Integer enemiesKilled = 0;
     private Integer villagersLost = 0;
     private Integer daysSurvived = 0;
@@ -12,6 +13,11 @@ public class StatBuilder {
     private Integer highestResources = 0;
     private Integer highestBuildings = 0;
     private Integer highestPopulation = 0;
+
+    public StatBuilder setUser(User user) {
+        this.user = user;
+        return this;
+    }
 
     public StatBuilder setEnemiesKilled(Integer enemiesKilled) {
         this.enemiesKilled = enemiesKilled;
@@ -54,6 +60,6 @@ public class StatBuilder {
     }
 
     public UserStats createUserStats() {
-        return new UserStats(enemiesKilled, villagersLost, daysSurvived, overallScore, highestCoins, highestResources, highestBuildings, highestPopulation);
+        return new UserStats(user, enemiesKilled, villagersLost, daysSurvived, overallScore, highestCoins, highestResources, highestBuildings, highestPopulation);
     }
 }

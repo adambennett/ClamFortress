@@ -252,7 +252,7 @@ public class GameStrings {
         rsrcMap.put("Intellect", "" + v.getIntelligence());
         rsrcMap.put("Magic", "" + v.getMagic());
         rsrcMap.put("Strength", "" + v.getStrength());
-        if (v.getPopulation() > 0) {
+        if (v.getPopulation().size() > 0) {
             rsrcMap.put("Average Age", "" + v.getAgeAvg());
             rsrcMap.put("Average Agility", "" + v.getAgilityAvg());
             rsrcMap.put("Average Dexterity", "" + v.getDexterityAvg());
@@ -353,7 +353,7 @@ public class GameStrings {
         } else {
             a.put("6", "---------");
         }
-        if (Game.getVillage().getPopulation() > 0) {
+        if (Game.getVillage().getPopulation().size() > 0) {
             a.put("7", "Population");
         } else {
             a.put("7", "----------");
@@ -588,7 +588,7 @@ public class GameStrings {
     public static LinkedHashMap<String, String> getBuildings() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
-        ArrayList<AbstractBuilding> buildings = v.getBuildings();
+        ArrayList<AbstractBuilding> buildings = new ArrayList<>(v.getBuildings());
         Collections.sort(buildings);
         for (AbstractBuilding item : buildings){
             String name = item.getName();
@@ -701,7 +701,7 @@ public class GameStrings {
     public static LinkedHashMap<String, ArrayList<String>> getVillagers() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Game.getVillage();
-        for (Survivor s : v.getSurvivors()) {
+        for (Survivor s : v.getPopulation()) {
             ArrayList<String> tempCols = new ArrayList<>();
             tempCols.add("" + s.getAge());
             tempCols.add("" + s.getHP() + " / " + s.getMaxHp());

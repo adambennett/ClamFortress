@@ -9,17 +9,37 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.a
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.tools.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.tools.backpacks.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+@Entity
 public class Inventory extends GameObject {
 
+    @Id
+    @OneToOne(optional = false)
+    private Village village;
+
+    @ElementCollection
     private final Map<AbstractItem, Integer> inventory;
+
+    @ElementCollection
     private final Map<AbstractItem, Integer> priceMap;
+
+    @Column(nullable = false, name = "pass")
     private Integer itemsHeld;
+
+    @Column(nullable = false, name = "pass")
     private Integer capacity;
+
+    public Inventory() {
+        super("Inventory", "A place to store all of your items.");
+        this.inventory = new HashMap<>();
+        this.priceMap = new HashMap<>();
+    }
 
     public Inventory(int capacity) {
         super("Inventory", "A place to store all of your items.");
@@ -177,6 +197,29 @@ public class Inventory extends GameObject {
         }
     }
 
+    public Village getVillage() {
+        return village;
+    }
+
+    public Map<AbstractItem, Integer> getInventory() {
+        return inventory;
+    }
+
+    public Map<AbstractItem, Integer> getPriceMap() {
+        return priceMap;
+    }
+
+    public Integer getItemsHeld() {
+        return itemsHeld;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
+    }
+
+    public void setItemsHeld(Integer itemsHeld) {
+        this.itemsHeld = itemsHeld;
+    }
 
     @Override
     public Inventory clone() {

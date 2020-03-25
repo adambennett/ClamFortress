@@ -32,7 +32,7 @@ public class TurnMenu extends AbstractConsole {
         } else {
             consoleCommands.put("6", MenuCommands.OPTION_UNAVAILABLE);
         }
-        if (Game.getVillage().getPopulation() > 0) {
+        if (Game.getVillage().getPopulation().size() > 0) {
             consoleCommands.put("7", MenuCommands.VILLAGERS);
         } else {
             consoleCommands.put("7", MenuCommands.OPTION_UNAVAILABLE);

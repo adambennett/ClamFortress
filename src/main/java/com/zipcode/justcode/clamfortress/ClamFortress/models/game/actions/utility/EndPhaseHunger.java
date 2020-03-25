@@ -23,7 +23,7 @@ public class EndPhaseHunger extends AbstractGameAction {
         }
         ArrayList<String> surviorsWhoLeft = new ArrayList<>();
         for (int i = 0; i < Game.getVillage().getFamine(); i++) {
-            if (Game.getVillage().getPopulation() > 0) {
+            if (Game.getVillage().getPopulation().size() > 0) {
                 Survivor s = Game.getVillage().removeRandomSurvivor();
                 surviorsWhoLeft.add(s.getName());
             }

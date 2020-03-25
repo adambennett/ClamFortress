@@ -51,8 +51,8 @@ public class GameUtils {
 
     public static void whenObtainingAnyItem(GameObject obtained) {
         int maxHPGain = obtained.modifyMaxHPOnPickup();
-        if (maxHPGain > 0 && Game.getVillage().getPopulation() > 0) {
-            Survivor s = Game.getVillage().getSurvivors().get(ThreadLocalRandom.current().nextInt(Game.getVillage().getSurvivors().size()));
+        if (maxHPGain > 0 && Game.getVillage().getPopulation().size() > 0) {
+            Survivor s = Game.getVillage().getPopulation().get(ThreadLocalRandom.current().nextInt(Game.getVillage().getPopulation().size()));
             s.setMaxHp(s.getMaxHp() + maxHPGain);
             Game.getVillage().setHealth(Game.getVillage().getHealth() + maxHPGain);
         }

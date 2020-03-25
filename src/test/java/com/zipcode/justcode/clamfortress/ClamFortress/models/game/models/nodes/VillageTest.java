@@ -103,8 +103,7 @@ public class VillageTest {
         village.addToPopulation(testF);
         village.addToPopulation(testG);
         Integer actualAgility = village.getAgility();
-        Integer actualSize = village.getSurvivors().size();
-        Integer popSize = village.getPopulation();
+        Integer actualSize = village.getPopulation().size();
         Integer actualInt = village.getIntelligence();
         Integer actualDex = village.getDexterity();
         Integer actualMagic = village.getMagic();
@@ -135,7 +134,6 @@ public class VillageTest {
         Assertions.assertEquals(expectedDub, actualEngAvg);
         Assertions.assertEquals(expectedDub, actualAvgAge);
         Assertions.assertEquals(expectedSize, actualSize);
-        Assertions.assertEquals(expectedSize, popSize);
     }
 
     @Test
@@ -160,7 +158,7 @@ public class VillageTest {
         Integer tempVal = 10;
         AbstractMiracle testM = new ClericBlessing(tempVal);
         village.addMiracle(testM);
-        ArrayList<AbstractMiracle> ongoingM = village.getActiveMiracles();
+        ArrayList<AbstractMiracle> ongoingM = new ArrayList<>(village.getActiveMiracles());
         Boolean actual = ongoingM.contains(testM);
 
         Assertions.assertTrue(actual);
@@ -172,7 +170,7 @@ public class VillageTest {
         Village village = new Village(startBiome, 5);
         AbstractDisaster testD = new Fire(10);
         village.addDisaster(testD);
-        ArrayList<AbstractDisaster> ongoingD = village.getOngoingDisasters();
+        ArrayList<AbstractDisaster> ongoingD = new ArrayList<>(village.getOngoingDisasters());
         Boolean actual = ongoingD.contains(testD);
         Boolean expected = true;
 
@@ -185,7 +183,7 @@ public class VillageTest {
         Village village = new Village(startBiome, 5);
         AbstractPlague testP = new Bubonic(10);
         village.addPlague(testP);
-        ArrayList<AbstractPlague> ongoing = village.getOngoingPlagues();
+        ArrayList<AbstractPlague> ongoing = new ArrayList<>(village.getOngoingPlagues());
         Boolean actual = ongoing.contains(testP);
         Boolean expected = true;
 

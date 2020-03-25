@@ -21,7 +21,7 @@ public class PriorityMenu extends AbstractConsole {
 
     @Override
     public void initializeCommands() {
-        int newPoints = PriorityManager.getPointsRemaining() + (Game.getVillage().getPopulation() * Game.getDifficulty().getPriorityMod());
+        int newPoints = PriorityManager.getPointsRemaining() + (Game.getVillage().getPopulation().size() * Game.getDifficulty().getPriorityMod());
         for (GameObject obj : Game.getModifierObjects()) {
             newPoints += obj.modifyPriorityPoints();
         }

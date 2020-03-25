@@ -1,1 +1,0 @@
-web: java -jar target/JustCode-1.0-SNAPSHOT.jar

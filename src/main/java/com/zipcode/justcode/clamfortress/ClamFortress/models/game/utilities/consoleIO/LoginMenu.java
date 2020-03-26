@@ -37,7 +37,7 @@ public class LoginMenu extends AbstractConsole {
                 String userR = ConsoleServices.getStringInput("New Username: ");
                 String passR = ConsoleServices.getStringInput("Password: ");
                 if (!Database.isUser(userR)) {
-                    Database.register(userR, passR);
+                    Database.registerUser(userR, passR);
                     Database.logIn(userR, passR);
                     MainMenu main = new MainMenu();
                     main.printPrompt("Registered new user " + userR, false);

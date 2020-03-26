@@ -14,33 +14,24 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-@Entity
+
 public abstract class AbstractNode implements Comparable<AbstractNode> {
 
-    @Id
-    @ManyToOne(optional = false)
-    @JoinTable(name = "grids")
-    private Board board;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "biome", targetEntity = AbstractBiome.class)
+
+
     protected AbstractBiome biome;
 
-    @Column(nullable = false, name = "xPos")
     protected Integer xPos;
 
-    @Column(nullable = false, name = "yPos")
     protected Integer yPos;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "artifact", targetEntity = AbstractArtifact.class)
     protected AbstractArtifact artifact;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "item", targetEntity = AbstractItem.class)
     protected AbstractItem item;
 
-    @ElementCollection
     protected Map<AbstractResource, Integer> resources;
 
-    @ElementCollection
     protected Map<AbstractAnimal, Integer> animals;
 
     public AbstractNode(int x, int y, AbstractBiome biome) {
@@ -110,14 +101,6 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
 
     public String getIcon() {
         return "";
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
     }
 
     public void setBiome(AbstractBiome biome) {

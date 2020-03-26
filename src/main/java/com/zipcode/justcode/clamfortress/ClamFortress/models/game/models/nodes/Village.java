@@ -27,116 +27,63 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.*;
 
-@Entity
+
 public class Village extends AbstractNode {
 
-    @Id
-    @OneToOne(optional = false)
-    private Board board;
-
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "inventory", targetEntity = Inventory.class)
     private final Inventory inventory;
     
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "baseNode", targetEntity = AbstractNode.class)
     private final AbstractNode baseNode;
     
-/*    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "farmland", targetEntity = Farmland.class)
-    private final Farmland farmland;*/
+    //private final Farmland farmland;
 
 
-    @Column(nullable = false, name = "popCap")
     private Integer popCap =            5;
-    @Column(nullable = false, name = "buildingLimit")
     private Integer buildingLimit =     5;
-    @Column(nullable = false, name = "foodLimit")
     private Integer foodLimit =         10;
-    @Column(nullable = false, name = "resourceLimit")
     private Integer resourceLimit =     250;
-    @Column(nullable = false, name = "coinLimit")
     private Integer coinLimit =         500;
-    @Column(nullable = false, name = "faithLimit")
     private Integer faithLimit =        100;
-    @Column(nullable = false, name = "defence")
     private Integer defence =           0;
-    @Column(nullable = false, name = "attackPower")
     private Integer attackPower =       0;
-    @Column(nullable = false, name = "agility")
     private Integer agility =           0;
-    @Column(nullable = false, name = "strength")
     private Integer strength =          0;
-    @Column(nullable = false, name = "intelligence")
     private Integer intelligence =      0;
-    @Column(nullable = false, name = "dexterity")
     private Integer dexterity =         0;
-    @Column(nullable = false, name = "magic")
     private Integer magic =             0;
-    @Column(nullable = false, name = "engineering")
     private Integer engineering =       0;
-    @Column(nullable = false, name = "health")
     private Integer health =            0;
-    @Column(nullable = false, name = "maxHP")
     private Integer maxHP =             0;
-    @Column(nullable = false, name = "totalAge")
     private Integer totalAge =          0;
-    @Column(nullable = false, name = "hunger")
     private Integer hunger =            0;
-    @Column(nullable = false, name = "famine")
     private Integer famine =            0;
-    @Column(nullable = false, name = "food")
     private Integer food =              0;
-    @Column(nullable = false, name = "faith")
     private Integer faith =             0;
-    @Column(nullable = false, name = "coins")
     private Integer coins =             0;
 
-    @Column(nullable = false, name = "ageAvg")
     private Double ageAvg =             0.0;
-    @Column(nullable = false, name = "agilityAvg")
     private Double agilityAvg =         0.0;
-    @Column(nullable = false, name = "strengthAvg")
     private Double strengthAvg =        0.0;
-    @Column(nullable = false, name = "intelligenceAvg")
     private Double intelligenceAvg =    0.0;
-    @Column(nullable = false, name = "dexterityAvg")
     private Double dexterityAvg =       0.0;
-    @Column(nullable = false, name = "magicAvg")
     private Double magicAvg =           0.0;
-    @Column(nullable = false, name = "engineeringAvg")
     private Double engineeringAvg =     0.0;
 
-    @OneToMany(targetEntity = Bandit.class, mappedBy = "village")
-    @JoinTable(name = "village_bandits")
     private List<Bandit>  occupyingBandits = new ArrayList<>();
 
-    @OneToMany(targetEntity = AbstractBuilding.class, mappedBy = "village")
-    @JoinTable(name = "village_buildings")
     private List<AbstractBuilding> buildings = new ArrayList<>();
 
-    @OneToMany(targetEntity = AbstractBuilding.class, mappedBy = "village")
-    @JoinTable(name = "village_building_queue")
     private List<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
 
-    @OneToMany(targetEntity = AbstractMiracle.class, mappedBy = "village")
-    @JoinTable(name = "village_miracles")
     private List<AbstractMiracle>  activeMiracles = new ArrayList<>();
 
-    @OneToMany(targetEntity = AbstractDisaster.class, mappedBy = "village")
-    @JoinTable(name = "village_disasters")
     private List<AbstractDisaster> ongoingDisasters = new ArrayList<>();
 
-    @OneToMany(targetEntity = Merchant.class, mappedBy = "village")
-    @JoinTable(name = "village_merchants")
     private List<Merchant>         vistingMerchants = new ArrayList<>();
 
-    @OneToMany(targetEntity = AbstractPlague.class, mappedBy = "village")
-    @JoinTable(name = "village_plagues")
     private List<AbstractPlague>   ongoingPlagues = new ArrayList<>();
 
-    @OneToMany(targetEntity = Survivor.class, mappedBy = "village")
-    @JoinTable(name = "village_population")
     private List<Survivor>         population = new ArrayList<>();
 
-    @ElementCollection
     private Map<AbstractResource, Integer> resources;
 
     @Override public String toString() { return "Village"; }
@@ -675,9 +622,7 @@ public class Village extends AbstractNode {
         else if (this.hunger < 0) { this.hunger = 0; }
     }
 
-    public Board getBoard() {
-        return board;
-    }
+
 
     public Inventory getInventory() {
         return inventory;
@@ -829,10 +774,6 @@ public class Village extends AbstractNode {
 
     public List<Survivor> getPopulation() {
         return population;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
     }
 
     public void setPopCap(Integer popCap) {

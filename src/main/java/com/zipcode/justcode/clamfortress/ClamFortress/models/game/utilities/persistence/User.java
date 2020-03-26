@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.per
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.builders.*;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Entity
 public class User implements Comparable<User> {
@@ -42,6 +43,19 @@ public class User implements Comparable<User> {
     public void setName(String name) { this.name = name; }
     public void setStats(UserStats stats) { this.stats = stats; }
     public void setId(Long id) { this.id = id; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 
     @Override
     public int compareTo(User o) {

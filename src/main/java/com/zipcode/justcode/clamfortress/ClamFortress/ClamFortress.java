@@ -9,8 +9,8 @@ public class ClamFortress {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ClamFortress.class, args);
-		MainApp mainApp = new MainApp();
-		mainApp.initialize();
+		CommandLineMenus commandLineMenus = new CommandLineMenus();
+		commandLineMenus.initialize();
 	}
 
 }

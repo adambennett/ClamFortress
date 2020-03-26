@@ -18,72 +18,70 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.pers
 import javax.persistence.*;
 import java.util.*;
 
-@Entity
+
 public class Game {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, unique = true, name = "id")
+
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "game", targetEntity = Board.class)
+
     private static Board gameBoard;
 
-    @Transient
+
     public  static ActionManager actionManager;
 
-    @Transient
+
     private static GameManager gameManager;
 
-    @Column(nullable = false, name = "toughEnemies")
+
     private static Boolean toughEnemies;
 
-    @Column(nullable = false, name = "hostileEnemies")
+
     private static Boolean hostileEnemies;
 
-    @Column(nullable = false, name = "slowResourceGain")
+
     private static Boolean slowResourceGain;
 
-    @Column(nullable = false, name = "frequentBadEvents")
+
     private static Boolean frequentBadEvents;
 
-    @Column(nullable = false, name = "terribleDisasters")
+
     private static Boolean terribleDisasters;
 
-    @Column(nullable = false, name = "handicappedStartEquipment")
+
     private static Boolean handicappedStartEquipment;
 
-    @Column(nullable = false, name = "moreNetherworlds")
+
     private static Boolean moreNetherworlds;
 
-    @Column(nullable = false, name = "lessEffectiveTools")
+
     private static Boolean lessEffectiveTools;
 
-    @Column(nullable = false, name = "limitedBlueprintAccess")
+
     private static Boolean limitedBlueprintAccess;
 
-    @Column(nullable = false, name = "tradingEnabled")
+
     private static Boolean tradingEnabled;
 
-    @Column(nullable = false, name = "magicEnabled")
+
     private static Boolean magicEnabled;
 
-    @Column(nullable = false, name = "aliensEnabled")
+
     private static Boolean aliensEnabled;
 
-    @Column(nullable = false, name = "healingEnabled")
+
     private static Boolean healingEnabled;
 
-    @Column(nullable = false, name = "faithEnabled")
+
     private static Boolean faithEnabled;
 
-    @Column(nullable = false, name = "surroundingCheckEnabled")
+
     private static Boolean surroundingCheckEnabled;
 
-    @Column(nullable = false, name = "playerRace")
+
     private static Race playerRace;
 
-    @Column(nullable = false, name = "difficulty")
+
     private static Difficulty difficulty;
 
     public Game() {}

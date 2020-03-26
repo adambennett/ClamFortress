@@ -44,17 +44,15 @@ public class StatTracker {
         if (StatTracker.getOverallScore() > 500)   { orcsUnlocked   = true;  }
     }
 
-    public static UserStats getUserStatBundle() {
-        return new StatBuilder()
-                .setDaysSurvived(daysSurvived)
-                .setEnemiesKilled(enemiesKilled)
-                .setVillagersLost(villagersLost)
-                .setOverallScore(overallScore)
-                .setHighestBuildings(highBuild)
-                .setHighestCoins(highCoins)
-                .setHighestPopulation(highPop)
-                .setHighestResources(highRes)
-                .createUserStats();
+    public static void getUserStatBundle(User user) {
+        user.getStats().setDaysSurvived(daysSurvived);
+        user.getStats().setEnemiesKilled(enemiesKilled);
+        user.getStats().setVillagersLost(villagersLost);
+        user.getStats().setOverallScore(overallScore);
+        user.getStats().setHighestBuildings(highBuild);
+        user.getStats().setHighestCoins(highCoins);
+        user.getStats().setHighestPopulation(highPop);
+        user.getStats().setHighestResources(highRes);
     }
 
     public static void setStats(UserStats statBundle) {

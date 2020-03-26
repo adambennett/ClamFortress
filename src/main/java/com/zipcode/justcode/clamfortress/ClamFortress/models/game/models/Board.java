@@ -20,43 +20,31 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-@Entity
+
 public class Board extends GameObject {
 
-    @Id
-    @OneToOne(optional = false)
-    private Game game;
 
-    @Column(nullable = false, unique = true, name = "gridXMax")
     private Integer gridXMax;
 
-    @Column(nullable = false, unique = true, name = "gridYMax")
+
     private Integer gridYMax;
 
-    @Column(nullable = false, unique = true, name = "nextX")
+
     private Integer nextX;
 
-    @Column(nullable = false, unique = true, name = "nextY")
+
     private Integer nextY;
 
-    @Column(nullable = false, unique = true, name = "startPopCap")
     private Integer startPopCap;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = AbstractBiome.class)
     private AbstractBiome startBiome;
 
-    @Transient
     private Village village;
 
-    @OneToMany(targetEntity = AbstractNode.class)
-    @JoinTable(name = "grid")
     private List<AbstractNode> grid;
 
-    @OneToMany(targetEntity = AbstractAnimal.class)
-    @JoinTable(name = "board_animals")
     private List<AbstractAnimal> animals;
 
-    @ElementCollection
     private Map<AbstractResource, Integer> resources;
 
     public Board() {
@@ -83,10 +71,6 @@ public class Board extends GameObject {
         this.nextY = 0;
         this.addAnimals(this.village.getAnimals());
         this.addResources(this.village.getResources());
-    }
-
-    public void reloadVillage() {
-        this.village = (Village) getNodeAt(0, 0);
     }
 
     public Boolean isBoardFull() {
@@ -334,9 +318,6 @@ public class Board extends GameObject {
         return new Board(this.startBiome, this.gridXMax, this.gridYMax, this.startPopCap);
     }
 
-    public Game getGame() {
-        return game;
-    }
 
     public Integer getGridXMax() {
         return gridXMax;
@@ -358,9 +339,6 @@ public class Board extends GameObject {
         return grid;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     public void setGridXMax(Integer gridXMax) {
         this.gridXMax = gridXMax;

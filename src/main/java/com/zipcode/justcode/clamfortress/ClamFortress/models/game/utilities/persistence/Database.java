@@ -1,12 +1,11 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence;
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.services.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.*;
 import org.springframework.stereotype.*;
 
-import javax.transaction.*;
 import java.util.*;
 
 @Component
@@ -48,10 +47,12 @@ public class Database implements CommandLineRunner {
     }
 
 
-    public static void register(String user, String pass) {
+    public static void registerUser(String user, String pass) {
         User newUser = new User(user, pass);
         users.add(newUser);
-        UserService.insert(newUser);
+        try {
+            UserService.persist(newUser);
+        } catch (Exception ignored) {}
     }
 
     public static void registerGame(Game game) {
@@ -60,17 +61,24 @@ public class Database implements CommandLineRunner {
     }
 
     public static void loadDatabase() {
+        GameStrings.loadNames();
         users.addAll(UserService.load());
-        // add each loaded user to list of users
-        // add each loaded game to list of games
+        // games.addAll(GamesService.load());
         StatTracker.updateUnlocks();
     }
 
     public static void saveDatabase() {
         for (User player : users) {
             if (player.equals(Database.player)) {
-                player.setStats(StatTracker.getUserStatBundle());
-                Database.player.setStats(StatTracker.getUserStatBundle());
+                try {
+                    UserService.flush();
+                } catch (Exception ignored) {}
+                StatTracker.getUserStatBundle(player);
+                StatTracker.getUserStatBundle(Database.player);
+                try {
+                    UserService.persist(player);
+                } catch (Exception ignored) {}
+                break;
             }
         }
     }
@@ -91,10 +99,26 @@ public class Database implements CommandLineRunner {
         return users;
     }
 
+    public static void saveNameToRandomNames(ArrayList<String> stringsToInsert) {
+        Set<String> checkedIn = new HashSet<>();
+        for (Name name : NameService.load()) {
+            checkedIn.add(name.getName());
+        }
+        for (String s : stringsToInsert) {
+            if (!checkedIn.contains(s)) {
+                Name name = new Name();
+                name.setName(s);
+                NameService.persist(name);
+                checkedIn.add(s);
+            }
+        }
+    }
+
     @Override
-    public void run(String... args) throws Exception {
-        /*User admin = new User("Admin", "root");
-        UserService.insert(admin);*/
-        loadDatabase();
+    public void run(String... args) {
+        try {
+            loadDatabase();
+            saveNameToRandomNames(GameStrings.getAllRandomNames(true));
+        } catch (Exception ignored) {}
     }
 }

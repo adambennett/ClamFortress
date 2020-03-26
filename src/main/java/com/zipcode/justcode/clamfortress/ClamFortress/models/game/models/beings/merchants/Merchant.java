@@ -11,27 +11,18 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-@Entity
+
 public class Merchant {
 
-    @Id
-    @ManyToOne(optional = false)
-    @JoinTable(name = "merchants")
-    private Village village;
 
-    @ElementCollection
+
     private final Map<String, Integer> wares;
 
-    @Column(nullable = false, name = "turnsAvailable")
     private final Integer turnsAvailable;
 
-    @Column(nullable = false, name = "items")
     private final Integer items;
 
-    @Column(nullable = false, name = "name")
     private final String name;
-
-    @Column(nullable = false, name = "turnsVisited")
     private Integer turnsVisited;
 
     public Merchant() {
@@ -99,13 +90,7 @@ public class Merchant {
         return name;
     }
 
-    public Village getVillage() {
-        return village;
-    }
 
-    public void setVillage(Village village) {
-        this.village = village;
-    }
 
     public Integer getTurnsAvailable() {
         return turnsAvailable;

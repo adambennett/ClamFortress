@@ -16,23 +16,20 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-@Entity
+
 public class Inventory extends GameObject {
 
-    @Id
-    @OneToOne(optional = false)
-    private Village village;
 
-    @ElementCollection
+
+
     private final Map<AbstractItem, Integer> inventory;
 
-    @ElementCollection
+
     private final Map<AbstractItem, Integer> priceMap;
 
-    @Column(nullable = false, name = "pass")
+
     private Integer itemsHeld;
 
-    @Column(nullable = false, name = "pass")
     private Integer capacity;
 
     public Inventory() {
@@ -197,9 +194,6 @@ public class Inventory extends GameObject {
         }
     }
 
-    public Village getVillage() {
-        return village;
-    }
 
     public Map<AbstractItem, Integer> getInventory() {
         return inventory;
@@ -213,9 +207,6 @@ public class Inventory extends GameObject {
         return itemsHeld;
     }
 
-    public void setVillage(Village village) {
-        this.village = village;
-    }
 
     public void setItemsHeld(Integer itemsHeld) {
         this.itemsHeld = itemsHeld;

@@ -12,27 +12,14 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.er
 import javax.persistence.*;
 import java.util.logging.*;
 
-@Entity
+
 public abstract class AbstractBuilding extends GameObject {
 
-
-    @Id
-    @ManyToOne(optional = false)
-    @JoinTable(name = "bandits")
-    private Village village;
-
-    public AbstractBuilding() {
-        super("Building", "Desc");
-    }
-
-
-    @Column(nullable = false, name = "resourceCost")
     private Integer resourceCost;
 
-    @Transient
+
     private AbstractResource resourceType;
 
-    @Transient
     private Era eraRequired;
 
     public AbstractBuilding(String name, String desc, int resourceCost, AbstractResource resourceType) {
@@ -97,14 +84,6 @@ public abstract class AbstractBuilding extends GameObject {
 
     public AbstractResource getResourceType() {
         return resourceType;
-    }
-
-    public Village getVillage() {
-        return village;
-    }
-
-    public void setVillage(Village village) {
-        this.village = village;
     }
 
     public void setResourceCost(Integer resourceCost) {

@@ -19,7 +19,7 @@ public class UserService {
         userRepository = userRepo;
     }
 
-    public static void insert(User user) {
+    public static void persist(User user) {
         userRepository.saveAndFlush(user);
     }
 
@@ -31,7 +31,7 @@ public class UserService {
         userRepository.saveAll(users);
     }
 
-
+    public static void flush() { userRepository.flush(); }
 
 
 

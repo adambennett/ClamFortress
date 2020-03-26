@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.io.*;
 
 @Entity
+@Table(name = "user_stats")
 public class UserStats implements Serializable {
 
     @Id
@@ -15,28 +16,28 @@ public class UserStats implements Serializable {
     @MapsId
     private User user;
 
-    @Column(nullable = false, name = "enemiesKilled")
+    @Column(nullable = false, name = "enemies_killed")
     private Integer enemiesKilled;
 
-    @Column(nullable = false, name = "villagersLost")
+    @Column(nullable = false, name = "villagers_lost")
     private Integer villagersLost;
 
-    @Column(nullable = false, name = "daysSurvived")
+    @Column(nullable = false, name = "days_survived")
     private Integer daysSurvived;
 
-    @Column(nullable = false, name = "overallScore")
+    @Column(nullable = false, name = "overall_score")
     private Integer overallScore;
 
-    @Column(nullable = false, name = "highestCoins")
+    @Column(nullable = false, name = "highest_coins")
     private Integer highestCoins;
 
-    @Column(nullable = false, name = "highestResources")
+    @Column(nullable = false, name = "highest_resources")
     private Integer highestResources;
 
-    @Column(nullable = false, name = "highestBuildings")
+    @Column(nullable = false, name = "highest_buildings")
     private Integer highestBuildings;
 
-    @Column(nullable = false, name = "highestPopulation")
+    @Column(nullable = false, name = "highest_population")
     private Integer highestPopulation;
 
     public UserStats() {}

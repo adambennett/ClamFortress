@@ -7,6 +7,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.artifacts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -21,7 +22,7 @@ public class Foraging extends AbstractGameAction {
     public void update() {
         if (ThreadLocalRandom.current().nextInt(0, 10) > 4) {
             forage();
-        } else if (Game.getVillage().getInventory().containsItem(new RingOfForaging().getName())) {
+        } else if (Database.getCurrentGame().getVillage().getInventory().containsItem(new RingOfForaging().getName())) {
             int secondRoll = ThreadLocalRandom.current().nextInt(0, 10);
             if (secondRoll > 2) {
                 forage();
@@ -43,7 +44,7 @@ public class Foraging extends AbstractGameAction {
                 if (ThreadLocalRandom.current().nextBoolean()) {
                     ArrayList<AbstractItem> items = Archive.getInstance().items();
                     AbstractItem item = items.get(ThreadLocalRandom.current().nextInt(items.size()));
-                    Game.getVillage().addToInventory(item.getName());
+                    Database.getCurrentGame().getVillage().addToInventory(item.getName());
                     OutputManager.addToBot("Found " + item.getName() + " while Foraging");
                     GameManager.getInstance().gainExperience(10);
                     this.isDone = true;
@@ -51,9 +52,9 @@ public class Foraging extends AbstractGameAction {
                 }
             }
         }
-        AbstractResource rand = Game.getGameBoard().removeRandomResource();
+        AbstractResource rand = Database.getCurrentGame().getGameBoard().removeRandomResource();
         if (rand != null) {
-            Game.getVillage().addResource(rand);
+            Database.getCurrentGame().getVillage().addResource(rand);
             GameManager.getInstance().gainExperience(1);
             OutputManager.addToBot("Found " + rand.getName() + " while Foraging");
         }

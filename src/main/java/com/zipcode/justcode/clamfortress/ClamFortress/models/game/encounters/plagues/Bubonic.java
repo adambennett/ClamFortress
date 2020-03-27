@@ -2,6 +2,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.pl
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.concurrent.*;
 
@@ -16,13 +17,13 @@ public class Bubonic extends AbstractPlague {
         int dmgLeft = 100;
         while (dmgLeft > 0) {
             int dmged = ThreadLocalRandom.current().nextInt(0, dmgLeft);
-            Game.getVillage().takeDamage(dmged);
+            Database.getCurrentGame().getVillage().takeDamage(dmged);
             dmgLeft -= dmged;
         }
 
         this.turnsActive--;
         if (this.turnsActive < 1) {
-            Game.getVillage().getOngoingPlagues().remove(this);
+            Database.getCurrentGame().getVillage().getOngoingPlagues().remove(this);
         }
     }
 

@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.mi
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ public abstract class AbstractMiracle extends AbstractEncounter {
 
     @Override
     public void runEncounter() {
-        Game.getVillage().addMiracle(this);
+        Database.getCurrentGame().getVillage().addMiracle(this);
     }
 
 

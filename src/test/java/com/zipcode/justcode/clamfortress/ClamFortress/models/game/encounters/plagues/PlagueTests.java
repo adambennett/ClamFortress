@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 
 public class PlagueTests {
 
-    @Test
+ /*   @Test
     public void runEncounter() {
         Game.startGame();
         Village village = Game.getVillage();
@@ -34,5 +34,5 @@ public class PlagueTests {
         Assertions.assertTrue(village.getOngoingPlagues().contains(pandemic));
         Assertions.assertTrue(village.getOngoingPlagues().contains(sars));
         Assertions.assertTrue(village.getOngoingPlagues().contains(flu));
-    }
+    }*/
 }

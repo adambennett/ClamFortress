@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.con
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
 import java.util.*;
@@ -37,7 +38,7 @@ public class SaleMerchantMenu extends AbstractConsole implements DynamicConsole 
                 amt += i;
             }
             if (amt < 1) { amt = 1; }
-            Inventory inv = Game.getVillage().getInventory();
+            Inventory inv = Database.getCurrentGame().getVillage().getInventory();
             String key = args.get(0).toLowerCase();
             boolean bought = false;
             if (inv.containsItem(key)) {
@@ -54,11 +55,11 @@ public class SaleMerchantMenu extends AbstractConsole implements DynamicConsole 
                 }
             }
             if (bought) {
-                String merchant = Game.getVillage().getVistingMerchants().get(0).getName();
+                String merchant = Database.getCurrentGame().getVillage().getVistingMerchants().get(0).getName();
                 boolean sold = inv.remove(key, amt);
                 if (sold) {
                     int amtPaid = inv.getItemValue(key);
-                    Game.getVillage().incCoins(amtPaid);
+                    Database.getCurrentGame().getVillage().incCoins(amtPaid);
                     StringHelpers.reloadStrings();
                     printPrompt(PromptMessage.SALE_MERCHANT, false);
                     printPrompt("Sold " + amt + "x " + key + " to " + merchant + " for " + amtPaid + " Coins", true);

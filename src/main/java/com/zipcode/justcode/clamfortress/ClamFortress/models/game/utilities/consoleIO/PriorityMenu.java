@@ -12,6 +12,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.priori
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 
@@ -21,8 +22,8 @@ public class PriorityMenu extends AbstractConsole {
 
     @Override
     public void initializeCommands() {
-        int newPoints = PriorityManager.getPointsRemaining() + (Game.getVillage().getPopulation().size() * Game.getDifficulty().getPriorityMod());
-        for (GameObject obj : Game.getModifierObjects()) {
+        int newPoints = PriorityManager.getPointsRemaining() + (Database.getCurrentGame().getVillage().getPopulation().size() * Database.getCurrentGame().getDifficulty().getPriorityMod());
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             newPoints += obj.modifyPriorityPoints();
         }
         PriorityManager.setPointsRemaining(newPoints);
@@ -105,19 +106,19 @@ public class PriorityMenu extends AbstractConsole {
         if (amt > PriorityManager.getPointsRemaining()) {
             amt = PriorityManager.getPointsRemaining();
         }
-        ActionManager actionManager = Game.actionManager;
+        ActionManager actionManager = Database.getCurrentGame().actionManager;
         ArrayList<AbstractGameAction> foodActions = getFoodActions(amt);
         switch(cmd) {
             case CONTINUE:
-                Game.advanceTurn();
+                Database.getCurrentGame().advanceTurn();
                 new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
                 break;
             case DYNAMIC_FOOD_A:
                 PriorityManager.setFood1(PriorityManager.getFood1() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 for (int i = 0; i < amt; i++) {
-                    Game.actionManager.addToBottom(foodActions.get(0).clone());
-                    for (GameObject obj : Game.getModifierObjects()) {
+                    Database.getCurrentGame().actionManager.addToBottom(foodActions.get(0).clone());
+                    for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                         obj.onGatherFood(foodActions.get(0));
                     }
                 }
@@ -127,7 +128,7 @@ public class PriorityMenu extends AbstractConsole {
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 for (int i = 0; i < amt; i++) {
                     actionManager.addToBottom(foodActions.get(1).clone());
-                    for (GameObject obj : Game.getModifierObjects()) {
+                    for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                         obj.onGatherFood(foodActions.get(0));
                     }
                 }
@@ -137,7 +138,7 @@ public class PriorityMenu extends AbstractConsole {
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
                 for (int i = 0; i < amt; i++) {
                     actionManager.addToBottom(foodActions.get(2).clone());
-                    for (GameObject obj : Game.getModifierObjects()) {
+                    for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                         obj.onGatherFood(foodActions.get(0));
                     }
                 }
@@ -243,27 +244,27 @@ public class PriorityMenu extends AbstractConsole {
 
     public static ArrayList<AbstractGameAction> getFoodActions(int amt) {
         ArrayList<AbstractGameAction> foodActions = new ArrayList<>();
-        if (Game.getPlayerRace().equals(Race.HUMAN)) {
+        if (Database.getCurrentGame().getPlayerRace().equals(Race.HUMAN)) {
             foodActions.add(new Hunting(amt));
             foodActions.add(new Fishing(amt));
             foodActions.add(new Cooking(amt));
-        } else if (Game.getPlayerRace().equals(Race.ORC)) {
+        } else if (Database.getCurrentGame().getPlayerRace().equals(Race.ORC)) {
             foodActions.add(new OrcFoodRaid(amt));
             foodActions.add(new OrcHunting(amt));
             foodActions.add(new Sacrifice(amt));
-        } else if (Game.getPlayerRace().equals(Race.ELF)) {
+        } else if (Database.getCurrentGame().getPlayerRace().equals(Race.ELF)) {
             foodActions.add(new InsectHunt(amt));
             foodActions.add(new RiverSearch(amt));
             foodActions.add(new Roasting(amt));
-        } else if (Game.getPlayerRace().equals(Race.DWARF)) {
+        } else if (Database.getCurrentGame().getPlayerRace().equals(Race.DWARF)) {
             foodActions.add(new Brewing(amt));
             foodActions.add(new MushroomPicking(amt));
             foodActions.add(new Scavenging(amt));
-        } else if (Game.getPlayerRace().equals(Race.CLAMAN)) {
+        } else if (Database.getCurrentGame().getPlayerRace().equals(Race.CLAMAN)) {
             foodActions.add(new Angling(amt));
             foodActions.add(new Diving(amt));
             foodActions.add(new Trawling(amt));
-        } else if (Game.getPlayerRace().equals(Race.ALIEN)) {
+        } else if (Database.getCurrentGame().getPlayerRace().equals(Race.ALIEN)) {
             foodActions.add(new Abducting(amt));
             foodActions.add(new Analyzing(amt));
             foodActions.add(new Redacted(amt));

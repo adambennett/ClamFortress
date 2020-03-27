@@ -1,6 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence;
 
 
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.builders.*;
 
 import javax.persistence.*;
@@ -23,6 +24,9 @@ public class User implements Comparable<User> {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = UserStats.class)
     private UserStats stats;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "user", targetEntity = Game.class)
+    private List<Game> savedGames;
+
     public User() {}
 
     public User(String name, String pass) {
@@ -30,19 +34,24 @@ public class User implements Comparable<User> {
         this.pass = pass;
         this.stats = new StatBuilder().createUserStats();
         this.stats.setUser(this);
+        this.savedGames = new ArrayList<>();
     }
+
+    public void addGame(Game game) { this.savedGames.add(game); }
 
     // Getters
     public String getName() { return name; }
     public String getPass() { return pass; }
     public UserStats getStats() { return stats; }
     public Long getId() { return id; }
+    public List<Game> getSavedGames() { return savedGames; }
 
     // Setters
+    public void setId(Long id) { this.id = id; }
     public void setPass(String pass) { this.pass = pass; }
     public void setName(String name) { this.name = name; }
     public void setStats(UserStats stats) { this.stats = stats; }
-    public void setId(Long id) { this.id = id; }
+    public void setSavedGames(List<Game> savedGames) { this.savedGames = savedGames; }
 
     @Override
     public boolean equals(Object o) {

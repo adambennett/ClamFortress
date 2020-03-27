@@ -8,6 +8,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.merchants.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.concurrent.*;
 
@@ -22,16 +23,16 @@ public class Scouting extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (!Game.getGameBoard().isBoardFull()) {
+        if (!Database.getCurrentGame().getGameBoard().isBoardFull()) {
             int roll = ThreadLocalRandom.current().nextInt(0, 100);
 
-            if (Game.getVillage().getInventory().containsItem("telescope")) {
+            if (Database.getCurrentGame().getVillage().getInventory().containsItem("telescope")) {
                 roll += 20;
             }
 
             if (roll >= 40) {
-                AbstractNode region = Game.getGameBoard().getRandomRegion(this.nethermod);
-                Game.getGameBoard().discover(region);
+                AbstractNode region = Database.getCurrentGame().getGameBoard().getRandomRegion(this.nethermod);
+                Database.getCurrentGame().getGameBoard().discover(region);
                 OutputManager.addToBot("Discovered a new " + region.toString() + " region!");
             }
         } else {
@@ -39,17 +40,17 @@ public class Scouting extends AbstractGameAction {
         }
 
         int merchantRoll = ThreadLocalRandom.current().nextInt(0, 100);
-        if (Game.getVillage().getInventory().containsItem("shop token")) {
+        if (Database.getCurrentGame().getVillage().getInventory().containsItem("shop token")) {
             merchantRoll += 20;
         }
 
-        if (Game.getGameBoard().isBoardFull()) {
+        if (Database.getCurrentGame().getGameBoard().isBoardFull()) {
             merchantRoll += 10;
         }
 
         if (merchantRoll > 98) {
             Merchant traveler = MerchantManager.getRandomMerchant();
-            Game.getVillage().addMerchant(traveler);
+            Database.getCurrentGame().getVillage().addMerchant(traveler);
             OutputManager.merch(1);
             //OutputManager.addToBot("During your exploring, you came upon a " + traveler.getMerchantType() + " by the name of " + traveler.getName() + ".");
         }

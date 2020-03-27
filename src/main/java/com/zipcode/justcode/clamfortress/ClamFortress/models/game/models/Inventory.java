@@ -11,6 +11,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.t
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import javax.persistence.*;
 import java.util.*;
@@ -74,12 +75,12 @@ public class Inventory extends GameObject {
             return this.priceMap.get(item);
         } else{
             int roll = ThreadLocalRandom.current().nextInt(50, 1000);
-            int costMod = Game.getDifficulty().getCostMod();
+            int costMod = Database.getCurrentGame().getDifficulty().getCostMod();
             int high = 200 * costMod;
             int low = 10 * costMod;
             int rollReduction = ThreadLocalRandom.current().nextInt(low, high);
             roll -= rollReduction;
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 roll += obj.modifyItemSellPrice();
             }
             if (roll < 25) { roll = 25; }
@@ -111,7 +112,7 @@ public class Inventory extends GameObject {
                 GameUtils.whenObtainingAnyItem(item);
                 priceMap.put(item, generateItemSellPrice(item));
                 if (item instanceof Golden) {
-                    Game.getVillage().incCoins(((Golden) item).getGoldAmt());
+                    Database.getCurrentGame().getVillage().incCoins(((Golden) item).getGoldAmt());
                     OutputManager.addToBot("Received " + ((Golden) item).getGoldAmt() + " Coins upon pickup of Golden item! (" + item.getName() + ")");
                 }
 

@@ -8,6 +8,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import javax.persistence.*;
 import java.util.logging.*;
@@ -36,11 +37,11 @@ public abstract class AbstractBuilding extends GameObject {
     public void upgrade() {}
 
     public Boolean demolish() {
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             obj.onDemolish();
         }
         if (this instanceof Golden) {
-            Game.getVillage().incCoins(((Golden) this).getGoldAmt());
+            Database.getCurrentGame().getVillage().incCoins(((Golden) this).getGoldAmt());
             OutputManager.addToBot("Received " + ((Golden) this).getGoldAmt() + " Coins upon destruction of " + this.getName() + "!");
         }
 
@@ -48,7 +49,7 @@ public abstract class AbstractBuilding extends GameObject {
             ((Cursed) this).runCurse();
             OutputManager.addToBot("You have been Cursed upon the destruction of " + this.getName() + "!");
         }
-        return Game.getVillage().getBuildings().remove(this);
+        return Database.getCurrentGame().getVillage().getBuildings().remove(this);
     }
 
     public void setEraRequired(Era era) {
@@ -61,7 +62,7 @@ public abstract class AbstractBuilding extends GameObject {
         }
 
         if (this.resourceType instanceof ResourceCost) {
-            if (!(Game.getVillage().hasEnoughOfResource(this.resourceType.getName(), this.resourceCost))) {
+            if (!(Database.getCurrentGame().getVillage().hasEnoughOfResource(this.resourceType.getName(), this.resourceCost))) {
                 return false;
             }
         } else {
@@ -69,7 +70,7 @@ public abstract class AbstractBuilding extends GameObject {
         }
 
         if (this instanceof Unique) {
-            for (AbstractBuilding b : Game.getVillage().getBuildings()) {
+            for (AbstractBuilding b : Database.getCurrentGame().getVillage().getBuildings()) {
                 if (b.getName().equals(this.getName())) {
                     return false;
                 }

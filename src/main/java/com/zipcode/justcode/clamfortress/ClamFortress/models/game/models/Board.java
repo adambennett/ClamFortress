@@ -20,31 +20,35 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-
+/*@Entity*/
 public class Board extends GameObject {
 
+    //@Id
+    private Long id;
+
+    /*@OneToOne
+    @MapsId*/
+    private Game game;
 
     private Integer gridXMax;
-
-
     private Integer gridYMax;
-
-
     private Integer nextX;
-
-
     private Integer nextY;
-
     private Integer startPopCap;
 
+    /*@Transient*/
     private AbstractBiome startBiome;
 
+    /*@Transient*/
     private Village village;
 
+    /*@Transient*/
     private List<AbstractNode> grid;
 
+    /*@Transient*/
     private List<AbstractAnimal> animals;
 
+    /*@Transient*/
     private Map<AbstractResource, Integer> resources;
 
     public Board() {
@@ -129,8 +133,8 @@ public class Board extends GameObject {
             GameUtils.obtainItem(space.getItem());
         }
         if (!(space instanceof City)) {
-            Game.getGameBoard().addResources(space.getResources());
-            Game.getGameBoard().addAnimals(space.getAnimals());
+            Database.getCurrentGame().getGameBoard().addResources(space.getResources());
+            Database.getCurrentGame().getGameBoard().addAnimals(space.getAnimals());
         } else {
             GameManager.getInstance().getRaidable().add((City) space);
         }
@@ -140,7 +144,7 @@ public class Board extends GameObject {
         for (Map.Entry<AbstractAnimal, Integer> entry : animals.entrySet()) {
             for (int i = 0; i < entry.getValue(); i++) {
                 this.animals.add(entry.getKey().clone());
-                for (GameObject obj : Game.getModifierObjects()) {
+                for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                     obj.onAddAnimalToBoard(entry.getKey());
                 }
             }
@@ -150,7 +154,7 @@ public class Board extends GameObject {
     public void addAnimals(AbstractAnimal animal, int amt) {
         for (int i = 0; i < amt; i++) {
             this.animals.add(animal.clone());
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 obj.onAddAnimalToBoard(animal);
             }
         }
@@ -339,6 +343,13 @@ public class Board extends GameObject {
         return grid;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public Game getGame() {
+        return game;
+    }
 
     public void setGridXMax(Integer gridXMax) {
         this.gridXMax = gridXMax;
@@ -378,5 +389,13 @@ public class Board extends GameObject {
 
     public void setResources(Map<AbstractResource, Integer> resources) {
         this.resources = resources;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

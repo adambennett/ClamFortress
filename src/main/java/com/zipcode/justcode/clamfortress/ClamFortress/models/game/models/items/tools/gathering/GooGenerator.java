@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.natural.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.concurrent.*;
 
@@ -19,7 +20,7 @@ public class GooGenerator extends AbstractGatheringTool {
 
     @Override
     public void standbyPhase() {
-        Game.getVillage().addResource(new Spacegoo(), ThreadLocalRandom.current().nextInt(100, 200));
+        Database.getCurrentGame().getVillage().addResource(new Spacegoo(), ThreadLocalRandom.current().nextInt(100, 200));
     }
 
     @Override

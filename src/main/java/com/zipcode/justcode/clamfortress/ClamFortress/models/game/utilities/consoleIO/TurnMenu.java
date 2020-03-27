@@ -22,33 +22,33 @@ public class TurnMenu extends AbstractConsole {
         consoleCommands.put("2", MenuCommands.STATS);
         consoleCommands.put("3", MenuCommands.GAME_BOARD);
         consoleCommands.put("4", MenuCommands.RESOURCES);
-        if (Game.getVillage().getInventory().inventorySize() > 0) {
+        if (Database.getCurrentGame().getVillage().getInventory().inventorySize() > 0) {
             consoleCommands.put("5", MenuCommands.INVENTORY);
         } else {
             consoleCommands.put("5", MenuCommands.OPTION_UNAVAILABLE);
         }
-        if (Game.getVillage().getBuildings().size() > 0) {
+        if (Database.getCurrentGame().getVillage().getBuildings().size() > 0) {
             consoleCommands.put("6", MenuCommands.BUILDING);
         } else {
             consoleCommands.put("6", MenuCommands.OPTION_UNAVAILABLE);
         }
-        if (Game.getVillage().getPopulation().size() > 0) {
+        if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
             consoleCommands.put("7", MenuCommands.VILLAGERS);
         } else {
             consoleCommands.put("7", MenuCommands.OPTION_UNAVAILABLE);
         }
-        if (Game.getVillage().getVistingMerchants().size() > 0) {
+        if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
             consoleCommands.put("8", MenuCommands.MERCHANT);
         } else {
             consoleCommands.put("8", MenuCommands.OPTION_UNAVAILABLE);
         }
-        if (Game.canRaid()) {
+        if (Database.getCurrentGame().canRaid()) {
             consoleCommands.put("9", MenuCommands.RAIDING);
         } else {
             consoleCommands.put("9", MenuCommands.OPTION_UNAVAILABLE);
         }
         int trainingCost = GameManager.getInstance().getTrainingCost();
-        if (Game.getVillage().getCoins() >= trainingCost) {
+        if (Database.getCurrentGame().getVillage().getCoins() >= trainingCost) {
             consoleCommands.put("10", MenuCommands.TRAINING);
         } else {
             consoleCommands.put("10", MenuCommands.OPTION_UNAVAILABLE);
@@ -96,7 +96,7 @@ public class TurnMenu extends AbstractConsole {
                 new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
                 break;
             case SKIP_TURN:
-                Game.advanceTurn();
+                Database.getCurrentGame().advanceTurn();
                 new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
                 break;
             case STATS:
@@ -112,7 +112,7 @@ public class TurnMenu extends AbstractConsole {
                 new MidTurnMenu().printPrompt(PromptMessage.VILLAGERS, true);
                 break;
             case CONTINUE:
-                for (GameObject obj : Game.getModifierObjects()) {
+                for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                     obj.priorityPhase();
                 }
                 PriorityMenu priorityMenu = new PriorityMenu();

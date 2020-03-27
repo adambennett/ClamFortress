@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildi
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public abstract class AbstractFaithBuilding extends AbstractBuilding {
 
@@ -29,7 +30,7 @@ public abstract class AbstractFaithBuilding extends AbstractBuilding {
     @Override
     public void onBuild() {
         if (this.faithCapInc > 0) {
-            Game.getVillage().setFaithLimit(Game.getVillage().getFaithLimit() + this.faithCapInc);
+            Database.getCurrentGame().getVillage().setFaithLimit(Database.getCurrentGame().getVillage().getFaithLimit() + this.faithCapInc);
             OutputManager.addToBot("New Building " + this.getName() + " has been completed! Faith cap has been increased by " + this.faithCapInc);
         } else {
             OutputManager.addToBot("New Building " + this.getName() + " has been completed!");

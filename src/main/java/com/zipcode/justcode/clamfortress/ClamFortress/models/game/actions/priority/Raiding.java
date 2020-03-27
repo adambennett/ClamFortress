@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.prior
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
 public class Raiding extends AbstractGameAction {
@@ -18,8 +19,8 @@ public class Raiding extends AbstractGameAction {
     @Override
     public void update() {
         if (this.city != null && !this.city.getDefeated()) {
-            Game.getVillage().takeDamage(city.dealDamage());
-            city.takeDamage(Game.getVillage().dealDamage());
+            Database.getCurrentGame().getVillage().takeDamage(city.dealDamage());
+            city.takeDamage(Database.getCurrentGame().getVillage().dealDamage());
         }
 
         if (this.getAmount() == this.amountToRun) {

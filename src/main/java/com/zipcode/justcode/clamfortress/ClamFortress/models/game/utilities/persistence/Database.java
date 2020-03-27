@@ -12,25 +12,22 @@ import java.util.*;
 public class Database implements CommandLineRunner {
 
 
-    private static final ArrayList<User> users = new ArrayList<>();
-    private static final ArrayList<Game> games = new ArrayList<>();
-    private static User player;
+    private static String loginUser;
+    private static Long loginGame;
+    private static User currentUser;
     private static Game currentGame;
 
     public static void logInQuickplay() {
-        player = new User("Quickplayer", "");
         StatTracker.clear();
     }
 
-    public void loadGame(Game game) {
-        currentGame = game;
-    }
 
     public static Boolean logIn(String user, String pass) {
-        for (User player : users){
+        for (User player : UserService.load()){
             if (player.getName().equals(user) && player.getPass().equals(pass)) {
-                Database.player = player;
-                StatTracker.setStats(Database.player.getStats());
+                StatTracker.setStats(player.getStats());
+                loginUser = user;
+                currentUser = player;
                 return true;
             }
         }
@@ -38,7 +35,7 @@ public class Database implements CommandLineRunner {
     }
 
     public static Boolean isUser(String user) {
-        for (User player : users){
+        for (User player : UserService.load()){
             if (player.getName().equals(user)) {
                 return true;
             }
@@ -46,57 +43,87 @@ public class Database implements CommandLineRunner {
         return false;
     }
 
+    public static Boolean isGame(Long id) {
+        for (Game game : GamesService.load()){
+            if (game.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static void registerUser(String user, String pass) {
         User newUser = new User(user, pass);
-        users.add(newUser);
-        try {
-            UserService.persist(newUser);
-        } catch (Exception ignored) {}
+        loginUser = user;
+        currentUser = newUser;
+        UserService.persist(newUser);
     }
 
     public static void registerGame(Game game) {
-        games.add(game);
-        //GamesService.insert(game);
+        for (User player : UserService.load()) {
+            if (player.getName().equals(loginUser)) {
+                game.setUser(player);
+                player.addGame(game);
+                UserService.persist(player);
+            }
+        }
+        currentGame = game;
+    }
+
+    public static Game setCurrentGame(Long id) {
+        for (Game game : GamesService.load()) {
+            if (game.getId().equals(id)) {
+                currentGame = game;
+                return game;
+            }
+        }
+        return null;
     }
 
     public static void loadDatabase() {
         GameStrings.loadNames();
-        users.addAll(UserService.load());
-        // games.addAll(GamesService.load());
         StatTracker.updateUnlocks();
     }
 
     public static void saveDatabase() {
-        for (User player : users) {
-            if (player.equals(Database.player)) {
-                try {
-                    UserService.flush();
-                } catch (Exception ignored) {}
+        for (User player : UserService.load()) {
+            if (player.equals(getPlayer())) {
                 StatTracker.getUserStatBundle(player);
-                StatTracker.getUserStatBundle(Database.player);
-                try {
-                    UserService.persist(player);
-                } catch (Exception ignored) {}
+                UserService.persist(player);
                 break;
+            }
+        }
+
+        for (Game game : GamesService.load()) {
+            if (game.getId().equals(loginGame)) {
+                GamesService.persist(game);
             }
         }
     }
 
     public static User getPlayer() {
-        return player;
-    }
-
-    public static ArrayList<Game> getGames() {
-        return games;
+        return currentUser;
     }
 
     public static Game getCurrentGame() {
         return currentGame;
     }
 
-    public static ArrayList<User> getUsers() {
-        return users;
+    public static Game getDBGame() {
+        for (Game game : GamesService.load()) {
+            if (game.getId().equals(loginGame)) {
+                return game;
+            }
+        }
+        return null;
+    }
+
+    public static List<Game> getGames() {
+        return GamesService.load();
+    }
+
+    public static List<User> getUsers() {
+        return UserService.load();
     }
 
     public static void saveNameToRandomNames(ArrayList<String> stringsToInsert) {
@@ -116,9 +143,7 @@ public class Database implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        try {
-            loadDatabase();
-            saveNameToRandomNames(GameStrings.getAllRandomNames(true));
-        } catch (Exception ignored) {}
+       loadDatabase();
+       saveNameToRandomNames(GameStrings.getAllRandomNames(true));
     }
 }

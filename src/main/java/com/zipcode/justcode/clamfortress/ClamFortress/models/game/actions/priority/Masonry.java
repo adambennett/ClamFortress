@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.prior
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class Masonry extends AbstractGameAction {
 
@@ -13,7 +14,7 @@ public class Masonry extends AbstractGameAction {
 
     @Override
     public void update() {
-        Game.getVillage().setBuildingLimit(Game.getVillage().getBuildingLimit() + 1);
+        Database.getCurrentGame().getVillage().setBuildingLimit(Database.getCurrentGame().getVillage().getBuildingLimit() + 1);
         GameManager.getInstance().gainExperience();
         this.isDone = true;
     }

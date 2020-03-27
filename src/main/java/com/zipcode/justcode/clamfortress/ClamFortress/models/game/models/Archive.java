@@ -41,6 +41,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resourc
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.refined.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.builders.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
 import java.util.*;
@@ -388,7 +389,7 @@ public class Archive {
             int randAgility = ThreadLocalRandom.current().nextInt(1, 2);
             int randEngineer = ThreadLocalRandom.current().nextInt(1, 2);
             int randMagic = ThreadLocalRandom.current().nextInt(1, 2);
-            if (Game.getPlayerRace().equals(Race.HUMAN) || Game.getPlayerRace().equals(Race.ALIEN)) {
+            if (Database.getCurrentGame().getPlayerRace().equals(Race.HUMAN) || Database.getCurrentGame().getPlayerRace().equals(Race.ALIEN)) {
                 randMagic = 0;
             }
             int randDex = ThreadLocalRandom.current().nextInt(1, 2);
@@ -404,7 +405,7 @@ public class Archive {
                     .setAgility(randAgility)
                     .setEngineering(randEngineer)
                     .setGender(gender)
-                    .setRace(Game.getPlayerRace())
+                    .setRace(Database.getCurrentGame().getPlayerRace())
                     .setMagic(randMagic)
                     .setDexterity(randDex)
                     .createSurvivor();

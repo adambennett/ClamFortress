@@ -1,6 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.tools.backpacks;
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class Battlebag extends AbstractBackpack {
     public Battlebag() {
@@ -9,7 +10,7 @@ public class Battlebag extends AbstractBackpack {
 
     @Override
     public void onObtain() {
-        Game.getVillage().getInventory().setCapacity(Game.getVillage().getInventory().getCapacity() + 25);
+        Database.getCurrentGame().getVillage().getInventory().setCapacity(Database.getCurrentGame().getVillage().getInventory().getCapacity() + 25);
     }
 
     @Override

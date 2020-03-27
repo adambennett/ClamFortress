@@ -6,6 +6,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
 import java.util.*;
@@ -46,19 +47,20 @@ public class GameBuilder {
     }
 
     public Boolean buildGame() {
-        try {
-            if (this.difficulty.equals(Difficulty.RANDOM)) {
-                this.difficulty = Difficulty.getRandomDifficulty();
-            }
-            if (this.difficulty.equals(Difficulty.CUSTOM)) {
-                Game.startGame(this.startingEra, this.race, this.customMods, this.startBiome, this.startingPop, this.startingPopCap, this.xMax, this.yMax);
-            } else {
-                Game.startGame(this.startingEra, this.difficulty, this.race, this.startBiome, this.startingPop, this.startingPopCap, this.xMax, this.yMax);
-            }
-            return true;
-        } catch (Exception ex) {
-            return false;
+        if (this.difficulty.equals(Difficulty.RANDOM)) {
+            this.difficulty = Difficulty.getRandomDifficulty();
         }
+        Game game;
+        if (this.difficulty.equals(Difficulty.CUSTOM)) {
+            game = new Game(this.startingEra, this.race, this.customMods, this.startBiome, this.startingPopCap, this.xMax, this.yMax);
+        } else {
+            game = new Game(this.startingEra, this.difficulty, this.race, this.startBiome, this.startingPopCap, this.xMax, this.yMax);
+        }
+        if (!Database.getPlayer().getName().equals("Quickplayer")) {
+            Database.registerGame(game);
+        }
+        game.postSetup(this.startingPop);
+        return true;
     }
 
     public void setStartingEra(Era startingEra) {

@@ -2,6 +2,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class ClericCloak extends AbstractArtifact implements Unique {
 
@@ -11,7 +12,7 @@ public class ClericCloak extends AbstractArtifact implements Unique {
 
     @Override
     public void endPhase() {
-        Game.getVillage().incCoins(Game.getVillage().getFaith());
+        Database.getCurrentGame().getVillage().incCoins(Database.getCurrentGame().getVillage().getFaith());
     }
 
     @Override

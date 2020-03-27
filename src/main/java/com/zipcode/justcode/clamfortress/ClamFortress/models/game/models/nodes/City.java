@@ -81,7 +81,7 @@ public class City extends AbstractNode {
             if (villager.getHP() < 1) {
                 removeSurvivor(villager);
                 StatTracker.incEnemies(1);
-                for (GameObject obj : Game.getModifierObjects()) {
+                for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                     obj.onEnemyDeath();
                 }
                 OutputManager.kill(1);
@@ -120,11 +120,11 @@ public class City extends AbstractNode {
         }
 
         if (this.resources.size() > 0) {
-            Game.getVillage().addResources(this.resources);
+            Database.getCurrentGame().getVillage().addResources(this.resources);
         }
 
         if (this.animals.size() > 0) {
-            Game.getGameBoard().addAnimals(this.animals);
+            Database.getCurrentGame().getGameBoard().addAnimals(this.animals);
         }
         GameManager.getInstance().getRaidable().remove(this);
         GameManager.getInstance().setDefeatedCities(GameManager.getInstance().getDefeatedCities() + 1);

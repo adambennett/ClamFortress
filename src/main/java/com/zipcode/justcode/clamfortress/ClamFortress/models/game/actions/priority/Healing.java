@@ -6,6 +6,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -19,21 +20,21 @@ public class Healing extends AbstractGameAction {
 
     @Override
     public void update() {
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             obj.onHeal();
         }
 
-        if (Game.getVillage().getPopulation().size() > 0) {
+        if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
             ArrayList<Survivor> dmged = new ArrayList<>();
-            for (Survivor s : Game.getVillage().getPopulation()) {
+            for (Survivor s : Database.getCurrentGame().getVillage().getPopulation()) {
                 if (s.getHP() < s.getMaxHp()) {
                     dmged.add(s);
                 }
             }
             if (dmged.size() > 0) {
                 Survivor hurtGuy = dmged.get(ThreadLocalRandom.current().nextInt(dmged.size()));
-                boolean hasAntibiotic = Game.getVillage().getInventory().containsItem("antibiotic");
-                boolean hasBandage = Game.getVillage().getInventory().containsItem("bandage");
+                boolean hasAntibiotic = Database.getCurrentGame().getVillage().getInventory().containsItem("antibiotic");
+                boolean hasBandage = Database.getCurrentGame().getVillage().getInventory().containsItem("bandage");
                 if (hasAntibiotic) {
                     hurtGuy.setHealthPoints(hurtGuy.getMaxHp());
                     OutputManager.addToBot("Healed " + hurtGuy.getName() + " to full health! [ANTIBIOTIC]");

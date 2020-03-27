@@ -2,6 +2,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.di
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class Flood extends AbstractDisaster {
     public Flood(int turns) {
@@ -10,7 +11,7 @@ public class Flood extends AbstractDisaster {
 
     @Override
     public void runEncounter() {
-        Game.getVillage().addDisaster(this);
+        Database.getCurrentGame().getVillage().addDisaster(this);
     }
 
     @Override

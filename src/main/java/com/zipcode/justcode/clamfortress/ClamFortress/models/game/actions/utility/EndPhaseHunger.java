@@ -6,6 +6,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 
@@ -17,14 +18,14 @@ public class EndPhaseHunger extends AbstractGameAction {
 
     @Override
     public void update() {
-        int numHungry = Game.getVillage().feedAllVillagers();
-        if (Game.getVillage().getFood() > 0) {
-            Game.getVillage().setFamine(Game.getVillage().getFamine() - Game.getVillage().getFood());
+        int numHungry = Database.getCurrentGame().getVillage().feedAllVillagers();
+        if (Database.getCurrentGame().getVillage().getFood() > 0) {
+            Database.getCurrentGame().getVillage().setFamine(Database.getCurrentGame().getVillage().getFamine() - Database.getCurrentGame().getVillage().getFood());
         }
         ArrayList<String> surviorsWhoLeft = new ArrayList<>();
-        for (int i = 0; i < Game.getVillage().getFamine(); i++) {
-            if (Game.getVillage().getPopulation().size() > 0) {
-                Survivor s = Game.getVillage().removeRandomSurvivor();
+        for (int i = 0; i < Database.getCurrentGame().getVillage().getFamine(); i++) {
+            if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
+                Survivor s = Database.getCurrentGame().getVillage().removeRandomSurvivor();
                 surviorsWhoLeft.add(s.getName());
             }
         }
@@ -35,8 +36,8 @@ public class EndPhaseHunger extends AbstractGameAction {
         if (numHungry > 0 && (int)newFamine < 0) {
             newFamine = 1.0;
         }
-        Game.getVillage().setFamine((int) newFamine);
-        Game.getVillage().setHunger(numHungry);
+        Database.getCurrentGame().getVillage().setFamine((int) newFamine);
+        Database.getCurrentGame().getVillage().setHunger(numHungry);
         this.isDone = true;
     }
 

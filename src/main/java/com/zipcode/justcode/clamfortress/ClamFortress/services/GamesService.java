@@ -19,15 +19,15 @@ public class GamesService {
         gamesRepository = gameRepo;
     }
 
-    public static void persist(User game) {
+    public static void persist(Game game) {
         gamesRepository.saveAndFlush(game);
     }
 
-    public static List<User> load() {
+    public static List<Game> load() {
         return gamesRepository.findAll();
     }
 
-    public static void saveAll(List<User> games) {
+    public static void saveAll(List<Game> games) {
         gamesRepository.saveAll(games);
     }
 

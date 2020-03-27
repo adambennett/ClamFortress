@@ -109,6 +109,9 @@ public class StringHelpers {
             case SALE_MERCHANT:
                 GameStrings.loadSaleMerchant();
                 return GameStrings.saleMerchant;
+            case LOAD_GAME:
+                GameStrings.loadLoadGameMenu();
+                return GameStrings.loadGames;
         }
         return "";
     }

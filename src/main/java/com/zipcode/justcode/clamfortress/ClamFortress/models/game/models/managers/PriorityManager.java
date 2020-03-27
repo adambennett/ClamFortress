@@ -2,6 +2,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.manage
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class PriorityManager {
 
@@ -93,7 +94,7 @@ public class PriorityManager {
         PriorityManager.pointsRemaining = pointsRemaining;
         int fin = PriorityManager.getPointsRemaining();
         int diff = fin - orig;
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             obj.onSpendPriorityPoints(diff);
         }
     }

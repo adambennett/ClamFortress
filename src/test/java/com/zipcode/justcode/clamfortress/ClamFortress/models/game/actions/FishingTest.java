@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FishingTest {
 
-    @Test
+  /*  @Test
     public void fishingTestWithoutRod(){
         Fishing fishing = new Fishing(1);
         Game.startGame();
@@ -48,5 +48,5 @@ public class FishingTest {
         Integer expected = 48;
 
         assertEquals(expected, actual);
-    }
+    }*/
 }

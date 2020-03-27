@@ -25,7 +25,7 @@ public class EndPhaseMenu extends AbstractConsole {
         switch (cmd) {
             case CONTINUE:
                 OutputManager.reset();
-                for (GameObject obj : Game.getModifierObjects()) {
+                for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                     obj.standbyPhase();
                 }
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
@@ -36,7 +36,7 @@ public class EndPhaseMenu extends AbstractConsole {
                 break;
             case SKIP_TURN:
                 OutputManager.reset();
-                Game.advanceTurn();
+                Database.getCurrentGame().advanceTurn();
                 new EndPhaseMenu().printPrompt(PromptMessage.END_PHASE, true);
                 break;
             case SAVE:

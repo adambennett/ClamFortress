@@ -34,8 +34,7 @@ public class Village extends AbstractNode {
     
     private final AbstractNode baseNode;
     
-    //private final Farmland farmland;
-
+    private final Farmland farmland;
 
     private Integer popCap =            5;
     private Integer buildingLimit =     5;
@@ -94,7 +93,7 @@ public class Village extends AbstractNode {
         this.resources = new HashMap<>();
         this.popCap = popCap;
         this.baseNode = getNodeFromBiome(biome);
-        //this.farmland = new Farmland();
+        this.farmland = new Farmland();
         this.health = 100;
         this.maxHP = 100;
     }
@@ -104,7 +103,7 @@ public class Village extends AbstractNode {
         super();
         this.baseNode = null;
         this.inventory = new Inventory(0);
-        //this.farmland = new Farmland();
+        this.farmland = new Farmland();
     }
 
     public AbstractNode getNodeFromBiome(AbstractBiome biome) {
@@ -169,7 +168,7 @@ public class Village extends AbstractNode {
             if (villager.getHP() < 1) {
                 removeSurvivor(villager);
                 villager.die();
-                for (GameObject obj : Game.getModifierObjects()) {
+                for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                     obj.onVillagerDeath();
                 }
                 StatTracker.incVillagers(1);
@@ -209,7 +208,7 @@ public class Village extends AbstractNode {
 
     public Boolean addToPopulation(Survivor s) {
         if (population.size() < popCap) {
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 s = obj.onNewCitizen(s);
             }
             this.population.add(s);
@@ -241,7 +240,7 @@ public class Village extends AbstractNode {
         this.maxHP -= s.getMaxHp();
         this.totalAge -= s.getAge();
         updateAverageStats();
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             obj.onLoseCitizen(s);
         }
     }
@@ -288,15 +287,15 @@ public class Village extends AbstractNode {
             if (this.food>0) {
                 this.food--;
                 int healAmt = 100;
-                if (Game.getDifficulty().compareTo(Difficulty.IMPOSSIBLE) >= 0) {
+                if (Database.getCurrentGame().getDifficulty().compareTo(Difficulty.IMPOSSIBLE) >= 0) {
                     healAmt = 10;
-                } else if (Game.getDifficulty().compareTo(Difficulty.NIGHTMARE) >= 0) {
+                } else if (Database.getCurrentGame().getDifficulty().compareTo(Difficulty.NIGHTMARE) >= 0) {
                     healAmt = 15;
-                } else if (Game.getDifficulty().compareTo(Difficulty.BRUTAL) >= 0) {
+                } else if (Database.getCurrentGame().getDifficulty().compareTo(Difficulty.BRUTAL) >= 0) {
                     healAmt = 25;
-                } else if (Game.getDifficulty().compareTo(Difficulty.HARD) >= 0) {
+                } else if (Database.getCurrentGame().getDifficulty().compareTo(Difficulty.HARD) >= 0) {
                     healAmt = 40;
-                } else if (Game.getDifficulty().compareTo(Difficulty.DEFAULT) >= 0) {
+                } else if (Database.getCurrentGame().getDifficulty().compareTo(Difficulty.DEFAULT) >= 0) {
                     healAmt = 50;
                 }
                 s.feed(new PlaceholderFood(healAmt));
@@ -312,7 +311,7 @@ public class Village extends AbstractNode {
     public Boolean addBuilding(AbstractBuilding b) {
         if (buildings.size() < buildingLimit) {
             buildings.add(b);
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 obj.onNewBuilding(b);
             }
             return true;
@@ -401,7 +400,7 @@ public class Village extends AbstractNode {
             resource.onObtain();
             GameUtils.whenObtainingAnyItem(resource);
             if (resource instanceof Golden) {
-                Game.getVillage().incCoins(((Golden) resource).getGoldAmt());
+                Database.getCurrentGame().getVillage().incCoins(((Golden) resource).getGoldAmt());
                 OutputManager.addToBot("Received " + ((Golden) resource).getGoldAmt() + " Coins upon pickup of Golden resource!");
             }
             return true;
@@ -460,7 +459,7 @@ public class Village extends AbstractNode {
     public void addMiracle(AbstractMiracle m) {
         if (this.canRunEncounter(m)) {
             this.activeMiracles.add(m);
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 obj.onNewMiracle(m);
             }
         }
@@ -468,7 +467,7 @@ public class Village extends AbstractNode {
     public void addDisaster(AbstractDisaster d) {
         if (this.canRunEncounter(d)) {
             this.ongoingDisasters.add(d);
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 obj.onNewDisaster(d);
             }
         }
@@ -476,7 +475,7 @@ public class Village extends AbstractNode {
     public void addPlague(AbstractPlague p) {
         if (this.canRunEncounter(p)) {
             this.ongoingPlagues.add(p);
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 obj.onNewPlague(p);
             }
         }
@@ -525,7 +524,7 @@ public class Village extends AbstractNode {
     // GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////////
     public Integer getDefense(){
         int def = this.defence;
-        ArrayList<GameObject> objs = Game.getModifierObjects();
+        ArrayList<GameObject> objs = Database.getCurrentGame().getModifierObjects();
         for (GameObject obj : objs) {
             def += obj.modifyDef();
             if (obj instanceof AbstractArmor) {
@@ -538,7 +537,7 @@ public class Village extends AbstractNode {
     }
     public Integer getAttackPower(){
         int atk = this.attackPower;
-        ArrayList<GameObject> objs = Game.getModifierObjects();
+        ArrayList<GameObject> objs = Database.getCurrentGame().getModifierObjects();
         for (GameObject obj : objs) {
             atk += obj.modifyAtk();
             if (obj instanceof AbstractWeapon) {
@@ -588,7 +587,7 @@ public class Village extends AbstractNode {
 
     public void incCoins(int amt) {
         int orig = amt;
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             amt += obj.modifyGoldGain(orig);
         }
         this.coins+=amt;
@@ -776,6 +775,15 @@ public class Village extends AbstractNode {
         return population;
     }
 
+    public Farmland getFarmland() {
+        return farmland;
+    }
+
+    @Override
+    public Map<AbstractResource, Integer> getResources() {
+        return resources;
+    }
+
     public void setPopCap(Integer popCap) {
         this.popCap = popCap;
     }
@@ -922,6 +930,38 @@ public class Village extends AbstractNode {
 
     public void setResources(Map<AbstractResource, Integer> resources) {
         this.resources = resources;
+    }
+
+    public void setOccupyingBandits(List<Bandit> occupyingBandits) {
+        this.occupyingBandits = occupyingBandits;
+    }
+
+    public void setBuildings(List<AbstractBuilding> buildings) {
+        this.buildings = buildings;
+    }
+
+    public void setUncompletedBuildings(List<AbstractBuilding> uncompletedBuildings) {
+        this.uncompletedBuildings = uncompletedBuildings;
+    }
+
+    public void setActiveMiracles(List<AbstractMiracle> activeMiracles) {
+        this.activeMiracles = activeMiracles;
+    }
+
+    public void setOngoingDisasters(List<AbstractDisaster> ongoingDisasters) {
+        this.ongoingDisasters = ongoingDisasters;
+    }
+
+    public void setVistingMerchants(List<Merchant> vistingMerchants) {
+        this.vistingMerchants = vistingMerchants;
+    }
+
+    public void setOngoingPlagues(List<AbstractPlague> ongoingPlagues) {
+        this.ongoingPlagues = ongoingPlagues;
+    }
+
+    public void setPopulation(List<Survivor> population) {
+        this.population = population;
     }
 
     // END GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////

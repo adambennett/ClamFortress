@@ -16,143 +16,108 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.er
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import javax.persistence.*;
+import java.io.*;
 import java.util.*;
 
-
+@Entity
 public class Game {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @MapsId
+    private User user;
 
-    private static Board gameBoard;
+    @Transient
+    private Board gameBoard;
 
+    @Transient
+    public ActionManager actionManager;
 
-    public  static ActionManager actionManager;
+    private Boolean toughEnemies;
+    private Boolean hostileEnemies;
+    private Boolean slowResourceGain;
+    private Boolean frequentBadEvents;
+    private Boolean terribleDisasters;
+    private Boolean handicappedStartEquipment;
+    private Boolean moreNetherworlds;
+    private Boolean lessEffectiveTools;
+    private Boolean limitedBlueprintAccess;
+    private Boolean tradingEnabled;
+    private Boolean magicEnabled;
+    private Boolean aliensEnabled;
+    private Boolean healingEnabled;
+    private Boolean faithEnabled;
+    private Boolean surroundingCheckEnabled;
 
+    @Enumerated(EnumType.STRING)
+    private Race playerRace;
 
-    private static GameManager gameManager;
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 
-
-    private static Boolean toughEnemies;
-
-
-    private static Boolean hostileEnemies;
-
-
-    private static Boolean slowResourceGain;
-
-
-    private static Boolean frequentBadEvents;
-
-
-    private static Boolean terribleDisasters;
-
-
-    private static Boolean handicappedStartEquipment;
-
-
-    private static Boolean moreNetherworlds;
-
-
-    private static Boolean lessEffectiveTools;
-
-
-    private static Boolean limitedBlueprintAccess;
-
-
-    private static Boolean tradingEnabled;
-
-
-    private static Boolean magicEnabled;
-
-
-    private static Boolean aliensEnabled;
-
-
-    private static Boolean healingEnabled;
-
-
-    private static Boolean faithEnabled;
-
-
-    private static Boolean surroundingCheckEnabled;
-
-
-    private static Race playerRace;
-
-
-    private static Difficulty difficulty;
-
-    public Game() {}
-
-
-
-    // Default Settings (for tests)
-    public static void startGame() {
-        startGame(new BronzeAge(true), Difficulty.DEFAULT, Race.HUMAN, new BlankBiome(), 0, 5, 50, 50);
+    public Game() {
+        this(new BronzeAge(true), Difficulty.DEFAULT, Race.HUMAN, new BlankBiome(), 5, 50, 50);
     }
 
-    public static void startGame(Era startEra, Difficulty gameDifficulty, Race chosenRace, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
+    public Game(Era startEra, Difficulty gameDifficulty, Race chosenRace, AbstractBiome startingBiome, int startPopCap, int xMax, int yMax) {
         TechTree.resetTechTree();
         if (startEra != null) {
             TechTree.moveToEra(startEra, true);
         }
         PriorityManager.reset(true);
-        difficulty = gameDifficulty;
-        actionManager = new ActionManager();
-        playerRace = chosenRace;
-        gameManager = GameManager.getInstance();
-        gameBoard = new Board();
+        this.difficulty = gameDifficulty;
+        this.actionManager = new ActionManager();
+        this.playerRace = chosenRace;
+        this.gameBoard = new Board();
         Archive.getInstance().get("wood");
         gameBoard = new Board(startingBiome, xMax, yMax, startPopCap);
-        if (!startingBiome.toString().equals("Debug")) {
-            gameBoard.discover(getVillage().getBaseNode());
-        }
-        new NewSurvivors(false).addToVillage(startPop);
-        getVillage().addResource(new Wood(), 100);
         updateDifficultyBools();
-        gameManager.setNethermod(difficulty.getNethermod());
+        GameManager.getInstance().setNethermod(difficulty.getNethermod());
     }
 
     // Custom Difficulty
-    public static void startGame(Era startEra, Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractBiome startingBiome, int startPop, int startPopCap, int xMax, int yMax) {
+    public Game(Era startEra, Race chosenRace, ArrayList<Integer> customDifficultyMods, AbstractBiome startingBiome, int startPopCap, int xMax, int yMax) {
         TechTree.resetTechTree();
         if (startEra != null) {
             TechTree.moveToEra(startEra, true);
         }
         PriorityManager.reset(true);
-        difficulty = Difficulty.CUSTOM;
+        this.difficulty = Difficulty.CUSTOM;
         actionManager = new ActionManager();
-        playerRace = chosenRace;
-        gameManager = GameManager.getInstance();
+        this.playerRace = chosenRace;
         gameBoard = new Board();
         Archive.getInstance().get("wood");
         gameBoard = new Board(startingBiome, xMax, yMax, startPopCap);
-        if (!startingBiome.toString().equals("Debug")) {
+        this.toughEnemies = customDifficultyMods.contains(1);
+        this.slowResourceGain = customDifficultyMods.contains(2);
+        this.frequentBadEvents = customDifficultyMods.contains(3);
+        this.terribleDisasters = customDifficultyMods.contains(4);
+        this.handicappedStartEquipment = customDifficultyMods.contains(5);
+        this.moreNetherworlds = customDifficultyMods.contains(6);
+        this.hostileEnemies = customDifficultyMods.contains(8);
+        this.lessEffectiveTools = customDifficultyMods.contains(7);
+        this.limitedBlueprintAccess = customDifficultyMods.contains(9);
+        this.tradingEnabled = !customDifficultyMods.contains(10);
+        this.magicEnabled = !customDifficultyMods.contains(11);
+        this.aliensEnabled = !customDifficultyMods.contains(12);
+        this.healingEnabled = !customDifficultyMods.contains(13);
+        this.faithEnabled = !customDifficultyMods.contains(14);
+        this.surroundingCheckEnabled = !customDifficultyMods.contains(15);
+        GameManager.getInstance().setNethermod(difficulty.getNethermod());
+    }
+
+    public void postSetup(int startPop) {
+        if (!this.getGameBoard().getStartBiome().toString().equals("Debug")) {
             gameBoard.discover(getVillage().getBaseNode());
         }
         new NewSurvivors(false).addToVillage(startPop);
         getVillage().addResource(new Wood(), 100);
-        toughEnemies = customDifficultyMods.contains(1);
-        slowResourceGain = customDifficultyMods.contains(2);
-        frequentBadEvents = customDifficultyMods.contains(3);
-        terribleDisasters = customDifficultyMods.contains(4);
-        handicappedStartEquipment = customDifficultyMods.contains(5);
-        moreNetherworlds = customDifficultyMods.contains(6);
-        hostileEnemies = customDifficultyMods.contains(8);
-        lessEffectiveTools = customDifficultyMods.contains(7);
-        limitedBlueprintAccess = customDifficultyMods.contains(9);
-        tradingEnabled = !customDifficultyMods.contains(10);
-        magicEnabled = !customDifficultyMods.contains(11);
-        aliensEnabled = !customDifficultyMods.contains(12);
-        healingEnabled = !customDifficultyMods.contains(13);
-        faithEnabled = !customDifficultyMods.contains(14);
-        surroundingCheckEnabled = !customDifficultyMods.contains(15);
-        gameManager.setNethermod(difficulty.getNethermod());
     }
 
-    public static ArrayList<GameObject> getModifierObjects() {
+    public ArrayList<GameObject> getModifierObjects() {
         ArrayList<GameObject> mods = new ArrayList<>(getVillage().getAllResources());
         for (Map.Entry<AbstractItem, Integer> entry : getVillage().getInventory().getEntrySet()) {
             for (int i = 0; i < entry.getValue(); i++) {
@@ -165,27 +130,27 @@ public class Game {
         return mods;
     }
 
-    public static Boolean canRaid() {
+    public Boolean canRaid() {
         return GameManager.getInstance().getRaidable().size() > 0;
     }
 
-    public static void handleEncounter(AbstractEncounter enc) {
+    public void handleEncounter(AbstractEncounter enc) {
         if (gameBoard.getVillage().canRunEncounter(enc)) {
             OutputManager.addToBot("SPECIAL ENCOUNTER :: " + enc.toString());
             enc.runEncounter();
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : this.getModifierObjects()) {
                 obj.onRunSpecialEncounter(enc);
             }
         }
     }
 
-    public static Integer encounterLogic(ArrayList<AbstractEncounter> encounters) {
-        Integer dateInc = gameManager.advanceDate(5, 15);
+    public Integer encounterLogic(ArrayList<AbstractEncounter> encounters) {
+        Integer dateInc = GameManager.getInstance().advanceDate(5, 15);
         for (AbstractEncounter enc : encounters) {
             handleEncounter(enc);
         }
         int highEnd = 45;
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : this.getModifierObjects()) {
             highEnd += obj.modifyDateIncrease();
         }
         if (highEnd < 45) { highEnd = 45; }
@@ -193,53 +158,53 @@ public class Game {
         int high = highEnd - dateInc;
         if (low < 0) { low = 0; }
         if (high < 1) { high = 1; }
-        dateInc += gameManager.advanceDate(low, high);
+        dateInc += GameManager.getInstance().advanceDate(low, high);
         return dateInc;
     }
 
-    public static Integer getDateInc() {
+    public Integer getDateInc() {
         Integer dateInc = 0;
         ArrayList<AbstractEncounter> encounters = EncounterManager.generateEncounters();
         if (encounters.size() > 0) {
             dateInc += encounterLogic(encounters);
         } else {
             int highEnd = 45;
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : this.getModifierObjects()) {
                 highEnd += obj.modifyDateIncrease();
             }
             if (highEnd < 45) { highEnd = 45; }
-            dateInc += gameManager.advanceDate(25, highEnd);
+            dateInc += GameManager.getInstance().advanceDate(25, highEnd);
         }
         return dateInc;
     }
 
-    public static void advanceTurn() {
+    public void advanceTurn() {
         int dateInc = getDateInc();
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : this.getModifierObjects()) {
             obj.onDateAdvance(dateInc);
         }
         StatTracker.incScore(dateInc);
-        gameManager.incTurns();
+        GameManager.getInstance().incTurns();
         queueEvergreenActions(dateInc);
-        if (Game.getVillage().getVistingMerchants().size() > 0) {
-            Game.getVillage().getVistingMerchants().get(0).visit();
+        if (this.getVillage().getVistingMerchants().size() > 0) {
+            this.getVillage().getVistingMerchants().get(0).visit();
         }
         runActions();
-        Game.getVillage().updateHP();
-        PriorityManager.reset(difficulty.compareTo(Difficulty.HARD) > 0);
-        for (GameObject obj : Game.getModifierObjects()) {
+        this.getVillage().updateHP();
+        PriorityManager.reset(this.difficulty.compareTo(Difficulty.HARD) > 0);
+        for (GameObject obj : this.getModifierObjects()) {
             obj.endPhase();
         }
 
     }
 
-    public static void runActions() {
+    public void runActions() {
         while (!actionManager.actions.isEmpty() || !actionManager.preTurnActions.isEmpty() || !actionManager.postTurnActions.isEmpty() || (actionManager.finalAction != null && !actionManager.finalAction.isDone)) {
             actionManager.update();
         }
     }
 
-    public static void queueEvergreenActions(int dateInc) {
+    public void queueEvergreenActions(int dateInc) {
         actionManager.addToTurnStart(new NewSurvivors(true));
         actionManager.addToTurnEnd(new EndPhaseHunger());
         if (getVillage().getUncompletedBuildings().size() > 0) {
@@ -249,31 +214,27 @@ public class Game {
         actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc));
     }
 
-    public static Board getGameBoard() {
+    public Board getGameBoard() {
         return gameBoard;
     }
 
-    public static GameManager getGameManager() {
-        return gameManager;
-    }
-
-    public static Boolean getSurroundingCheckEnabled() {
+    public Boolean getSurroundingCheckEnabled() {
         return surroundingCheckEnabled;
     }
 
-    public static Race getPlayerRace() {
+    public Race getPlayerRace() {
         return playerRace;
     }
 
-    public static Difficulty getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public static Village getVillage() {
+    public Village getVillage() {
         return gameBoard.getVillage();
     }
 
-    private static void updateDifficultyBools() {
+    private void updateDifficultyBools() {
         switch (difficulty) {
             case DEFAULT:
                 // Bad
@@ -398,147 +359,153 @@ public class Game {
         return id;
     }
 
-    public static ActionManager getActionManager() {
-        return actionManager;
+    public User getUser() {
+        return user;
     }
 
-    public static Boolean getToughEnemies() {
+    public Boolean getToughEnemies() {
         return toughEnemies;
     }
 
-    public static Boolean getHostileEnemies() {
+    public Boolean getHostileEnemies() {
         return hostileEnemies;
     }
 
-    public static Boolean getSlowResourceGain() {
+    public Boolean getSlowResourceGain() {
         return slowResourceGain;
     }
 
-    public static Boolean getFrequentBadEvents() {
+    public Boolean getFrequentBadEvents() {
         return frequentBadEvents;
     }
 
-    public static Boolean getTerribleDisasters() {
+    public Boolean getTerribleDisasters() {
         return terribleDisasters;
     }
 
-    public static Boolean getHandicappedStartEquipment() {
+    public Boolean getHandicappedStartEquipment() {
         return handicappedStartEquipment;
     }
 
-    public static Boolean getMoreNetherworlds() {
+    public Boolean getMoreNetherworlds() {
         return moreNetherworlds;
     }
 
-    public static Boolean getLessEffectiveTools() {
+    public Boolean getLessEffectiveTools() {
         return lessEffectiveTools;
     }
 
-    public static Boolean getLimitedBlueprintAccess() {
+    public Boolean getLimitedBlueprintAccess() {
         return limitedBlueprintAccess;
     }
 
-    public static Boolean getTradingEnabled() {
+    public Boolean getTradingEnabled() {
         return tradingEnabled;
     }
 
-    public static Boolean getMagicEnabled() {
+    public Boolean getMagicEnabled() {
         return magicEnabled;
     }
 
-    public static Boolean getAliensEnabled() {
+    public Boolean getAliensEnabled() {
         return aliensEnabled;
     }
 
-    public static Boolean getHealingEnabled() {
+    public Boolean getHealingEnabled() {
         return healingEnabled;
     }
 
-    public static Boolean getFaithEnabled() {
+    public Boolean getFaithEnabled() {
         return faithEnabled;
+    }
+
+    public ActionManager getActionManager() {
+        return actionManager;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public static void setGameBoard(Board gameBoard) {
-        Game.gameBoard = gameBoard;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public static void setActionManager(ActionManager actionManager) {
-        Game.actionManager = actionManager;
+    public void setGameBoard(Board gameBoard) {
+        this.gameBoard = gameBoard;
     }
 
-    public static void setGameManager(GameManager gameManager) {
-        Game.gameManager = gameManager;
+    public void setActionManager(ActionManager actionManager) {
+        this.actionManager = actionManager;
     }
 
-    public static void setToughEnemies(Boolean toughEnemies) {
-        Game.toughEnemies = toughEnemies;
+    public void setToughEnemies(Boolean toughEnemies) {
+        this.toughEnemies = toughEnemies;
     }
 
-    public static void setHostileEnemies(Boolean hostileEnemies) {
-        Game.hostileEnemies = hostileEnemies;
+    public void setHostileEnemies(Boolean hostileEnemies) {
+        this.hostileEnemies = hostileEnemies;
     }
 
-    public static void setSlowResourceGain(Boolean slowResourceGain) {
-        Game.slowResourceGain = slowResourceGain;
+    public void setSlowResourceGain(Boolean slowResourceGain) {
+        this.slowResourceGain = slowResourceGain;
     }
 
-    public static void setFrequentBadEvents(Boolean frequentBadEvents) {
-        Game.frequentBadEvents = frequentBadEvents;
+    public void setFrequentBadEvents(Boolean frequentBadEvents) {
+        this.frequentBadEvents = frequentBadEvents;
     }
 
-    public static void setTerribleDisasters(Boolean terribleDisasters) {
-        Game.terribleDisasters = terribleDisasters;
+    public void setTerribleDisasters(Boolean terribleDisasters) {
+        this.terribleDisasters = terribleDisasters;
     }
 
-    public static void setHandicappedStartEquipment(Boolean handicappedStartEquipment) {
-        Game.handicappedStartEquipment = handicappedStartEquipment;
+    public void setHandicappedStartEquipment(Boolean handicappedStartEquipment) {
+        this.handicappedStartEquipment = handicappedStartEquipment;
     }
 
-    public static void setMoreNetherworlds(Boolean moreNetherworlds) {
-        Game.moreNetherworlds = moreNetherworlds;
+    public void setMoreNetherworlds(Boolean moreNetherworlds) {
+        this.moreNetherworlds = moreNetherworlds;
     }
 
-    public static void setLessEffectiveTools(Boolean lessEffectiveTools) {
-        Game.lessEffectiveTools = lessEffectiveTools;
+    public void setLessEffectiveTools(Boolean lessEffectiveTools) {
+        this.lessEffectiveTools = lessEffectiveTools;
     }
 
-    public static void setLimitedBlueprintAccess(Boolean limitedBlueprintAccess) {
-        Game.limitedBlueprintAccess = limitedBlueprintAccess;
+    public void setLimitedBlueprintAccess(Boolean limitedBlueprintAccess) {
+        this.limitedBlueprintAccess = limitedBlueprintAccess;
     }
 
-    public static void setTradingEnabled(Boolean tradingEnabled) {
-        Game.tradingEnabled = tradingEnabled;
+    public void setTradingEnabled(Boolean tradingEnabled) {
+        this.tradingEnabled = tradingEnabled;
     }
 
-    public static void setMagicEnabled(Boolean magicEnabled) {
-        Game.magicEnabled = magicEnabled;
+    public void setMagicEnabled(Boolean magicEnabled) {
+        this.magicEnabled = magicEnabled;
     }
 
-    public static void setAliensEnabled(Boolean aliensEnabled) {
-        Game.aliensEnabled = aliensEnabled;
+    public void setAliensEnabled(Boolean aliensEnabled) {
+        this.aliensEnabled = aliensEnabled;
     }
 
-    public static void setHealingEnabled(Boolean healingEnabled) {
-        Game.healingEnabled = healingEnabled;
+    public void setHealingEnabled(Boolean healingEnabled) {
+        this.healingEnabled = healingEnabled;
     }
 
-    public static void setFaithEnabled(Boolean faithEnabled) {
-        Game.faithEnabled = faithEnabled;
+    public void setFaithEnabled(Boolean faithEnabled) {
+        this.faithEnabled = faithEnabled;
     }
 
-    public static void setSurroundingCheckEnabled(Boolean surroundingCheckEnabled) {
-        Game.surroundingCheckEnabled = surroundingCheckEnabled;
+    public void setSurroundingCheckEnabled(Boolean surroundingCheckEnabled) {
+        this.surroundingCheckEnabled = surroundingCheckEnabled;
     }
 
-    public static void setPlayerRace(Race playerRace) {
-        Game.playerRace = playerRace;
+    public void setPlayerRace(Race playerRace) {
+        this.playerRace = playerRace;
     }
 
-    public static void setDifficulty(Difficulty difficulty) {
-        Game.difficulty = difficulty;
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
+
+
 }

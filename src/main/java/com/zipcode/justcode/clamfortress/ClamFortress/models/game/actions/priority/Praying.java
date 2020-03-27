@@ -6,6 +6,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.concurrent.*;
 
@@ -18,7 +19,7 @@ public class Praying extends AbstractGameAction {
     @Override
     public void update() {
         int faithBuildingMod = 0;
-        for (AbstractBuilding b : Game.getVillage().getBuildings()) {
+        for (AbstractBuilding b : Database.getCurrentGame().getVillage().getBuildings()) {
             if (b instanceof AbstractFaithBuilding) {
                 faithBuildingMod += ((AbstractFaithBuilding) b).getPrayBonus();
             }
@@ -27,13 +28,13 @@ public class Praying extends AbstractGameAction {
             faithBuildingMod = 1;
         }
 
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             faithBuildingMod += obj.modifyFaithInc();
         }
 
         int amt = ThreadLocalRandom.current().nextInt(faithBuildingMod+1);
         if (amt > 0) {
-            Game.getVillage().incFaith(amt);
+            Database.getCurrentGame().getVillage().incFaith(amt);
             GameManager.getInstance().gainExperience();
             OutputManager.addToBot("Praying has earned you " + faithBuildingMod + " Faith");
         }

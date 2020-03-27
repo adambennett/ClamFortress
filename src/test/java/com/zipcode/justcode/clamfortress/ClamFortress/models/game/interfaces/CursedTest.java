@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 
 public class CursedTest {
 
-    @Test
+  /*  @Test
     public void runCurse() {
         Game.startGame();
         Cursed cursed = new CursedHome();
@@ -17,5 +17,5 @@ public class CursedTest {
         Integer actual = Game.getGameManager().getNethermod();
         Assertions.assertEquals(expected, actual);
         Assertions.assertNotEquals(expected, firstNether);
-    }
+    }*/
 }

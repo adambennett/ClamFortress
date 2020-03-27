@@ -5,6 +5,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class ProjectileEnhancer extends AbstractArtifact implements Unique {
 
@@ -14,7 +15,7 @@ public class ProjectileEnhancer extends AbstractArtifact implements Unique {
 
     @Override
     public void onObtain() {
-        for (AbstractItem item : Game.getVillage().getInventory().getItems()) {
+        for (AbstractItem item : Database.getCurrentGame().getVillage().getInventory().getItems()) {
             if (item instanceof Projectile) {
                 Projectile fItem = (Projectile)item;
                 if (fItem.getAccuracy() < 100) {

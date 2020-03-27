@@ -276,7 +276,7 @@ public abstract class AbstractConsole {
         return toRet;
     }
 
-    private void advanceToFirstTurn() {
+    public void advanceToFirstTurn() {
         printPrompt(PromptMessage.BLURB, false);
         TurnMenu turnMenu = new TurnMenu();
         turnMenu.printPrompt(PromptMessage.TURN_MENU, true);

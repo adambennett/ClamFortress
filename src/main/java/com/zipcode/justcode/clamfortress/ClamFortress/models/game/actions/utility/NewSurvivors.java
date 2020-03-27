@@ -4,6 +4,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.concurrent.*;
 
@@ -19,12 +20,12 @@ public class NewSurvivors extends AbstractGameAction {
 
     @Override
     public void update() {
-        int pop = Game.getVillage().getPopulation().size();
-        int popCap = Game.getVillage().getPopCap();
+        int pop = Database.getCurrentGame().getVillage().getPopulation().size();
+        int popCap = Database.getCurrentGame().getVillage().getPopCap();
         int diff = popCap - pop;
         if (pop < popCap && diff > 0) {
             int amtOfNewSurvivors = ThreadLocalRandom.current().nextInt(0, diff+1);
-            int high = Game.getVillage().getHunger();
+            int high = Database.getCurrentGame().getVillage().getHunger();
             if (high < 1) { high = 1; }
             int hungerRoll = ThreadLocalRandom.current().nextInt(0, high);
             amtOfNewSurvivors -= hungerRoll;
@@ -44,7 +45,7 @@ public class NewSurvivors extends AbstractGameAction {
         OutputManager.moveIn(amt);
         for (int i = 0; i < amt; i++) {
             Survivor newCitizen = Archive.generateRandomSurvivor(true);
-            Game.getVillage().addToPopulation(newCitizen);
+            Database.getCurrentGame().getVillage().addToPopulation(newCitizen);
         }
     }
 }

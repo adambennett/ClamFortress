@@ -3,6 +3,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.mi
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.priority.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.concurrent.*;
 
@@ -15,13 +16,13 @@ public class DivineHealing extends AbstractMiracle {
     @Override
     public void standbyPhase() {
         int high = ThreadLocalRandom.current().nextInt(1, 5);
-        if (Game.getVillage().getFaith() > Game.getVillage().getFaithLimit() - 25) {
+        if (Database.getCurrentGame().getVillage().getFaith() > Database.getCurrentGame().getVillage().getFaithLimit() - 25) {
             high += ThreadLocalRandom.current().nextInt(1, 3);
         }
-        Game.actionManager.addToBottom(new Healing(high));
+        Database.getCurrentGame().actionManager.addToBottom(new Healing(high));
         this.turnsActive--;
         if (this.turnsActive < 1) {
-            Game.getVillage().getActiveMiracles().remove(this);
+            Database.getCurrentGame().getVillage().getActiveMiracles().remove(this);
         }
     }
 

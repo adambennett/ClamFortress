@@ -7,6 +7,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.dis
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.miracles.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.plagues.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -42,7 +43,7 @@ public class EncounterManager {
         encounters.add(new Pandemic(tempVal));
         encounters.add(new SARS(tempVal));
         encounters.add(new SpanishFlu(tempVal));
-        if (!Game.getVillage().getInventory().containsItem("Rabbit's Foot")) {
+        if (!Database.getCurrentGame().getVillage().getInventory().containsItem("Rabbit's Foot")) {
             encounters.add(new AlienInvasion(tempVal,tempVal));
             encounters.add(new Earthquake());
             encounters.add(new Fire(tempVal));

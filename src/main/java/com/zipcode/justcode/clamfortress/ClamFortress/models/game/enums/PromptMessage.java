@@ -28,5 +28,6 @@ public enum PromptMessage {
     LEADERBOARD,
     STATS_MENU,
     PLAYER_STATS,
-    DEV_CONSOLE
+    DEV_CONSOLE,
+    LOAD_GAME
 }

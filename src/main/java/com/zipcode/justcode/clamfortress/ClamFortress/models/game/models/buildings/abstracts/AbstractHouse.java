@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildi
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public abstract class AbstractHouse extends AbstractBuilding {
 
@@ -23,10 +24,10 @@ public abstract class AbstractHouse extends AbstractBuilding {
     @Override
     public void onBuild() {
         int inc = this.popCapInc;
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             inc += obj.modifyPopCapIncreases();
         }
-        Game.getVillage().incPopCap(inc);
+        Database.getCurrentGame().getVillage().incPopCap(inc);
         OutputManager.addToBot("New Building " + this.getName() + " has been completed! Increased population cap by " + inc + ".");
     }
 

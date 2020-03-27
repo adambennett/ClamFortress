@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildi
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public abstract class AbstractDefenses extends AbstractBuilding {
 
@@ -23,7 +24,7 @@ public abstract class AbstractDefenses extends AbstractBuilding {
     @Override
     public void onBuild() {
         super.onBuild();
-        Game.getVillage().incDefense(this.defense);
+        Database.getCurrentGame().getVillage().incDefense(this.defense);
         OutputManager.addToBot("Village Defenses improved by " + this.defense + " due to construction of " + this.getName());
     }
 

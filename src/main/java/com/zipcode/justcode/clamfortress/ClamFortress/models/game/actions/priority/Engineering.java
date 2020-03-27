@@ -5,6 +5,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class Engineering extends AbstractGameAction {
 
@@ -15,9 +16,9 @@ public class Engineering extends AbstractGameAction {
     @Override
     public void update() {
         AbstractBuilding newBuilding = BuildingManager.getRandomBuilding();
-        Game.getVillage().addUncompletedBuilding(newBuilding);
+        Database.getCurrentGame().getVillage().addUncompletedBuilding(newBuilding);
         OutputManager.addToBot("Added new " + newBuilding.getName() + " Project to Building Queue");
-        if (Game.getVillage().getInventory().containsItem("hammer")) {
+        if (Database.getCurrentGame().getVillage().getInventory().containsItem("hammer")) {
             GameManager.getInstance().gainExperience(10);
         }
         this.isDone = true;

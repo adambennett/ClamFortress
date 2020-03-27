@@ -3,6 +3,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class Wallet extends AbstractItem {
     public Wallet() {
@@ -11,7 +12,7 @@ public class Wallet extends AbstractItem {
 
     @Override
     public void onObtain() {
-        Game.getVillage().setCoinLimit(Game.getVillage().getCoinLimit() + 1000);
+        Database.getCurrentGame().getVillage().setCoinLimit(Database.getCurrentGame().getVillage().getCoinLimit() + 1000);
     }
 
     @Override

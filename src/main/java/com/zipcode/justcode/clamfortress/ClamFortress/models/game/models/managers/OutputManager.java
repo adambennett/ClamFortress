@@ -6,6 +6,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 
@@ -119,7 +120,7 @@ public class OutputManager {
             String reportString = "REPORT\n------\n";
 
             String extraTopLine = "";
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 extraTopLine += obj.addToEndTurnReportTop();
             }
 
@@ -159,7 +160,7 @@ public class OutputManager {
             }
 
             String extraBotLine = "";
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 extraBotLine += obj.addToEndTurnReportBot();
             }
 

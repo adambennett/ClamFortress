@@ -51,13 +51,13 @@ public class GameUtils {
 
     public static void whenObtainingAnyItem(GameObject obtained) {
         int maxHPGain = obtained.modifyMaxHPOnPickup();
-        if (maxHPGain > 0 && Game.getVillage().getPopulation().size() > 0) {
-            Survivor s = Game.getVillage().getPopulation().get(ThreadLocalRandom.current().nextInt(Game.getVillage().getPopulation().size()));
+        if (maxHPGain > 0 && Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
+            Survivor s = Database.getCurrentGame().getVillage().getPopulation().get(ThreadLocalRandom.current().nextInt(Database.getCurrentGame().getVillage().getPopulation().size()));
             s.setMaxHp(s.getMaxHp() + maxHPGain);
-            Game.getVillage().setHealth(Game.getVillage().getHealth() + maxHPGain);
+            Database.getCurrentGame().getVillage().setHealth(Database.getCurrentGame().getVillage().getHealth() + maxHPGain);
         }
-        StatTracker.setHighRes(Game.getVillage().getAllResources().size());
-        StatTracker.setHighBuild(Game.getVillage().getBuildings().size());
+        StatTracker.setHighRes(Database.getCurrentGame().getVillage().getAllResources().size());
+        StatTracker.setHighBuild(Database.getCurrentGame().getVillage().getBuildings().size());
     }
 
     public static String getNewRaidCity() {
@@ -131,14 +131,14 @@ public class GameUtils {
                 obtainBuilding((AbstractBuilding) obj.clone());
             }
         } else if (obj instanceof AbstractResource) {
-            Game.getVillage().addResource((AbstractResource) obj, amt);
+            Database.getCurrentGame().getVillage().addResource((AbstractResource) obj, amt);
         } else if (obj instanceof Era) {
             TechTree.moveToEra((Era) obj, true);
         }
     }
 
     public static void obtainArtifact(AbstractArtifact artifact) {
-        if (Game.getVillage().getInventory().addItem(artifact)) {
+        if (Database.getCurrentGame().getVillage().getInventory().addItem(artifact)) {
             if (StringHelpers.startsWithVowel(artifact.getName())) {
                 OutputManager.addToBot("Found an " + artifact.getName() + "!");
             } else {
@@ -148,13 +148,13 @@ public class GameUtils {
     }
 
     public static void obtainItem(AbstractItem item) {
-        if (Game.getVillage().getInventory().addItem(item)) {
+        if (Database.getCurrentGame().getVillage().getInventory().addItem(item)) {
             OutputManager.addToBot("Found " + item.getName() + "!");
         }
     }
 
     public static Boolean obtainBuilding(AbstractBuilding building) {
-        if (building.canObtain() && Game.getVillage().addBuilding(building)) {
+        if (building.canObtain() && Database.getCurrentGame().getVillage().addBuilding(building)) {
             building.onBuild();
             building.onObtain();
             whenObtainingAnyItem(building);
@@ -165,14 +165,14 @@ public class GameUtils {
     }
 
     public static void discoverNode(AbstractNode space) {
-        Game.getGameBoard().addGridSpace(space);
+        Database.getCurrentGame().getGameBoard().addGridSpace(space);
     }
 
     public static void advanceEra() {
         if (TechTree.getCurrentEra().hasNext() && TechTree.getCurrentEra().getNext().canObtain()) {
             TechTree.incEra();
             TechTree.getCurrentEra().onObtain();
-            for (GameObject obj : Game.getModifierObjects()) {
+            for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 obj.onAdvanceEra(TechTree.getCurrentEra());
             }
             whenObtainingAnyItem(TechTree.getCurrentEra());
@@ -183,29 +183,29 @@ public class GameUtils {
     // ONLY FOR DEV CONSOLE
     public static void devConsoleObtainObject(GameObject obj, int amt, AbstractConsole from, boolean triggerExtras) {
         if (obj instanceof Coin) {
-            Game.getVillage().incCoins(amt);
+            Database.getCurrentGame().getVillage().incCoins(amt);
         }
         if (obj instanceof AbstractItem) {
             AbstractItem item = (AbstractItem) obj;
             for (int i = 0; i < amt; i++) {
-                Game.getVillage().getInventory().addItem(item.clone());
+                Database.getCurrentGame().getVillage().getInventory().addItem(item.clone());
             }
         } else if (obj instanceof AbstractBuilding) {
             AbstractBuilding b = (AbstractBuilding) obj;
             for (int i = 0; i < amt; i++) {
-                Game.getVillage().getBuildings().add(b);
+                Database.getCurrentGame().getVillage().getBuildings().add(b);
                 b.onBuild();
                 if (triggerExtras) {
-                    for (GameObject objB : Game.getModifierObjects()) {
+                    for (GameObject objB : Database.getCurrentGame().getModifierObjects()) {
                         objB.onNewBuilding(b);
                     }
                 }
             }
         } else if (obj instanceof AbstractResource) {
-            if (Game.getVillage().getAllResources().size() + amt > Game.getVillage().getResourceLimit()) {
-                Game.getVillage().setResourceLimit(Game.getVillage().getAllResources().size() + amt);
+            if (Database.getCurrentGame().getVillage().getAllResources().size() + amt > Database.getCurrentGame().getVillage().getResourceLimit()) {
+                Database.getCurrentGame().getVillage().setResourceLimit(Database.getCurrentGame().getVillage().getAllResources().size() + amt);
             }
-            Game.getVillage().addResource((AbstractResource) obj, amt);
+            Database.getCurrentGame().getVillage().addResource((AbstractResource) obj, amt);
         } else if (obj instanceof Era) {
             TechTree.moveToEra((Era)obj, true);
         }

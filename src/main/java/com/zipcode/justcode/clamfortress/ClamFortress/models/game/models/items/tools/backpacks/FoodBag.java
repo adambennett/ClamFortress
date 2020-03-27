@@ -1,6 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.tools.backpacks;
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class FoodBag extends AbstractBackpack {
     public FoodBag() {
@@ -9,8 +10,8 @@ public class FoodBag extends AbstractBackpack {
 
     @Override
     public void onObtain() {
-        Game.getVillage().getInventory().setCapacity(Game.getVillage().getInventory().getCapacity() + 100);
-        Game.getVillage().setFoodLimit(Game.getVillage().getFoodLimit() + 100);
+        Database.getCurrentGame().getVillage().getInventory().setCapacity(Database.getCurrentGame().getVillage().getInventory().getCapacity() + 100);
+        Database.getCurrentGame().getVillage().setFoodLimit(Database.getCurrentGame().getVillage().getFoodLimit() + 100);
     }
 
     @Override

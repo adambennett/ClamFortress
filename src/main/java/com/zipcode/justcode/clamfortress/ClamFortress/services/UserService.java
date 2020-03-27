@@ -5,6 +5,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.repositories.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -32,7 +33,6 @@ public class UserService {
     }
 
     public static void flush() { userRepository.flush(); }
-
 
 
 

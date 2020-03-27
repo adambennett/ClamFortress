@@ -2,6 +2,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.concurrent.*;
 
@@ -13,7 +14,7 @@ public abstract class AbstractGooGun extends AbstractFutureGun {
 
     @Override
     public Boolean canFire() {
-        return Game.getVillage().getResource("spacegoo") != null && Game.getVillage().getResource("spacegoo") > 0;
+        return Database.getCurrentGame().getVillage().getResource("spacegoo") != null && Database.getCurrentGame().getVillage().getResource("spacegoo") > 0;
     }
 
     @Override

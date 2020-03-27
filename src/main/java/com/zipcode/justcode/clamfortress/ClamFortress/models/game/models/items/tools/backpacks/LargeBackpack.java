@@ -3,6 +3,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class LargeBackpack extends AbstractBackpack implements Unique {
     public LargeBackpack() {
@@ -12,7 +13,7 @@ public class LargeBackpack extends AbstractBackpack implements Unique {
 
     @Override
     public void onObtain() {
-        Game.getVillage().getInventory().setCapacity(Game.getVillage().getInventory().getCapacity() + 5000);
+        Database.getCurrentGame().getVillage().getInventory().setCapacity(Database.getCurrentGame().getVillage().getInventory().getCapacity() + 5000);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.di
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
 public class Volcano extends AbstractDisaster {
@@ -13,7 +14,7 @@ public class Volcano extends AbstractDisaster {
     }
 
     @Override
-    public void runEncounter() { Game.getVillage().addDisaster(this); }
+    public void runEncounter() { Database.getCurrentGame().getVillage().addDisaster(this); }
 
     @Override
     public String toString() {

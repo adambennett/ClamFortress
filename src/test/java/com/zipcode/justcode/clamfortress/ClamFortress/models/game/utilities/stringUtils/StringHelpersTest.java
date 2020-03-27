@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*;
 
 public class StringHelpersTest {
 
-    @BeforeEach
+   /* @BeforeEach
     public void setUp() {
         Game.startGame();
         StringHelpers.reloadStrings();
@@ -135,5 +135,5 @@ public class StringHelpersTest {
 
     @Test
     public void multiColumnMenu() {
-    }
+    }*/
 }

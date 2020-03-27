@@ -4,6 +4,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildi
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public abstract class AbstractStorehouse extends AbstractBuilding {
 
@@ -23,11 +24,11 @@ public abstract class AbstractStorehouse extends AbstractBuilding {
     @Override
     public void onBuild() {
         int inc = this.storageCapacityIncrease;
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             inc += obj.modifyResourceStorageIncreases();
         }
-        Game.getVillage().setResourceLimit(Game.getVillage().getResourceLimit() + inc);
-        Game.getVillage().setFoodLimit((int) (Game.getVillage().getFoodLimit() + inc / 4.0));
+        Database.getCurrentGame().getVillage().setResourceLimit(Database.getCurrentGame().getVillage().getResourceLimit() + inc);
+        Database.getCurrentGame().getVillage().setFoodLimit((int) (Database.getCurrentGame().getVillage().getFoodLimit() + inc / 4.0));
         OutputManager.addToBot("New Building " + this.getName() + " has been completed! Increased resource cap by " + inc + ".");
     }
 

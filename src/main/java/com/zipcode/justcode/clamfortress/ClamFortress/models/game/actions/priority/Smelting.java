@@ -8,6 +8,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -22,7 +23,7 @@ public class Smelting extends AbstractGameAction {
     public void update() {
         HashMap<Smeltable,Integer> smeltables = new HashMap<>();
         ArrayList<Smeltable> smelted= new ArrayList<>();
-        ArrayList<AbstractResource> recources = Game.getVillage().getAllResources();
+        ArrayList<AbstractResource> recources = Database.getCurrentGame().getVillage().getAllResources();
         int amountToSmelt = 2 + random.nextInt(5);
 
 
@@ -38,8 +39,8 @@ public class Smelting extends AbstractGameAction {
             Smeltable rand = smelted.get(ThreadLocalRandom.current().nextInt(smelted.size()));
             int amount = smeltables.get(rand);
             AbstractResource someName = (AbstractResource) rand;
-            Game.getVillage().removeResource(someName.getName());
-            Game.getVillage().addResource(rand.getRefined(),amount);
+            Database.getCurrentGame().getVillage().removeResource(someName.getName());
+            Database.getCurrentGame().getVillage().addResource(rand.getRefined(),amount);
             OutputManager.addToBot("Smelted " + amount + " " + ( rand.getRefined()).getName() + "!");
             GameManager.getInstance().gainExperience();
             amountToSmelt--;

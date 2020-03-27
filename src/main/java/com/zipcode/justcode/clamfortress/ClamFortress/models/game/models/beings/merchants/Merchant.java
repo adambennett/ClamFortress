@@ -5,6 +5,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
 import javax.persistence.*;
@@ -49,13 +50,13 @@ public class Merchant {
             while (wares.containsKey(ref.getName().toLowerCase()) || (ref instanceof AbstractAnimal)) {
                 ref = allObjs.get(ThreadLocalRandom.current().nextInt(allObjs.size()));
             }
-            wares.put(ref.getName().toLowerCase(), ThreadLocalRandom.current().nextInt(100 * Game.getDifficulty().getCostMod(), 1000 * Game.getDifficulty().getCostMod()));
+            wares.put(ref.getName().toLowerCase(), ThreadLocalRandom.current().nextInt(100 * Database.getCurrentGame().getDifficulty().getCostMod(), 1000 * Database.getCurrentGame().getDifficulty().getCostMod()));
         }
     }
 
     public void purchase(String key, int amtPaid) {
         this.wares.remove(key.toLowerCase());
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             obj.onPurchaseItem(Archive.getInstance().get(key), amtPaid);
         }
     }
@@ -63,7 +64,7 @@ public class Merchant {
     public void visit() {
         this.turnsVisited++;
         if (this.turnsVisited >= this.turnsAvailable || this.wares.size() < 1) {
-            Game.getVillage().getVistingMerchants().remove(this);
+            Database.getCurrentGame().getVillage().getVistingMerchants().remove(this);
             OutputManager.addToBot("Merchant " + name + " has left the region.");
         } else {
             OutputManager.addToBot("Merchant " + name + " will stick around for " + (this.turnsAvailable - this.turnsVisited) + " more turns.");

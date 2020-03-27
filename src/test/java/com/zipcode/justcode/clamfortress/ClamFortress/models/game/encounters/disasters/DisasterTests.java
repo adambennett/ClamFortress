@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 
 public class DisasterTests {
 
-    @Test
+   /* @Test
     public void runEncounter() {
         Game.startGame();
         Village village = Game.getVillage();
@@ -42,5 +42,5 @@ public class DisasterTests {
         Assertions.assertTrue(village.getOngoingDisasters().contains(typhoon));
         Assertions.assertTrue(village.getOngoingDisasters().contains(volcano));
         Assertions.assertEquals(expectedSize, actualSize);
-    }
+    }*/
 }

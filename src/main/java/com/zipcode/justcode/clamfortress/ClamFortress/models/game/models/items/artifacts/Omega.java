@@ -8,6 +8,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.m
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.military.weapons.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -43,7 +44,7 @@ public class Omega extends AbstractArtifact implements Unique {
         int amt = b.getDesc().length();
         if (amt > 0) {
             ArrayList<AbstractResource> res = Archive.getInstance().generateNewResources("coins", amt);
-            Game.getVillage().addResources(res);
+            Database.getCurrentGame().getVillage().addResources(res);
             OutputManager.addToBot("OMEGA: GENERATED " + amt + " COINS FROM NEW BUILDING DESCRIPTION LENGTH!");
         }
     }

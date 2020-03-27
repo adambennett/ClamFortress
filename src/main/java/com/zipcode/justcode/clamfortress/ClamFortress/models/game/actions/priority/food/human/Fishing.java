@@ -5,6 +5,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.prior
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 
@@ -20,33 +21,33 @@ public class Fishing extends AbstractGameAction {
     @Override
     public void update() {
         int fish = 0;
-        int fishOnBoard = Game.getGameBoard().getSeaAnimals().size();
+        int fishOnBoard = Database.getCurrentGame().getGameBoard().getSeaAnimals().size();
         if (fishOnBoard > 0) {
             int rando = random.nextInt(fishOnBoard);
-            fish += Game.getGameBoard().getSeaAnimals().get(rando).getAmountOfFoodOnHunt();
-            Game.getGameBoard().getSeaAnimals().remove(rando);
+            fish += Database.getCurrentGame().getGameBoard().getSeaAnimals().get(rando).getAmountOfFoodOnHunt();
+            Database.getCurrentGame().getGameBoard().getSeaAnimals().remove(rando);
         }
         if (fish < 2) {
             fish = 2;
         }
-        for (GameObject obj : Game.getModifierObjects()) {
+        for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             fish *= obj.multiplyFoodOnFishing();
         }
 
         int fishMod = 1;
-        if (Game.getVillage().getInventory().containsItem("net")) {
+        if (Database.getCurrentGame().getVillage().getInventory().containsItem("net")) {
             fishMod++;
         }
 
-        if (Game.getVillage().getInventory().containsItem("fishing rod")) {
+        if (Database.getCurrentGame().getVillage().getInventory().containsItem("fishing rod")) {
             fishMod++;
         }
 
-        if (Game.getVillage().getInventory().containsItem("fishing spear")) {
+        if (Database.getCurrentGame().getVillage().getInventory().containsItem("fishing spear")) {
             fishMod++;
         }
         fish = fish * fishMod;
-        Game.getVillage().incFood(fish);
+        Database.getCurrentGame().getVillage().incFood(fish);
         OutputManager.addToBot("Fished " + fish + " new food");
         this.isDone = true;
     }

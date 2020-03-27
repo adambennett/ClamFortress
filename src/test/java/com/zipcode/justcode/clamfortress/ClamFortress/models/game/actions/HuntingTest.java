@@ -7,7 +7,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals
 import org.junit.jupiter.api.*;
 
 public class HuntingTest { ;
-
+/*
     @Test
     public void huntingTest(){
         Game.startGame();
@@ -17,5 +17,5 @@ public class HuntingTest { ;
         hunting.update();
         Integer actual = Game.getVillage().getFood();
         Assertions.assertTrue(actual > 0);
-    }
+    }*/
 }

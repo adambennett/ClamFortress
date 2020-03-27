@@ -3,6 +3,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.bui
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.aspectj.lang.annotation.*;
 import org.junit.jupiter.api.*;
 
@@ -24,8 +25,8 @@ public class GameBuilderTest {
     public void buildGame() {
         builder.setDifficulty(Difficulty.RANDOM);
         builder.buildGame();
-        assertNotEquals(Game.getDifficulty(), Difficulty.CUSTOM);
-        assertNotEquals(Game.getDifficulty(), Difficulty.RANDOM);
+        assertNotEquals(Database.getCurrentGame().getDifficulty(), Difficulty.CUSTOM);
+        assertNotEquals(Database.getCurrentGame().getDifficulty(), Difficulty.RANDOM);
     }
 
     @Test
@@ -36,8 +37,8 @@ public class GameBuilderTest {
         builder.setCustomMods(new ArrayList<>());
         builder.setStartBiome(grass);
         builder.buildGame();
-        assertEquals(Game.getDifficulty(), Difficulty.CUSTOM);
-        assertEquals(Game.getPlayerRace(), Race.HUMAN);
-        assertEquals(Game.getVillage().getBiome(), grass);
+        assertEquals(Database.getCurrentGame().getDifficulty(), Difficulty.CUSTOM);
+        assertEquals(Database.getCurrentGame().getPlayerRace(), Race.HUMAN);
+        assertEquals(Database.getCurrentGame().getVillage().getBiome(), grass);
     }
 }

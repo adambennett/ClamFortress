@@ -7,7 +7,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.cons
 import org.junit.jupiter.api.*;
 
 public class GameUtilsTest {
-
+/*
     @BeforeEach
     public void setUp() {
         Game.startGame();
@@ -51,5 +51,5 @@ public class GameUtilsTest {
 
     @Test
     public void discoverNode() {
-    }
+    }*/
 }

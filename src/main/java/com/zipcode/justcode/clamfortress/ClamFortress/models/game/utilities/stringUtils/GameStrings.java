@@ -43,12 +43,13 @@ public class GameStrings {
     public static String saleMerchant;
     public static String leader;
     public static String playerStats;
+    public static String loadGames;
     public static ArrayList<String> randomNames = new ArrayList<>();
 
     public static final String openingBlurb = "GAME START\nHelp your guys survive and thrive... watch out for cLAmS";
 
     public static final String loginScreen =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***              Clam Fortress                 ***\n" +
                     "***--------------------------------------------***\n" +
                     "***                1 | Login                   ***\n" +
@@ -59,7 +60,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String newGameHub =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***               New Game Menu                ***\n" +
                     "***--------------------------------------------***\n" +
                     "***                1 | Difficulty              ***\n" +
@@ -79,7 +80,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String mainMenu =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***                 Main Menu                  ***\n" +
                     "***--------------------------------------------***\n" +
                     "***                1 | New Game                ***\n" +
@@ -87,11 +88,11 @@ public class GameStrings {
                     "***                3 | Stats                   ***\n" +
                     "***                4 | Archive                 ***\n" +
                     "***--------------------------------------------***\n" +
-                    "***                0 | Logout                  ***\n" +                  
+                    "***                0 | Logout                  ***\n" +
                     "**************************************************\n";
 
     public static final String startEra =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***              Starting Era                  ***\n" +
                     "***--------------------------------------------***\n" +
                     "***           1 | Stone Age                    ***\n" +
@@ -107,7 +108,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String train =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***           Villager Training                ***\n" +
                     "***--------------------------------------------***\n" +
                     "***           1 | Agility                      ***\n" +
@@ -121,7 +122,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String pop =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***              Population Options            ***\n" +
                     "***--------------------------------------------***\n" +
                     "***           1 | Set Population Cap           ***\n" +
@@ -132,7 +133,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String statsMenu =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***              Stats Menu                    ***\n" +
                     "***--------------------------------------------***\n" +
                     "***           1 | Player Stats                 ***\n" +
@@ -143,7 +144,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String boardSize =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***              Board Size Options            ***\n" +
                     "***--------------------------------------------***\n" +
                     "***           1 | Set Board X Max              ***\n" +
@@ -154,7 +155,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String chooseBiome =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***              Starting Biome                ***\n" +
                     "***--------------------------------------------***\n" +
                     "***           1 | Grasslands                   ***\n" +
@@ -169,7 +170,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String gridTest =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***     _______________________________        ***\n" +
                     "***     |DESRT|NETHR|OCEAN|MOUNT|MOUNT|        ***\n" +
                     "***     | MIA | M A | M   |  I  |  I  |        ***\n" +
@@ -184,7 +185,7 @@ public class GameStrings {
                     "**************************************************\n";
 
     public static final String chooseDifficulty =
-                    "**************************************************\n" +
+            "**************************************************\n" +
                     "***              Select Difficulty             ***\n" +
                     "***--------------------------------------------***\n" +
                     "***           1 | Easy                         ***\n" +
@@ -202,7 +203,7 @@ public class GameStrings {
 
     public static void loadEndPhase() {
         endPhase =
-                        "****************************************************************************************************\n" +
+                "****************************************************************************************************\n" +
                         "***                                          END PHASE                                           ***\n" +
                         "***----------------------------------------------------------------------------------------------***\n" +
                         "***                                      0 | Standby Phase                                       ***\n" +
@@ -216,7 +217,7 @@ public class GameStrings {
     }
 
     public static final String customDifficulty =
-                    "***************************************************************\n" +
+            "***************************************************************\n" +
                     "***                    Difficulty Options                   ***\n" +
                     "***---------------------------------------------------------***\n" +
                     "***             1 | Tougher enemies                         ***\n" +
@@ -233,14 +234,51 @@ public class GameStrings {
                     "***            12 | Disable Aliens                          ***\n" +
                     "***            13 | Disable Healing                         ***\n" +
                     "***            14 | Disable Faith                           ***\n" +
-                    "***            15 | Disable ability to check surroundings   ***\n" +                  
+                    "***            15 | Disable ability to check surroundings   ***\n" +
                     "***---------------------------------------------------------***\n" +
                     "***             0 | Back to New Game Menu                   ***\n" +
                     "***************************************************************\n";
 
+    public static LinkedHashMap<String, ArrayList<String>> getLoadGameMenu() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
+        List<Game> games = Database.getGames();
+        for (Game g : games) {
+            ArrayList<String> gameInfo = new ArrayList<>();
+            gameInfo.add(StringHelpers.capFirstLetter(g.getPlayerRace().toString().toLowerCase()));
+            gameInfo.add(StringHelpers.capFirstLetter(g.getDifficulty().toString().toLowerCase()));
+            a.put(""+g.getId(), gameInfo);
+        }
+        if (a.size() < 1) {
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
+        }
+        return a;
+    }
+    public static void loadLoadGameMenu() {
+        String leftAlignFormat = "| %-25s | %-21s | %-35s |\n";
+        String headerFormat = "| %-87s |\n";
+        String breakLine = "+---------------------------+-----------------------+-------------------------------------+\n";
+        String header = "Saved Games";
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("Race"); botCols.add("Return to Main Menu");
+        topCols.add("Difficulty"); botCols.add("");
+        top.put("Game ID", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
+        list.add(top);
+        list.add(getLoadGameMenu());
+        list.add(bottom);
+        loadGames = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+    }
+
     public static LinkedHashMap<String, String> getStats() {
         LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
-        Village v = Game.getVillage();
+        Village v = Database.getCurrentGame().getVillage();
         rsrcMap.put("Days Survived", "" + StatTracker.getDaysSurvived());
         rsrcMap.put("Cities Defeated", "" + GameManager.getInstance().getDefeatedCities() + " / " + (GameManager.getInstance().getRaidable().size() + GameManager.getInstance().getDefeatedCities()));
         rsrcMap.put("Population", "" + v.getPopulation().size() + " / " + v.getPopCap());
@@ -323,17 +361,17 @@ public class GameStrings {
 
     public static LinkedHashMap<String, String> getTurns() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
-        Village v = Game.getVillage();
-        a.put("Turn Number", "" + Game.getGameManager().getTurnNumber());
+        Village v = Database.getCurrentGame().getVillage();
+        a.put("Turn Number", "" + GameManager.getInstance().getTurnNumber());
         a.put("Current Era", "" + TechTree.getCurrentEra().toString());
-        a.put("Population", "" + Game.getVillage().getPopulation().size() + " / " + Game.getVillage().getPopCap());
-        a.put("Village HP", "" + Game.getVillage().getHealth() + " / " + Game.getVillage().getMaxHP());
-        a.put("Resources", "" + Game.getVillage().totalResources() + " / " + Game.getVillage().getResourceLimit());
-        a.put("Buildings", "" + Game.getVillage().getBuildings().size() + " / " + Game.getVillage().getBuildingLimit());
-        a.put("Food", "" + Game.getVillage().getFood() + " / " + Game.getVillage().getFoodLimit());
-        a.put("Hunger", "" + Game.getVillage().getHunger() + " / " + 100);
-        a.put("Coins", "" + Game.getVillage().getCoins() + " / " + Game.getVillage().getCoinLimit());
-        a.put("Faith", "" + Game.getVillage().getFaith() + " / " + Game.getVillage().getFaithLimit());
+        a.put("Population", "" + Database.getCurrentGame().getVillage().getPopulation().size() + " / " + Database.getCurrentGame().getVillage().getPopCap());
+        a.put("Village HP", "" + Database.getCurrentGame().getVillage().getHealth() + " / " + Database.getCurrentGame().getVillage().getMaxHP());
+        a.put("Resources", "" + Database.getCurrentGame().getVillage().totalResources() + " / " + Database.getCurrentGame().getVillage().getResourceLimit());
+        a.put("Buildings", "" + Database.getCurrentGame().getVillage().getBuildings().size() + " / " + Database.getCurrentGame().getVillage().getBuildingLimit());
+        a.put("Food", "" + Database.getCurrentGame().getVillage().getFood() + " / " + Database.getCurrentGame().getVillage().getFoodLimit());
+        a.put("Hunger", "" + Database.getCurrentGame().getVillage().getHunger() + " / " + 100);
+        a.put("Coins", "" + Database.getCurrentGame().getVillage().getCoins() + " / " + Database.getCurrentGame().getVillage().getCoinLimit());
+        a.put("Faith", "" + Database.getCurrentGame().getVillage().getFaith() + " / " + Database.getCurrentGame().getVillage().getFaithLimit());
         if (GameManager.getInstance().getRaidingCity() != null && !GameManager.getInstance().getRaidingCity().getDefeated()) {
             City raid = GameManager.getInstance().getRaidingCity();
             a.put("Raiding", "" + raid.cityName() + " [" + raid.getHp() + " / " + raid.getMaxHP() + "]");
@@ -345,33 +383,33 @@ public class GameStrings {
         a.put("2", "Village Stats");
         a.put("3", "Board Stats");
         a.put("4", "Resources");
-        if (Game.getVillage().getInventory().inventorySize() > 0) {
+        if (Database.getCurrentGame().getVillage().getInventory().inventorySize() > 0) {
             a.put("5", "Inventory");
         } else {
             a.put("5", "---------");
         }
-        if (Game.getVillage().getBuildings().size() > 0) {
+        if (Database.getCurrentGame().getVillage().getBuildings().size() > 0) {
             a.put("6", "Buildings");
         } else {
             a.put("6", "---------");
         }
-        if (Game.getVillage().getPopulation().size() > 0) {
+        if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
             a.put("7", "Population");
         } else {
             a.put("7", "----------");
         }
-        if (Game.getVillage().getVistingMerchants().size() > 0  && Game.getVillage().getVistingMerchants().get(0).getWares().size() > 0) {
+        if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0  && Database.getCurrentGame().getVillage().getVistingMerchants().get(0).getWares().size() > 0) {
             a.put("8", "Merchants");
         } else {
             a.put("8", "---------");
         }
-        if (Game.canRaid()) {
+        if (Database.getCurrentGame().canRaid()) {
             a.put("9", "Raid a New City");
         } else {
             a.put("9", "---------------");
         }
         int trainingCost = GameManager.getInstance().getTrainingCost();
-        if (Game.getVillage().getCoins() >= trainingCost) {
+        if (Database.getCurrentGame().getVillage().getCoins() >= trainingCost) {
             a.put("10", "Train (" +  trainingCost + " Coins)");
         } else {
             a.put("10", "------------------");
@@ -386,7 +424,7 @@ public class GameStrings {
         LinkedHashMap<String, String> date = new LinkedHashMap<>();
         LinkedHashMap<String, String> bottom = new LinkedHashMap<>();
         LinkedHashMap<String, String> megaBottom = new LinkedHashMap<>();
-        date.put(GameManager.getInstance().getDateString(), Game.getGameManager().getSeason());
+        date.put(GameManager.getInstance().getDateString(), GameManager.getInstance().getSeason());
         bottom.put("0", "Priorities Phase");
         megaBottom.put("End", "Skip to End Phase");
         megaBottom.put("Quit", "Finish Game");
@@ -402,7 +440,7 @@ public class GameStrings {
     }
 
     public static LinkedHashMap<String, Integer> getPriorityValues() {
-        ArrayList<FoodOptions> optionEnums = FoodOptions.getOptionsFromRace(Game.getPlayerRace());
+        ArrayList<FoodOptions> optionEnums = FoodOptions.getOptionsFromRace(Database.getCurrentGame().getPlayerRace());
         String food1Name = StringHelpers.capFirstLetter(optionEnums.get(0).writeInConsole().toLowerCase());
         String food2Name = StringHelpers.capFirstLetter(optionEnums.get(1).writeInConsole().toLowerCase());
         String food3Name = StringHelpers.capFirstLetter(optionEnums.get(2).writeInConsole().toLowerCase());
@@ -480,7 +518,7 @@ public class GameStrings {
         LinkedHashMap<String, ArrayList<String>> points = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> colHeads = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> msg = new LinkedHashMap<>();
-        LinkedHashMap<String, ArrayList<String>> ret = new LinkedHashMap<>(); 
+        LinkedHashMap<String, ArrayList<String>> ret = new LinkedHashMap<>();
         ArrayList<String> pointCols = new ArrayList<>();
         pointCols.add("" + PriorityManager.getPointsRemaining());
         pointCols.add("" + PriorityManager.totalSpentPoints());
@@ -508,7 +546,7 @@ public class GameStrings {
 
     public static LinkedHashMap<String, String> getResources() {
         LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
-        Village vil = Game.getVillage();
+        Village vil = Database.getCurrentGame().getVillage();
         rsrcMap.put("Coins", "" + vil.getCoins() + " / " + vil.getCoinLimit());
         rsrcMap.put("Food", "" + vil.getFood() + " / " + vil.getFoodLimit());
         rsrcMap.put("Faith", "" + vil.getFaith() + " / " + vil.getFaithLimit());
@@ -535,7 +573,7 @@ public class GameStrings {
 
     public static LinkedHashMap<String, ArrayList<String>> getInventory() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
-        Village v = Game.getVillage();
+        Village v = Database.getCurrentGame().getVillage();
         ArrayList<AbstractItem> sortable = new ArrayList<>();
         for (Map.Entry<AbstractItem, Integer> entry : v.getInventory().getEntrySet()) {
             sortable.add(entry.getKey());
@@ -577,7 +615,7 @@ public class GameStrings {
         ArrayList<String> botCols = new ArrayList<>();
         topCols.add("Amount"); botCols.add("Return");
         topCols.add("Type"); botCols.add("");
-        topCols.add("Description"); botCols.add("Total Items: " + Game.getVillage().getInventory().inventorySize() + " / " + Game.getVillage().getInventory().getCapacity());
+        topCols.add("Description"); botCols.add("Total Items: " + Database.getCurrentGame().getVillage().getInventory().inventorySize() + " / " + Database.getCurrentGame().getVillage().getInventory().getCapacity());
         top.put("Item Name", topCols);
         bottom.put("0", botCols);
         ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
@@ -589,7 +627,7 @@ public class GameStrings {
 
     public static LinkedHashMap<String, String> getBuildings() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
-        Village v = Game.getVillage();
+        Village v = Database.getCurrentGame().getVillage();
         ArrayList<AbstractBuilding> buildings = new ArrayList<>(v.getBuildings());
         Collections.sort(buildings);
         for (AbstractBuilding item : buildings){
@@ -662,10 +700,10 @@ public class GameStrings {
         list.add(bottom);
         archive = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
-    
+
     public static LinkedHashMap<String, String> getBoard() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
-        Board board = Game.getGameBoard();
+        Board board = Database.getCurrentGame().getGameBoard();
         for (Map.Entry<AbstractResource, Integer> item : board.getResources().entrySet()) {
             if (item.getValue() > 0) {
                 String name = item.getKey().getName();
@@ -688,7 +726,7 @@ public class GameStrings {
         String leftAlignFormat = "| %-25s | %-35s |\n";
         String headerFormat = "| %-63s |\n";
         String breakLine = "+---------------------------+-------------------------------------+\n";
-        String header = "Game Board [" + Game.getGameBoard().getGridXMax() + "x" + Game.getGameBoard().getGridYMax() + "]";
+        String header = "Game Board [" + Database.getCurrentGame().getGameBoard().getGridXMax() + "x" + Database.getCurrentGame().getGameBoard().getGridYMax() + "]";
         Map<String, String> top = new HashMap<>();
         Map<String, String> bottom = new HashMap<>();
         top.put("Resource / Animal", "Amount");
@@ -702,7 +740,7 @@ public class GameStrings {
 
     public static LinkedHashMap<String, ArrayList<String>> getVillagers() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
-        Village v = Game.getVillage();
+        Village v = Database.getCurrentGame().getVillage();
         for (Survivor s : v.getPopulation()) {
             ArrayList<String> tempCols = new ArrayList<>();
             tempCols.add("" + s.getAge());
@@ -735,7 +773,7 @@ public class GameStrings {
     }
     public static void loadVillagers() {
         String leftAlignFormat = "| %-52s | %-8s | %-18s | %-4s | %-4s | %-4s | %-4s | %-4s | %-4s | %-10s | %-10s |\n";
-        String headerFormat = "| %-142s |\n";
+        String headerFormat = "| %-152s |\n";
         String breakLine = "+------------------------------------------------------+--------------------+----------+------+------+------+------+------+------+------------+------------+\n";
         String header = "Population";
         LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
@@ -760,7 +798,7 @@ public class GameStrings {
         list.add(bottom);
         vil = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
-    
+
     public static LinkedHashMap<String, ArrayList<String>> getPlayerStats() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         User player = Database.getPlayer();
@@ -811,7 +849,7 @@ public class GameStrings {
 
     public static LinkedHashMap<String, ArrayList<String>> getLeaderboard() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
-        ArrayList<User> users = Database.getUsers();
+        List<User> users = Database.getUsers();
         Collections.sort(users);
         for (User player : users) {
             ArrayList<String> tempCols = new ArrayList<>();
@@ -859,17 +897,17 @@ public class GameStrings {
         list.add(bottom);
         leader = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
-    
+
     public static LinkedHashMap<String, ArrayList<String>> getMerchant() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
-        Village v = Game.getVillage();
+        Village v = Database.getCurrentGame().getVillage();
         if (v.getVistingMerchants().size() > 0) {
             Merchant active = v.getVistingMerchants().get(0);
             for (Map.Entry<String, Integer> o : active.getWares().entrySet()) {
                 GameObject obj = Archive.getInstance().get(o.getKey());
                 boolean canBuy = true;
                 if ((obj instanceof AbstractItem)) {
-                    canBuy = Game.getVillage().getInventory().canAdd((AbstractItem) obj);
+                    canBuy = Database.getCurrentGame().getVillage().getInventory().canAdd((AbstractItem) obj);
                 }
                 String type = Archive.getInstance().get(o.getKey()).getType();
                 String cost = "" + o.getValue();
@@ -911,8 +949,8 @@ public class GameStrings {
         String headerFormat = "| %-201s |\n";
         String breakLine = "+---------------------------+-----------------------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------+\n";
         String header = "Merchant";
-        Village v = Game.getVillage();
-        if (Game.getVillage().getVistingMerchants().size() > 0) {
+        Village v = Database.getCurrentGame().getVillage();
+        if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
             Merchant active = v.getVistingMerchants().get(0);
             header = active.getName() + "'s " + active.getMerchantType() + " Shop";
         }
@@ -923,7 +961,7 @@ public class GameStrings {
         ArrayList<String> botCols = new ArrayList<>();
         ArrayList<String> sales = new ArrayList<>();
         topCols.add("Cost (Coins)"); botCols.add("Return"); sales.add("Sell");
-        topCols.add("Type"); botCols.add("Coins: " + Game.getVillage().getCoins()); sales.add("");
+        topCols.add("Type"); botCols.add("Coins: " + Database.getCurrentGame().getVillage().getCoins()); sales.add("");
         topCols.add("Description"); botCols.add(""); sales.add("");
         top.put("Item Name", topCols);
         bottom.put("0", botCols);
@@ -936,29 +974,29 @@ public class GameStrings {
         merchant = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
-/*    public static LinkedHashMap<String, ArrayList<String>> getGrid() {
-        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
-        for (int i = 0; i < Game.getGameBoard().getGridXMax(); i++) {
-            if (i >= Game.getGameBoard().getNextX()) {
-                String head = "";aaa
-                ArrayList<String> nodes = new ArrayList<>();
-                for (int k = 0; k < Game.getGameBoard().getGridYMax(); k++) {
-                    AbstractNode curr = Game.getGameBoard().getNodeAt(i, k);
-                    nodes.add(curr.getIcon());
+    /*    public static LinkedHashMap<String, ArrayList<String>> getGrid() {
+            LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
+            for (int i = 0; i < Database.getCurrentGame().getGameBoard().getGridXMax(); i++) {
+                if (i >= Database.getCurrentGame().getGameBoard().getNextX()) {
+                    String head = "";aaa
+                    ArrayList<String> nodes = new ArrayList<>();
+                    for (int k = 0; k < Database.getCurrentGame().getGameBoard().getGridYMax(); k++) {
+                        AbstractNode curr = Database.getCurrentGame().getGameBoard().getNodeAt(i, k);
+                        nodes.add(curr.getIcon());
+                    }
+                    a.put(head.getIcon(), nodes);
+                } else {
+                    AbstractNode head = Database.getCurrentGame().getGameBoard().getNodeAt(i, 0);
+                    ArrayList<String> nodes = new ArrayList<>();
+                    for (int k = 0; k < Database.getCurrentGame().getGameBoard().getGridYMax(); k++) {
+                        AbstractNode curr = Database.getCurrentGame().getGameBoard().getNodeAt(i, k);
+                        nodes.add(curr.getIcon());
+                    }
+                    a.put(head.getIcon(), nodes);
                 }
-                a.put(head.getIcon(), nodes);
-            } else {
-                AbstractNode head = Game.getGameBoard().getNodeAt(i, 0);
-                ArrayList<String> nodes = new ArrayList<>();
-                for (int k = 0; k < Game.getGameBoard().getGridYMax(); k++) {
-                    AbstractNode curr = Game.getGameBoard().getNodeAt(i, k);
-                    nodes.add(curr.getIcon());
-                }
-                a.put(head.getIcon(), nodes);
             }
-        }
-        return a;
-    }*/
+            return a;
+        }*/
     public static void loadGrid() {
         String leftAlignFormat = "| %-52s | %-8s |\n";
         String headerFormat = "| %-142s |\n";
@@ -978,10 +1016,10 @@ public class GameStrings {
         list.add(bottom);
         merchant = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
-    
+
     public static LinkedHashMap<String, ArrayList<String>> getSaleMerchant() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
-        Village v = Game.getVillage();
+        Village v = Database.getCurrentGame().getVillage();
         if (v.getInventory().inventorySize() > 0) {
             for (Map.Entry<AbstractItem, Integer> entry : v.getInventory().getEntrySet()) {
                 AbstractItem item = entry.getKey();
@@ -1011,8 +1049,8 @@ public class GameStrings {
         String headerFormat = "| %-97s |\n";
         String breakLine = "+---------------------------+-----------------------+-----------------------+-----------------------+\n";
         String header = "Merchant - Sell Menu";
-        Village v = Game.getVillage();
-        if (Game.getVillage().getVistingMerchants().size() > 0) {
+        Village v = Database.getCurrentGame().getVillage();
+        if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
             Merchant active = v.getVistingMerchants().get(0);
             header = "Selling Items to " + active.getName() + "'s Shop";
         }
@@ -1022,7 +1060,7 @@ public class GameStrings {
         ArrayList<String> botCols = new ArrayList<>();
         topCols.add("Held"); botCols.add("Return");
         topCols.add("Value"); botCols.add("");
-        topCols.add("Type"); botCols.add("Coins: " + Game.getVillage().getCoins());
+        topCols.add("Type"); botCols.add("Coins: " + Database.getCurrentGame().getVillage().getCoins());
         top.put("Item Name", topCols);
         bottom.put("0", botCols);
         ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
@@ -1081,527 +1119,525 @@ public class GameStrings {
 
     // Strings added here will be automatically updated in the DB
     public static ArrayList<String> getAllRandomNames(boolean includePokemon) {
-        try {
-            ArrayList<String> names = new ArrayList<>();
-            for (Name name : NameService.load()) {
-                names.add(name.getName());
-            }
-            return names;
-        } catch (Exception ex) {
-            ArrayList<String> names = new ArrayList<>();
-            names.add("Brennan");
-            names.add("Brent");
-            names.add("Britanney");
-            names.add("Brock");
-            names.add("Bruno");
-            names.add("Buckminster");
-            names.add("Burton");
-            names.add("Bus Stop Guy");
-            names.add("Cade");
-            names.add("Carly");
-            names.add("Cedric");
-            names.add("Chaim");
-            names.add("Chancellor");
-            names.add("Chaney");
-            names.add("Charles");
-            names.add("Charlotte");
-            names.add("Chris Nobles");
-            names.add("Clare");
-            names.add("Clinton");
-            names.add("Cole");
-            names.add("Colette");
-            names.add("Coronavirus Man");
-            names.add("Damian");
-            names.add("Damian");
-            names.add("Dan Stabb");
-            names.add("Danny Carey");
-            names.add("Dante");
-            names.add("Darth Vader");
-            names.add("Dean");
-            names.add("Dennis");
-            names.add("Derek");
-            names.add("Desa");
-            names.add("Desirae");
-            names.add("Donald Trump");
-            names.add("Driscoll");
-            names.add("Eagan");
-            names.add("Easter Bunny");
-            names.add("Echo");
-            names.add("Eden");
-            names.add("Eleanor");
-            names.add("Elizabeth");
-            names.add("Elton");
-            names.add("Emerald");
-            names.add("Emerson");
-            names.add("Erich");
-            names.add("Farmer Joe");
-            names.add("Farmer Rick");
-            names.add("Fat Guy");
-            names.add("Fatima");
-            names.add("Fredericka");
-            names.add("Gage");
-            names.add("Galena");
-            names.add("Gandalf");
-            names.add("Gary Oak");
-            names.add("Gannon");
-            names.add("Gemma");
-            names.add("Geoffrey");
-            names.add("Glenna");
-            names.add("Graiden");
-            names.add("Hadassah");
-            names.add("Han");
-            names.add("Hanae");
-            names.add("Harriet");
-            names.add("Hayfa");
-            names.add("Heidi");
-            names.add("Helen");
-            names.add("Herman");
-            names.add("Herrod");
-            names.add("Hilary");
-            names.add("Hobo Jeff");
-            names.add("Hobo Jim");
-            names.add("Hot Girl");
-            names.add("Ignacia");
-            names.add("Ignacia");
-            names.add("Ignatius");
-            names.add("Iliana");
-            names.add("Indira");
-            names.add("Indira");
-            names.add("Ira");
-            names.add("Isaac");
-            names.add("Jack");
-            names.add("Jacob");
-            names.add("Jael");
-            names.add("Jakeem");
-            names.add("Jamalia");
-            names.add("Jarrod");
-            names.add("Jedi");
-            names.add("Jeremy");
-            names.add("Jeremy");
-            names.add("Jerry");
-            names.add("Jill");
-            names.add("Joe Rogan");
-            names.add("Joe");
-            names.add("John Oliver");
-            names.add("John");
-            names.add("Jorden");
-            names.add("Josephine");
-            names.add("Josiah");
-            names.add("Julian");
-            names.add("Justine");
-            names.add("Kalia");
-            names.add("Karina");
-            names.add("Karleigh");
-            names.add("Kaseem");
-            names.add("Keane");
-            names.add("Keegan");
-            names.add("Keely");
-            names.add("Kelly");
-            names.add("Kirby");
-            names.add("Kitty Rotten");
-            names.add("Kris Younger");
-            names.add("Kylynn");
-            names.add("Lacey");
-            names.add("Lacey");
-            names.add("Lara");
-            names.add("Latifah");
-            names.add("Lee");
-            names.add("Leon");
-            names.add("Lillian");
-            names.add("Lossy");
-            names.add("Lucius");
-            names.add("Lydia");
-            names.add("Lysandra");
-            names.add("Macaulay");
-            names.add("Macaulay");
-            names.add("Macey");
-            names.add("Macy");
-            names.add("Madonna");
-            names.add("Maggie");
-            names.add("Maite");
-            names.add("Malik");
-            names.add("Master Hand");
-            names.add("Crazy Hand");
-            names.add("Giovanni");
-            names.add("Lt. Surge");
-            names.add("Gunny");
-            names.add("Gunner");
-            names.add("Hook Man");
-            names.add("Really Slow Guy");
-            names.add("White Knight");
-            names.add("Black Knight");
-            names.add("Knight of Ni");
-            names.add("Saul Goodman");
-            names.add("Walter White");
-            names.add("Jesse Pinkman");
-            names.add("Jon Snow");
-            names.add("Tyrion");
-            names.add("A Dragon");
-            names.add("Dothraki Screamer");
-            names.add("Unsullied Soldier");
-            names.add("Khalessi");
-            names.add("Dany");
-            names.add("Dani");
-            names.add("Danny");
-            names.add("Drew Carey");
-            names.add("Jim Carey");
-            names.add("Idris Elba");
-            names.add("Steve Carell");
-            names.add("Steven Colbert");
-            names.add("John Stewart");
-            names.add("Aragorn");
-            names.add("Legolas");
-            names.add("Gimli");
-            names.add("Frodo");
-            names.add("Samwise Gamgee");
-            names.add("Pippin");
-            names.add("Merry");
-            names.add("Gandalf, the White");
-            names.add("Gandalf, the Grey");
-            names.add("Voldemort");
-            names.add("Harry Potter");
-            names.add("Ronald Weasley");
-            names.add("Fred Weasley");
-            names.add("George Weasley");
-            names.add("Arthur Weasley");
-            names.add("Ginny Weasley");
-            names.add("Percy Weasley");
-            names.add("Molly Weasley");
-            names.add("Hermonine Granger");
-            names.add("Hedwig");
-            names.add("Mark");
-            names.add("Mary");
-            names.add("Mary");
-            names.add("Melissa");
-            names.add("Melvin");
-            names.add("Melyssa");
-            names.add("Mercedes");
-            names.add("Merrill");
-            names.add("Micheal Jackson");
-            names.add("Miriam");
-            names.add("Mr. Nice Guy");
-            names.add("Murphy");
-            names.add("My Dad");
-            names.add("Myra");
-            names.add("Myra");
-            names.add("Nancy");
-            names.add("Naomi");
-            names.add("Nasim");
-            names.add("Natalie");
-            names.add("Nehru");
-            names.add("Neil Peart");
-            names.add("Nell");
-            names.add("Nelle");
-            names.add("Nerea");
-            names.add("Noble");
-            names.add("Nomlanga");
-            names.add("Noob");
-            names.add("Octavia");
-            names.add("Octavius");
-            names.add("Odysseus");
-            names.add("Oleg");
-            names.add("Ori");
-            names.add("Owen");
-            names.add("Paki");
-            names.add("Paki");
-            names.add("Pamela");
-            names.add("Patrick Star");
-            names.add("Pete");
-            names.add("Peter Griffin");
-            names.add("Petra");
-            names.add("Phillip");
-            names.add("Phoebe");
-            names.add("Post Malone");
-            names.add("Price");
-            names.add("Priscilla");
-            names.add("Professor Oak");
-            names.add("Professor Elm");
-            names.add("Professor Birch");
-            names.add("Quail");
-            names.add("Quamar");
-            names.add("Quinlan");
-            names.add("Quinn");
-            names.add("Rafael");
-            names.add("Raheel");
-            names.add("Raja");
-            names.add("Rajah");
-            names.add("Rebecca");
-            names.add("Ric Flair");
-            names.add("Rick James");
-            names.add("Roberto");
-            names.add("Robin");
-            names.add("AJ Applegate");
-            names.add("RoboCop");
-            names.add("Ronan");
-            names.add("Russian Spy");
-            names.add("Samson");
-            names.add("Santa Claus");
-            names.add("Sasha");
-            names.add("Sauron");
-            names.add("Scarlet");
-            names.add("Scuba Steve");
-            names.add("Sebastian");
-            names.add("Sharon");
-            names.add("Shellie");
-            names.add("Silas");
-            names.add("Skyler");
-            names.add("Spock");
-            names.add("Spongebob");
-            names.add("Stacey");
-            names.add("Stacey's Mom");
-            names.add("Stacey");
-            names.add("Stella");
-            names.add("Steve-O");
-            names.add("Raheel");
-            names.add("Stuart");
-            names.add("Susan");
-            names.add("Squidward");
-            names.add("Mr. Krabs");
-            names.add("Tanek");
-            names.add("Tarik");
-            names.add("Tariq");
-            names.add("Tate");
-            names.add("Teagan");
-            names.add("Thaddeus");
-            names.add("Thor");
-            names.add("Timmy Turner");
-            names.add("Trevor");
-            names.add("Uncle Bob");
-            names.add("Uriel");
-            names.add("Valentine");
-            names.add("Vivian");
-            names.add("Wade");
-            names.add("Wing");
-            names.add("Wynne");
-            names.add("Xandra");
-            names.add("Yolanda");
-            names.add("Yosemite Sam");
-            names.add("Your Girlfriend");
-            names.add("Emperor Thaurissan");
-            names.add("Deathwing");
-            names.add("Yogg-Saron");
-            names.add("Murloc");
-            names.add("Murloc Tidehunter");
-            names.add("Murloc Rockpool");
-            names.add("Fisheye Guy");
-            names.add("Weird Eye Guy");
-            names.add("Fisheye Girl");
-            names.add("Weird Eye Girl");
-            names.add("Dumb Person");
-            names.add("Smart Person");
-            names.add("King Joghause");
-            names.add("King Flausweussen");
-            names.add("King Nordissanijakivic");
-            names.add("King Swijckiwskty");
-            names.add("King RuntimeError");
-            names.add("King CompileError");
-            names.add("Confused Programmer");
-            names.add("Confused Debugger");
-            names.add("Program Bug");
-            names.add("Program Bug");
-            names.add("Program Bug");
-            names.add("Movie Watcher");
-            names.add("Creepo");
-            names.add("Radiohead");
-            names.add("Nickleback");
-            names.add("Raheel");
-            names.add("The Arbiter");
-            names.add("343 Guilty Spark");
-            names.add("Volcano Worshipper");
-            names.add("Hurricane Worshipper");
-            names.add("Plague Worshipper");
-            names.add("Tornado Worshipper");
-            names.add("Earthquake Worshipper");
-            names.add("Master of Terminals");
-            names.add("Controller of Versions");
-            names.add("Breaker of Convention");
-            names.add("Adam Codeborn of the House Bennett");
-            names.add("King of the First Men");
-            names.add("King of the Andals");
-            names.add("COVID-19 Carrier");
-            names.add("Greasy Guy");
-            names.add("Guy Who Says Moist");
-            names.add("Racist Guy");
-            names.add("Politically Correct Guy");
-            names.add("Sacha Baron Cohen");
-            names.add("Nathan Fielder");
-            names.add("Daniel Tosh");
-            names.add("Tony Hinchcliffe");
-            names.add("Brian Redban");
-            names.add("Jeremiah Watkins");
-            names.add("Joelberg");
-            names.add("Molly Stewart");
-            names.add("Andrew Santino");
-            names.add("Bill Burr");
-            names.add("Huel");
-            names.add("Vacuum Repair Guy");
-            names.add("Mr. Beast");
-            names.add("Mark Rober");
-            names.add("NASA Guy");
-            names.add("Elon Musk");
-            names.add("Obama");
-            names.add("George Bush");
-            names.add("George Clinton");
-            names.add("Abraham Lincoln");
-            names.add("Mark Wahlberg");
-            names.add("Marky Mark");
-            names.add("50 Cent");
-            names.add("Eminem");
-            names.add("A Ghost");
-            names.add("Cursed Guy");
-            names.add("Unlucky Guy");
-            names.add("Joyner Lucas");
-            names.add("Luke Holland");
-            names.add("Mark McQuire");
-            names.add("Ed Sheeran");
-            names.add("Hopsin");
-            names.add("Quavo");
-            names.add("Katy Perry");
-            names.add("Billie Eilish");
-            names.add("Sean Evans");
-            names.add("Pete Davidson");
-            names.add("Nicholas Cage");
-            names.add("Nicholas Cage (from Con Air)");
-            names.add("Nicholas Cage (from Face Off)");
-            names.add("Nicholas Cage (from National Treasure)");
-            names.add("Nicholas Cage (from Leaving Las Vegas)");
-            names.add("Nicholas Cage (from Mandy)");
-            names.add("Nicholas Cage (from Gone in 60 Seconds)");
-            names.add("Nicholas Cage (from Ghost Rider)");
-            names.add("Nicholas Cage (from Raising Arizona)");
-            names.add("Nicholas Cage (from Knowing)");
-            names.add("Nicholas Cage (from Moonstruck)");
-            names.add("Nicholas Cage (from Kick-Ass)");
-            names.add("Nicholas Cage (from Adaptation)");
-            names.add("Nicholas Cage (from The Family Man)");
-            names.add("Nicholas Cage (from Wild at Heart)");
-            names.add("Nicholas Cage (from Bad Lieutenant)");
-            names.add("Nicholas Cage (from Lord of War)");
-            names.add("Nicholas Cage (from Season of the Witch)");
-            names.add("Nicholas Cage (from Vampire's Kiss)");
-            names.add("Nicholas Cage (from Color Out of Space)");
-            names.add("Nicholas Cage (from The Rock)");
-            names.add("Nicholas Cage (from Drive Angry)");
-            names.add("Nicholas Cage (from Left Behind)");
-            names.add("Nicholas Cage (from The Wicker Man)");
-            names.add("Nicholas Cage (from The Frozen Ground)");
-            names.add("Nicholas Cage (from Next)");
-            names.add("Nicholas Cage (from Matchstick Men)");
-            names.add("Nicholas Cage (from 8mm)");
-            names.add("Nicholas Cage (from Bangkok Dangerous)");
-            names.add("Nicholas Cage (from The Weather Man)");
-            names.add("Nicholas Cage (from Mom and Dad)");
-            names.add("Nicholas Cage (from Snake Eyes)");
-            names.add("Nicholas Cage (from Dying of the Light)");
-            names.add("Nicholas Cage (from Outcast)");
-            names.add("Nicholas Cage (from Birdy)");
-            names.add("Paul Rudd");
-            names.add("Shaq");
-            names.add("Koby Bryant");
-            names.add("Gordon Ramsey");
-            names.add("Paula Deen");
-            names.add("Margot Robbie");
-            names.add("Olivia Wilde");
-            names.add("Ashton Kutcher");
-            names.add("Shia LaBeouf");
-                names.add("Bulbasaur");
-                names.add("Ivysaur");
-                names.add("Venusaur");
-                names.add("Charmander");
-                names.add("Charmeleon");
-                names.add("Charizard");
-                names.add("Squirtle");
-                names.add("Wartortle");
-                names.add("Blastoise");
-                names.add("Caterpie");
-                names.add("Butterfree");
-                names.add("Beedrill");
-                names.add("Pidgey");
-                names.add("Rattata");
-                names.add("Ekans");
-                names.add("Pikachu");
-                names.add("Raichu");
-                names.add("Sandshrew");
-                names.add("Nidoqueen");
-                names.add("Nidoking");
-                names.add("Clefairy");
-                names.add("Vulpix");
-                names.add("Ninetales");
-                names.add("Jigglypuff");
-                names.add("Zubat");
-                names.add("Vileplume");
-                names.add("Diglett");
-                names.add("Dugtrio");
-                names.add("Meowth");
-                names.add("Psyduck");
-                names.add("Growlithe");
-                names.add("Arcanine");
-                names.add("Poliwag");
-                names.add("Slowpoke");
-                names.add("Gengar");
-                names.add("Onix");
-                names.add("Cubone");
-                names.add("Hitmonlee");
-                names.add("Hitmonchan");
-                names.add("Lickitung");
-                names.add("Koffing");
-                names.add("Weezing");
-                names.add("Mr.Mime");
-                names.add("Scyther");
-                names.add("Electabuzz");
-                names.add("Magmar");
-                names.add("Pinsir");
-                names.add("Magikarp");
-                names.add("Gyarados");
-                names.add("Eevee");
-                names.add("Vaporeon");
-                names.add("Jolteon");
-                names.add("Flareon");
-                names.add("Snorlax");
-                names.add("Articuno");
-                names.add("Zapdos");
-                names.add("Moltres");
-                names.add("Dragonite");
-                names.add("Mewtwo");
-                names.add("Mew");
-                names.add("Typhlosion");
-                names.add("Totodile");
-                names.add("Hoothoot");
-                names.add("Pichu");
-                names.add("Togepi");
-                names.add("Ampharos");
-                names.add("Marill");
-                names.add("Sudowoodo");
-                names.add("Quagsire");
-                names.add("Espeon");
-                names.add("Umbreon");
-                names.add("Qwilfish");
-                names.add("Shuckle");
-                names.add("Heracross");
-                names.add("Piloswine");
-                names.add("Corsola");
-                names.add("Raikou");
-                names.add("Entei");
-                names.add("Tyranitar");
-                names.add("Lugia");
-                names.add("Ho-Oh");
-                names.add("Celebi");
-                names.add("Treecko");
-                names.add("Torchic");
-                names.add("Blaziken");
-                names.add("Mudkip");
-                names.add("Zigzagoon");
-                names.add("Ralts");
-                names.add("Metagross");
-                names.add("Latias");
-                names.add("Latios");
-                names.add("Kyogre");
-                names.add("Groudon");
-                names.add("Rayquaza");
-                names.add("Jirachi");
-                names.add("Deoxys");
+        ArrayList<String> names = new ArrayList<>();
+        for (Name name : NameService.load()) {
+            names.add(name.getName());
+        }
+        if (names.size() > 0) {
             return names;
         }
+        names.add("Brennan");
+        names.add("Brent");
+        names.add("Britanney");
+        names.add("Brock");
+        names.add("Bruno");
+        names.add("Buckminster");
+        names.add("Burton");
+        names.add("Bus Stop Guy");
+        names.add("Cade");
+        names.add("Carly");
+        names.add("Cedric");
+        names.add("Chaim");
+        names.add("Chancellor");
+        names.add("Chaney");
+        names.add("Charles");
+        names.add("Charlotte");
+        names.add("Chris Nobles");
+        names.add("Clare");
+        names.add("Clinton");
+        names.add("Cole");
+        names.add("Colette");
+        names.add("Coronavirus Man");
+        names.add("Damian");
+        names.add("Damian");
+        names.add("Dan Stabb");
+        names.add("Danny Carey");
+        names.add("Dante");
+        names.add("Darth Vader");
+        names.add("Dean");
+        names.add("Dennis");
+        names.add("Derek");
+        names.add("Desa");
+        names.add("Desirae");
+        names.add("Donald Trump");
+        names.add("Driscoll");
+        names.add("Eagan");
+        names.add("Easter Bunny");
+        names.add("Echo");
+        names.add("Eden");
+        names.add("Eleanor");
+        names.add("Elizabeth");
+        names.add("Elton");
+        names.add("Emerald");
+        names.add("Emerson");
+        names.add("Erich");
+        names.add("Farmer Joe");
+        names.add("Farmer Rick");
+        names.add("Fat Guy");
+        names.add("Fatima");
+        names.add("Fredericka");
+        names.add("Gage");
+        names.add("Galena");
+        names.add("Gandalf");
+        names.add("Gary Oak");
+        names.add("Gannon");
+        names.add("Gemma");
+        names.add("Geoffrey");
+        names.add("Glenna");
+        names.add("Graiden");
+        names.add("Hadassah");
+        names.add("Han");
+        names.add("Hanae");
+        names.add("Harriet");
+        names.add("Hayfa");
+        names.add("Heidi");
+        names.add("Helen");
+        names.add("Herman");
+        names.add("Herrod");
+        names.add("Hilary");
+        names.add("Hobo Jeff");
+        names.add("Hobo Jim");
+        names.add("Hot Girl");
+        names.add("Ignacia");
+        names.add("Ignacia");
+        names.add("Ignatius");
+        names.add("Iliana");
+        names.add("Indira");
+        names.add("Indira");
+        names.add("Ira");
+        names.add("Isaac");
+        names.add("Jack");
+        names.add("Jacob");
+        names.add("Jael");
+        names.add("Jakeem");
+        names.add("Jamalia");
+        names.add("Jarrod");
+        names.add("Jedi");
+        names.add("Jeremy");
+        names.add("Jeremy");
+        names.add("Jerry");
+        names.add("Jill");
+        names.add("Joe Rogan");
+        names.add("Joe");
+        names.add("John Oliver");
+        names.add("John");
+        names.add("Jorden");
+        names.add("Josephine");
+        names.add("Josiah");
+        names.add("Julian");
+        names.add("Justine");
+        names.add("Kalia");
+        names.add("Karina");
+        names.add("Karleigh");
+        names.add("Kaseem");
+        names.add("Keane");
+        names.add("Keegan");
+        names.add("Keely");
+        names.add("Kelly");
+        names.add("Kirby");
+        names.add("Kitty Rotten");
+        names.add("Kris Younger");
+        names.add("Kylynn");
+        names.add("Lacey");
+        names.add("Lacey");
+        names.add("Lara");
+        names.add("Latifah");
+        names.add("Lee");
+        names.add("Leon");
+        names.add("Lillian");
+        names.add("Lossy");
+        names.add("Lucius");
+        names.add("Lydia");
+        names.add("Lysandra");
+        names.add("Macaulay");
+        names.add("Macaulay");
+        names.add("Macey");
+        names.add("Macy");
+        names.add("Madonna");
+        names.add("Maggie");
+        names.add("Maite");
+        names.add("Malik");
+        names.add("Master Hand");
+        names.add("Crazy Hand");
+        names.add("Giovanni");
+        names.add("Lt. Surge");
+        names.add("Gunny");
+        names.add("Gunner");
+        names.add("Hook Man");
+        names.add("Really Slow Guy");
+        names.add("White Knight");
+        names.add("Black Knight");
+        names.add("Knight of Ni");
+        names.add("Saul Goodman");
+        names.add("Walter White");
+        names.add("Jesse Pinkman");
+        names.add("Jon Snow");
+        names.add("Tyrion");
+        names.add("A Dragon");
+        names.add("Dothraki Screamer");
+        names.add("Unsullied Soldier");
+        names.add("Khalessi");
+        names.add("Dany");
+        names.add("Dani");
+        names.add("Danny");
+        names.add("Drew Carey");
+        names.add("Jim Carey");
+        names.add("Idris Elba");
+        names.add("Steve Carell");
+        names.add("Steven Colbert");
+        names.add("John Stewart");
+        names.add("Aragorn");
+        names.add("Legolas");
+        names.add("Gimli");
+        names.add("Frodo");
+        names.add("Samwise Gamgee");
+        names.add("Pippin");
+        names.add("Merry");
+        names.add("Gandalf, the White");
+        names.add("Gandalf, the Grey");
+        names.add("Voldemort");
+        names.add("Harry Potter");
+        names.add("Ronald Weasley");
+        names.add("Fred Weasley");
+        names.add("George Weasley");
+        names.add("Arthur Weasley");
+        names.add("Ginny Weasley");
+        names.add("Percy Weasley");
+        names.add("Molly Weasley");
+        names.add("Hermonine Granger");
+        names.add("Hedwig");
+        names.add("Mark");
+        names.add("Mary");
+        names.add("Mary");
+        names.add("Melissa");
+        names.add("Melvin");
+        names.add("Melyssa");
+        names.add("Mercedes");
+        names.add("Merrill");
+        names.add("Micheal Jackson");
+        names.add("Miriam");
+        names.add("Mr. Nice Guy");
+        names.add("Murphy");
+        names.add("My Dad");
+        names.add("Myra");
+        names.add("Myra");
+        names.add("Nancy");
+        names.add("Naomi");
+        names.add("Nasim");
+        names.add("Natalie");
+        names.add("Nehru");
+        names.add("Neil Peart");
+        names.add("Nell");
+        names.add("Nelle");
+        names.add("Nerea");
+        names.add("Noble");
+        names.add("Nomlanga");
+        names.add("Noob");
+        names.add("Octavia");
+        names.add("Octavius");
+        names.add("Odysseus");
+        names.add("Oleg");
+        names.add("Ori");
+        names.add("Owen");
+        names.add("Paki");
+        names.add("Paki");
+        names.add("Pamela");
+        names.add("Patrick Star");
+        names.add("Pete");
+        names.add("Peter Griffin");
+        names.add("Petra");
+        names.add("Phillip");
+        names.add("Phoebe");
+        names.add("Post Malone");
+        names.add("Price");
+        names.add("Priscilla");
+        names.add("Professor Oak");
+        names.add("Professor Elm");
+        names.add("Professor Birch");
+        names.add("Quail");
+        names.add("Quamar");
+        names.add("Quinlan");
+        names.add("Quinn");
+        names.add("Rafael");
+        names.add("Raheel");
+        names.add("Raja");
+        names.add("Rajah");
+        names.add("Rebecca");
+        names.add("Ric Flair");
+        names.add("Rick James");
+        names.add("Roberto");
+        names.add("Robin");
+        names.add("AJ Applegate");
+        names.add("RoboCop");
+        names.add("Ronan");
+        names.add("Russian Spy");
+        names.add("Samson");
+        names.add("Santa Claus");
+        names.add("Sasha");
+        names.add("Sauron");
+        names.add("Scarlet");
+        names.add("Scuba Steve");
+        names.add("Sebastian");
+        names.add("Sharon");
+        names.add("Shellie");
+        names.add("Silas");
+        names.add("Skyler");
+        names.add("Spock");
+        names.add("Spongebob");
+        names.add("Stacey");
+        names.add("Stacey's Mom");
+        names.add("Stacey");
+        names.add("Stella");
+        names.add("Steve-O");
+        names.add("Raheel");
+        names.add("Stuart");
+        names.add("Susan");
+        names.add("Squidward");
+        names.add("Mr. Krabs");
+        names.add("Tanek");
+        names.add("Tarik");
+        names.add("Tariq");
+        names.add("Tate");
+        names.add("Teagan");
+        names.add("Thaddeus");
+        names.add("Thor");
+        names.add("Timmy Turner");
+        names.add("Trevor");
+        names.add("Uncle Bob");
+        names.add("Uriel");
+        names.add("Valentine");
+        names.add("Vivian");
+        names.add("Wade");
+        names.add("Wing");
+        names.add("Wynne");
+        names.add("Xandra");
+        names.add("Yolanda");
+        names.add("Yosemite Sam");
+        names.add("Your Girlfriend");
+        names.add("Emperor Thaurissan");
+        names.add("Deathwing");
+        names.add("Yogg-Saron");
+        names.add("Murloc");
+        names.add("Murloc Tidehunter");
+        names.add("Murloc Rockpool");
+        names.add("Fisheye Guy");
+        names.add("Weird Eye Guy");
+        names.add("Fisheye Girl");
+        names.add("Weird Eye Girl");
+        names.add("Dumb Person");
+        names.add("Smart Person");
+        names.add("King Joghause");
+        names.add("King Flausweussen");
+        names.add("King Nordissanijakivic");
+        names.add("King Swijckiwskty");
+        names.add("King RuntimeError");
+        names.add("King CompileError");
+        names.add("Confused Programmer");
+        names.add("Confused Debugger");
+        names.add("Program Bug");
+        names.add("Program Bug");
+        names.add("Program Bug");
+        names.add("Movie Watcher");
+        names.add("Creepo");
+        names.add("Radiohead");
+        names.add("Nickleback");
+        names.add("Raheel");
+        names.add("The Arbiter");
+        names.add("343 Guilty Spark");
+        names.add("Volcano Worshipper");
+        names.add("Hurricane Worshipper");
+        names.add("Plague Worshipper");
+        names.add("Tornado Worshipper");
+        names.add("Earthquake Worshipper");
+        names.add("Master of Terminals");
+        names.add("Controller of Versions");
+        names.add("Breaker of Convention");
+        names.add("Adam Codeborn of the House Bennett");
+        names.add("King of the First Men");
+        names.add("King of the Andals");
+        names.add("COVID-19 Carrier");
+        names.add("Greasy Guy");
+        names.add("Guy Who Says Moist");
+        names.add("Racist Guy");
+        names.add("Politically Correct Guy");
+        names.add("Sacha Baron Cohen");
+        names.add("Nathan Fielder");
+        names.add("Daniel Tosh");
+        names.add("Tony Hinchcliffe");
+        names.add("Brian Redban");
+        names.add("Jeremiah Watkins");
+        names.add("Joelberg");
+        names.add("Molly Stewart");
+        names.add("Andrew Santino");
+        names.add("Bill Burr");
+        names.add("Huel");
+        names.add("Vacuum Repair Guy");
+        names.add("Mr. Beast");
+        names.add("Mark Rober");
+        names.add("NASA Guy");
+        names.add("Elon Musk");
+        names.add("Obama");
+        names.add("George Bush");
+        names.add("George Clinton");
+        names.add("Abraham Lincoln");
+        names.add("Mark Wahlberg");
+        names.add("Marky Mark");
+        names.add("50 Cent");
+        names.add("Eminem");
+        names.add("A Ghost");
+        names.add("Cursed Guy");
+        names.add("Unlucky Guy");
+        names.add("Joyner Lucas");
+        names.add("Luke Holland");
+        names.add("Mark McQuire");
+        names.add("Ed Sheeran");
+        names.add("Hopsin");
+        names.add("Quavo");
+        names.add("Katy Perry");
+        names.add("Billie Eilish");
+        names.add("Sean Evans");
+        names.add("Pete Davidson");
+        names.add("Nicholas Cage");
+        names.add("Nicholas Cage (from Con Air)");
+        names.add("Nicholas Cage (from Face Off)");
+        names.add("Nicholas Cage (from National Treasure)");
+        names.add("Nicholas Cage (from Leaving Las Vegas)");
+        names.add("Nicholas Cage (from Mandy)");
+        names.add("Nicholas Cage (from Gone in 60 Seconds)");
+        names.add("Nicholas Cage (from Ghost Rider)");
+        names.add("Nicholas Cage (from Raising Arizona)");
+        names.add("Nicholas Cage (from Knowing)");
+        names.add("Nicholas Cage (from Moonstruck)");
+        names.add("Nicholas Cage (from Kick-Ass)");
+        names.add("Nicholas Cage (from Adaptation)");
+        names.add("Nicholas Cage (from The Family Man)");
+        names.add("Nicholas Cage (from Wild at Heart)");
+        names.add("Nicholas Cage (from Bad Lieutenant)");
+        names.add("Nicholas Cage (from Lord of War)");
+        names.add("Nicholas Cage (from Season of the Witch)");
+        names.add("Nicholas Cage (from Vampire's Kiss)");
+        names.add("Nicholas Cage (from Color Out of Space)");
+        names.add("Nicholas Cage (from The Rock)");
+        names.add("Nicholas Cage (from Drive Angry)");
+        names.add("Nicholas Cage (from Left Behind)");
+        names.add("Nicholas Cage (from The Wicker Man)");
+        names.add("Nicholas Cage (from The Frozen Ground)");
+        names.add("Nicholas Cage (from Next)");
+        names.add("Nicholas Cage (from Matchstick Men)");
+        names.add("Nicholas Cage (from 8mm)");
+        names.add("Nicholas Cage (from Bangkok Dangerous)");
+        names.add("Nicholas Cage (from The Weather Man)");
+        names.add("Nicholas Cage (from Mom and Dad)");
+        names.add("Nicholas Cage (from Snake Eyes)");
+        names.add("Nicholas Cage (from Dying of the Light)");
+        names.add("Nicholas Cage (from Outcast)");
+        names.add("Nicholas Cage (from Birdy)");
+        names.add("Paul Rudd");
+        names.add("Shaq");
+        names.add("Koby Bryant");
+        names.add("Gordon Ramsey");
+        names.add("Paula Deen");
+        names.add("Margot Robbie");
+        names.add("Olivia Wilde");
+        names.add("Ashton Kutcher");
+        names.add("Shia LaBeouf");
+        names.add("Bulbasaur");
+        names.add("Ivysaur");
+        names.add("Venusaur");
+        names.add("Charmander");
+        names.add("Charmeleon");
+        names.add("Charizard");
+        names.add("Squirtle");
+        names.add("Wartortle");
+        names.add("Blastoise");
+        names.add("Caterpie");
+        names.add("Butterfree");
+        names.add("Beedrill");
+        names.add("Pidgey");
+        names.add("Rattata");
+        names.add("Ekans");
+        names.add("Pikachu");
+        names.add("Raichu");
+        names.add("Sandshrew");
+        names.add("Nidoqueen");
+        names.add("Nidoking");
+        names.add("Clefairy");
+        names.add("Vulpix");
+        names.add("Ninetales");
+        names.add("Jigglypuff");
+        names.add("Zubat");
+        names.add("Vileplume");
+        names.add("Diglett");
+        names.add("Dugtrio");
+        names.add("Meowth");
+        names.add("Psyduck");
+        names.add("Growlithe");
+        names.add("Arcanine");
+        names.add("Poliwag");
+        names.add("Slowpoke");
+        names.add("Gengar");
+        names.add("Onix");
+        names.add("Cubone");
+        names.add("Hitmonlee");
+        names.add("Hitmonchan");
+        names.add("Lickitung");
+        names.add("Koffing");
+        names.add("Weezing");
+        names.add("Mr.Mime");
+        names.add("Scyther");
+        names.add("Electabuzz");
+        names.add("Magmar");
+        names.add("Pinsir");
+        names.add("Magikarp");
+        names.add("Gyarados");
+        names.add("Eevee");
+        names.add("Vaporeon");
+        names.add("Jolteon");
+        names.add("Flareon");
+        names.add("Snorlax");
+        names.add("Articuno");
+        names.add("Zapdos");
+        names.add("Moltres");
+        names.add("Dragonite");
+        names.add("Mewtwo");
+        names.add("Mew");
+        names.add("Typhlosion");
+        names.add("Totodile");
+        names.add("Hoothoot");
+        names.add("Pichu");
+        names.add("Togepi");
+        names.add("Ampharos");
+        names.add("Marill");
+        names.add("Sudowoodo");
+        names.add("Quagsire");
+        names.add("Espeon");
+        names.add("Umbreon");
+        names.add("Qwilfish");
+        names.add("Shuckle");
+        names.add("Heracross");
+        names.add("Piloswine");
+        names.add("Corsola");
+        names.add("Raikou");
+        names.add("Entei");
+        names.add("Tyranitar");
+        names.add("Lugia");
+        names.add("Ho-Oh");
+        names.add("Celebi");
+        names.add("Treecko");
+        names.add("Torchic");
+        names.add("Blaziken");
+        names.add("Mudkip");
+        names.add("Zigzagoon");
+        names.add("Ralts");
+        names.add("Metagross");
+        names.add("Latias");
+        names.add("Latios");
+        names.add("Kyogre");
+        names.add("Groudon");
+        names.add("Rayquaza");
+        names.add("Jirachi");
+        names.add("Deoxys");
+        return names;
     }
 
 }

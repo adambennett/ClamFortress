@@ -7,6 +7,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.merchants.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
 import java.util.*;
@@ -31,8 +32,8 @@ public class MerchantMenu extends AbstractConsole implements DynamicConsole {
 
     public void findAndProcessCommandCustomOptions(ArrayList<String> args) {
         if (args.size() > 0) {
-            if (Game.getVillage().getVistingMerchants().size() > 0) {
-                Merchant m = Game.getVillage().getVistingMerchants().get(0);
+            if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
+                Merchant m = Database.getCurrentGame().getVillage().getVistingMerchants().get(0);
                 String key = args.get(0).toLowerCase();
                 boolean bought = false;
                 if (m.getWares().containsKey(key)) {
@@ -52,12 +53,12 @@ public class MerchantMenu extends AbstractConsole implements DynamicConsole {
                     GameObject obj = Archive.getInstance().getGameObj(key);
                     boolean canBuy = true;
                     if (obj instanceof AbstractItem) {
-                        canBuy = Game.getVillage().getInventory().canAdd((AbstractItem) obj);
+                        canBuy = Database.getCurrentGame().getVillage().getInventory().canAdd((AbstractItem) obj);
                     }
-                    if (canBuy && Game.getVillage().getCoins() >= m.getWares().get(key)) {
+                    if (canBuy && Database.getCurrentGame().getVillage().getCoins() >= m.getWares().get(key)) {
                         GameUtils.obtainGameObject(obj, 1);
                         int amtPaid = m.getWares().get(key);
-                        Game.getVillage().subCoins(amtPaid);
+                        Database.getCurrentGame().getVillage().subCoins(amtPaid);
                         m.purchase(key, amtPaid);
                         StringHelpers.reloadStrings();
                         printPrompt(PromptMessage.MERCHANT, false);

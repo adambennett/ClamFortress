@@ -9,6 +9,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resourc
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.natural.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -23,10 +24,10 @@ public class Mining extends AbstractGameAction {
     public void update() {
         ArrayList<AbstractResource> mined = new ArrayList<>();
         for (AbstractResource ore : ores()) {
-            Integer amtOnBoard = Game.getGameBoard().getResource(ore.getName());
+            Integer amtOnBoard = Database.getCurrentGame().getGameBoard().getResource(ore.getName());
             if (amtOnBoard != null && amtOnBoard > 0) {
                 int roll = ThreadLocalRandom.current().nextInt(0, amtOnBoard);
-                if (Game.getVillage().getInventory().containsItem("pickaxe")) {
+                if (Database.getCurrentGame().getVillage().getInventory().containsItem("pickaxe")) {
                     roll += ThreadLocalRandom.current().nextInt(0, amtOnBoard);
                 }
                 if (roll > amtOnBoard) { roll = amtOnBoard; }
@@ -40,9 +41,9 @@ public class Mining extends AbstractGameAction {
         }
         if (mined.size() > 0) {
             GameManager.getInstance().gainExperience();
-            if (!(Game.getVillage().addResources(mined))) {
+            if (!(Database.getCurrentGame().getVillage().addResources(mined))) {
                 for (AbstractResource ore : mined) {
-                    if (!Game.getVillage().addResource(ore)) {
+                    if (!Database.getCurrentGame().getVillage().addResource(ore)) {
                         OutputManager.addToBot(OutputFlag.RESOURCES_FULL, "Not enough room to accumulate more resources! Build some storehouses.");
                         this.isDone = true;
                         return;
@@ -70,7 +71,7 @@ public class Mining extends AbstractGameAction {
             typesToMine.add(new Copper());
             typesToMine.add(new Rock());
         } else if (curr.atLeast(new ExplorationAge())) {
-            if (Game.getVillage().getInventory().containsItem("pickaxe")) {
+            if (Database.getCurrentGame().getVillage().getInventory().containsItem("pickaxe")) {
                 typesToMine.add(new Gold());
             }
             typesToMine.add(new Clay());

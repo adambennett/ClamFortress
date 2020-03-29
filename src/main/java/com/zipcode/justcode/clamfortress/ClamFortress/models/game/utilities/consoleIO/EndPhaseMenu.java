@@ -47,7 +47,6 @@ public class EndPhaseMenu extends AbstractConsole {
                 Database.saveDatabase();
                 System.exit(0);
             case END_GAME:
-                GameManager.reset();
                 new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
                 break;
         }

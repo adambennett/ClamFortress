@@ -126,8 +126,8 @@ public class City extends AbstractNode {
         if (this.animals.size() > 0) {
             Database.getCurrentGame().getGameBoard().addAnimals(this.animals);
         }
-        GameManager.getInstance().getRaidable().remove(this);
-        GameManager.getInstance().setDefeatedCities(GameManager.getInstance().getDefeatedCities() + 1);
+        Database.getCurrentGame().gameManager.getRaidable().remove(this);
+        Database.getCurrentGame().gameManager.setDefeatedCities(Database.getCurrentGame().gameManager.getDefeatedCities() + 1);
     }
 
     public Boolean getDefeated() {

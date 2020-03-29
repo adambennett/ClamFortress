@@ -47,7 +47,7 @@ public class TurnMenu extends AbstractConsole {
         } else {
             consoleCommands.put("9", MenuCommands.OPTION_UNAVAILABLE);
         }
-        int trainingCost = GameManager.getInstance().getTrainingCost();
+        int trainingCost = Database.getCurrentGame().gameManager.getTrainingCost();
         if (Database.getCurrentGame().getVillage().getCoins() >= trainingCost) {
             consoleCommands.put("10", MenuCommands.TRAINING);
         } else {
@@ -92,7 +92,6 @@ public class TurnMenu extends AbstractConsole {
                 System.exit(0);
             case END_GAME:
                 Database.saveDatabase();
-                GameManager.reset();
                 new MainMenu().printPrompt(PromptMessage.MAIN_MENU, true);
                 break;
             case SKIP_TURN:

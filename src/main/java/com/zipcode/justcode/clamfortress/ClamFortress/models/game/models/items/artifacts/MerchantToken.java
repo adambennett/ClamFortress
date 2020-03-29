@@ -3,6 +3,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class MerchantToken extends AbstractArtifact implements Unique {
 
@@ -12,7 +13,7 @@ public class MerchantToken extends AbstractArtifact implements Unique {
 
     @Override
     public void onObtain() {
-        GameManager.getInstance().setMerchantItems(GameManager.getInstance().getMerchantItems() + 2);
+        Database.getCurrentGame().gameManager.setMerchantItems(Database.getCurrentGame().gameManager.getMerchantItems() + 2);
     }
 
     @Override

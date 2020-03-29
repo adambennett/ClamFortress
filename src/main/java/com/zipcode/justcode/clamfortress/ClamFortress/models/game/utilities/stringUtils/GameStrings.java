@@ -243,10 +243,12 @@ public class GameStrings {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         List<Game> games = Database.getGames();
         for (Game g : games) {
-            ArrayList<String> gameInfo = new ArrayList<>();
-            gameInfo.add(StringHelpers.capFirstLetter(g.getPlayerRace().toString().toLowerCase()));
-            gameInfo.add(StringHelpers.capFirstLetter(g.getDifficulty().toString().toLowerCase()));
-            a.put(""+g.getId(), gameInfo);
+            if (g.getUser().getId().equals(Database.getPlayer().getId())) {
+                ArrayList<String> gameInfo = new ArrayList<>();
+                gameInfo.add(StringHelpers.capFirstLetter(g.getPlayerRace().toString().toLowerCase()));
+                gameInfo.add(StringHelpers.capFirstLetter(g.getDifficulty().toString().toLowerCase()));
+                a.put(""+g.getId(), gameInfo);
+            }
         }
         if (a.size() < 1) {
             ArrayList<String> tempCols = new ArrayList<>();
@@ -280,7 +282,7 @@ public class GameStrings {
         LinkedHashMap<String, String> rsrcMap = new LinkedHashMap<>();
         Village v = Database.getCurrentGame().getVillage();
         rsrcMap.put("Days Survived", "" + StatTracker.getDaysSurvived());
-        rsrcMap.put("Cities Defeated", "" + GameManager.getInstance().getDefeatedCities() + " / " + (GameManager.getInstance().getRaidable().size() + GameManager.getInstance().getDefeatedCities()));
+        rsrcMap.put("Cities Defeated", "" + Database.getCurrentGame().gameManager.getDefeatedCities() + " / " + (Database.getCurrentGame().gameManager.getRaidable().size() + Database.getCurrentGame().gameManager.getDefeatedCities()));
         rsrcMap.put("Population", "" + v.getPopulation().size() + " / " + v.getPopCap());
         rsrcMap.put("Buildings", "" + v.getBuildings().size() + " / " + v.getBuildingLimit());
         rsrcMap.put("Total Village HP", "" + v.getHealth() + " / " + v.getMaxHP());
@@ -362,7 +364,7 @@ public class GameStrings {
     public static LinkedHashMap<String, String> getTurns() {
         LinkedHashMap<String, String> a = new LinkedHashMap<>();
         Village v = Database.getCurrentGame().getVillage();
-        a.put("Turn Number", "" + GameManager.getInstance().getTurnNumber());
+        a.put("Turn Number", "" + Database.getCurrentGame().gameManager.getTurnNumber());
         a.put("Current Era", "" + TechTree.getCurrentEra().toString());
         a.put("Population", "" + Database.getCurrentGame().getVillage().getPopulation().size() + " / " + Database.getCurrentGame().getVillage().getPopCap());
         a.put("Village HP", "" + Database.getCurrentGame().getVillage().getHealth() + " / " + Database.getCurrentGame().getVillage().getMaxHP());
@@ -372,8 +374,8 @@ public class GameStrings {
         a.put("Hunger", "" + Database.getCurrentGame().getVillage().getHunger() + " / " + 100);
         a.put("Coins", "" + Database.getCurrentGame().getVillage().getCoins() + " / " + Database.getCurrentGame().getVillage().getCoinLimit());
         a.put("Faith", "" + Database.getCurrentGame().getVillage().getFaith() + " / " + Database.getCurrentGame().getVillage().getFaithLimit());
-        if (GameManager.getInstance().getRaidingCity() != null && !GameManager.getInstance().getRaidingCity().getDefeated()) {
-            City raid = GameManager.getInstance().getRaidingCity();
+        if (Database.getCurrentGame().gameManager.getRaidingCity() != null && !Database.getCurrentGame().gameManager.getRaidingCity().getDefeated()) {
+            City raid = Database.getCurrentGame().gameManager.getRaidingCity();
             a.put("Raiding", "" + raid.cityName() + " [" + raid.getHp() + " / " + raid.getMaxHP() + "]");
         }
         return a;
@@ -408,7 +410,7 @@ public class GameStrings {
         } else {
             a.put("9", "---------------");
         }
-        int trainingCost = GameManager.getInstance().getTrainingCost();
+        int trainingCost = Database.getCurrentGame().gameManager.getTrainingCost();
         if (Database.getCurrentGame().getVillage().getCoins() >= trainingCost) {
             a.put("10", "Train (" +  trainingCost + " Coins)");
         } else {
@@ -424,7 +426,7 @@ public class GameStrings {
         LinkedHashMap<String, String> date = new LinkedHashMap<>();
         LinkedHashMap<String, String> bottom = new LinkedHashMap<>();
         LinkedHashMap<String, String> megaBottom = new LinkedHashMap<>();
-        date.put(GameManager.getInstance().getDateString(), GameManager.getInstance().getSeason());
+        date.put(Database.getCurrentGame().gameManager.getDateString(), Database.getCurrentGame().gameManager.getSeason());
         bottom.put("0", "Priorities Phase");
         megaBottom.put("End", "Skip to End Phase");
         megaBottom.put("Quit", "Finish Game");

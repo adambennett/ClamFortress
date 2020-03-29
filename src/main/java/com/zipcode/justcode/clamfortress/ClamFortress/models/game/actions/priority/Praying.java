@@ -35,7 +35,7 @@ public class Praying extends AbstractGameAction {
         int amt = ThreadLocalRandom.current().nextInt(faithBuildingMod+1);
         if (amt > 0) {
             Database.getCurrentGame().getVillage().incFaith(amt);
-            GameManager.getInstance().gainExperience();
+            Database.getCurrentGame().gameManager.gainExperience();
             OutputManager.addToBot("Praying has earned you " + faithBuildingMod + " Faith");
         }
         this.isDone = true;

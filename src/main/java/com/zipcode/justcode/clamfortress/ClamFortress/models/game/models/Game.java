@@ -27,7 +27,6 @@ public class Game {
     private Long id;
 
     @ManyToOne
-    @MapsId
     private User user;
 
     @Transient
@@ -35,6 +34,9 @@ public class Game {
 
     @Transient
     public ActionManager actionManager;
+    
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "game", targetEntity = GameManager.class)
+    public GameManager gameManager;
 
     private Boolean toughEnemies;
     private Boolean hostileEnemies;
@@ -68,14 +70,17 @@ public class Game {
             TechTree.moveToEra(startEra, true);
         }
         PriorityManager.reset(true);
+        this.user = Database.getPlayer();
         this.difficulty = gameDifficulty;
         this.actionManager = new ActionManager();
+        this.gameManager = new GameManager();
+        this.gameManager.setGame(this);
         this.playerRace = chosenRace;
         this.gameBoard = new Board();
         Archive.getInstance().get("wood");
         gameBoard = new Board(startingBiome, xMax, yMax, startPopCap);
         updateDifficultyBools();
-        GameManager.getInstance().setNethermod(difficulty.getNethermod());
+        this.gameManager.setNethermod(difficulty.getNethermod());
     }
 
     // Custom Difficulty
@@ -85,8 +90,11 @@ public class Game {
             TechTree.moveToEra(startEra, true);
         }
         PriorityManager.reset(true);
+        this.user = Database.getPlayer();
         this.difficulty = Difficulty.CUSTOM;
-        actionManager = new ActionManager();
+        this.actionManager = new ActionManager();
+        this.gameManager = new GameManager();
+        this.gameManager.setGame(this);
         this.playerRace = chosenRace;
         gameBoard = new Board();
         Archive.getInstance().get("wood");
@@ -106,7 +114,7 @@ public class Game {
         this.healingEnabled = !customDifficultyMods.contains(13);
         this.faithEnabled = !customDifficultyMods.contains(14);
         this.surroundingCheckEnabled = !customDifficultyMods.contains(15);
-        GameManager.getInstance().setNethermod(difficulty.getNethermod());
+        this.gameManager.setNethermod(difficulty.getNethermod());
     }
 
     public void postSetup(int startPop) {
@@ -115,6 +123,10 @@ public class Game {
         }
         new NewSurvivors(false).addToVillage(startPop);
         getVillage().addResource(new Wood(), 100);
+    }
+
+    public void refreshSavedGame(Game game) {
+        this.gameManager.refreshGameManager(game.gameManager);
     }
 
     public ArrayList<GameObject> getModifierObjects() {
@@ -131,7 +143,7 @@ public class Game {
     }
 
     public Boolean canRaid() {
-        return GameManager.getInstance().getRaidable().size() > 0;
+        return this.gameManager.getRaidable().size() > 0;
     }
 
     public void handleEncounter(AbstractEncounter enc) {
@@ -145,7 +157,7 @@ public class Game {
     }
 
     public Integer encounterLogic(ArrayList<AbstractEncounter> encounters) {
-        Integer dateInc = GameManager.getInstance().advanceDate(5, 15);
+        Integer dateInc = this.gameManager.advanceDate(5, 15);
         for (AbstractEncounter enc : encounters) {
             handleEncounter(enc);
         }
@@ -158,7 +170,7 @@ public class Game {
         int high = highEnd - dateInc;
         if (low < 0) { low = 0; }
         if (high < 1) { high = 1; }
-        dateInc += GameManager.getInstance().advanceDate(low, high);
+        dateInc += this.gameManager.advanceDate(low, high);
         return dateInc;
     }
 
@@ -173,7 +185,7 @@ public class Game {
                 highEnd += obj.modifyDateIncrease();
             }
             if (highEnd < 45) { highEnd = 45; }
-            dateInc += GameManager.getInstance().advanceDate(25, highEnd);
+            dateInc += this.gameManager.advanceDate(25, highEnd);
         }
         return dateInc;
     }
@@ -184,7 +196,7 @@ public class Game {
             obj.onDateAdvance(dateInc);
         }
         StatTracker.incScore(dateInc);
-        GameManager.getInstance().incTurns();
+        this.gameManager.incTurns();
         queueEvergreenActions(dateInc);
         if (this.getVillage().getVistingMerchants().size() > 0) {
             this.getVillage().getVistingMerchants().get(0).visit();
@@ -507,5 +519,11 @@ public class Game {
         this.difficulty = difficulty;
     }
 
+    public GameManager getGameManager() {
+        return gameManager;
+    }
 
+    public void setGameManager(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
 }

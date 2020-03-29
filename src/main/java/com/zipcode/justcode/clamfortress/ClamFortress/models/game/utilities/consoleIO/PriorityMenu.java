@@ -191,7 +191,7 @@ public class PriorityMenu extends AbstractConsole {
             case SCOUTING:
                 PriorityManager.setScout(PriorityManager.getScout() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                actionManager.addToBottom(new Scouting(amt, GameManager.getInstance().getNethermod()));
+                actionManager.addToBottom(new Scouting(amt, Database.getCurrentGame().gameManager.getNethermod()));
                 break;
             case PLANTING:
                 PriorityManager.setPlant(PriorityManager.getPlant() + amt);
@@ -211,8 +211,8 @@ public class PriorityMenu extends AbstractConsole {
             case RAIDING:
                 PriorityManager.setRaid(PriorityManager.getRaid() + amt);
                 PriorityManager.setPointsRemaining(PriorityManager.getPointsRemaining() - amt);
-                if (GameManager.getInstance().getRaidingCity() != null) {
-                    actionManager.addToTurnEnd(new Raiding(GameManager.getInstance().getRaidingCity(), amt));
+                if (Database.getCurrentGame().gameManager.getRaidingCity() != null) {
+                    actionManager.addToTurnEnd(new Raiding(Database.getCurrentGame().gameManager.getRaidingCity(), amt));
                 } else {
                     OutputManager.addToBot(OutputFlag.NO_RAIDS, "No city currently selected for raiding! Choose option 8 from the Standby Phase menu to select a city to raid.");
                 }

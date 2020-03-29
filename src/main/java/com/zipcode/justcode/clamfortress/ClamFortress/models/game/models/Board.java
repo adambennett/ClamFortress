@@ -136,7 +136,7 @@ public class Board extends GameObject {
             Database.getCurrentGame().getGameBoard().addResources(space.getResources());
             Database.getCurrentGame().getGameBoard().addAnimals(space.getAnimals());
         } else {
-            GameManager.getInstance().getRaidable().add((City) space);
+            Database.getCurrentGame().gameManager.getRaidable().add((City) space);
         }
     }
 

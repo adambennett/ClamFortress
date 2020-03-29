@@ -1,16 +1,27 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers;
 
 
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
+import javax.persistence.*;
 import java.math.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+@Entity
 public class GameManager {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    @MapsId
+    private Game game;
 
     private Integer techLevel;
     private Integer techUp;
@@ -22,21 +33,20 @@ public class GameManager {
     private Integer merchantItems;
     private Date date;
     private String season;
+    public Boolean gameIsLoaded;
+
+    @Transient
     private City raidingCity;
+
+    @Transient
     private ArrayList<City> raidable;
-    public static Boolean gameIsLoaded;
-    private static final GameManager instance;
+
     private static final String[] seasons = {
             "Winter", "Winter", "Spring", "Spring", "Summer", "Summer",
             "Summer", "Summer", "Fall", "Fall", "Winter", "Winter"
     };
 
-    static {
-        try { instance = new GameManager(); gameIsLoaded = false; }
-        catch (Exception e) { throw new RuntimeException("Error occured while initializing GameManager"); }
-    }
-
-    private GameManager() {
+    public GameManager() {
         this.turnNumber = BigInteger.valueOf(1);
         this.trainingCost = 200;
         this.techLevel = 0;
@@ -50,20 +60,19 @@ public class GameManager {
         updateSeason();
     }
 
-    public static void reset() {
-        gameIsLoaded = false;
-        instance.raidingCity = null;
-        instance.turnNumber = BigInteger.valueOf(1);
-        instance.trainingCost = 200;
-        instance.techLevel = 0;
-        instance.techUp = 500;
-        instance.techMod = 2;
-        instance.nethermod = 1;
-        instance.defeatedCities = 0;
-        instance.merchantItems = 9;
-        instance.date = new Date();
-        instance.raidable = new ArrayList<>();
-        instance.updateSeason();
+    public void refreshGameManager(GameManager manager) {
+        manager.setNethermod(this.nethermod);
+        manager.setDate(this.date);
+        manager.setRaidingCity(this.raidingCity);
+        manager.setMerchantItems(this.merchantItems);
+        manager.setDefeatedCities(this.defeatedCities);
+        manager.setTrainingCost(this.trainingCost);
+        manager.setGameIsLoaded(this.gameIsLoaded);
+        manager.setSeason(this.season);
+        manager.setTechLevel(this.techLevel);
+        manager.setTechMod(this.techMod);
+        manager.setTechUp(this.techUp);
+        manager.setTurnNumber(this.turnNumber);
     }
 
     public void setTrainingCost(int newCost) {
@@ -121,10 +130,6 @@ public class GameManager {
 
     public Integer getNethermod() {
         return nethermod;
-    }
-
-    public static GameManager getInstance() {
-        return instance;
     }
 
     private void updateSeason() {
@@ -194,5 +199,77 @@ public class GameManager {
     public String getSeason() {
         updateSeason();
         return season;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Integer getTechLevel() {
+        return techLevel;
+    }
+
+    public void setTechLevel(Integer techLevel) {
+        this.techLevel = techLevel;
+    }
+
+    public Integer getTechUp() {
+        return techUp;
+    }
+
+    public void setTechUp(Integer techUp) {
+        this.techUp = techUp;
+    }
+
+    public Integer getTechMod() {
+        return techMod;
+    }
+
+    public void setTechMod(Integer techMod) {
+        this.techMod = techMod;
+    }
+
+    public void setTurnNumber(BigInteger turnNumber) {
+        this.turnNumber = turnNumber;
+    }
+
+    public void setTrainingCost(Integer trainingCost) {
+        this.trainingCost = trainingCost;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public void setRaidable(ArrayList<City> raidable) {
+        this.raidable = raidable;
+    }
+
+    public Boolean getGameIsLoaded() {
+        return gameIsLoaded;
+    }
+
+    public void setGameIsLoaded(Boolean gameIsLoaded) {
+        this.gameIsLoaded = gameIsLoaded;
+    }
+
+    public static String[] getSeasons() {
+        return seasons;
     }
 }

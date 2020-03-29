@@ -15,7 +15,7 @@ public class Masonry extends AbstractGameAction {
     @Override
     public void update() {
         Database.getCurrentGame().getVillage().setBuildingLimit(Database.getCurrentGame().getVillage().getBuildingLimit() + 1);
-        GameManager.getInstance().gainExperience();
+        Database.getCurrentGame().gameManager.gainExperience();
         this.isDone = true;
     }
 

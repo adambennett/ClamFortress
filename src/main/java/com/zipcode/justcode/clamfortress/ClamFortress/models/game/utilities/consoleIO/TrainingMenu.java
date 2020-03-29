@@ -30,32 +30,32 @@ public class TrainingMenu extends AbstractConsole {
                 break;
             case AGILITY:
                 Database.getCurrentGame().getVillage().setAgility(Database.getCurrentGame().getVillage().getAgility() + ThreadLocalRandom.current().nextInt(1, 100));
-                Database.getCurrentGame().getVillage().subCoins(GameManager.getInstance().getTrainingCost());
+                Database.getCurrentGame().getVillage().subCoins(Database.getCurrentGame().gameManager.getTrainingCost());
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case STRENGTH:
                 Database.getCurrentGame().getVillage().setStrength(Database.getCurrentGame().getVillage().getStrength() + ThreadLocalRandom.current().nextInt(1, 100));
-                Database.getCurrentGame().getVillage().subCoins(GameManager.getInstance().getTrainingCost());
+                Database.getCurrentGame().getVillage().subCoins(Database.getCurrentGame().gameManager.getTrainingCost());
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case DEXTERITY:
                 Database.getCurrentGame().getVillage().setDexterity(Database.getCurrentGame().getVillage().getDexterity() + ThreadLocalRandom.current().nextInt(1, 100));
-                Database.getCurrentGame().getVillage().subCoins(GameManager.getInstance().getTrainingCost());
+                Database.getCurrentGame().getVillage().subCoins(Database.getCurrentGame().gameManager.getTrainingCost());
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case INTELLIGENCE:
                 Database.getCurrentGame().getVillage().setIntelligence(Database.getCurrentGame().getVillage().getIntelligence() + ThreadLocalRandom.current().nextInt(1, 100));
-                Database.getCurrentGame().getVillage().subCoins(GameManager.getInstance().getTrainingCost());
+                Database.getCurrentGame().getVillage().subCoins(Database.getCurrentGame().gameManager.getTrainingCost());
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case ENGINEERING:
                 Database.getCurrentGame().getVillage().setEngineering(Database.getCurrentGame().getVillage().getEngineering() + ThreadLocalRandom.current().nextInt(1, 100));
-                Database.getCurrentGame().getVillage().subCoins(GameManager.getInstance().getTrainingCost());
+                Database.getCurrentGame().getVillage().subCoins(Database.getCurrentGame().gameManager.getTrainingCost());
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;
             case MAXHP:
                 Database.getCurrentGame().getVillage().setMaxHP(Database.getCurrentGame().getVillage().getMaxHP() + ThreadLocalRandom.current().nextInt(1, 100));
-                Database.getCurrentGame().getVillage().subCoins(GameManager.getInstance().getTrainingCost());
+                Database.getCurrentGame().getVillage().subCoins(Database.getCurrentGame().gameManager.getTrainingCost());
                 new TurnMenu().printPrompt(PromptMessage.TURN_MENU, true);
                 break;
         }

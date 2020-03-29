@@ -42,7 +42,7 @@ public class Smelting extends AbstractGameAction {
             Database.getCurrentGame().getVillage().removeResource(someName.getName());
             Database.getCurrentGame().getVillage().addResource(rand.getRefined(),amount);
             OutputManager.addToBot("Smelted " + amount + " " + ( rand.getRefined()).getName() + "!");
-            GameManager.getInstance().gainExperience();
+            Database.getCurrentGame().gameManager.gainExperience();
             amountToSmelt--;
         }
         this.isDone = true;

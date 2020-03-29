@@ -40,7 +40,7 @@ public class Mining extends AbstractGameAction {
             }
         }
         if (mined.size() > 0) {
-            GameManager.getInstance().gainExperience();
+            Database.getCurrentGame().gameManager.gainExperience();
             if (!(Database.getCurrentGame().getVillage().addResources(mined))) {
                 for (AbstractResource ore : mined) {
                     if (!Database.getCurrentGame().getVillage().addResource(ore)) {

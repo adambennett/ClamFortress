@@ -35,7 +35,7 @@ public class LoadGameMenu extends AbstractConsole implements DynamicConsole {
             for (Long lo : ints) {
                 if (Database.isGame(lo)) {
                     Database.setCurrentGame(lo);
-                    GameManager.gameIsLoaded = true;
+                   // Database.getCurrentGame().gameManager.gameIsLoaded = true;
                     advanceToFirstTurn();
                     return;
                 }

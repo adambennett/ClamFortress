@@ -1,6 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence;
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.services.*;
 import org.springframework.boot.*;
@@ -11,9 +12,6 @@ import java.util.*;
 @Component
 public class Database implements CommandLineRunner {
 
-
-    private static String loginUser;
-    private static Long loginGame;
     private static User currentUser;
     private static Game currentGame;
 
@@ -26,7 +24,6 @@ public class Database implements CommandLineRunner {
         for (User player : UserService.load()){
             if (player.getName().equals(user) && player.getPass().equals(pass)) {
                 StatTracker.setStats(player.getStats());
-                loginUser = user;
                 currentUser = player;
                 return true;
             }
@@ -45,7 +42,7 @@ public class Database implements CommandLineRunner {
 
     public static Boolean isGame(Long id) {
         for (Game game : GamesService.load()){
-            if (game.getId().equals(id)) {
+            if (game.getId().equals(id) && game.getUser().getId().equals(currentUser.getId())) {
                 return true;
             }
         }
@@ -54,19 +51,11 @@ public class Database implements CommandLineRunner {
 
     public static void registerUser(String user, String pass) {
         User newUser = new User(user, pass);
-        loginUser = user;
         currentUser = newUser;
         UserService.persist(newUser);
     }
 
     public static void registerGame(Game game) {
-        for (User player : UserService.load()) {
-            if (player.getName().equals(loginUser)) {
-                game.setUser(player);
-                player.addGame(game);
-                UserService.persist(player);
-            }
-        }
         currentGame = game;
     }
 
@@ -87,35 +76,51 @@ public class Database implements CommandLineRunner {
 
     public static void saveDatabase() {
         for (User player : UserService.load()) {
-            if (player.equals(getPlayer())) {
+            if (player.getId().equals(currentUser.getId())) {
                 StatTracker.getUserStatBundle(player);
+                boolean found = false;
+                for (Game game : player.getSavedGames()) {
+                    if (game.getId().equals(currentGame.getId())) {
+                        game.setUser(player);
+                        currentGame.refreshSavedGame(game);
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    currentGame.setUser(player);
+                    currentGame.setId(getNextGameID());
+                    player.addGame(currentGame);
+                }
                 UserService.persist(player);
                 break;
             }
         }
+    }
 
-        for (Game game : GamesService.load()) {
-            if (game.getId().equals(loginGame)) {
-                GamesService.persist(game);
+    public static Long getNextGameID() {
+        Long index = 0L;
+        for (Game g : GamesService.load()) {
+            if (g.getId() > index) {
+                index = g.getId();
             }
         }
+        index++;
+        return index;
     }
 
     public static User getPlayer() {
+        if (currentUser != null && currentUser.getId() != null) {
+            for (User user : UserService.load()) {
+                if (user.getId().equals(currentUser.getId())) {
+                    return user;
+                }
+            }
+        }
         return currentUser;
     }
 
     public static Game getCurrentGame() {
         return currentGame;
-    }
-
-    public static Game getDBGame() {
-        for (Game game : GamesService.load()) {
-            if (game.getId().equals(loginGame)) {
-                return game;
-            }
-        }
-        return null;
     }
 
     public static List<Game> getGames() {
@@ -143,7 +148,7 @@ public class Database implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-       loadDatabase();
-       saveNameToRandomNames(GameStrings.getAllRandomNames(true));
+        loadDatabase();
+        saveNameToRandomNames(GameStrings.getAllRandomNames(true));
     }
 }

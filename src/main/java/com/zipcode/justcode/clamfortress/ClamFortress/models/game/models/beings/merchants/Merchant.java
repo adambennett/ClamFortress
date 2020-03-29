@@ -40,7 +40,7 @@ public class Merchant {
     }
 
     private Integer rollItemCount() {
-        return ThreadLocalRandom.current().nextInt(3, GameManager.getInstance().getMerchantItems());
+        return ThreadLocalRandom.current().nextInt(3, Database.getCurrentGame().gameManager.getMerchantItems());
     }
 
     public void setupWares() {

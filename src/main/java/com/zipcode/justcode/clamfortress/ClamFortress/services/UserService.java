@@ -34,6 +34,8 @@ public class UserService {
 
     public static void flush() { userRepository.flush(); }
 
-
+    public static Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
 
 }

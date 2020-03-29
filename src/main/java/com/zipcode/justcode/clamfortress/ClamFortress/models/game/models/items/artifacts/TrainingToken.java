@@ -3,6 +3,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class TrainingToken extends AbstractArtifact implements Unique {
 
@@ -12,7 +13,7 @@ public class TrainingToken extends AbstractArtifact implements Unique {
 
     @Override
     public void onObtain() {
-        GameManager.getInstance().setTrainingCost(GameManager.getInstance().getTrainingCost() - 100);
+        Database.getCurrentGame().gameManager.setTrainingCost(Database.getCurrentGame().gameManager.getTrainingCost() - 100);
     }
 
     @Override

@@ -38,12 +38,12 @@ public class Woodcutting extends AbstractGameAction {
             }
             if (goldWood > 0 && Database.getCurrentGame().getVillage().addResource(new GoldenWood(), goldWood)) {
                 OutputManager.addToBot("Chopped " + goldWood + " Golden Wood!");
-                GameManager.getInstance().gainExperience(10);
+                Database.getCurrentGame().gameManager.gainExperience(10);
             }
             if (wood > 0 && Database.getCurrentGame().getVillage().addResource(new Wood(), wood)) {
                 Database.getCurrentGame().getGameBoard().removeResource("wood", wood);
                 OutputManager.addToBot("Chopped " + wood + " wood!");
-                GameManager.getInstance().gainExperience();
+                Database.getCurrentGame().gameManager.gainExperience();
             }
         } else {
             OutputManager.addToBot(OutputFlag.NO_WOOD, "No more Wood left on board! Try Scouting more.");

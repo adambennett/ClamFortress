@@ -1,6 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.managers;
 
 
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import org.junit.jupiter.api.*;
 
@@ -11,7 +12,8 @@ public class GameManagerTest {
 
     @Test
     public void instanceVariablesTest() {
-        GameManager game = GameManager.getInstance();
+        Game gm = new Game();
+        GameManager game = gm.gameManager;
         game.incTurns();
         game.incDate();
         BigInteger expectedTurn = BigInteger.valueOf(2);
@@ -32,7 +34,8 @@ public class GameManagerTest {
 
     @Test
     public void getInstanceTest() {
-        GameManager game = GameManager.getInstance();
+        Game gm = new Game();
+        GameManager game = gm.gameManager;
         Assertions.assertNotNull(game);
     }
 }

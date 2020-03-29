@@ -19,7 +19,7 @@ public class Engineering extends AbstractGameAction {
         Database.getCurrentGame().getVillage().addUncompletedBuilding(newBuilding);
         OutputManager.addToBot("Added new " + newBuilding.getName() + " Project to Building Queue");
         if (Database.getCurrentGame().getVillage().getInventory().containsItem("hammer")) {
-            GameManager.getInstance().gainExperience(10);
+            Database.getCurrentGame().gameManager.gainExperience(10);
         }
         this.isDone = true;
     }

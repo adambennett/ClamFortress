@@ -24,7 +24,7 @@ public class User implements Comparable<User> {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = UserStats.class)
     private UserStats stats;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "user", targetEntity = Game.class)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", targetEntity = Game.class)
     private List<Game> savedGames;
 
     public User() {}
@@ -37,7 +37,24 @@ public class User implements Comparable<User> {
         this.savedGames = new ArrayList<>();
     }
 
-    public void addGame(Game game) { this.savedGames.add(game); }
+    public void addGame(Game game) {
+        this.savedGames.add(game);
+    }
+
+    public List<Game> updateSavedGames(Game game) {
+        ArrayList<Game> newSaved = new ArrayList<>();
+        boolean found = false;
+        for (Game g : this.savedGames) {
+            if (g.getId().equals(game.getId())) {
+                newSaved.add(game);
+                found = true;
+            } else {
+                newSaved.add(g);
+            }
+        }
+        if (!found) { newSaved.add(game); }
+        return newSaved;
+    }
 
     // Getters
     public String getName() { return name; }

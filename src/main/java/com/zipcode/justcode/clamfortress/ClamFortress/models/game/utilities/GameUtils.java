@@ -61,17 +61,17 @@ public class GameUtils {
     }
 
     public static String getNewRaidCity() {
-        if (GameManager.getInstance().getRaidable().size() > 0) {
-            ArrayList<City> cities = GameManager.getInstance().getRaidable();
+        if (Database.getCurrentGame().gameManager.getRaidable().size() > 0) {
+            ArrayList<City> cities = Database.getCurrentGame().gameManager.getRaidable();
             ArrayList<City> otherCities = new ArrayList<>();
             if (cities.size() > 0) {
                 for (City c : cities) {
-                    if (GameManager.getInstance().getRaidingCity() == null) {
+                    if (Database.getCurrentGame().gameManager.getRaidingCity() == null) {
                         if (!c.getDefeated()) {
                             otherCities.add(c);
                         }
                     } else {
-                        if (!c.equals(GameManager.getInstance().getRaidingCity()) && !c.getDefeated()) {
+                        if (!c.equals(Database.getCurrentGame().gameManager.getRaidingCity()) && !c.getDefeated()) {
                             otherCities.add(c);
                         }
                     }
@@ -79,13 +79,13 @@ public class GameUtils {
 
                 if (otherCities.size() > 0) {
                     String oldName = "";
-                    if (GameManager.getInstance().getRaidingCity() != null) {
-                        oldName = GameManager.getInstance().getRaidingCity().cityName();
+                    if (Database.getCurrentGame().gameManager.getRaidingCity() != null) {
+                        oldName = Database.getCurrentGame().gameManager.getRaidingCity().cityName();
                     }
-                    GameManager.getInstance().setRaidingCity(otherCities.get(ThreadLocalRandom.current().nextInt(otherCities.size())));
-                    City ref = GameManager.getInstance().getRaidingCity();
+                    Database.getCurrentGame().gameManager.setRaidingCity(otherCities.get(ThreadLocalRandom.current().nextInt(otherCities.size())));
+                    City ref = Database.getCurrentGame().gameManager.getRaidingCity();
                     int amtOfResources = 0;
-                    for (Map.Entry<AbstractResource, Integer> i : GameManager.getInstance().getRaidingCity().getResources().entrySet()) {
+                    for (Map.Entry<AbstractResource, Integer> i : Database.getCurrentGame().gameManager.getRaidingCity().getResources().entrySet()) {
                         amtOfResources += i.getValue();
                     }
                     boolean hasItem = ref.hasItem();
@@ -158,7 +158,7 @@ public class GameUtils {
             building.onBuild();
             building.onObtain();
             whenObtainingAnyItem(building);
-            GameManager.getInstance().gainExperience();
+            Database.getCurrentGame().gameManager.gainExperience();
             return true;
         }
         return false;

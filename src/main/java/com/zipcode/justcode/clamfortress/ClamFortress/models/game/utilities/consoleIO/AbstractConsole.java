@@ -6,6 +6,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.builders.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
 import java.util.*;
@@ -63,7 +64,7 @@ public abstract class AbstractConsole {
             runOnInvalidCommand(this);
             return;
         }
-        if (GameManager.gameIsLoaded && !(this instanceof DevConsole) && command.length() > 0 && command.charAt(0) == '~') {
+        if (Database.getCurrentGame() != null && Database.getCurrentGame().gameManager.gameIsLoaded && !(this instanceof DevConsole) && command.length() > 0 && command.charAt(0) == '~') {
             AbstractConsole toReturnTo = this;
             if (this instanceof MidTurnMenu) {
                 toReturnTo = new TurnMenu();
@@ -82,7 +83,7 @@ public abstract class AbstractConsole {
 
     public void findAndProcessMultilineCommand(ArrayList<String> args) {
         String command = args.get(0).toLowerCase();
-        if (GameManager.gameIsLoaded && !(this instanceof DevConsole) && command.length() > 0 && command.charAt(0) == '~') {
+        if (Database.getCurrentGame().gameManager.gameIsLoaded && !(this instanceof DevConsole) && command.length() > 0 && command.charAt(0) == '~') {
             AbstractConsole toReturnTo = this;
             if (this instanceof MidTurnMenu) {
                 toReturnTo = new TurnMenu();
@@ -288,7 +289,7 @@ public abstract class AbstractConsole {
         }
         boolean setup = setupGame();
         if (setup) {
-            GameManager.gameIsLoaded = true;
+            Database.getCurrentGame().gameManager.gameIsLoaded = true;
             advanceToFirstTurn();
         } else {
             Logger.getGlobal().warning("Game was not created properly, returning to Main Menu");

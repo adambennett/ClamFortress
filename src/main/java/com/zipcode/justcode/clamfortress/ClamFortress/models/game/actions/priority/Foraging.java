@@ -46,7 +46,7 @@ public class Foraging extends AbstractGameAction {
                     AbstractItem item = items.get(ThreadLocalRandom.current().nextInt(items.size()));
                     Database.getCurrentGame().getVillage().addToInventory(item.getName());
                     OutputManager.addToBot("Found " + item.getName() + " while Foraging");
-                    GameManager.getInstance().gainExperience(10);
+                    Database.getCurrentGame().gameManager.gainExperience(10);
                     this.isDone = true;
                     return;
                 }
@@ -55,7 +55,7 @@ public class Foraging extends AbstractGameAction {
         AbstractResource rand = Database.getCurrentGame().getGameBoard().removeRandomResource();
         if (rand != null) {
             Database.getCurrentGame().getVillage().addResource(rand);
-            GameManager.getInstance().gainExperience(1);
+            Database.getCurrentGame().gameManager.gainExperience(1);
             OutputManager.addToBot("Found " + rand.getName() + " while Foraging");
         }
         this.isDone = true;

@@ -5,6 +5,7 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildi
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.natural.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;
 
@@ -39,7 +40,7 @@ public class Farmland extends AbstractFoodBuilding {
     @Override
     public void endPhase() {
         harvestDate++;
-        if(GameManager.getInstance().getTurnNumber().intValue() == plantDate +3){
+        if(Database.getCurrentGame().gameManager.getTurnNumber().intValue() == plantDate +3){
             readyToHarvest=true;
         }
     }

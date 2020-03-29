@@ -2,15 +2,17 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.manage
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PriorityManagerTest {
-/*
     @Test
     public void getPointsRemaining() {
-        Game.startGame();
+        Game game = new Game();
+        game.setId(1L);
+        Database.setGameForTests(game);
         Integer expectedFood1 = 10;
         Integer expectedFood2 = 15;
         Integer expectedFood3 = 20;
@@ -97,5 +99,5 @@ public class PriorityManagerTest {
         assertEquals(expectedTrade, actualTrade);
         assertEquals(expectedPts, actualPts);
         assertEquals(expectedBuild, actualBuild);
-    }*/
+    }
 }

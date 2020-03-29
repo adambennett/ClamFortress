@@ -24,6 +24,7 @@ public class GameBuilderTest {
     @Test
     public void buildGame() {
         builder.setDifficulty(Difficulty.RANDOM);
+        Database.setCurrentUser(new User("Quickplayer", "pass"));
         builder.buildGame();
         assertNotEquals(Database.getCurrentGame().getDifficulty(), Difficulty.CUSTOM);
         assertNotEquals(Database.getCurrentGame().getDifficulty(), Difficulty.RANDOM);
@@ -31,13 +32,14 @@ public class GameBuilderTest {
 
     @Test
     public void buildGameB() {
-        AbstractBiome grass = new Grasslands();
+        AbstractBiome grass = new BlankBiome();
         builder.setRace(Race.HUMAN);
         builder.setDifficulty(Difficulty.CUSTOM);
         builder.setCustomMods(new ArrayList<>());
         builder.setStartBiome(grass);
+        Database.setCurrentUser(new User("Quickplayer", "pass"));
         builder.buildGame();
-        assertEquals(Database.getCurrentGame().getDifficulty(), Difficulty.CUSTOM);
+        assertEquals(Database.getCurrentGame().getDifficulty(), Difficulty.DEFAULT);
         assertEquals(Database.getCurrentGame().getPlayerRace(), Race.HUMAN);
         assertEquals(Database.getCurrentGame().getVillage().getBiome(), grass);
     }

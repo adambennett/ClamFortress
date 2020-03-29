@@ -3,14 +3,18 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.di
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.junit.jupiter.api.*;
 
 public class DisasterTests {
 
-   /* @Test
+    @Test
     public void runEncounter() {
-        Game.startGame();
-        Village village = Game.getVillage();
+        Game game = new Game();
+        game = new Game();
+        game.setId(1L);
+        Database.setGameForTests(game);
+        Village village = game.getVillage();
         Earthquake eq = new Earthquake();
         Fire fire = new Fire(10);
         Flood flood = new Flood(10);
@@ -42,5 +46,5 @@ public class DisasterTests {
         Assertions.assertTrue(village.getOngoingDisasters().contains(typhoon));
         Assertions.assertTrue(village.getOngoingDisasters().contains(volcano));
         Assertions.assertEquals(expectedSize, actualSize);
-    }*/
+    }
 }

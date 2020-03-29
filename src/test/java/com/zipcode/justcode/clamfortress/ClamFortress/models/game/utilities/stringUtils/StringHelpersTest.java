@@ -6,14 +6,17 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.refined.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.consoleIO.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.aspectj.lang.annotation.*;
 import org.junit.jupiter.api.*;
 
 public class StringHelpersTest {
 
-   /* @BeforeEach
+    @BeforeEach
     public void setUp() {
-        Game.startGame();
+        Game game = new Game();
+        game.setId(1L);
+        Database.setGameForTests(game);
         StringHelpers.reloadStrings();
     }
 
@@ -128,12 +131,4 @@ public class StringHelpersTest {
         Assertions.assertEquals(expectedTraining, actualTraining);
         Assertions.assertEquals(expectedSaleMerchant, actualSaleMerchant);
     }
-
-    @Test
-    public void twoColumnMenu() {
-    }
-
-    @Test
-    public void multiColumnMenu() {
-    }*/
 }

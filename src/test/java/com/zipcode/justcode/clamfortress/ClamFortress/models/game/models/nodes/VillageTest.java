@@ -5,9 +5,11 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.disasters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.miracles.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.plagues.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.builders.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.aspectj.lang.annotation.*;
 import org.junit.jupiter.api.*;
 
@@ -15,10 +17,20 @@ import java.util.*;
 
 public class VillageTest {
 
+    private static Village village;
+    private static Game game;
+
+    @BeforeEach
+    public void setup() {
+        game = new Game();
+        game.setId(1L);
+        Database.setGameForTests(game);
+        village = game.getVillage();
+    }
+
     @Test
     public void constructorTest() {
-        AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
+        AbstractBiome startBiome = new BlankBiome();
         Assertions.assertNotNull(village);
         Assertions.assertEquals(startBiome, village.getBiome());
     }
@@ -26,8 +38,6 @@ public class VillageTest {
     @Test
     public void gettersAndSettersTest() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
-
         Integer expectedYPos =          1;
         Integer expectedXPos =          1;
         Integer expectedBuildingLim =   15;
@@ -52,7 +62,6 @@ public class VillageTest {
     @Test
     public void canRunEncounter() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
 
         Integer tempVal = 10;
         AbstractEncounter fire = new Fire(tempVal);
@@ -77,7 +86,6 @@ public class VillageTest {
     @Test
     public void addToPopulation() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
 
         Survivor test = new SurvivorBuilder().createSurvivor();
         Survivor testB = new SurvivorBuilder().createSurvivor();
@@ -137,24 +145,8 @@ public class VillageTest {
     }
 
     @Test
-    public void addBuilding() {
-        //need properbuildings
-    }
-
-    @Test
-    public void addBandits() {
-   //need bandit ecounters
-    }
-
-    @Test
-    public void reduceBandits() {
-        //need bandit encounters
-    }
-
-    @Test
     public void addMiracle() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         Integer tempVal = 10;
         AbstractMiracle testM = new ClericBlessing(tempVal);
         village.addMiracle(testM);
@@ -167,7 +159,6 @@ public class VillageTest {
     @Test
     public void addDisaster() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         AbstractDisaster testD = new Fire(10);
         village.addDisaster(testD);
         ArrayList<AbstractDisaster> ongoingD = new ArrayList<>(village.getOngoingDisasters());
@@ -180,7 +171,6 @@ public class VillageTest {
     @Test
     public void addPlague() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         AbstractPlague testP = new Bubonic(10);
         village.addPlague(testP);
         ArrayList<AbstractPlague> ongoing = new ArrayList<>(village.getOngoingPlagues());
@@ -192,17 +182,8 @@ public class VillageTest {
     }
 
     @Test
-    public void addHostileRaid() {
-    }
-
-    @Test
-    public void addFriendlyRaid() {
-    }
-
-    @Test
     public void incDefense() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setDefence(50);
         village.incDefense(1010);
 
@@ -216,7 +197,6 @@ public class VillageTest {
     @Test
     public void incFaith() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setFaithLimit(999);
         village.setFaith(100);
         village.incFaith();
@@ -230,7 +210,6 @@ public class VillageTest {
     @Test
     public void testIncFaith() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setFaithLimit(999);
         village.setFaith(100);
         village.incFaith(55);
@@ -244,7 +223,6 @@ public class VillageTest {
     @Test
     public void subFaith() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setFaith(100);
         village.subFaith(300);
 
@@ -257,7 +235,6 @@ public class VillageTest {
     @Test
     public void incMana() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setMagic(100);
         village.incMagic();
 
@@ -270,7 +247,6 @@ public class VillageTest {
     @Test
     public void testIncMana() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setMagic(100);
         village.incMagic(100);
 
@@ -283,7 +259,6 @@ public class VillageTest {
     @Test
     public void subMana() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setMagic(100);
         village.subMagic(500);
 
@@ -296,7 +271,6 @@ public class VillageTest {
     @Test
     public void incCoins() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         Integer firstActual = village.getCoins();
         village.incCoins();
         Integer actual = village.getCoins();
@@ -308,7 +282,6 @@ public class VillageTest {
     @Test
     public void testIncCoins() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         Integer firstActual = village.getCoins();
         village.incCoins(100);
 
@@ -322,7 +295,6 @@ public class VillageTest {
     @Test
     public void subCoins() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         Integer firstActual = village.getCoins();
         village.incCoins(50);
         village.subCoins(25);
@@ -335,7 +307,6 @@ public class VillageTest {
     @Test
     public void subPop() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         Survivor tester = new SurvivorBuilder().createSurvivor();
         village.addToPopulation(tester);
         village.removeSurvivor(tester);
@@ -348,7 +319,6 @@ public class VillageTest {
     @Test
     public void incPopCap() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setPopCap(5);
         village.incPopCap();
 
@@ -361,7 +331,6 @@ public class VillageTest {
     @Test
     public void testIncPopCap() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setPopCap(5);
         village.incPopCap(10);
 
@@ -375,7 +344,6 @@ public class VillageTest {
     @Test
     public void subPopCap() {
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.setPopCap(5);
         village.subPopCap(2);
         Integer actual = village.getPopCap();
@@ -387,7 +355,6 @@ public class VillageTest {
     @Test
     public void testSetPopCap(){
         AbstractBiome startBiome = new Grasslands();
-        Village village = new Village(startBiome, 5);
         village.incPopCap(50);
         village.setPopCap(10);
 

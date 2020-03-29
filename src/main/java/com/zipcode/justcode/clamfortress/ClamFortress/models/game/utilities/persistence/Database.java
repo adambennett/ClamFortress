@@ -59,6 +59,10 @@ public class Database implements CommandLineRunner {
         currentGame = game;
     }
 
+    public static void setGameForTests(Game game) {
+        currentGame = game;
+    }
+
     public static Game setCurrentGame(Long id) {
         for (Game game : GamesService.load()) {
             if (game.getId().equals(id)) {
@@ -144,6 +148,10 @@ public class Database implements CommandLineRunner {
                 checkedIn.add(s);
             }
         }
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        Database.currentUser = currentUser;
     }
 
     @Override

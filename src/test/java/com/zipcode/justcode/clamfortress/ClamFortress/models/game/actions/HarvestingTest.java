@@ -7,12 +7,18 @@ import org.junit.jupiter.api.*;
 
 public class HarvestingTest {
 
-   /* @Test
+  /*  private static Game game;
+
+    @BeforeEach
+    public void setup() {
+        game = new Game();
+    }
+
+    @Test
     public void cropsReadyToHarvestTest(){
-        Game.startGame();
         Harvesting harvesting = new Harvesting(1);
-        Game.getVillage().getFarmland().setHarvestDate(10);
-        Game.getVillage().getFarmland().setPlantDate(10);
+        game.getVillage().getFarmland().setHarvestDate(10);
+        game.getVillage().getFarmland().setPlantDate(10);
         Boolean actual = harvesting.cropsReadyToHarvest();
         Assertions.assertTrue(!actual);
     }
@@ -21,13 +27,12 @@ public class HarvestingTest {
 
     @Test
     public void thereAreCropsToHarvest(){
-        Game.startGame();
         Seeds seeds = new Seeds();
         Harvesting harvesting = new Harvesting(1);
         Planting planting = new Planting(1);
-        Game.getVillage().addResource(seeds,10);
+        game.getVillage().addResource(seeds,10);
         planting.update();
-        Game.getVillage().getFarmland().setHarvestDate(Game.getVillage().getFarmland().getPlantDate()+3);
+        game.getVillage().getFarmland().setHarvestDate(game.getVillage().getFarmland().getPlantDate()+3);
         Boolean actual = harvesting.cropsReadyToHarvest();
         Assertions.assertTrue(!actual);
     }*/

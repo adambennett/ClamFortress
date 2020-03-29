@@ -8,12 +8,11 @@ import org.junit.jupiter.api.*;
 
 public class BoardTest {
 
-  /*  private static Board board;
+    private static Board board;
     private static AbstractBiome biome;
 
     @BeforeEach
     public void setUp() {
-        Game.startGame();
         biome = new Grasslands();
         board = new Board(biome, 50, 50, 5);
     }
@@ -33,6 +32,6 @@ public class BoardTest {
         Assertions.assertEquals(12, (int) rand.getyPos());
         Assertions.assertEquals(60, (int) bad.getxPos());
         Assertions.assertEquals(60, (int) bad.getyPos());
-    }*/
+    }
 
 }

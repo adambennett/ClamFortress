@@ -3,14 +3,18 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.pl
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.junit.jupiter.api.*;
 
 public class PlagueTests {
 
- /*   @Test
+    @Test
     public void runEncounter() {
-        Game.startGame();
-        Village village = Game.getVillage();
+        Game game = new Game();
+        game = new Game();
+        game.setId(1L);
+        Database.setGameForTests(game);
+        Village village = game.getVillage();
         Bubonic bubonic = new Bubonic(10);
         Contagion contagion = new Contagion(10);
         COVID19 covid19 = new COVID19(10);
@@ -34,5 +38,5 @@ public class PlagueTests {
         Assertions.assertTrue(village.getOngoingPlagues().contains(pandemic));
         Assertions.assertTrue(village.getOngoingPlagues().contains(sars));
         Assertions.assertTrue(village.getOngoingPlagues().contains(flu));
-    }*/
+    }
 }

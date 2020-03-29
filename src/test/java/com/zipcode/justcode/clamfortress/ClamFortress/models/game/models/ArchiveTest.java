@@ -11,11 +11,6 @@ import java.util.*;
 
 public class ArchiveTest {
 
-    @BeforeEach
-    public void setup() {
-        //Game.startGame();      
-    }
-
     @Test
     public void get() {
         GameObject obj = Archive.getInstance().get("wood");

@@ -2,14 +2,18 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.mi
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.junit.jupiter.api.*;
 
 public class MiraclesTests {
 
-   /* @Test
+    @Test
     public void runEncounter() {
-        Game.startGame();
-        Village village = Game.getVillage();
+        Game game = new Game();
+        game = new Game();
+        game.setId(1L);
+        Database.setGameForTests(game);
+        Village village = game.getVillage();
         ClericBlessing blessing = new ClericBlessing(10);
         DivineHealing divineHealing = new DivineHealing(10);
         blessing.runEncounter();
@@ -19,5 +23,5 @@ public class MiraclesTests {
         Assertions.assertTrue(village.getActiveMiracles().contains(blessing));
         Assertions.assertTrue(village.getActiveMiracles().contains(divineHealing));
         Assertions.assertEquals(expectedSize, actualSize);
-    }*/
+    }
 }

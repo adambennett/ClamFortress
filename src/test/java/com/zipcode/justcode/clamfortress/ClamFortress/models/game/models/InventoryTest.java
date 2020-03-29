@@ -5,18 +5,22 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.artifacts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.tools.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.tools.gathering.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
 
 public class InventoryTest {
 
-  /*  private static Inventory inv;
+    private static Inventory inv;
 
     @BeforeEach
     public void setUp() {
-        Game.startGame();
-        inv = Game.getVillage().getInventory();
+        Game game = new Game();
+        game = new Game();
+        game.setId(1L);
+        Database.setGameForTests(game);
+        inv = game.getVillage().getInventory();
         inv.getItems().clear();
     }
 
@@ -123,5 +127,5 @@ public class InventoryTest {
         Integer expected = 1;
         Integer actual = inv.getItems().size();
         Assertions.assertEquals(expected, actual);
-    }*/
+    }
 }

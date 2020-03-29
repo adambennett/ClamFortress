@@ -5,7 +5,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
 
 public class RabbitFoot extends AbstractArtifact implements Unique {
     public RabbitFoot() {
-        super("Rabbit's Foot", "Decreases bad random encounter occurrence rate.");
+        super("Rabbit's Foot", "Decreases the turn duration of negative encounters, such as disasters and plagues.");
     }
 
     @Override

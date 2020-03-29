@@ -2,6 +2,10 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models;
 
 
 
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.disasters.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.miracles.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.plagues.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.desert.*;
@@ -317,6 +321,16 @@ public class Archive {
         for (GameObject o : archive) {
             if (o instanceof AbstractArtifact) {
                 objects.add((AbstractArtifact) o.clone());
+            }
+        }
+        return objects;
+    }
+
+    public ArrayList<AbstractEncounter> encounters() {
+        ArrayList<AbstractEncounter> objects = new ArrayList<>();
+        for (GameObject o : archive) {
+            if (o instanceof AbstractEncounter) {
+                objects.add((AbstractEncounter) o.clone());
             }
         }
         return objects;
@@ -658,5 +672,21 @@ public class Archive {
         add(new FoodBag());
         add(new ClericCloak());
         add(new GoldenCloak());
+        add(new DivineHealing(1));
+        add(new Earthquake());
+        add(new Fire(1));
+        add(new Flood(1));
+        add(new Hurricane(1));
+        add(new Tornado(1));
+        add(new Tsunami());
+        add(new Typhoon(1));
+        add(new Volcano());
+        add(new Bubonic(1));
+        add(new Contagion(1));
+        add(new COVID19(1));
+        add(new H1N1(1));
+        add(new Pandemic(1));
+        add(new SARS(1));
+        add(new SpanishFlu(1));
     }
 }

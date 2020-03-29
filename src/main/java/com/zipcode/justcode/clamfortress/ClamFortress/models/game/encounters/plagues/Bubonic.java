@@ -15,8 +15,8 @@ public class Bubonic extends AbstractPlague {
     @Override
     public void endPhase() {
         int dmgLeft = 100;
-        while (dmgLeft > 0) {
-            int dmged = ThreadLocalRandom.current().nextInt(0, dmgLeft);
+        while (dmgLeft > 1) {
+            int dmged = ThreadLocalRandom.current().nextInt(1, dmgLeft);
             Database.getCurrentGame().getVillage().takeDamage(dmged);
             dmgLeft -= dmged;
         }

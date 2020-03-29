@@ -21,68 +21,17 @@ public class EncounterManager {
     }
 
     public static AbstractEncounter getRandomEncounter() {
-        ArrayList<AbstractEncounter> encounters = new ArrayList<>();
-        int tempVal = 10;
-        encounters.add(new AlienInvasion(tempVal, tempVal));
-        encounters.add(new FriendlyAliens(tempVal));
-        encounters.add(new NeutralAlien(tempVal));
-        encounters.add(new Earthquake());
-        encounters.add(new Fire(tempVal));
-        encounters.add(new Flood(tempVal));
-        encounters.add(new Hurricane(tempVal));
-        encounters.add(new Tornado(tempVal));
-        encounters.add(new Tsunami());
-        encounters.add(new Typhoon(tempVal));
-        encounters.add(new Volcano());
-        encounters.add(new ClericBlessing(tempVal));
-        encounters.add(new DivineHealing(tempVal));
-        encounters.add(new Bubonic(tempVal));
-        encounters.add(new Contagion(tempVal));
-        encounters.add(new COVID19(tempVal));
-        encounters.add(new H1N1(tempVal));
-        encounters.add(new Pandemic(tempVal));
-        encounters.add(new SARS(tempVal));
-        encounters.add(new SpanishFlu(tempVal));
-        if (!Database.getCurrentGame().getVillage().getInventory().containsItem("Rabbit's Foot")) {
-            encounters.add(new AlienInvasion(tempVal,tempVal));
-            encounters.add(new Earthquake());
-            encounters.add(new Fire(tempVal));
-            encounters.add(new Flood(tempVal));
-            encounters.add(new Hurricane(tempVal));
-            encounters.add(new Tornado(tempVal));
-            encounters.add(new Tsunami());
-            encounters.add(new Typhoon(tempVal));
-            encounters.add(new Volcano());
-            encounters.add(new Bubonic(tempVal));
-            encounters.add(new Contagion(tempVal));
-            encounters.add(new COVID19(tempVal));
-            encounters.add(new H1N1(tempVal));
-            encounters.add(new Pandemic(tempVal));
-            encounters.add(new SARS(tempVal));
-            encounters.add(new SpanishFlu(tempVal));
-            encounters.add(new AlienInvasion(tempVal, tempVal));
-            encounters.add(new Earthquake());
-            encounters.add(new Fire(tempVal));
-            encounters.add(new Flood(tempVal));
-            encounters.add(new Hurricane(tempVal));
-            encounters.add(new Tornado(tempVal));
-            encounters.add(new Tsunami());
-            encounters.add(new Typhoon(tempVal));
-            encounters.add(new Volcano());
-            encounters.add(new Bubonic(tempVal));
-            encounters.add(new Contagion(tempVal));
-            encounters.add(new COVID19(tempVal));
-            encounters.add(new H1N1(tempVal));
-            encounters.add(new Pandemic(tempVal));
-            encounters.add(new SARS(tempVal));
-            encounters.add(new SpanishFlu(tempVal));
-        } else {
-            encounters.add(new ClericBlessing(tempVal));
-            encounters.add(new DivineHealing(tempVal));
-            encounters.add(new ClericBlessing(tempVal));
-            encounters.add(new DivineHealing(tempVal));
+        ArrayList<AbstractEncounter> encounters = Archive.getInstance().encounters();
+        int turnTimer = ThreadLocalRandom.current().nextInt(1, 8);
+        AbstractEncounter output = encounters.get(ThreadLocalRandom.current().nextInt(encounters.size()));
+        boolean badEnc = output instanceof AbstractDisaster || output instanceof AbstractPlague;
+        if (badEnc && Database.getCurrentGame().getGameBoard().getVillage().getInventory().containsItem("Rabbit's Foot")) {
+            turnTimer -= 3;
         }
-
+        if (turnTimer < 0) {
+           turnTimer = 0;
+        }
+        output.setTurnsActive(turnTimer);
         return encounters.get(ThreadLocalRandom.current().nextInt(encounters.size()));
     }
 
@@ -93,7 +42,10 @@ public class EncounterManager {
     public static ArrayList<AbstractEncounter> generateEncounters(int roll) {
         ArrayList<AbstractEncounter> currentEncounters = new ArrayList<>();
         if (roll == 43) {
-            currentEncounters.add(getRandomEncounter());
+            AbstractEncounter rand = getRandomEncounter();
+            if (rand.getTurnsActive() > 0) {
+                currentEncounters.add(rand);
+            }
         }
         return currentEncounters;
     }

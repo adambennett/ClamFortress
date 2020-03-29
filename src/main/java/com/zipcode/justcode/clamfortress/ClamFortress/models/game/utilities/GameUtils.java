@@ -1,6 +1,9 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities;
 
 
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.disasters.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.miracles.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.plagues.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
@@ -134,6 +137,12 @@ public class GameUtils {
             Database.getCurrentGame().getVillage().addResource((AbstractResource) obj, amt);
         } else if (obj instanceof Era) {
             TechTree.moveToEra((Era) obj, true);
+        } else if (obj instanceof AbstractMiracle) {
+            Database.getCurrentGame().getVillage().addMiracle((AbstractMiracle) obj);
+        }  if (obj instanceof AbstractPlague) {
+            Database.getCurrentGame().getVillage().addPlague((AbstractPlague) obj);
+        } else if (obj instanceof AbstractDisaster) {
+            Database.getCurrentGame().getVillage().addDisaster((AbstractDisaster) obj);
         }
     }
 
@@ -208,6 +217,12 @@ public class GameUtils {
             Database.getCurrentGame().getVillage().addResource((AbstractResource) obj, amt);
         } else if (obj instanceof Era) {
             TechTree.moveToEra((Era)obj, true);
+        } else if (obj instanceof AbstractMiracle) {
+            Database.getCurrentGame().getVillage().addMiracle((AbstractMiracle) obj);
+        }  if (obj instanceof AbstractPlague) {
+            Database.getCurrentGame().getVillage().addPlague((AbstractPlague) obj);
+        } else if (obj instanceof AbstractDisaster) {
+            Database.getCurrentGame().getVillage().addDisaster((AbstractDisaster) obj);
         }
 
         StringHelpers.reloadStrings();

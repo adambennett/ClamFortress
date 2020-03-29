@@ -138,6 +138,9 @@ public class Game {
         }
         mods.addAll(getVillage().getBuildings());
         mods.addAll(getGameBoard().getAnimals());
+        mods.addAll(getGameBoard().getVillage().getActiveMiracles());
+        mods.addAll(getGameBoard().getVillage().getOngoingPlagues());
+        mods.addAll(getGameBoard().getVillage().getOngoingDisasters());
         //mods.add(getVillage().getFarmland());
         return mods;
     }

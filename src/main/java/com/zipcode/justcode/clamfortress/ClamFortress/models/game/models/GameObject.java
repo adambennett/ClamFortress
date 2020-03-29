@@ -48,6 +48,7 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
 
     // Prevention hooks
     public Boolean canObtain() { return true; }
+    /*
     public Boolean canAddVillagers() { return true; }
     public Boolean canGainExp() { return true; }
     public Boolean canBuildAnything() { return true; }
@@ -56,6 +57,7 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public Boolean canGatherFood() { return true; }
     public Boolean canHeal() { return true; }
     public Boolean canFight() { return true; }
+    */
 
     // Multiply fish/hunt food gain
     public Integer multiplyFoodOnFishing() { return 1; }
@@ -124,7 +126,13 @@ public abstract class GameObject implements Cloneable, Comparable<GameObject> {
     public String getType() {
         if (this instanceof AbstractAnimal) {
             return "Animal";
-        } else if (this instanceof AbstractBuilding) {
+        } else if (this instanceof AbstractMiracle) {
+            return "Miracle";
+        } else if (this instanceof AbstractPlague) {
+            return "Plague";
+        }else if (this instanceof AbstractDisaster) {
+            return "Disaster";
+        }else if (this instanceof AbstractBuilding) {
             return "Building";
         } else if (this instanceof AbstractBackpack) {
             return "Bag";

@@ -14,7 +14,18 @@ public abstract class AbstractEncounter extends GameObject {
 
     public abstract void runEncounter();
 
+    public void setTurnsActive(Integer turnsActive) {
+        this.turnsActive = turnsActive;
+    }
+
+    public Integer getTurnsActive() {
+        return turnsActive;
+    }
+
     @Override
     public abstract String toString();
+
+   /* @Override
+    public abstract AbstractEncounter clone();*/
 
 }

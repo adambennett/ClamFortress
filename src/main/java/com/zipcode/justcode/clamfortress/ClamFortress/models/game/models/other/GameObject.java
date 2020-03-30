@@ -1,4 +1,4 @@
-package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models;
+package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other;
 
 
 

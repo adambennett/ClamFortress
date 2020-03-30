@@ -1,8 +1,9 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.fasterxml.jackson.annotation.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
@@ -21,6 +22,7 @@ public class GameManager {
 
     @OneToOne
     @MapsId
+    @JsonIgnore
     private Game game;
 
     private Integer techLevel;

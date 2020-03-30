@@ -2,11 +2,11 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.military.armor.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.military.weapons.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 

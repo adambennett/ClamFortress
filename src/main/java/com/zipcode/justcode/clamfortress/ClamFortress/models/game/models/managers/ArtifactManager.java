@@ -1,8 +1,8 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.artifacts.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 
 import java.util.*;
 import java.util.concurrent.*;

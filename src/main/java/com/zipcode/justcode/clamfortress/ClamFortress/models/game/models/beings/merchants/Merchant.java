@@ -1,14 +1,12 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.merchants;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 
-import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 

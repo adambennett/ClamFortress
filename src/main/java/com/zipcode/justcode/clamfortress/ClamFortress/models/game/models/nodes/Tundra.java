@@ -1,9 +1,9 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.tundra.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 
 import java.util.*;
 import java.util.concurrent.*;

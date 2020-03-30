@@ -1,9 +1,9 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.sea.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.natural.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.refined.*;
 

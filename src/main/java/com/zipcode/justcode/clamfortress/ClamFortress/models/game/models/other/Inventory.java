@@ -1,4 +1,4 @@
-package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models;
+package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other;
 
 
 
@@ -17,20 +17,24 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-
+/*@Entity*/
 public class Inventory extends GameObject {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @MapsId
+    private Village village;
 
-
+    @Transient
     private final Map<AbstractItem, Integer> inventory;
 
-
+    @Transient
     private final Map<AbstractItem, Integer> priceMap;
 
-
     private Integer itemsHeld;
-
     private Integer capacity;
 
     public Inventory() {
@@ -208,9 +212,24 @@ public class Inventory extends GameObject {
         return itemsHeld;
     }
 
-
     public void setItemsHeld(Integer itemsHeld) {
         this.itemsHeld = itemsHeld;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Village getVillage() {
+        return village;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
     }
 
     @Override

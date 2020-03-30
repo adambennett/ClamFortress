@@ -67,6 +67,7 @@ public class Mining extends AbstractGameAction {
         if (curr.atLeast(new FutureAge())) {
             typesToMine.add(new Spacegoo());
             typesToMine.add(new Gold());
+            typesToMine.add(new Clay());
             typesToMine.add(new Iron());
             typesToMine.add(new Copper());
             typesToMine.add(new Rock());

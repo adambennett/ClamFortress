@@ -3,11 +3,12 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.prior
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
+import java.util.*;
 import java.util.concurrent.*;
 
 public class Praying extends AbstractGameAction {
@@ -19,9 +20,9 @@ public class Praying extends AbstractGameAction {
     @Override
     public void update() {
         int faithBuildingMod = 0;
-        for (AbstractBuilding b : Database.getCurrentGame().getVillage().getBuildings()) {
-            if (b instanceof AbstractFaithBuilding) {
-                faithBuildingMod += ((AbstractFaithBuilding) b).getPrayBonus();
+        for (Map.Entry<AbstractBuilding, Integer> b : Database.getCurrentGame().getVillage().getBuildings().entrySet()) {
+            if (b.getKey() instanceof AbstractFaithBuilding) {
+                faithBuildingMod += ((AbstractFaithBuilding) b.getKey()).getPrayBonus() * b.getValue();
             }
         }
         if (faithBuildingMod < 1) {

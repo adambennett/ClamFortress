@@ -1,6 +1,7 @@
-package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models;
+package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other;
 
 
+import com.fasterxml.jackson.annotation.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.desert.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.jungle.*;
@@ -20,14 +21,16 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-/*@Entity*/
+@Entity
 public class Board extends GameObject {
 
-    //@Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*@OneToOne
-    @MapsId*/
+    @OneToOne(fetch = FetchType.EAGER)
+    @MapsId
+    @JsonIgnore
     private Game game;
 
     private Integer gridXMax;
@@ -36,19 +39,20 @@ public class Board extends GameObject {
     private Integer nextY;
     private Integer startPopCap;
 
-    /*@Transient*/
+    @Transient
     private AbstractBiome startBiome;
 
-    /*@Transient*/
+    /*@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = Village.class)*/
+    @Transient
     private Village village;
 
-    /*@Transient*/
+    @Transient
     private List<AbstractNode> grid;
 
-    /*@Transient*/
+    @Transient
     private List<AbstractAnimal> animals;
 
-    /*@Transient*/
+    @Transient
     private Map<AbstractResource, Integer> resources;
 
     public Board() {
@@ -75,6 +79,16 @@ public class Board extends GameObject {
         this.nextY = 0;
         this.addAnimals(this.village.getAnimals());
         this.addResources(this.village.getResources());
+    }
+
+    public void refreshGameBoard(Board board) {
+        board.setAnimals(this.animals);
+        board.setNextX(this.nextX);
+        board.setNextY(this.nextY);
+        board.setGrid(this.grid);
+        board.setResources(this.resources);
+        this.village.refreshVillage(board.getVillage());
+        this.village.setBoard(this);
     }
 
     public Boolean isBoardFull() {
@@ -398,4 +412,6 @@ public class Board extends GameObject {
     public void setGame(Game game) {
         this.game = game;
     }
+
+
 }

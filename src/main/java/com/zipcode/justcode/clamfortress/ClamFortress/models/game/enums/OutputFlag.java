@@ -11,5 +11,6 @@ public enum OutputFlag {
     NO_ROCKS,
     NO_DAMAGE,
     NO_RAIDS,
-    INVENTORY_FULL
+    INVENTORY_FULL,
+    BRICK_HALT
 }

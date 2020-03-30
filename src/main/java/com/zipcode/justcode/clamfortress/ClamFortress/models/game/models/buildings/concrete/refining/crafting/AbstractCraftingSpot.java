@@ -12,13 +12,13 @@ public abstract class AbstractCraftingSpot extends AbstractRefining {
     private AbstractItem craftable;
 
     public AbstractCraftingSpot(String name, int resourceCost, AbstractResource resourceCostType, AbstractResource toRefine, AbstractItem itemToCraft) {
-        super(name, getDesc(name, resourceCost, resourceCostType, toRefine, itemToCraft), resourceCost, resourceCostType, toRefine);
+        super(name, getDesc(resourceCost, resourceCostType, toRefine, itemToCraft), resourceCost, resourceCostType, toRefine);
         this.craftable = itemToCraft;
     }
 
-    public static String getDesc(String name, int resourceCost, AbstractResource resourceCostType, AbstractResource toRefine, AbstractItem itemToCraft) {
+    public static String getDesc(int resourceCost, AbstractResource resourceCostType, AbstractResource toRefine, AbstractItem itemToCraft) {
         String output = "";
-        output += name + " [CRAFT][REFINES|" + toRefine.getName() + "]-[CRAFTS|" + itemToCraft.getName() + "]-[COST|" + resourceCost + "x" + resourceCostType.getName() + "]";
+        output += "[Refines: " + toRefine.getName() + "] - [Crafts: " + itemToCraft.getName() + "] - [Cost: " + resourceCost + "x" + resourceCostType.getName() + "]";
         return output;
     }
 

@@ -41,6 +41,7 @@ public class MainMenu extends AbstractConsole {
                 new MidConsoleMenu().printPrompt(PromptMessage.ARCHIVE, true);
                 break;
             case LOGOUT:
+                Database.logout();
                 new LoginMenu().printPrompt(PromptMessage.LOGIN, true);
                 break;
         }

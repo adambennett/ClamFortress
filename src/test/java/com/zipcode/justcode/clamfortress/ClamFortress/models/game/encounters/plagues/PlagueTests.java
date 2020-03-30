@@ -1,8 +1,8 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.plagues;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.junit.jupiter.api.*;
 

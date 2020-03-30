@@ -3,9 +3,9 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.con
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.merchants.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;

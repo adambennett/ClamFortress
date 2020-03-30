@@ -2,11 +2,10 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.prior
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
-import java.util.*;
 import java.util.concurrent.*;
 
 public class Hunting extends AbstractGameAction {

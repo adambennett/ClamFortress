@@ -5,7 +5,6 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.str
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.merchants.*;
@@ -14,6 +13,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.artifacts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
@@ -369,7 +369,7 @@ public class GameStrings {
         a.put("Population", "" + Database.getCurrentGame().getVillage().getPopulation().size() + " / " + Database.getCurrentGame().getVillage().getPopCap());
         a.put("Village HP", "" + Database.getCurrentGame().getVillage().getHealth() + " / " + Database.getCurrentGame().getVillage().getMaxHP());
         a.put("Resources", "" + Database.getCurrentGame().getVillage().totalResources() + " / " + Database.getCurrentGame().getVillage().getResourceLimit());
-        a.put("Buildings", "" + Database.getCurrentGame().getVillage().getBuildings().size() + " / " + Database.getCurrentGame().getVillage().getBuildingLimit());
+        a.put("Buildings", "" + Database.getCurrentGame().getVillage().getNumberOfBuildings() + " / " + Database.getCurrentGame().getVillage().getBuildingLimit());
         a.put("Food", "" + Database.getCurrentGame().getVillage().getFood() + " / " + Database.getCurrentGame().getVillage().getFoodLimit());
         a.put("Hunger", "" + Database.getCurrentGame().getVillage().getHunger() + " / " + 100);
         a.put("Coins", "" + Database.getCurrentGame().getVillage().getCoins() + " / " + Database.getCurrentGame().getVillage().getCoinLimit());
@@ -390,7 +390,7 @@ public class GameStrings {
         } else {
             a.put("5", "---------");
         }
-        if (Database.getCurrentGame().getVillage().getBuildings().size() > 0) {
+        if (Database.getCurrentGame().getVillage().getNumberOfBuildings() > 0) {
             a.put("6", "Buildings");
         } else {
             a.put("6", "---------");
@@ -627,38 +627,54 @@ public class GameStrings {
         inv = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
-    public static LinkedHashMap<String, String> getBuildings() {
-        LinkedHashMap<String, String> a = new LinkedHashMap<>();
+    public static LinkedHashMap<String, ArrayList<String>> getBuildings() {
+        LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Database.getCurrentGame().getVillage();
-        ArrayList<AbstractBuilding> buildings = new ArrayList<>(v.getBuildings());
-        Collections.sort(buildings);
-        for (AbstractBuilding item : buildings){
-            String name = item.getName();
-            String desc = item.getDesc();
+        for (Map.Entry<AbstractBuilding, Integer> item : v.getBuildings().entrySet()){
+            String name = item.getKey().getName();
+            String desc = item.getKey().getDesc();
+            String amt = "" + item.getValue();
+            String type = item.getKey().getBuildingType();
+            if (item.getKey() instanceof Unique) {
+                amt = "UNIQUE";
+            }
+            ArrayList<String> tempCols = new ArrayList<>();
             if (desc.length() > 85) {
                 desc = desc.substring(0, 86);
             }
-            a.put(name, desc);
+            tempCols.add(amt);
+            tempCols.add(type);
+            tempCols.add(desc);
+            a.put(name, tempCols);
         }
         if (a.size() < 1) {
-            a.put(" ", " ");
+            ArrayList<String> tempCols = new ArrayList<>();
+            tempCols.add("");
+            tempCols.add("");
+            tempCols.add("");
+            a.put(" ", tempCols);
         }
         return a;
     }
     public static void loadBuildings() {
-        String leftAlignFormat = "| %-25s | %-85s |\n";
-        String headerFormat = "| %-113s |\n";
-        String breakLine = "+---------------------------+---------------------------------------------------------------------------------------+\n";
+        String leftAlignFormat = "| %-25s | %-25s | %-25s | %-85s |\n";
+        String headerFormat = "| %-169s |\n";
+        String breakLine = "+---------------------------+---------------------------+---------------------------+---------------------------------------------------------------------------------------+\n";
         String header = "Buildings";
-        Map<String, String> top = new HashMap<>();
-        Map<String, String> bottom = new HashMap<>();
-        top.put("Building", "Description");
-        bottom.put("0", "Return to Standby Menu");
-        ArrayList<Map<String, String>> list = new ArrayList<>();
+        LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
+        ArrayList<String> topCols = new ArrayList<>();
+        ArrayList<String> botCols = new ArrayList<>();
+        topCols.add("AMOUNT"); botCols.add("Return");
+        topCols.add("TYPE"); botCols.add("");
+        topCols.add("DESCRIPTION"); botCols.add("Buildings: " + Database.getCurrentGame().getVillage().getNumberOfBuildings());
+        top.put("NAME", topCols);
+        bottom.put("0", botCols);
+        ArrayList<LinkedHashMap<String, ArrayList<String>>> list = new ArrayList<>();
         list.add(top);
         list.add(getBuildings());
         list.add(bottom);
-        build = StringHelpers.twoColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
+        build = StringHelpers.multiColumnMenu(leftAlignFormat, headerFormat, breakLine, header, list);
     }
 
     public static LinkedHashMap<String, ArrayList<String>> getArchive() {

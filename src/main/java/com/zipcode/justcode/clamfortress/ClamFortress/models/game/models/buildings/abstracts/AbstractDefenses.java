@@ -11,13 +11,13 @@ public abstract class AbstractDefenses extends AbstractBuilding {
     private final Integer defense;
 
     public AbstractDefenses(String name, int resourceCost, int defend, AbstractResource resourceType) {
-        super(name, getDesc(name, resourceCost, defend, resourceType), resourceCost, resourceType);
+        super(name, getDesc(resourceCost, defend, resourceType), resourceCost, resourceType);
         this.defense = defend;
     }
 
-    public static String getDesc(String name, int resourceCost, int defend, AbstractResource resourceType) {
+    public static String getDesc(int resourceCost, int defend, AbstractResource resourceType) {
         String output = "";
-        output += name + " [M][DEF|" + defend + "]-[COST|" + resourceCost + "x" + resourceType.getName() + "]";
+        output += "[Defense Boost: " + defend + "] - [Cost: " + resourceCost + "x" + resourceType.getName() + "]";
         return output;
     }
 

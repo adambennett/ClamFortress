@@ -1,8 +1,8 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 

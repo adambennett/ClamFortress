@@ -1,8 +1,8 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.managers;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import org.junit.jupiter.api.*;
 
 import java.math.*;

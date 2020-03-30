@@ -10,36 +10,31 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.pers
 import javax.persistence.*;
 import java.util.*;
 
-
+/*@Entity*/
 public  class Survivor {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-
+    @ManyToOne
+    private Village village;
 
     protected Integer agility;
-
-
     protected Integer strength;
-
-
     protected Integer dexterity;
-
     protected Integer intelligence;
-
     protected Integer magic;
-
     protected Integer engineering;
-
     protected Integer healthPoints;
-
     protected Integer maxHp;
-
     protected Integer age;
-
     protected String name;
 
+    @Enumerated(EnumType.STRING)
     protected Gender gender;
 
+    @Enumerated(EnumType.STRING)
     protected Race race;
 
     public Survivor(Integer agility, Integer strength, Integer dexterity, Integer intelligence, Integer magic, Integer engineering, Integer healthPoints,Integer maxHP, Integer age, String name, Gender gender, Race race) {
@@ -141,7 +136,21 @@ public  class Survivor {
         return healthPoints;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Village getVillage() {
+        return village;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
+    }
 
     @Override
     public boolean equals(Object o) {

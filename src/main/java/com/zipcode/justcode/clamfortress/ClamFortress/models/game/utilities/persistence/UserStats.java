@@ -1,6 +1,8 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence;
 
 
+import com.fasterxml.jackson.annotation.*;
+
 import javax.persistence.*;
 import java.io.*;
 
@@ -14,6 +16,7 @@ public class UserStats implements Serializable {
 
     @OneToOne(fetch = FetchType.EAGER)
     @MapsId
+    @JsonIgnore
     private User user;
 
     @Column(nullable = false, name = "enemies_killed")

@@ -2,8 +2,8 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.con
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import java.util.*;

@@ -1,4 +1,4 @@
-package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models;
+package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other;
 
 
 
@@ -688,5 +688,6 @@ public class Archive {
         add(new Pandemic(1));
         add(new SARS(1));
         add(new SpanishFlu(1));
+        add(new BrokenWoodGranary());
     }
 }

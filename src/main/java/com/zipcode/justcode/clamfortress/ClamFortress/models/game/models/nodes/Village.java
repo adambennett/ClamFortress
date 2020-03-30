@@ -7,16 +7,15 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.mir
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.plagues.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.enums.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.merchants.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.concrete.foodbuilding.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.military.armor.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.military.weapons.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.refined.food.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
@@ -27,14 +26,25 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.*;
 
-
+/*@Entity*/
 public class Village extends AbstractNode {
 
-    private final Inventory inventory;
-    
-    private final AbstractNode baseNode;
-    
-    private final Farmland farmland;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @MapsId
+    private Board board;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Farm.class)
+    private Farm farm;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Inventory.class)
+    private Inventory inventory;
+
+    @Transient
+    private AbstractNode baseNode;
 
     private Integer popCap =            5;
     private Integer buildingLimit =     5;
@@ -67,43 +77,91 @@ public class Village extends AbstractNode {
     private Double magicAvg =           0.0;
     private Double engineeringAvg =     0.0;
 
-    private List<Bandit>  occupyingBandits = new ArrayList<>();
+    @Transient
+    private List<Bandit> occupyingBandits;
 
-    private List<AbstractBuilding> buildings = new ArrayList<>();
+    @Transient
+    private List<AbstractBuilding> uncompletedBuildings;
 
-    private List<AbstractBuilding> uncompletedBuildings = new ArrayList<>();
+    @Transient
+    private List<AbstractMiracle> activeMiracles;
 
-    private List<AbstractMiracle>  activeMiracles = new ArrayList<>();
+    @Transient
+    private List<AbstractDisaster> ongoingDisasters;
 
-    private List<AbstractDisaster> ongoingDisasters = new ArrayList<>();
+    @Transient
+    private List<Merchant> vistingMerchants;
 
-    private List<Merchant>         vistingMerchants = new ArrayList<>();
+    @Transient
+    private List<AbstractPlague> ongoingPlagues;
 
-    private List<AbstractPlague>   ongoingPlagues = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Survivor.class)
+    private List<Survivor> population;
 
-    private List<Survivor>         population = new ArrayList<>();
-
-    private Map<AbstractResource, Integer> resources;
+    @Transient
+    private Map<AbstractBuilding, Integer> buildings;
 
     @Override public String toString() { return "Village"; }
 
     public Village(AbstractBiome biome, int popCap) {
         super(0, 0, biome);
+        this.uncompletedBuildings = new ArrayList<>();
+        this.occupyingBandits = new ArrayList<>();
+        this.activeMiracles = new ArrayList<>();
+        this.ongoingDisasters = new ArrayList<>();
+        this.vistingMerchants = new ArrayList<>();
+        this.ongoingPlagues = new ArrayList<>();
+        this.population = new ArrayList<>();
         this.inventory = new Inventory(5);
         this.resources = new HashMap<>();
         this.popCap = popCap;
         this.baseNode = getNodeFromBiome(biome);
-        this.farmland = new Farmland();
+        this.farm = new Farm();
+        this.farm.setVillage(this);
         this.health = 100;
         this.maxHP = 100;
+        this.buildings = new HashMap<>();
     }
 
     // Fake Village for proper Archive creation
     public Village() {
         super();
-        this.baseNode = null;
         this.inventory = new Inventory(0);
-        this.farmland = new Farmland();
+        this.farm = new Farm();
+        this.farm.setVillage(this);
+    }
+
+    public void refreshVillage(Village village) {
+        //village.setActiveMiracles(this.activeMiracles);
+        village.setAgility(this.agility);
+        village.setBuildingLimit(this.buildingLimit);
+        village.setAttackPower(this.attackPower);
+        //village.setBuildings(this.buildings);
+        village.setCoinLimit(this.coinLimit);
+        village.setCoins(this.coins);
+        village.setDefence(this.defence);
+        village.setDexterity(this.dexterity);
+        village.setEngineering(this.engineering);
+        village.setFaith(this.faith);
+        village.setFamine(this.famine);
+        village.setFaithLimit(this.faithLimit);
+        village.setFood(this.food);
+        village.setFoodLimit(this.foodLimit);
+        village.setHealth(this.health);
+        village.setHunger(this.hunger);
+        village.setIntelligence(this.intelligence);
+        village.setMagic(this.magic);
+        village.setMaxHP(this.maxHP);
+       //village.setOccupyingBandits(this.occupyingBandits);
+       // village.setOngoingDisasters(this.ongoingDisasters);
+        //village.setOngoingPlagues(this.ongoingPlagues);
+        village.setPopCap(this.popCap);
+        //village.setPopulation(this.population);
+        village.setStrength(this.strength);
+        village.setTotalAge(this.totalAge);
+        village.setResourceLimit(this.resourceLimit);
+      //  village.setUncompletedBuildings(this.uncompletedBuildings);
+      //  village.setVistingMerchants(this.vistingMerchants);
     }
 
     public AbstractNode getNodeFromBiome(AbstractBiome biome) {
@@ -221,6 +279,7 @@ public class Village extends AbstractNode {
             this.health += s.getHP();
             this.maxHP += s.getMaxHp();
             this.totalAge += s.getAge();
+            s.setVillage(this);
             updateAverageStats();
             StatTracker.setHighPop(this.population.size());
             return true;
@@ -309,8 +368,8 @@ public class Village extends AbstractNode {
 
     // BUILDINGS     /////////////////////////////////////////////////////////////////////////////////////////////
     public Boolean addBuilding(AbstractBuilding b) {
-        if (buildings.size() < buildingLimit) {
-            buildings.add(b);
+        if (getNumberOfBuildings() < buildingLimit) {
+            buildings.compute(b, (k,v) -> (v==null) ? 1 : v + 1);
             for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
                 obj.onNewBuilding(b);
             }
@@ -326,9 +385,19 @@ public class Village extends AbstractNode {
     public Boolean hasBuilding(String building) {
         if (Archive.getInstance().getBuilding(building) != null) {
             AbstractBuilding res = Archive.getInstance().getBuilding(building);
-            return this.buildings.contains(res);
+            return this.buildings.containsKey(res);
         }
         return false;
+    }
+
+    public ArrayList<AbstractBuilding> getAllBuildings() {
+        ArrayList<AbstractBuilding> output = new ArrayList<>();
+        for (Map.Entry<AbstractBuilding, Integer> entry : this.buildings.entrySet()) {
+            for (int i = 0; i < entry.getValue(); i++) {
+                output.add(entry.getKey().clone());
+            }
+        }
+        return output;
     }
     // END BUILDINGS /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -747,10 +816,6 @@ public class Village extends AbstractNode {
         return occupyingBandits;
     }
 
-    public List<AbstractBuilding> getBuildings() {
-        return buildings;
-    }
-
     public List<AbstractBuilding> getUncompletedBuildings() {
         return uncompletedBuildings;
     }
@@ -775,13 +840,28 @@ public class Village extends AbstractNode {
         return population;
     }
 
-    public Farmland getFarmland() {
-        return farmland;
+    public Farm getFarm() {
+        return farm;
     }
 
-    @Override
-    public Map<AbstractResource, Integer> getResources() {
-        return resources;
+    public Map<AbstractBuilding, Integer> getBuildings() {
+        return buildings;
+    }
+
+    public Integer getNumberOfBuildings() {
+        int sum = 0;
+        for (Map.Entry<AbstractBuilding, Integer> entry : buildings.entrySet()) {
+            sum += entry.getValue();
+        }
+        return sum;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public void setPopCap(Integer popCap) {
@@ -896,48 +976,12 @@ public class Village extends AbstractNode {
         this.engineeringAvg = engineeringAvg;
     }
 
-    public void setOccupyingBandits(ArrayList<Bandit> occupyingBandits) {
-        this.occupyingBandits = occupyingBandits;
-    }
-
-    public void setBuildings(ArrayList<AbstractBuilding> buildings) {
-        this.buildings = buildings;
-    }
-
-    public void setUncompletedBuildings(ArrayList<AbstractBuilding> uncompletedBuildings) {
-        this.uncompletedBuildings = uncompletedBuildings;
-    }
-
-    public void setActiveMiracles(ArrayList<AbstractMiracle> activeMiracles) {
-        this.activeMiracles = activeMiracles;
-    }
-
-    public void setOngoingDisasters(ArrayList<AbstractDisaster> ongoingDisasters) {
-        this.ongoingDisasters = ongoingDisasters;
-    }
-
-    public void setVistingMerchants(ArrayList<Merchant> vistingMerchants) {
-        this.vistingMerchants = vistingMerchants;
-    }
-
-    public void setOngoingPlagues(ArrayList<AbstractPlague> ongoingPlagues) {
-        this.ongoingPlagues = ongoingPlagues;
-    }
-
-    public void setPopulation(ArrayList<Survivor> population) {
-        this.population = population;
-    }
-
     public void setResources(Map<AbstractResource, Integer> resources) {
         this.resources = resources;
     }
 
     public void setOccupyingBandits(List<Bandit> occupyingBandits) {
         this.occupyingBandits = occupyingBandits;
-    }
-
-    public void setBuildings(List<AbstractBuilding> buildings) {
-        this.buildings = buildings;
     }
 
     public void setUncompletedBuildings(List<AbstractBuilding> uncompletedBuildings) {
@@ -962,6 +1006,18 @@ public class Village extends AbstractNode {
 
     public void setPopulation(List<Survivor> population) {
         this.population = population;
+    }
+
+    public void setBuildings(Map<AbstractBuilding, Integer> buildings) {
+        this.buildings = buildings;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     // END GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////

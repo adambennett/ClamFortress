@@ -12,14 +12,14 @@ public abstract class AbstractFaithBuilding extends AbstractBuilding {
     protected Integer faithCapInc;
 
     public AbstractFaithBuilding(String name, int resourceCost, int prayBonus, int faithCapInc, AbstractResource resourceType) {
-        super(name, getDesc(name, resourceCost, prayBonus, faithCapInc, resourceType), resourceCost, resourceType);
+        super(name, getDesc(resourceCost, prayBonus, faithCapInc, resourceType), resourceCost, resourceType);
         this.prayBonus = prayBonus;
         this.faithCapInc = faithCapInc;
     }
 
-    public static String getDesc(String name, int resourceCost, int prayBonus, int faithCapInc, AbstractResource resourceType) {
+    public static String getDesc(int resourceCost, int prayBonus, int faithCapInc, AbstractResource resourceType) {
         String output = "";
-        output += name + " [C][PBUFF|" + prayBonus + "]-[FCAP|" + faithCapInc + "]-[COST|" + resourceCost + "x" + resourceType.getName() + "]";
+        output += "[Prayer Bonus: " + prayBonus + "] - [Faith Cap Increase: " + faithCapInc + "] - [Cost: " + resourceCost + "x" + resourceType.getName() + "]";
         return output;
     }
 

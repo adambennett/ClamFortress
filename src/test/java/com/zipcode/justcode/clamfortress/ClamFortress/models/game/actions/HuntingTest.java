@@ -2,8 +2,8 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions;
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.priority.food.human.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.land.bears.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.junit.jupiter.api.*;
 

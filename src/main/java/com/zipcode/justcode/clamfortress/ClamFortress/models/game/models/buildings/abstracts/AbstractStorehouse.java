@@ -1,8 +1,8 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
@@ -11,13 +11,13 @@ public abstract class AbstractStorehouse extends AbstractBuilding {
     private final Integer storageCapacityIncrease;
 
     public AbstractStorehouse(String name, int resourceCost, int storageInc, AbstractResource resourceType) {
-        super(name, getDesc(name, resourceCost, storageInc, resourceType), resourceCost, resourceType);
+        super(name, getDesc(resourceCost, storageInc, resourceType), resourceCost, resourceType);
         this.storageCapacityIncrease = storageInc;
     }
 
-    public static String getDesc(String name, int resourceCost, int storageInc, AbstractResource resourceType) {
+    public static String getDesc(int resourceCost, int storageInc, AbstractResource resourceType) {
         String output = "";
-        output += name + " [S][RCAP|" + storageInc + "]-[COST|" + resourceCost + "x" + resourceType.getName() + "]";
+        output +="[Resource Cap Increase: " + storageInc + "] - [Cost: " + resourceCost + "x" + resourceType.getName() + "]";
         return output;
     }
 

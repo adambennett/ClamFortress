@@ -4,13 +4,13 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.disasters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.miracles.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.plagues.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildings.abstracts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.artifacts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.refined.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
@@ -202,7 +202,7 @@ public class GameUtils {
         } else if (obj instanceof AbstractBuilding) {
             AbstractBuilding b = (AbstractBuilding) obj;
             for (int i = 0; i < amt; i++) {
-                Database.getCurrentGame().getVillage().getBuildings().add(b);
+                Database.getCurrentGame().getVillage().getBuildings().compute(b, (k, v) -> (v==null) ? 1 : v + 1);
                 b.onBuild();
                 if (triggerExtras) {
                     for (GameObject objB : Database.getCurrentGame().getModifierObjects()) {

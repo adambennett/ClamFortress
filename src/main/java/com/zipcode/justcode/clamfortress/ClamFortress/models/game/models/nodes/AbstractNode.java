@@ -17,9 +17,6 @@ import java.util.concurrent.*;
 
 public abstract class AbstractNode implements Comparable<AbstractNode> {
 
-
-
-
     protected AbstractBiome biome;
 
     protected Integer xPos;
@@ -40,11 +37,11 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
         this.biome = biome;
         this.resources = new HashMap<>();
         this.animals = new HashMap<>();
-        int artifactRoll = ThreadLocalRandom.current().nextInt(0, 50);
+        int artifactRoll = ThreadLocalRandom.current().nextInt(0, 100);
         if (artifactRoll == 1) {
             this.artifact = ArtifactManager.getRandomArtifact();
         }
-        int itemRoll = ThreadLocalRandom.current().nextInt(0, 10);
+        int itemRoll = ThreadLocalRandom.current().nextInt(0, 50);
         if (itemRoll == 1) {
             this.item = ItemManager.getRandomItem();
         }

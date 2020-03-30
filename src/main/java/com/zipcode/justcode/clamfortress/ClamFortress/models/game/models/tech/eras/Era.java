@@ -1,7 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 
 public abstract class Era extends GameObject {
@@ -44,25 +44,37 @@ public abstract class Era extends GameObject {
     }
 
     public boolean isAheadOf(Era era) {
-        return !isBehind(era);
+        int indexThis = -1;
+        int indexThat = -1;
+        Era curr = TechTree.getHead();
+        int indexOn = 0;
+        while (curr != null) {
+            if (curr.equals(this)) {
+                indexThis = indexOn;
+            } else if (curr.equals(era)) {
+                indexThat = indexOn;
+            }
+            indexOn++;
+            curr = curr.getNext();
+        }
+        return indexThis > indexThat;
     }
 
     public boolean isBehind(Era era) {
-        if (this.hasPrev() && this.prev.getClass().equals(era.getClass())) {
-            return true;
-        }
-        if (this.hasNext() && this.next.getClass().equals(era.getClass())) {
-            return false;
-        } else {
-            Era curr = this;
-            while (curr.hasNext()) {
-                if (curr.getNext().getClass().equals(era.getClass())) {
-                    return false;
-                }
-                curr = curr.getNext();
+        int indexThis = -1;
+        int indexThat = -1;
+        Era curr = TechTree.getHead();
+        int indexOn = 0;
+        while (curr != null) {
+            if (curr.equals(this)) {
+                indexThis = indexOn;
+            } else if (curr.equals(era)) {
+                indexThat = indexOn;
             }
+            indexOn++;
+            curr = curr.getNext();
         }
-        return true;
+        return indexThis < indexThat;
     }
 
     public Era advanceToEnd() {

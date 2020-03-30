@@ -1,7 +1,6 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence;
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.stringUtils.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.services.*;
 import org.springframework.boot.*;
@@ -17,6 +16,7 @@ public class Database implements CommandLineRunner {
 
     public static void logInQuickplay() {
         StatTracker.clear();
+        currentUser = new User("Quickplayer", "pass");
     }
 
 
@@ -29,6 +29,11 @@ public class Database implements CommandLineRunner {
             }
         }
         return false;
+    }
+
+    public static void logout() {
+        currentUser = null;
+        currentGame = null;
     }
 
     public static Boolean isUser(String user) {
@@ -93,6 +98,8 @@ public class Database implements CommandLineRunner {
                 if (!found) {
                     currentGame.setUser(player);
                     currentGame.setId(getNextGameID());
+                    currentGame.getGameBoard().setGame(currentGame);
+                    currentGame.getVillage().setBoard(currentGame.getGameBoard());
                     player.addGame(currentGame);
                 }
                 UserService.persist(player);

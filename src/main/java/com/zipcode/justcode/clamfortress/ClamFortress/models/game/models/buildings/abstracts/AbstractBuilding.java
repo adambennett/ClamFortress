@@ -2,15 +2,14 @@ package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.buildi
 
 
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.interfaces.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
-import javax.persistence.*;
+import java.util.*;
 import java.util.logging.*;
 
 
@@ -36,7 +35,7 @@ public abstract class AbstractBuilding extends GameObject {
 
     public void upgrade() {}
 
-    public Boolean demolish() {
+    public Integer demolish() {
         for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             obj.onDemolish();
         }
@@ -57,7 +56,7 @@ public abstract class AbstractBuilding extends GameObject {
     }
 
     public Boolean canBuild() {
-        if (!(this.eraRequired.isBehind(TechTree.getCurrentEra()) || this.eraRequired.equals(TechTree.getCurrentEra()))) {
+        if (TechTree.getCurrentEra().isBehind(this.eraRequired)) {
             return false;
         }
 
@@ -70,13 +69,28 @@ public abstract class AbstractBuilding extends GameObject {
         }
 
         if (this instanceof Unique) {
-            for (AbstractBuilding b : Database.getCurrentGame().getVillage().getBuildings()) {
-                if (b.getName().equals(this.getName())) {
+            for (Map.Entry<AbstractBuilding, Integer> b : Database.getCurrentGame().getVillage().getBuildings().entrySet()) {
+                if (b.getKey().getName().equals(this.getName())) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    public String getBuildingType() {
+        if (this instanceof AbstractDefenses) {
+            return "Military";
+        } else if (this instanceof AbstractFaithBuilding) {
+            return "Religious";
+        } else if (this instanceof AbstractHouse) {
+            return "Housing";
+        } else if (this instanceof AbstractRefining) {
+            return "Refinement";
+        } else if (this instanceof AbstractStorehouse) {
+            return "Storing";
+        }
+        return "General Purpose";
     }
 
     public Integer getResourceCost() {

@@ -1,7 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.eras.*;
 
 import java.util.*;

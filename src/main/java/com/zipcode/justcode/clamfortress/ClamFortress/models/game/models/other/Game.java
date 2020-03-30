@@ -1,7 +1,8 @@
-package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models;
+package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other;
 
 
 
+import com.fasterxml.jackson.annotation.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.priority.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.actions.utility.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.*;
@@ -16,7 +17,6 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.tech.er
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import javax.persistence.*;
-import java.io.*;
 import java.util.*;
 
 @Entity
@@ -27,9 +27,10 @@ public class Game {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
-    @Transient
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "game", targetEntity = Board.class)
     private Board gameBoard;
 
     @Transient
@@ -127,6 +128,9 @@ public class Game {
 
     public void refreshSavedGame(Game game) {
         this.gameManager.refreshGameManager(game.gameManager);
+        this.gameBoard.refreshGameBoard(game.getGameBoard());
+        game.getGameBoard().setGame(game);
+        this.gameBoard.setGame(this);
     }
 
     public ArrayList<GameObject> getModifierObjects() {
@@ -136,12 +140,12 @@ public class Game {
                 mods.add(entry.getKey());
             }
         }
-        mods.addAll(getVillage().getBuildings());
+        mods.addAll(getVillage().getAllBuildings());
         mods.addAll(getGameBoard().getAnimals());
         mods.addAll(getGameBoard().getVillage().getActiveMiracles());
         mods.addAll(getGameBoard().getVillage().getOngoingPlagues());
         mods.addAll(getGameBoard().getVillage().getOngoingDisasters());
-        //mods.add(getVillage().getFarmland());
+        mods.add(getGameBoard().getVillage().getFarm());
         return mods;
     }
 

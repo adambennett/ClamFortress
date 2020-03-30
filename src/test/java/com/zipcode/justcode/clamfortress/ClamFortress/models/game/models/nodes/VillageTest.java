@@ -5,12 +5,11 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.disasters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.miracles.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.plagues.*;
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.beings.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.builders.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
-import org.aspectj.lang.annotation.*;
 import org.junit.jupiter.api.*;
 
 import java.util.*;

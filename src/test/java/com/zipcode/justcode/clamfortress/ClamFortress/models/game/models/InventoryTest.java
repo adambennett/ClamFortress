@@ -5,6 +5,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.artifacts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.tools.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.tools.gathering.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 import org.junit.jupiter.api.*;
 

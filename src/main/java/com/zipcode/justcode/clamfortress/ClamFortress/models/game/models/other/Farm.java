@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-/*@Entity*/
+@Entity
 public class Farm extends GameObject {
 
     @Id

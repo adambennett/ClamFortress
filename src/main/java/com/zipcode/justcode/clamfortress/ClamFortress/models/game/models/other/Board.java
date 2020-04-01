@@ -42,8 +42,7 @@ public class Board extends GameObject {
     @Transient
     private AbstractBiome startBiome;
 
-    /*@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = Village.class)*/
-    @Transient
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = Village.class)
     private Village village;
 
     @Transient
@@ -60,6 +59,9 @@ public class Board extends GameObject {
         this.village = new Village();
         this.startPopCap = 0;
         this.startBiome = new BlankBiome();
+        this.grid = new ArrayList<>();
+        this.animals = new ArrayList<>();
+        this.resources = new HashMap<>();
     }
 
     public Board(AbstractBiome startingBiome, int xMax, int yMax, int popCap) {
@@ -87,8 +89,8 @@ public class Board extends GameObject {
         board.setNextY(this.nextY);
         board.setGrid(this.grid);
         board.setResources(this.resources);
-        this.village.refreshVillage(board.getVillage());
-        this.village.setBoard(this);
+        board.getVillage().refreshVillage(this.getVillage());
+        board.getVillage().setBoard(this);
     }
 
     public Boolean isBoardFull() {

@@ -10,7 +10,7 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.pers
 import javax.persistence.*;
 import java.util.*;
 
-/*@Entity*/
+@Entity
 public  class Survivor {
 
     @Id

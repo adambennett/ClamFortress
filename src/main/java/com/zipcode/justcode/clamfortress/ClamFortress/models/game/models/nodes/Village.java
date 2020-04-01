@@ -1,6 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes;
 
 
+import com.fasterxml.jackson.annotation.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.disasters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.miracles.*;
@@ -26,7 +27,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.*;
 
-/*@Entity*/
+@Entity
 public class Village extends AbstractNode {
 
     @Id
@@ -34,6 +35,7 @@ public class Village extends AbstractNode {
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     private Board board;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Farm.class)
@@ -112,6 +114,7 @@ public class Village extends AbstractNode {
         this.ongoingPlagues = new ArrayList<>();
         this.population = new ArrayList<>();
         this.inventory = new Inventory(5);
+        this.inventory.setVillage(this);
         this.resources = new HashMap<>();
         this.popCap = popCap;
         this.baseNode = getNodeFromBiome(biome);
@@ -125,10 +128,6 @@ public class Village extends AbstractNode {
     // Fake Village for proper Archive creation
     public Village() {
         super();
-        this.inventory = new Inventory(0);
-        this.farm = new Farm();
-        this.farm.setVillage(this);
-        this.buildings = new HashMap<>();
         this.uncompletedBuildings = new ArrayList<>();
         this.occupyingBandits = new ArrayList<>();
         this.activeMiracles = new ArrayList<>();
@@ -136,6 +135,14 @@ public class Village extends AbstractNode {
         this.vistingMerchants = new ArrayList<>();
         this.ongoingPlagues = new ArrayList<>();
         this.population = new ArrayList<>();
+        this.inventory = new Inventory(0);
+        this.inventory.setVillage(this);
+        this.resources = new HashMap<>();
+        this.farm = new Farm();
+        this.farm.setVillage(this);
+        this.health = 100;
+        this.maxHP = 100;
+        this.buildings = new HashMap<>();
     }
 
     public void refreshVillage(Village village) {

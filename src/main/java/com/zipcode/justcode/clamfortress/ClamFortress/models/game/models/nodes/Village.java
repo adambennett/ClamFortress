@@ -34,7 +34,6 @@ public class Village extends AbstractNode {
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
     private Board board;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Farm.class)
@@ -129,6 +128,14 @@ public class Village extends AbstractNode {
         this.inventory = new Inventory(0);
         this.farm = new Farm();
         this.farm.setVillage(this);
+        this.buildings = new HashMap<>();
+        this.uncompletedBuildings = new ArrayList<>();
+        this.occupyingBandits = new ArrayList<>();
+        this.activeMiracles = new ArrayList<>();
+        this.ongoingDisasters = new ArrayList<>();
+        this.vistingMerchants = new ArrayList<>();
+        this.ongoingPlagues = new ArrayList<>();
+        this.population = new ArrayList<>();
     }
 
     public void refreshVillage(Village village) {

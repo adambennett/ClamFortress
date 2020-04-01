@@ -29,10 +29,10 @@ public class Inventory extends GameObject {
     private Village village;
 
     @Transient
-    private final Map<AbstractItem, Integer> inventory;
+    private Map<AbstractItem, Integer> inventory;
 
     @Transient
-    private final Map<AbstractItem, Integer> priceMap;
+    private Map<AbstractItem, Integer> priceMap;
 
     private Integer itemsHeld;
     private Integer capacity;
@@ -230,6 +230,14 @@ public class Inventory extends GameObject {
 
     public void setVillage(Village village) {
         this.village = village;
+    }
+
+    public void setInventory(Map<AbstractItem, Integer> inventory) {
+        this.inventory = inventory;
+    }
+
+    public void setPriceMap(Map<AbstractItem, Integer> priceMap) {
+        this.priceMap = priceMap;
     }
 
     @Override

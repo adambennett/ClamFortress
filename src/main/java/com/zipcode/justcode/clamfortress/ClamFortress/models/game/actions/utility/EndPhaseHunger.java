@@ -18,7 +18,7 @@ public class EndPhaseHunger extends AbstractGameAction {
 
     @Override
     public void update() {
-        int numHungry = Database.getCurrentGame().getVillage().feedAllVillagers();
+        /*int numHungry = Database.getCurrentGame().getVillage().feedAllVillagers();
         if (Database.getCurrentGame().getVillage().getFood() > 0) {
             Database.getCurrentGame().getVillage().setFamine(Database.getCurrentGame().getVillage().getFamine() - Database.getCurrentGame().getVillage().getFood());
         }
@@ -37,7 +37,7 @@ public class EndPhaseHunger extends AbstractGameAction {
             newFamine = 1.0;
         }
         Database.getCurrentGame().getVillage().setFamine((int) newFamine);
-        Database.getCurrentGame().getVillage().setHunger(numHungry);
+        Database.getCurrentGame().getVillage().setHunger(numHungry);*/
         this.isDone = true;
     }
 

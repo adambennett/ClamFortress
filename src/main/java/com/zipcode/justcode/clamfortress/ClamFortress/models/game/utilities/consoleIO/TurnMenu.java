@@ -31,16 +31,18 @@ public class TurnMenu extends AbstractConsole {
         } else {
             consoleCommands.put("6", MenuCommands.OPTION_UNAVAILABLE);
         }
-        if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
+        /*if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
             consoleCommands.put("7", MenuCommands.VILLAGERS);
-        } else {
+        }
+        else {*/
             consoleCommands.put("7", MenuCommands.OPTION_UNAVAILABLE);
-        }
-        if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
+        //}
+        /*if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
             consoleCommands.put("8", MenuCommands.MERCHANT);
-        } else {
-            consoleCommands.put("8", MenuCommands.OPTION_UNAVAILABLE);
         }
+        else {*/
+            consoleCommands.put("8", MenuCommands.OPTION_UNAVAILABLE);
+        //}
         if (Database.getCurrentGame().canRaid()) {
             consoleCommands.put("9", MenuCommands.RAIDING);
         } else {

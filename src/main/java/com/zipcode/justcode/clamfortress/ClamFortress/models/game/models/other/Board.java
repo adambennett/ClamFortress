@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 @Entity
-public class Board extends GameObject {
+public class Board{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,29 +42,33 @@ public class Board extends GameObject {
     @Transient
     private AbstractBiome startBiome;
 
-    /*@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = Village.class)*/
-    @Transient
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "board", targetEntity = Village.class)
+/*    @Transient*/
     private Village village;
 
-    @Transient
+/*    @Transient
     private List<AbstractNode> grid;
 
     @Transient
-    private List<AbstractAnimal> animals;
+    private List<AbstractAnimal> animals;*/
 
     @Transient
     private Map<AbstractResource, Integer> resources;
 
     public Board() {
-        super("Fake Board", "The game board!");
-        this.village = new Village();
+/*        this.village = new Village();
         this.startPopCap = 0;
         this.startBiome = new BlankBiome();
+        this.grid = new ArrayList<>();
+        this.grid.add(this.village);
+        this.animals = new ArrayList<>();
+        this.resources = new HashMap<>();
+        this.nextX = 0;
+        this.nextY = 0;*/
     }
 
     public Board(AbstractBiome startingBiome, int xMax, int yMax, int popCap) {
-        super("Game Board", "The game board!");
-        this.village = new Village(startingBiome, popCap);
+/*        this.village = new Village(startingBiome, popCap);
         this.village.setxPos(0);
         this.village.setyPos(0);
         this.gridXMax = xMax;
@@ -77,31 +81,31 @@ public class Board extends GameObject {
         this.startPopCap = popCap;
         this.nextX = 0;
         this.nextY = 0;
-        this.addAnimals(this.village.getAnimals());
-        this.addResources(this.village.getResources());
+        //this.addAnimals(this.village.getAnimals());
+        this.addResources(this.village.getResources());*/
     }
 
     public void refreshGameBoard(Board board) {
-        board.setAnimals(this.animals);
+     //   board.setAnimals(this.animals);
         board.setNextX(this.nextX);
         board.setNextY(this.nextY);
-        board.setGrid(this.grid);
+      //  board.setGrid(this.grid);
         board.setResources(this.resources);
         this.village.refreshVillage(board.getVillage());
         this.village.setBoard(this);
     }
 
-    public Boolean isBoardFull() {
+/*    public Boolean isBoardFull() {
         return (grid.size() >= (gridXMax * gridYMax)+1 || nextY > gridYMax);
-    }
+    }*/
 
-    public AbstractNode getRandomRegion(int nethermod) {
+    /*public AbstractNode getRandomRegion(int nethermod) {
         int boardSize = gridXMax * gridYMax;
         if (grid.size() >= boardSize+1 || nextY > gridYMax) {
             return null;
         }
         return getRandomRegion(nextX, nextY, nethermod);
-    }
+    }*/
 
     public AbstractNode getRandomRegion(int x, int y, int nethermod) {
         return NodeManager.getRandomNode(x, y, nethermod);
@@ -115,16 +119,16 @@ public class Board extends GameObject {
         return nextY;
     }
 
-    public AbstractNode getNodeAt(int x) {
+   /* public AbstractNode getNodeAt(int x) {
         for (AbstractNode node : grid) {
             if (node.getxPos().equals(x) && node.getyPos().equals(0)) {
                 return node;
             }
         }
         return null;
-    }
+    }*/
 
-    public AbstractNode getNodeAt(int x, int y) {
+  /*  public AbstractNode getNodeAt(int x, int y) {
         for (AbstractNode node : grid) {
             if (node.getxPos().equals(x) && node.getyPos().equals(y)) {
                 return node;
@@ -152,9 +156,9 @@ public class Board extends GameObject {
         } else {
             Database.getCurrentGame().gameManager.getRaidable().add((City) space);
         }
-    }
+    }*/
 
-    public void addAnimals(Map<AbstractAnimal, Integer> animals) {
+   /* public void addAnimals(Map<AbstractAnimal, Integer> animals) {
         for (Map.Entry<AbstractAnimal, Integer> entry : animals.entrySet()) {
             for (int i = 0; i < entry.getValue(); i++) {
                 this.animals.add(entry.getKey().clone());
@@ -172,7 +176,7 @@ public class Board extends GameObject {
                 obj.onAddAnimalToBoard(animal);
             }
         }
-    }
+    }*/
 
     // RESOURCES     /////////////////////////////////////////////////////////////////////////////////////////////
     public void addResources(Map<AbstractResource, Integer> resources) {
@@ -243,7 +247,7 @@ public class Board extends GameObject {
         return output;
     }
     // END RESOURCES /////////////////////////////////////////////////////////////////////////////////////////////
-    public ArrayList<City> getAllCities() {
+    /*public ArrayList<City> getAllCities() {
         ArrayList<City> output = new ArrayList<>();
         for (AbstractNode node : this.grid) {
             if (node instanceof City) {
@@ -251,14 +255,6 @@ public class Board extends GameObject {
             }
         }
         return output;
-    }
-
-    public Village getVillage() {
-        return village;
-    }
-
-    public List<AbstractAnimal> getAnimals() {
-        return animals;
     }
 
     public ArrayList<AbstractDesertAnimal> getDesertAnimals() {
@@ -329,44 +325,39 @@ public class Board extends GameObject {
             }
         }
         return toRet;
-    }
+    }*/
 
     @Override
     public Board clone() {
         return new Board(this.startBiome, this.gridXMax, this.gridYMax, this.startPopCap);
     }
 
-
-    public Integer getGridXMax() {
-        return gridXMax;
-    }
-
-    public Integer getGridYMax() {
-        return gridYMax;
-    }
-
-    public Integer getStartPopCap() {
-        return startPopCap;
-    }
-
-    public AbstractBiome getStartBiome() {
-        return startBiome;
-    }
-
-    public List<AbstractNode> getGrid() {
-        return grid;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Game getGame() {
         return game;
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Integer getGridXMax() {
+        return gridXMax;
+    }
+
     public void setGridXMax(Integer gridXMax) {
         this.gridXMax = gridXMax;
+    }
+
+    public Integer getGridYMax() {
+        return gridYMax;
     }
 
     public void setGridYMax(Integer gridYMax) {
@@ -381,37 +372,47 @@ public class Board extends GameObject {
         this.nextY = nextY;
     }
 
+    public Integer getStartPopCap() {
+        return startPopCap;
+    }
+
     public void setStartPopCap(Integer startPopCap) {
         this.startPopCap = startPopCap;
+    }
+
+    public AbstractBiome getStartBiome() {
+        return startBiome;
     }
 
     public void setStartBiome(AbstractBiome startBiome) {
         this.startBiome = startBiome;
     }
 
+    public Village getVillage() {
+        return village;
+    }
+
     public void setVillage(Village village) {
         this.village = village;
+    }
+
+/*    public List<AbstractNode> getGrid() {
+        return grid;
     }
 
     public void setGrid(List<AbstractNode> grid) {
         this.grid = grid;
     }
 
+    public List<AbstractAnimal> getAnimals() {
+        return animals;
+    }
+
     public void setAnimals(List<AbstractAnimal> animals) {
         this.animals = animals;
-    }
+    }*/
 
     public void setResources(Map<AbstractResource, Integer> resources) {
         this.resources = resources;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-
 }

@@ -1,6 +1,7 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes;
 
 
+import com.fasterxml.jackson.annotation.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.disasters.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.miracles.*;
@@ -22,25 +23,29 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.*;
 
-/*@Entity*/
-public class Village extends AbstractNode {
+@Entity
+public class Village extends AbstractNode implements Serializable  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @MapsId
+    //@MapsId
     private Board board;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Farm.class)
+   // @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Farm.class)
+    @Transient
     private Farm farm;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Inventory.class)
+   // @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Inventory.class)
+    @Transient
     private Inventory inventory;
 
     @Transient
@@ -77,35 +82,43 @@ public class Village extends AbstractNode {
     private Double magicAvg =           0.0;
     private Double engineeringAvg =     0.0;
 
-    @Transient
+/*    @Transient
+    @NotNull
     private List<Bandit> occupyingBandits;
 
     @Transient
+    @NotNull
     private List<AbstractBuilding> uncompletedBuildings;
 
+    @NotNull
     @Transient
     private List<AbstractMiracle> activeMiracles;
 
+    @NotNull
     @Transient
     private List<AbstractDisaster> ongoingDisasters;
 
+    @NotNull
     @Transient
     private List<Merchant> vistingMerchants;
 
+    @NotNull
     @Transient
     private List<AbstractPlague> ongoingPlagues;
 
+    @NotNull
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Survivor.class)
-    private List<Survivor> population;
+    private List<Survivor> population;*/
 
+    @NotNull
     @Transient
     private Map<AbstractBuilding, Integer> buildings;
 
     @Override public String toString() { return "Village"; }
 
     public Village(AbstractBiome biome, int popCap) {
-        super(0, 0, biome);
-        this.uncompletedBuildings = new ArrayList<>();
+       super(0, 0, biome);
+       /*this.uncompletedBuildings = new ArrayList<>();
         this.occupyingBandits = new ArrayList<>();
         this.activeMiracles = new ArrayList<>();
         this.ongoingDisasters = new ArrayList<>();
@@ -121,14 +134,24 @@ public class Village extends AbstractNode {
         this.health = 100;
         this.maxHP = 100;
         this.buildings = new HashMap<>();
+        this.resources = new HashMap<>();*/
     }
 
     // Fake Village for proper Archive creation
     public Village() {
-        super();
+        /*super();
         this.inventory = new Inventory(0);
         this.farm = new Farm();
         this.farm.setVillage(this);
+      this.uncompletedBuildings = new ArrayList<>();
+        this.occupyingBandits = new ArrayList<>();
+        this.activeMiracles = new ArrayList<>();
+        this.ongoingDisasters = new ArrayList<>();
+        this.vistingMerchants = new ArrayList<>();
+        this.ongoingPlagues = new ArrayList<>();
+        this.population = new ArrayList<>();
+        this.buildings = new HashMap<>();
+        this.resources = new HashMap<>();*/
     }
 
     public void refreshVillage(Village village) {
@@ -197,7 +220,7 @@ public class Village extends AbstractNode {
     // END INVENTORY /////////////////////////////////////////////////////////////////////////////////////////////
 
     // COMBAT    /////////////////////////////////////////////////////////////////////////////////////////////////
-    public Integer dealDamage() {
+   /* public Integer dealDamage() {
         Integer dmg = this.getAttackPower();
         for (AbstractItem i : getInventory().getItems()) {
             if (i instanceof Projectile) {
@@ -234,11 +257,11 @@ public class Village extends AbstractNode {
             }
             updateHP();
         }
-    }
+    }*/
     // END COMBAT ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // VILLAGERS /////////////////////////////////////////////////////////////////////////////////////////////////
-    public Boolean hasSurvivorByThatName(String name) {
+   /* public Boolean hasSurvivorByThatName(String name) {
         for (Survivor s : population) {
             if (s.getName().equals(name)) {
                 return true;
@@ -286,7 +309,7 @@ public class Village extends AbstractNode {
         }
         StatTracker.setHighPop(this.population.size());
         return false;
-    }
+    }*/
 
     public void updateAfterRemoving(Survivor s) {
         this.strength -= s.getStrength();
@@ -298,23 +321,12 @@ public class Village extends AbstractNode {
         this.health -= s.getHP();
         this.maxHP -= s.getMaxHp();
         this.totalAge -= s.getAge();
-        updateAverageStats();
         for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {
             obj.onLoseCitizen(s);
         }
     }
 
-    private void updateAverageStats() {
-        this.ageAvg =             (double)this.totalAge / (double)this.population.size();
-        this.agilityAvg =         (double)this.agility / (double) this.population.size();
-        this.strengthAvg =        (double)this.strength / (double) this.population.size();
-        this.intelligenceAvg =    (double)this.intelligence / (double) this.population.size();
-        this.dexterityAvg =       (double)this.dexterity / (double) this.population.size();
-        this.magicAvg =           (double)this.magic / (double) this.population.size();
-        this.engineeringAvg =     (double)this.engineering / (double) this.population.size();
-    }
-
-    public Boolean containsVillager(Survivor s){
+   /* public Boolean containsVillager(Survivor s){
         for (Survivor sur: population) {
             if (sur.equals(s)) {
                 return true;
@@ -363,7 +375,7 @@ public class Village extends AbstractNode {
             }
         }
         return output;
-    }
+    }*/
     // END VILLAGERS /////////////////////////////////////////////////////////////////////////////////////////////
 
     // BUILDINGS     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -378,9 +390,11 @@ public class Village extends AbstractNode {
         return false;
     }
 
+/*
     public void addUncompletedBuilding(AbstractBuilding b) {
         uncompletedBuildings.add(b);
     }
+*/
 
     public Boolean hasBuilding(String building) {
         if (Archive.getInstance().getBuilding(building) != null) {
@@ -521,7 +535,7 @@ public class Village extends AbstractNode {
     // END RESOURCES /////////////////////////////////////////////////////////////////////////////////////////////
 
     // ENCOUNTERS    /////////////////////////////////////////////////////////////////////////////////////////////
-    public void addMerchant(Merchant merchant) {
+    /*public void addMerchant(Merchant merchant) {
         this.vistingMerchants.add(merchant);
     }
 
@@ -587,7 +601,7 @@ public class Village extends AbstractNode {
         if(occupyingBandits.size() > 0) {
             occupyingBandits.remove(occupyingBandits.size() - 1);
         }
-    }
+    }*/
     // END ENCOUNTERS ////////////////////////////////////////////////////////////////////////////////////////////
 
     // GETTERS & SETTERS /////////////////////////////////////////////////////////////////////////////////////////
@@ -812,7 +826,7 @@ public class Village extends AbstractNode {
         return engineeringAvg;
     }
 
-    public List<Bandit> getOccupyingBandits() {
+/*    public List<Bandit> getOccupyingBandits() {
         return occupyingBandits;
     }
 
@@ -838,7 +852,7 @@ public class Village extends AbstractNode {
 
     public List<Survivor> getPopulation() {
         return population;
-    }
+    }*/
 
     public Farm getFarm() {
         return farm;
@@ -980,7 +994,7 @@ public class Village extends AbstractNode {
         this.resources = resources;
     }
 
-    public void setOccupyingBandits(List<Bandit> occupyingBandits) {
+   /* public void setOccupyingBandits(List<Bandit> occupyingBandits) {
         this.occupyingBandits = occupyingBandits;
     }
 
@@ -1006,7 +1020,7 @@ public class Village extends AbstractNode {
 
     public void setPopulation(List<Survivor> population) {
         this.population = population;
-    }
+    }*/
 
     public void setBuildings(Map<AbstractBuilding, Integer> buildings) {
         this.buildings = buildings;

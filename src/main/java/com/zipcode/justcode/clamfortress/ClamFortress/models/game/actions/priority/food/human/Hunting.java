@@ -17,10 +17,10 @@ public class Hunting extends AbstractGameAction {
     @Override
     public void update() {
         int animals = 0;
-        int animalsOnBoard = Database.getCurrentGame().getGameBoard().getAnimals().size();
+        int animalsOnBoard = 0;//Database.getCurrentGame().getGameBoard().getAnimals().size();
         if (animalsOnBoard > 0) {
             int rando = ThreadLocalRandom.current().nextInt(animalsOnBoard);
-            animals += Database.getCurrentGame().getGameBoard().getAnimals().remove(rando).getAmountOfFoodOnHunt();
+            //animals += Database.getCurrentGame().getGameBoard().getAnimals().remove(rando).getAmountOfFoodOnHunt();
         }
         if (animals > 0) {
             for (GameObject obj : Database.getCurrentGame().getModifierObjects()) {

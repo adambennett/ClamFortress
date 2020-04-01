@@ -17,13 +17,13 @@ public class SpanishFlu extends AbstractPlague {
         int dmgLeft = ThreadLocalRandom.current().nextInt(10, 350);
         while (dmgLeft > 0) {
             int dmged = ThreadLocalRandom.current().nextInt(0, dmgLeft);
-            Database.getCurrentGame().getVillage().takeDamage(dmged);
+            //Database.getCurrentGame().getVillage().takeDamage(dmged);
             dmgLeft -= dmged;
         }
 
         this.turnsActive--;
         if (this.turnsActive < 1) {
-            Database.getCurrentGame().getVillage().getOngoingPlagues().remove(this);
+            //Database.getCurrentGame().getVillage().getOngoingPlagues().remove(this);
         }
     }
 

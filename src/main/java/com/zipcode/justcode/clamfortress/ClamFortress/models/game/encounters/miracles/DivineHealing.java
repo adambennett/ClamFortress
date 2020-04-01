@@ -22,7 +22,7 @@ public class DivineHealing extends AbstractMiracle {
         Database.getCurrentGame().actionManager.addToBottom(new Healing(high));
         this.turnsActive--;
         if (this.turnsActive < 1) {
-            Database.getCurrentGame().getVillage().getActiveMiracles().remove(this);
+            //Database.getCurrentGame().getVillage().getActiveMiracles().remove(this);
         }
     }
 

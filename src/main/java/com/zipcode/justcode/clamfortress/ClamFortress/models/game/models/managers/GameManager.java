@@ -41,7 +41,7 @@ public class GameManager {
     private City raidingCity;
 
     @Transient
-    private ArrayList<City> raidable;
+    private List<City> raidable;
 
     private static final String[] seasons = {
             "Winter", "Winter", "Spring", "Spring", "Summer", "Summer",
@@ -187,7 +187,7 @@ public class GameManager {
     public Integer getDefeatedCities() {
         return defeatedCities;
     }
-    public ArrayList<City> getRaidable() {
+    public List<City> getRaidable() {
         return raidable;
     }
     public BigInteger getTurnNumber() {

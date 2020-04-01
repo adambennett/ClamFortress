@@ -16,7 +16,7 @@ public class Building extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (Database.getCurrentGame().getVillage().getUncompletedBuildings().size() < 1) {
+        /*if (Database.getCurrentGame().getVillage().getUncompletedBuildings().size() < 1) {
             this.isDone = true;
             return;
         }
@@ -29,9 +29,9 @@ public class Building extends AbstractGameAction {
             }
         } else {
             Database.getCurrentGame().getVillage().getUncompletedBuildings().add(newBuilding);
-            //OutputManager.addToBot("Cannot build " + newBuilding.getName());
+            //OutputManager.addToBot("Cannot build " + newBuilding.getName());*/
             this.isDone = true;
-        }
+        //}
     }
 
     @Override

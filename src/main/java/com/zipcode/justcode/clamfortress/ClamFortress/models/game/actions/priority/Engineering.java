@@ -16,7 +16,7 @@ public class Engineering extends AbstractGameAction {
     @Override
     public void update() {
         AbstractBuilding newBuilding = BuildingManager.getRandomBuilding();
-        Database.getCurrentGame().getVillage().addUncompletedBuilding(newBuilding);
+     //   Database.getCurrentGame().getVillage().addUncompletedBuilding(newBuilding);
         OutputManager.addToBot("Added new " + newBuilding.getName() + " Project to Building Queue");
         if (Database.getCurrentGame().getVillage().getInventory().containsItem("hammer")) {
             Database.getCurrentGame().gameManager.gainExperience(10);

@@ -15,7 +15,7 @@ public class Defense extends AbstractGameAction {
     public void update() {
         Integer defense = Database.getCurrentGame().getVillage().getDefense();
         while (defense >4){
-            Database.getCurrentGame().getVillage().reduceBandits();
+           // Database.getCurrentGame().getVillage().reduceBandits();
             defense-=5;
         }
         this.isDone = true;

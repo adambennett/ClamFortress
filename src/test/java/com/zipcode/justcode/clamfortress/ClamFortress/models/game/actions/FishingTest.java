@@ -25,7 +25,7 @@ public class FishingTest {
     public void fishingTestWithoutRod(){
         Fishing fishing = new Fishing(1);        
         game.getVillage().setFoodLimit(999);
-        game.getGameBoard().addAnimals( new Penguin(),11);
+       // game.getGameBoard().addAnimals( new Penguin(),11);
 
         game.getVillage().setFood(0);
         game.getVillage().setFoodLimit(999);
@@ -44,7 +44,7 @@ public class FishingTest {
         PodsRod rod = new PodsRod();
         game.getVillage().setFoodLimit(999);
         game.getVillage().getInventory().addItem(rod);
-        game.getGameBoard().addAnimals( new Penguin(),11);
+       // game.getGameBoard().addAnimals( new Penguin(),11);
 
         game.getVillage().setFood(0);
 

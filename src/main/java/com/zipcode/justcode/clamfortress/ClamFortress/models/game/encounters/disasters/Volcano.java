@@ -14,7 +14,8 @@ public class Volcano extends AbstractDisaster {
     }
 
     @Override
-    public void runEncounter() { Database.getCurrentGame().getVillage().addDisaster(this); }
+    public void runEncounter() { //Database.getCurrentGame().getVillage().addDisaster(this);
+         }
 
     @Override
     public String toString() {

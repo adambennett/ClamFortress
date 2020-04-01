@@ -54,18 +54,18 @@ public class GameUtils {
 
     public static void whenObtainingAnyItem(GameObject obtained) {
         int maxHPGain = obtained.modifyMaxHPOnPickup();
-        if (maxHPGain > 0 && Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
+        /*if (maxHPGain > 0 && Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
             Survivor s = Database.getCurrentGame().getVillage().getPopulation().get(ThreadLocalRandom.current().nextInt(Database.getCurrentGame().getVillage().getPopulation().size()));
             s.setMaxHp(s.getMaxHp() + maxHPGain);
             Database.getCurrentGame().getVillage().setHealth(Database.getCurrentGame().getVillage().getHealth() + maxHPGain);
-        }
+        }*/
         StatTracker.setHighRes(Database.getCurrentGame().getVillage().getAllResources().size());
         StatTracker.setHighBuild(Database.getCurrentGame().getVillage().getBuildings().size());
     }
 
     public static String getNewRaidCity() {
         if (Database.getCurrentGame().gameManager.getRaidable().size() > 0) {
-            ArrayList<City> cities = Database.getCurrentGame().gameManager.getRaidable();
+            List<City> cities = Database.getCurrentGame().gameManager.getRaidable();
             ArrayList<City> otherCities = new ArrayList<>();
             if (cities.size() > 0) {
                 for (City c : cities) {
@@ -137,13 +137,13 @@ public class GameUtils {
             Database.getCurrentGame().getVillage().addResource((AbstractResource) obj, amt);
         } else if (obj instanceof Era) {
             TechTree.moveToEra((Era) obj, true);
-        } else if (obj instanceof AbstractMiracle) {
+        } /*else if (obj instanceof AbstractMiracle) {
             Database.getCurrentGame().getVillage().addMiracle((AbstractMiracle) obj);
         }  if (obj instanceof AbstractPlague) {
             Database.getCurrentGame().getVillage().addPlague((AbstractPlague) obj);
         } else if (obj instanceof AbstractDisaster) {
             Database.getCurrentGame().getVillage().addDisaster((AbstractDisaster) obj);
-        }
+        }*/
     }
 
     public static void obtainArtifact(AbstractArtifact artifact) {
@@ -173,9 +173,9 @@ public class GameUtils {
         return false;
     }
 
-    public static void discoverNode(AbstractNode space) {
+   /* public static void discoverNode(AbstractNode space) {
         Database.getCurrentGame().getGameBoard().addGridSpace(space);
-    }
+    }*/
 
     public static void advanceEra() {
         if (TechTree.getCurrentEra().hasNext() && TechTree.getCurrentEra().getNext().canObtain()) {
@@ -217,13 +217,13 @@ public class GameUtils {
             Database.getCurrentGame().getVillage().addResource((AbstractResource) obj, amt);
         } else if (obj instanceof Era) {
             TechTree.moveToEra((Era)obj, true);
-        } else if (obj instanceof AbstractMiracle) {
+        } /*else if (obj instanceof AbstractMiracle) {
             Database.getCurrentGame().getVillage().addMiracle((AbstractMiracle) obj);
         }  if (obj instanceof AbstractPlague) {
             Database.getCurrentGame().getVillage().addPlague((AbstractPlague) obj);
         } else if (obj instanceof AbstractDisaster) {
             Database.getCurrentGame().getVillage().addDisaster((AbstractDisaster) obj);
-        }
+        }*/
 
         StringHelpers.reloadStrings();
         if (from instanceof TurnMenu) {

@@ -283,7 +283,7 @@ public class GameStrings {
         Village v = Database.getCurrentGame().getVillage();
         rsrcMap.put("Days Survived", "" + StatTracker.getDaysSurvived());
         rsrcMap.put("Cities Defeated", "" + Database.getCurrentGame().gameManager.getDefeatedCities() + " / " + (Database.getCurrentGame().gameManager.getRaidable().size() + Database.getCurrentGame().gameManager.getDefeatedCities()));
-        rsrcMap.put("Population", "" + v.getPopulation().size() + " / " + v.getPopCap());
+       // rsrcMap.put("Population", "" + v.getPopulation().size() + " / " + v.getPopCap());
         rsrcMap.put("Buildings", "" + v.getBuildings().size() + " / " + v.getBuildingLimit());
         rsrcMap.put("Total Village HP", "" + v.getHealth() + " / " + v.getMaxHP());
         rsrcMap.put("Attack", "" + v.getAttackPower());
@@ -294,7 +294,7 @@ public class GameStrings {
         rsrcMap.put("Intellect", "" + v.getIntelligence());
         rsrcMap.put("Magic", "" + v.getMagic());
         rsrcMap.put("Strength", "" + v.getStrength());
-        if (v.getPopulation().size() > 0) {
+        /*if (v.getPopulation().size() > 0) {
             rsrcMap.put("Average Age", "" + v.getAgeAvg());
             rsrcMap.put("Average Agility", "" + v.getAgilityAvg());
             rsrcMap.put("Average Dexterity", "" + v.getDexterityAvg());
@@ -302,7 +302,7 @@ public class GameStrings {
             rsrcMap.put("Average Intellect", "" + v.getIntelligenceAvg());
             rsrcMap.put("Average Magic", "" + v.getMagicAvg());
             rsrcMap.put("Average Strength", "" + v.getStrengthAvg());
-        }
+        }*/
         rsrcMap.put("Villagers Lost", "" + StatTracker.getVillagersLost());
         rsrcMap.put("Enemies Killed", "" + StatTracker.getEnemiesKilled());
         return rsrcMap;
@@ -366,7 +366,7 @@ public class GameStrings {
         Village v = Database.getCurrentGame().getVillage();
         a.put("Turn Number", "" + Database.getCurrentGame().gameManager.getTurnNumber());
         a.put("Current Era", "" + TechTree.getCurrentEra().toString());
-        a.put("Population", "" + Database.getCurrentGame().getVillage().getPopulation().size() + " / " + Database.getCurrentGame().getVillage().getPopCap());
+        //a.put("Population", "" + Database.getCurrentGame().getVillage().getPopulation().size() + " / " + Database.getCurrentGame().getVillage().getPopCap());
         a.put("Village HP", "" + Database.getCurrentGame().getVillage().getHealth() + " / " + Database.getCurrentGame().getVillage().getMaxHP());
         a.put("Resources", "" + Database.getCurrentGame().getVillage().totalResources() + " / " + Database.getCurrentGame().getVillage().getResourceLimit());
         a.put("Buildings", "" + Database.getCurrentGame().getVillage().getNumberOfBuildings() + " / " + Database.getCurrentGame().getVillage().getBuildingLimit());
@@ -395,16 +395,18 @@ public class GameStrings {
         } else {
             a.put("6", "---------");
         }
-        if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
+        /*if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
             a.put("7", "Population");
-        } else {
+        }
+        else {*/
             a.put("7", "----------");
-        }
-        if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0  && Database.getCurrentGame().getVillage().getVistingMerchants().get(0).getWares().size() > 0) {
+        //}
+        /*if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0  && Database.getCurrentGame().getVillage().getVistingMerchants().get(0).getWares().size() > 0) {
             a.put("8", "Merchants");
-        } else {
-            a.put("8", "---------");
         }
+        else {*/
+            a.put("8", "---------");
+        //}
         if (Database.getCurrentGame().canRaid()) {
             a.put("9", "Raid a New City");
         } else {
@@ -729,9 +731,9 @@ public class GameStrings {
             }
         }
         Map<String, Integer> an = new HashMap<>();
-        for (AbstractAnimal item : board.getAnimals()) {
+       /* for (AbstractAnimal item : board.getAnimals()) {
             an.compute(item.getName(), new Mapper<String>(1).mapper);
-        }
+        }*/
         for (Map.Entry<String, Integer> item : an.entrySet()) {
             a.put(item.getKey(), "" + item.getValue());
         }
@@ -759,7 +761,7 @@ public class GameStrings {
     public static LinkedHashMap<String, ArrayList<String>> getVillagers() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Database.getCurrentGame().getVillage();
-        for (Survivor s : v.getPopulation()) {
+        /*for (Survivor s : v.getPopulation()) {
             ArrayList<String> tempCols = new ArrayList<>();
             tempCols.add("" + s.getAge());
             tempCols.add("" + s.getHP() + " / " + s.getMaxHp());
@@ -772,7 +774,7 @@ public class GameStrings {
             tempCols.add(StringHelpers.capFirstLetter(s.getRace().toString().toLowerCase()));
             tempCols.add(StringHelpers.capFirstLetter(s.getGender().toString().toLowerCase()));
             a.put(s.getName(), tempCols);
-        }
+        }*/
         if (a.size() < 1) {
             ArrayList<String> tempCols = new ArrayList<>();
             tempCols.add("");
@@ -919,7 +921,7 @@ public class GameStrings {
     public static LinkedHashMap<String, ArrayList<String>> getMerchant() {
         LinkedHashMap<String, ArrayList<String>> a = new LinkedHashMap<>();
         Village v = Database.getCurrentGame().getVillage();
-        if (v.getVistingMerchants().size() > 0) {
+        /*if (v.getVistingMerchants().size() > 0) {
             Merchant active = v.getVistingMerchants().get(0);
             for (Map.Entry<String, Integer> o : active.getWares().entrySet()) {
                 GameObject obj = Archive.getInstance().get(o.getKey());
@@ -952,7 +954,7 @@ public class GameStrings {
                 name = name.trim();
                 a.put(name, tempCols);
             }
-        }
+        }*/
         if (a.size() < 1) {
             ArrayList<String> tempCols = new ArrayList<>();
             tempCols.add("");
@@ -968,10 +970,10 @@ public class GameStrings {
         String breakLine = "+---------------------------+-----------------------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------+\n";
         String header = "Merchant";
         Village v = Database.getCurrentGame().getVillage();
-        if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
+        /*if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
             Merchant active = v.getVistingMerchants().get(0);
             header = active.getName() + "'s " + active.getMerchantType() + " Shop";
-        }
+        }*/
         LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> sellLine = new LinkedHashMap<>();
@@ -1068,10 +1070,10 @@ public class GameStrings {
         String breakLine = "+---------------------------+-----------------------+-----------------------+-----------------------+\n";
         String header = "Merchant - Sell Menu";
         Village v = Database.getCurrentGame().getVillage();
-        if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
+        /*if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
             Merchant active = v.getVistingMerchants().get(0);
             header = "Selling Items to " + active.getName() + "'s Shop";
-        }
+        }*/
         LinkedHashMap<String, ArrayList<String>> top = new LinkedHashMap<>();
         LinkedHashMap<String, ArrayList<String>> bottom = new LinkedHashMap<>();
         ArrayList<String> topCols = new ArrayList<>();

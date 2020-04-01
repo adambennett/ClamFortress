@@ -32,7 +32,7 @@ public class MerchantMenu extends AbstractConsole implements DynamicConsole {
 
     public void findAndProcessCommandCustomOptions(ArrayList<String> args) {
         if (args.size() > 0) {
-            if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
+            /*if (Database.getCurrentGame().getVillage().getVistingMerchants().size() > 0) {
                 Merchant m = Database.getCurrentGame().getVillage().getVistingMerchants().get(0);
                 String key = args.get(0).toLowerCase();
                 boolean bought = false;
@@ -76,7 +76,7 @@ public class MerchantMenu extends AbstractConsole implements DynamicConsole {
                 }
             } else {
                 printPrompt(PromptMessage.MERCHANT, true);
-            }
+            }*/
         }
     }
 

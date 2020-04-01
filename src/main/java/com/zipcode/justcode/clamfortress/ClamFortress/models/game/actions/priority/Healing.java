@@ -24,7 +24,7 @@ public class Healing extends AbstractGameAction {
             obj.onHeal();
         }
 
-        if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
+       /* if (Database.getCurrentGame().getVillage().getPopulation().size() > 0) {
             ArrayList<Survivor> dmged = new ArrayList<>();
             for (Survivor s : Database.getCurrentGame().getVillage().getPopulation()) {
                 if (s.getHP() < s.getMaxHp()) {
@@ -56,7 +56,7 @@ public class Healing extends AbstractGameAction {
             } else {
                 OutputManager.addToBot(OutputFlag.NO_DAMAGE, "Nobody in your village is hurt!");
             }
-        }
+        }*/
         this.isDone = true;
     }
 

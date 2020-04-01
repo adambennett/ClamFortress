@@ -47,7 +47,12 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
         }
     }
 
-    public AbstractNode() {}
+    public AbstractNode() {
+        this.xPos = 0;
+        this.yPos = 0;
+        this.resources = new HashMap<>();
+        this.animals = new HashMap<>();
+    }
 
     public Boolean hasArtifact() {
         return artifact != null;

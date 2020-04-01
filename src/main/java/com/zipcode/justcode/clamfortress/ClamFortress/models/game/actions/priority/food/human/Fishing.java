@@ -21,7 +21,7 @@ public class Fishing extends AbstractGameAction {
     @Override
     public void update() {
         int fish = 0;
-        int fishOnBoard = Database.getCurrentGame().getGameBoard().getSeaAnimals().size();
+        /*int fishOnBoard = Database.getCurrentGame().getGameBoard().getSeaAnimals().size();
         if (fishOnBoard > 0) {
             int rando = random.nextInt(fishOnBoard);
             fish += Database.getCurrentGame().getGameBoard().getSeaAnimals().get(rando).getAmountOfFoodOnHunt();
@@ -48,7 +48,7 @@ public class Fishing extends AbstractGameAction {
         }
         fish = fish * fishMod;
         Database.getCurrentGame().getVillage().incFood(fish);
-        OutputManager.addToBot("Fished " + fish + " new food");
+        OutputManager.addToBot("Fished " + fish + " new food");*/
         this.isDone = true;
     }
 

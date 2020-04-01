@@ -11,7 +11,7 @@ public class Typhoon extends AbstractDisaster {
 
     @Override
     public void runEncounter() {
-        Database.getCurrentGame().getVillage().addDisaster(this);
+        //Database.getCurrentGame().getVillage().addDisaster(this);
     }
 
     @Override

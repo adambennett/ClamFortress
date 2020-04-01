@@ -55,7 +55,7 @@ public class SaleMerchantMenu extends AbstractConsole implements DynamicConsole 
                 }
             }
             if (bought) {
-                String merchant = Database.getCurrentGame().getVillage().getVistingMerchants().get(0).getName();
+                String merchant = "BROKEN";//Database.getCurrentGame().getVillage().getVistingMerchants().get(0).getName();
                 boolean sold = inv.remove(key, amt);
                 if (sold) {
                     int amtPaid = inv.getItemValue(key);

@@ -20,7 +20,7 @@ public class NewSurvivors extends AbstractGameAction {
 
     @Override
     public void update() {
-        int pop = Database.getCurrentGame().getVillage().getPopulation().size();
+        /*int pop = Database.getCurrentGame().getVillage().getPopulation().size();
         int popCap = Database.getCurrentGame().getVillage().getPopCap();
         int diff = popCap - pop;
         if (pop < popCap && diff > 0) {
@@ -32,7 +32,7 @@ public class NewSurvivors extends AbstractGameAction {
             if (amtOfNewSurvivors > 0) {
                 addToVillage(amtOfNewSurvivors);
             }
-        }
+        }*/
         this.isDone = true;
     }
 
@@ -45,7 +45,7 @@ public class NewSurvivors extends AbstractGameAction {
         OutputManager.moveIn(amt);
         for (int i = 0; i < amt; i++) {
             Survivor newCitizen = Archive.generateRandomSurvivor(true);
-            Database.getCurrentGame().getVillage().addToPopulation(newCitizen);
+            //Database.getCurrentGame().getVillage().addToPopulation(newCitizen);
         }
     }
 }

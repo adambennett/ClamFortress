@@ -21,7 +21,7 @@ public class HuntingTest { ;
     @Test
     public void huntingTest(){
         game.getVillage().setFoodLimit(999);
-        game.getGameBoard().addAnimals(new BlackBear(), 10);
+       // game.getGameBoard().addAnimals(new BlackBear(), 10);
         Hunting hunting = new Hunting(1);
         hunting.update();
         Integer actual = game.getVillage().getFood();

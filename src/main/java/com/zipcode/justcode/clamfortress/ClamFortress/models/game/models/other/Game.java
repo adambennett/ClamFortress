@@ -120,7 +120,7 @@ public class Game {
 
     public void postSetup(int startPop) {
         if (!this.getGameBoard().getStartBiome().toString().equals("Debug")) {
-            gameBoard.discover(getVillage().getBaseNode());
+           // gameBoard.discover(getVillage().getBaseNode());
         }
         new NewSurvivors(false).addToVillage(startPop);
         getVillage().addResource(new Wood(), 100);
@@ -141,10 +141,10 @@ public class Game {
             }
         }
         mods.addAll(getVillage().getAllBuildings());
-        mods.addAll(getGameBoard().getAnimals());
+       /* mods.addAll(getGameBoard().getAnimals());
         mods.addAll(getGameBoard().getVillage().getActiveMiracles());
         mods.addAll(getGameBoard().getVillage().getOngoingPlagues());
-        mods.addAll(getGameBoard().getVillage().getOngoingDisasters());
+        mods.addAll(getGameBoard().getVillage().getOngoingDisasters());*/
         mods.add(getGameBoard().getVillage().getFarm());
         return mods;
     }
@@ -154,13 +154,13 @@ public class Game {
     }
 
     public void handleEncounter(AbstractEncounter enc) {
-        if (gameBoard.getVillage().canRunEncounter(enc)) {
+        /*if (gameBoard.getVillage().canRunEncounter(enc)) {
             OutputManager.addToBot("SPECIAL ENCOUNTER :: " + enc.toString());
             enc.runEncounter();
             for (GameObject obj : this.getModifierObjects()) {
                 obj.onRunSpecialEncounter(enc);
             }
-        }
+        }*/
     }
 
     public Integer encounterLogic(ArrayList<AbstractEncounter> encounters) {
@@ -205,7 +205,7 @@ public class Game {
         StatTracker.incScore(dateInc);
         this.gameManager.incTurns();
         queueEvergreenActions(dateInc);
-        if (this.getVillage().getVistingMerchants().size() > 0) {
+        /*if (this.getVillage().getVistingMerchants().size() > 0) {
             this.getVillage().getVistingMerchants().get(0).visit();
         }
         runActions();
@@ -213,7 +213,7 @@ public class Game {
         PriorityManager.reset(this.difficulty.compareTo(Difficulty.HARD) > 0);
         for (GameObject obj : this.getModifierObjects()) {
             obj.endPhase();
-        }
+        }*/
 
     }
 
@@ -226,9 +226,9 @@ public class Game {
     public void queueEvergreenActions(int dateInc) {
         actionManager.addToTurnStart(new NewSurvivors(true));
         actionManager.addToTurnEnd(new EndPhaseHunger());
-        if (getVillage().getUncompletedBuildings().size() > 0) {
+        /*if (getVillage().getUncompletedBuildings().size() > 0) {
             actionManager.addToBottom(new Building(PriorityManager.getBuild()));
-        }
+        }*/
         actionManager.addToBottom(new Engineering(PriorityManager.getEngineer()));
         actionManager.setAbsoluteLastAction(new EndTurnReport(dateInc));
     }

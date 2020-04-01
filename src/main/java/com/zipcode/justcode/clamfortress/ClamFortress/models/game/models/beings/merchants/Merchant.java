@@ -62,7 +62,7 @@ public class Merchant {
     public void visit() {
         this.turnsVisited++;
         if (this.turnsVisited >= this.turnsAvailable || this.wares.size() < 1) {
-            Database.getCurrentGame().getVillage().getVistingMerchants().remove(this);
+            //Database.getCurrentGame().getVillage().getVistingMerchants().remove(this);
             OutputManager.addToBot("Merchant " + name + " has left the region.");
         } else {
             OutputManager.addToBot("Merchant " + name + " will stick around for " + (this.turnsAvailable - this.turnsVisited) + " more turns.");

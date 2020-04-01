@@ -17,7 +17,7 @@ public abstract class AbstractMiracle extends AbstractEncounter {
 
     @Override
     public void runEncounter() {
-        Database.getCurrentGame().getVillage().addMiracle(this);
+       // Database.getCurrentGame().getVillage().addMiracle(this);
     }
 
 

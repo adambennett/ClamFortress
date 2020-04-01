@@ -23,7 +23,7 @@ public class Scouting extends AbstractGameAction {
 
     @Override
     public void update() {
-        if (!Database.getCurrentGame().getGameBoard().isBoardFull()) {
+        /*if (!Database.getCurrentGame().getGameBoard().isBoardFull()) {
             int roll = ThreadLocalRandom.current().nextInt(0, 100);
 
             if (Database.getCurrentGame().getVillage().getInventory().containsItem("telescope")) {
@@ -50,10 +50,9 @@ public class Scouting extends AbstractGameAction {
 
         if (merchantRoll > 98) {
             Merchant traveler = MerchantManager.getRandomMerchant();
-            Database.getCurrentGame().getVillage().addMerchant(traveler);
+            //Database.getCurrentGame().getVillage().addMerchant(traveler);
             OutputManager.merch(1);
-            //OutputManager.addToBot("During your exploring, you came upon a " + traveler.getMerchantType() + " by the name of " + traveler.getName() + ".");
-        }
+        }*/
         this.isDone = true;
     }
 

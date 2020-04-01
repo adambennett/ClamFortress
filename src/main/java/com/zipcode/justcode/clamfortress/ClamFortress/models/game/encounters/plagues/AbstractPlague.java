@@ -19,12 +19,12 @@ public abstract class AbstractPlague extends AbstractEncounter {
 
     @Override
     public void runEncounter() {
-        if (Database.getCurrentGame().getVillage().getInventory().containsItem("vaccine")) {
+        /*if (Database.getCurrentGame().getVillage().getInventory().containsItem("vaccine")) {
             if (ThreadLocalRandom.current().nextBoolean()) {
                 Database.getCurrentGame().getVillage().addPlague(this);
             }
         } else {
             Database.getCurrentGame().getVillage().addPlague(this);
-        }
+        }*/
     }
 }

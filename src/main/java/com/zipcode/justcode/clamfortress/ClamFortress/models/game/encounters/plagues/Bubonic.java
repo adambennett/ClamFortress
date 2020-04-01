@@ -17,13 +17,13 @@ public class Bubonic extends AbstractPlague {
         int dmgLeft = 100;
         while (dmgLeft > 1) {
             int dmged = ThreadLocalRandom.current().nextInt(1, dmgLeft);
-            Database.getCurrentGame().getVillage().takeDamage(dmged);
+           // Database.getCurrentGame().getVillage().takeDamage(dmged);
             dmgLeft -= dmged;
         }
 
         this.turnsActive--;
         if (this.turnsActive < 1) {
-            Database.getCurrentGame().getVillage().getOngoingPlagues().remove(this);
+           // Database.getCurrentGame().getVillage().getOngoingPlagues().remove(this);
         }
     }
 

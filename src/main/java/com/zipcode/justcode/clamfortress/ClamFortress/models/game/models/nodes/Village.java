@@ -151,11 +151,9 @@ public class Village extends AbstractNode {
     }
 
     public void refreshVillage(Village village) {
-        village.setActiveMiracles(this.activeMiracles);
         village.setAgility(this.agility);
         village.setBuildingLimit(this.buildingLimit);
         village.setAttackPower(this.attackPower);
-       // village.setBuildings(this.buildings);
         village.setCoinLimit(this.coinLimit);
         village.setCoins(this.coins);
         village.setDefence(this.defence);
@@ -171,16 +169,10 @@ public class Village extends AbstractNode {
         village.setIntelligence(this.intelligence);
         village.setMagic(this.magic);
         village.setMaxHP(this.maxHP);
-       //village.setOccupyingBandits(this.occupyingBandits);
-        village.setOngoingDisasters(this.ongoingDisasters);
-        village.setOngoingPlagues(this.ongoingPlagues);
         village.setPopCap(this.popCap);
-        village.setPopulation(this.population);
         village.setStrength(this.strength);
         village.setTotalAge(this.totalAge);
         village.setResourceLimit(this.resourceLimit);
-        village.setUncompletedBuildings(this.uncompletedBuildings);
-        village.setVistingMerchants(this.vistingMerchants);
         village.inventory.refresh(this.inventory);
     }
 

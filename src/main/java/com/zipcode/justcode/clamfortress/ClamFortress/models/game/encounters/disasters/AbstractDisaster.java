@@ -14,7 +14,7 @@ public abstract class AbstractDisaster extends AbstractEncounter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private Village village;
 

@@ -18,7 +18,7 @@ public abstract class AbstractPlague extends AbstractEncounter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private Village village;
 

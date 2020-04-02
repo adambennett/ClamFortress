@@ -90,7 +90,7 @@ public class Board extends GameObject {
         board.setGrid(this.grid);
         board.setResources(this.resources);
         board.getVillage().refreshVillage(this.getVillage());
-        board.getVillage().setBoard(this);
+        //board.getVillage().setBoard(this);
     }
 
     public Boolean isBoardFull() {

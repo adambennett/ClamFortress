@@ -1,12 +1,14 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes;
 
 
+import com.fasterxml.jackson.annotation.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.animals.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.items.artifacts.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.managers.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.nodes.biomes.*;
+import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.other.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
@@ -14,21 +16,34 @@ import javax.persistence.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-
+/*@Entity*/
 public abstract class AbstractNode implements Comparable<AbstractNode> {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JsonIgnore
+    private Board board;
+
+    @Transient
     protected AbstractBiome biome;
 
     protected Integer xPos;
 
     protected Integer yPos;
 
+    @Transient
     protected AbstractArtifact artifact;
 
+    @Transient
     protected AbstractItem item;
 
+    @Transient
     protected Map<AbstractResource, Integer> resources;
 
+    @Transient
     protected Map<AbstractAnimal, Integer> animals;
 
     public AbstractNode(int x, int y, AbstractBiome biome) {
@@ -118,6 +133,22 @@ public abstract class AbstractNode implements Comparable<AbstractNode> {
 
     public void setAnimals(Map<AbstractAnimal, Integer> animals) {
         this.animals = animals;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     @Override

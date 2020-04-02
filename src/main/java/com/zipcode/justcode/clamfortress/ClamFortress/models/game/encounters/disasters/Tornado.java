@@ -1,7 +1,6 @@
 package com.zipcode.justcode.clamfortress.ClamFortress.models.game.encounters.disasters;
 
 
-import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
 
 public class Tornado extends AbstractDisaster {

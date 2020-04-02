@@ -21,8 +21,11 @@ import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resourc
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.models.resources.refined.food.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.*;
 import com.zipcode.justcode.clamfortress.ClamFortress.models.game.utilities.persistence.*;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.*;
@@ -34,7 +37,7 @@ public class Village extends AbstractNode {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonIgnore
     private Board board;
 
@@ -84,19 +87,21 @@ public class Village extends AbstractNode {
     @Transient
     private List<AbstractBuilding> uncompletedBuildings;
 
-    @Transient
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = AbstractMiracle.class)
     private List<AbstractMiracle> activeMiracles;
 
-    @Transient
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = AbstractDisaster.class)
     private List<AbstractDisaster> ongoingDisasters;
 
-    @Transient
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Merchant.class)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Merchant> vistingMerchants;
 
-    @Transient
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = AbstractPlague.class)
     private List<AbstractPlague> ongoingPlagues;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "village", targetEntity = Survivor.class)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Survivor> population;
 
     @Transient
@@ -146,11 +151,11 @@ public class Village extends AbstractNode {
     }
 
     public void refreshVillage(Village village) {
-        //village.setActiveMiracles(this.activeMiracles);
+        village.setActiveMiracles(this.activeMiracles);
         village.setAgility(this.agility);
         village.setBuildingLimit(this.buildingLimit);
         village.setAttackPower(this.attackPower);
-        //village.setBuildings(this.buildings);
+       // village.setBuildings(this.buildings);
         village.setCoinLimit(this.coinLimit);
         village.setCoins(this.coins);
         village.setDefence(this.defence);
@@ -167,15 +172,16 @@ public class Village extends AbstractNode {
         village.setMagic(this.magic);
         village.setMaxHP(this.maxHP);
        //village.setOccupyingBandits(this.occupyingBandits);
-       // village.setOngoingDisasters(this.ongoingDisasters);
-        //village.setOngoingPlagues(this.ongoingPlagues);
+        village.setOngoingDisasters(this.ongoingDisasters);
+        village.setOngoingPlagues(this.ongoingPlagues);
         village.setPopCap(this.popCap);
-        //village.setPopulation(this.population);
+        village.setPopulation(this.population);
         village.setStrength(this.strength);
         village.setTotalAge(this.totalAge);
         village.setResourceLimit(this.resourceLimit);
-      //  village.setUncompletedBuildings(this.uncompletedBuildings);
-      //  village.setVistingMerchants(this.vistingMerchants);
+        village.setUncompletedBuildings(this.uncompletedBuildings);
+        village.setVistingMerchants(this.vistingMerchants);
+        village.inventory.refresh(this.inventory);
     }
 
     public AbstractNode getNodeFromBiome(AbstractBiome biome) {
@@ -1011,7 +1017,8 @@ public class Village extends AbstractNode {
     }
 
     public void setVistingMerchants(List<Merchant> vistingMerchants) {
-        this.vistingMerchants = vistingMerchants;
+        this.vistingMerchants.clear();
+        this.vistingMerchants.addAll(vistingMerchants);
     }
 
     public void setOngoingPlagues(List<AbstractPlague> ongoingPlagues) {

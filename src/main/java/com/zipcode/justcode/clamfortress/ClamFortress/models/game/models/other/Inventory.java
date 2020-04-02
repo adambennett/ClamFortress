@@ -51,6 +51,11 @@ public class Inventory extends GameObject {
         this.itemsHeld = 0;
     }
 
+    public void refresh(Inventory inven) {
+       inven.setCapacity(this.capacity);
+       inven.setItemsHeld(this.itemsHeld);
+    }
+
     public Integer inventorySize() {
         return itemsHeld;
     }
